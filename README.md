@@ -17,6 +17,8 @@ https://github.com/CompEvol/beast3/blob/master/scripts/migration-guide.md
 
 BEAST 3 Package Skeleton: https://github.com/CompEvol/beast-package-skeleton
 
+## Maven releases
 
+https://github.com/orgs/CompEvol/packages
 
 
