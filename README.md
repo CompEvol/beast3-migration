@@ -21,4 +21,6 @@ BEAST 3 Package Skeleton: https://github.com/CompEvol/beast-package-skeleton
 
 https://github.com/orgs/CompEvol/packages
 
+CompEvol releases on Maven Central: https://central.sonatype.com/namespace/io.github.compevol
 
+Beast2-Dev releases on Maven Central: https://central.sonatype.com/namespace/io.github.beast2-dev
