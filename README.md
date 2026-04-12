@@ -1,13 +1,18 @@
 # beast3 migration progress
 
-## Done
+## Complied
+
+**Note:** these packages are only compile-tested, using `mvn clean install -DskipTests`. Full migration may still require updates to tests, example XMLs, or BEAUti templates.
 
 - beast3
 - BEASTLabs
 - beast-classic
 - morph-models
+- MutableAlignment
 
 ## TODO
+
+If the pull request or branch isn't merged into the master branch, the package still counts as TODO.
 
 https://compevol.github.io/CBAN/
 
