@@ -116,7 +116,7 @@ public final class JavaScanner {
 
     private static final Pattern BLOCK_COMMENT = Pattern.compile("/\\*[\\s\\S]*?\\*/");
     private static final Pattern LINE_COMMENT = Pattern.compile("(?m)//[^\\n]*");
-    private static final Pattern PACKAGE = Pattern.compile("(?m)^\\s*package\\s+([\\w.]+)\\s*;");
+    private static final Pattern PACKAGE_DECL = Pattern.compile("(?m)^\\s*package\\s+([\\w.]+)\\s*;");
     private static final Pattern IMPORT = Pattern.compile("(?m)^\\s*import\\s+(?:static\\s+)?([\\w.$*]+)\\s*;");
     /** Top-level class declaration: capture name, optional extends list, optional implements list. */
     private static final Pattern CLASS_DECL = Pattern.compile(
@@ -168,9 +168,11 @@ public final class JavaScanner {
 
         Map<String, String> simpleToFqn = collectImports(stripped);
         Set<String> importFqns = new HashSet<>(simpleToFqn.values());
+        String pkgName = extractPackage(stripped);
 
         Matcher cm = CLASS_DECL.matcher(stripped);
         if (cm.find()) {
+            String simpleName = cm.group(1);
             String extendsClause = cm.group(2);
             String implementsClause = cm.group(3);
 
@@ -180,7 +182,58 @@ public final class JavaScanner {
             Kind kind = classify(tokens, resolved);
             Status status = migrationStatus(tokens, importFqns, resolved);
             report.javaCounts.get(kind).add(status);
+
+            report.classes.add(new ClassRecord(
+                    file,
+                    pkgName,
+                    simpleName,
+                    kind,
+                    status,
+                    trim(extendsClause),
+                    trim(implementsClause),
+                    java.util.List.copyOf(legacyEvidence(importFqns, resolved, tokens)),
+                    java.util.List.copyOf(specEvidence(importFqns, resolved, tokens))));
         }
+    }
+
+    private static String extractPackage(String src) {
+        Matcher m = PACKAGE_DECL.matcher(src);
+        return m.find() ? m.group(1) : "";
+    }
+
+    private static String trim(String s) {
+        return s == null ? "" : s.trim();
+    }
+
+    private static java.util.LinkedHashSet<String> legacyEvidence(
+            Set<String> imports, Set<String> resolved, Set<String> tokens) {
+        java.util.LinkedHashSet<String> out = new java.util.LinkedHashSet<>();
+        for (String imp : imports) {
+            if (LEGACY_FQNS.contains(imp)) out.add(imp);
+            else if (imp.startsWith("beast.base.inference.parameter.")) out.add(imp);
+            else if (imp.equals("beast.base.inference.distribution.Prior")) out.add(imp);
+        }
+        for (String fqn : resolved) {
+            if (fqn.startsWith("beast.base.inference.parameter.")
+                    || fqn.equals("beast.base.inference.distribution.Prior")) {
+                out.add("extends/implements " + fqn);
+            }
+        }
+        for (String t : tokens) {
+            if (t.equals("RealParameter") || t.equals("IntegerParameter")
+                    || t.equals("BooleanParameter")) {
+                out.add("extends/implements " + t);
+            }
+        }
+        return out;
+    }
+
+    private static java.util.LinkedHashSet<String> specEvidence(
+            Set<String> imports, Set<String> resolved, Set<String> tokens) {
+        java.util.LinkedHashSet<String> out = new java.util.LinkedHashSet<>();
+        for (String imp : imports) if (imp.startsWith("beast.base.spec.")) out.add(imp);
+        for (String fqn : resolved) if (fqn.startsWith("beast.base.spec.")) out.add("extends/implements " + fqn);
+        return out;
     }
 
     /** Maps simple class name → FQN for every {@code import} in the file. */

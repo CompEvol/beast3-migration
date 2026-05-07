@@ -1,7 +1,9 @@
 package io.github.beast3.migration;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public final class Report {
@@ -46,6 +48,8 @@ public final class Report {
 
     public final PackageEntry entry;
     public final Map<Kind, KindCounts> javaCounts = new EnumMap<>(Kind.class);
+    public final List<ClassRecord> classes = new ArrayList<>();
+    public final List<XmlRecord> xmls = new ArrayList<>();
     public int xmlTotal;
     public int xmlMigrated;         // version="2.8" AND beast.base.spec.* namespace
     public int xmlV28;              // version="2.8" (regardless of namespace)

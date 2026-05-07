@@ -38,17 +38,17 @@ public final class XmlScanner {
                                 || p.endsWith(Path.of("src", "main", "resources")))
                                 && !p.toString().contains("/target/");
                     })
-                    .forEach(d -> walk(d, report));
+                    .forEach(d -> walk(d, pkgRoot, report));
         } catch (IOException e) {
             // ignore
         }
     }
 
-    private static void walk(Path root, Report report) {
+    private static void walk(Path root, Path pkgRoot, Report report) {
         try (Stream<Path> stream = Files.walk(root)) {
             stream.filter(Files::isRegularFile)
                     .filter(p -> p.getFileName().toString().toLowerCase().endsWith(".xml"))
-                    .forEach(p -> classify(root, p, report));
+                    .forEach(p -> classify(root, pkgRoot, p, report));
         } catch (IOException e) {
             // Ignore — partial directories should not crash the run.
         }
@@ -66,9 +66,11 @@ public final class XmlScanner {
         return false;
     }
 
-    private static void classify(Path root, Path file, Report report) {
-        if (isLegacyDir(root, file)) {
+    private static void classify(Path root, Path pkgRoot, Path file, Report report) {
+        boolean legacy = isLegacyDir(root, file);
+        if (legacy) {
             report.xmlLegacyDir++;
+            report.xmls.add(new XmlRecord(file, pkgRoot, false, false, true));
             return;
         }
         String content;
@@ -87,5 +89,6 @@ public final class XmlScanner {
         boolean spec = NAMESPACE_SPEC.matcher(rootAttrs).find();
         if (v28) report.xmlV28++;
         if (v28 && spec) report.xmlMigrated++;
+        report.xmls.add(new XmlRecord(file, pkgRoot, v28, spec, false));
     }
 }

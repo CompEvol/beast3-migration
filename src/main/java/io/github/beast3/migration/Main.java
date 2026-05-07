@@ -13,7 +13,34 @@ import org.yaml.snakeyaml.Yaml;
 public final class Main {
 
     public static void main(String[] args) throws Exception {
-        Path repoRoot = (args.length > 0 ? Paths.get(args[0]) : Paths.get("")).toAbsolutePath().normalize();
+        Path repoRoot = locateRepoRoot();
+
+        if (args.length > 0 && args[0].equals("report")) {
+            reportMode(repoRoot, args);
+        } else {
+            analyzeMode(repoRoot, args);
+        }
+    }
+
+    private static Path locateRepoRoot() {
+        // The repo root is the directory holding packages.yaml. Walk up from
+        // the current working directory until found.
+        Path cwd = Paths.get("").toAbsolutePath().normalize();
+        for (Path p = cwd; p != null; p = p.getParent()) {
+            if (Files.isRegularFile(p.resolve("packages.yaml"))) return p;
+        }
+        return cwd;
+    }
+
+    private static void analyzeMode(Path repoRoot, String[] args) throws Exception {
+        Path overrideRoot = null;
+        for (String a : args) {
+            if (a.startsWith("--")) continue;
+            overrideRoot = Paths.get(a).toAbsolutePath().normalize();
+            break;
+        }
+        if (overrideRoot != null) repoRoot = overrideRoot;
+
         Path config = repoRoot.resolve("packages.yaml");
         Path checklist = repoRoot.resolve("CHECKLIST.md");
         Path statusJson = repoRoot.resolve("status.json");
@@ -21,30 +48,82 @@ public final class Main {
         boolean offline = Boolean.parseBoolean(System.getProperty("offline", "false"));
 
         System.out.println("Analyzing packages from " + config);
-        List<PackageEntry> entries = loadConfig(config, repoRoot);
-        System.out.println("Found " + entries.size() + " package(s).");
-
-        MavenCentralProbe probe = new MavenCentralProbe();
-        List<Report> reports = new ArrayList<>();
-        for (PackageEntry e : entries) {
-            System.out.println("  - " + e.name() + " (" + e.path() + ")");
-            Report r = new Report(e);
-            r.pathExists = Files.isDirectory(e.path());
-            if (r.pathExists) {
-                JavaScanner.scan(e.path(), r);
-                XmlScanner.scan(e.path(), r);
-                BuildScanner.scan(e.path(), r);
-            } else {
-                r.error = "local path missing";
-            }
-            if (!offline) probe.probe(r);
-            reports.add(r);
-        }
+        List<Report> reports = scanAll(config, repoRoot, offline);
 
         ChecklistWriter.write(checklist, reports);
         StatusJsonWriter.write(statusJson, reports);
         System.out.println("Wrote " + checklist);
         System.out.println("Wrote " + statusJson);
+    }
+
+    private static void reportMode(Path repoRoot, String[] args) throws Exception {
+        if (args.length < 2) {
+            System.err.println("Usage: report <package-name> [--out <file>]");
+            System.exit(2);
+            return;
+        }
+        String pkgName = args[1];
+        Path out = null;
+        for (int i = 2; i < args.length; i++) {
+            if (args[i].equals("--out") && i + 1 < args.length) {
+                out = Paths.get(args[++i]);
+            }
+        }
+
+        Path config = repoRoot.resolve("packages.yaml");
+        boolean offline = Boolean.parseBoolean(System.getProperty("offline", "false"));
+
+        List<PackageEntry> entries = loadConfig(config, repoRoot);
+        PackageEntry entry = entries.stream()
+                .filter(e -> e.name().equalsIgnoreCase(pkgName))
+                .findFirst()
+                .orElse(null);
+        if (entry == null) {
+            System.err.println("Unknown package: " + pkgName);
+            System.err.println("Tracked packages:");
+            for (PackageEntry e : entries) System.err.println("  " + e.name());
+            System.exit(2);
+            return;
+        }
+
+        Report r = scanOne(entry, offline);
+        String text = PackageReportWriter.render(r);
+        if (out != null) {
+            Files.writeString(out, text);
+            System.err.println("Wrote " + out.toAbsolutePath());
+        } else {
+            System.out.print(text);
+        }
+    }
+
+    private static List<Report> scanAll(Path config, Path repoRoot, boolean offline) throws Exception {
+        List<PackageEntry> entries = loadConfig(config, repoRoot);
+        System.out.println("Found " + entries.size() + " package(s).");
+        MavenCentralProbe probe = new MavenCentralProbe();
+        List<Report> reports = new ArrayList<>();
+        for (PackageEntry e : entries) {
+            System.out.println("  - " + e.name() + " (" + e.path() + ")");
+            reports.add(scan(e, probe, offline));
+        }
+        return reports;
+    }
+
+    private static Report scanOne(PackageEntry entry, boolean offline) {
+        return scan(entry, new MavenCentralProbe(), offline);
+    }
+
+    private static Report scan(PackageEntry entry, MavenCentralProbe probe, boolean offline) {
+        Report r = new Report(entry);
+        r.pathExists = Files.isDirectory(entry.path());
+        if (r.pathExists) {
+            JavaScanner.scan(entry.path(), r);
+            XmlScanner.scan(entry.path(), r);
+            BuildScanner.scan(entry.path(), r);
+        } else {
+            r.error = "local path missing";
+        }
+        if (!offline) probe.probe(r);
+        return r;
     }
 
     @SuppressWarnings("unchecked")
