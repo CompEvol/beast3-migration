@@ -21,9 +21,13 @@ Counts:
 Build/release columns are simple presence checks. Maven Central
 shows the latest released version (or `—` if not published).
 
+For a per-package punch list ("what's left for `flc`?"), browse the
+[`reports/`](reports/README.md) directory — each report includes the
+exact local checkout commit it was scanned against.
+
 <!-- BEGIN AUTO -->
 
-_Last regenerated: 2026-05-07T19:44:24.437734+12:00_
+_Last regenerated: 2026-05-07T19:54:22.371551+12:00_
 
 ## Release & build status
 

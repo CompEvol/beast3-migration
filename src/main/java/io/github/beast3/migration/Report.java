@@ -69,6 +69,9 @@ public final class Report {
     public boolean pathExists;
     public String error = "";
 
+    public GitInfo git = GitInfo.MISSING;
+    public java.time.OffsetDateTime scannedAt = java.time.OffsetDateTime.now();
+
     public Report(PackageEntry entry) {
         this.entry = entry;
         for (Kind k : Kind.values()) javaCounts.put(k, new KindCounts());

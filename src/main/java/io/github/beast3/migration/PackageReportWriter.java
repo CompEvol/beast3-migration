@@ -22,6 +22,8 @@ public final class PackageReportWriter {
         StringBuilder sb = new StringBuilder();
         sb.append("# ").append(r.entry.name()).append(" — what's left\n\n");
 
+        renderHeader(sb, r);
+
         if (!r.pathExists) {
             sb.append("> ⚠️ Local checkout not found at `").append(r.entry.path()).append("`. Clone it first.\n\n");
             return sb.toString();
@@ -38,6 +40,62 @@ public final class PackageReportWriter {
 
         if (sb.charAt(sb.length() - 1) != '\n') sb.append('\n');
         return sb.toString();
+    }
+
+    private static void renderHeader(StringBuilder sb, Report r) {
+        // The "version" of the report is whatever combination of fields
+        // unambiguously identifies what was scanned: git commit, pom version,
+        // and (when available) the published Maven Central version.
+        sb.append("> **Scanned at:** ")
+                .append(r.scannedAt.toLocalDateTime().toString()).append("  \n");
+        sb.append("> **Local checkout:** `").append(r.entry.path()).append('`');
+        if (!r.git.shortSha().isBlank()) {
+            sb.append(" — commit `").append(r.git.shortSha()).append('`');
+            if (!r.git.branch().isBlank() && !r.git.branch().equals("HEAD")) {
+                sb.append(" on `").append(r.git.branch()).append('`');
+            }
+            if (r.git.dirty()) sb.append(" *(dirty working tree)*");
+            if (!r.entry.github().isBlank() && !r.git.fullSha().isBlank()) {
+                sb.append(" — [view on GitHub](https://github.com/")
+                        .append(r.entry.github()).append("/commit/")
+                        .append(r.git.fullSha()).append(')');
+            }
+        }
+        sb.append("  \n");
+        if (!r.pomVersion.isBlank()) {
+            sb.append("> **Pom version:** `").append(r.pomVersion).append("`  \n");
+        }
+        if (r.entry.hasMavenCoords()) {
+            sb.append("> **Maven Central:** ");
+            if (!r.mavenCentralLatest.isBlank()) {
+                sb.append('`').append(r.entry.mavenGroupId()).append(':')
+                        .append(r.entry.mavenArtifactId()).append(':')
+                        .append(r.mavenCentralLatest).append("`  \n");
+            } else {
+                sb.append("not published as `").append(r.entry.mavenGroupId()).append(':')
+                        .append(r.entry.mavenArtifactId()).append('`');
+                if (!r.mavenCentralError.isBlank()) {
+                    sb.append(" (").append(r.mavenCentralError).append(')');
+                }
+                sb.append("  \n");
+            }
+        }
+        sb.append("> **Stage hint:** ").append(prettyStage(r.entry.stage())).append('\n');
+        if (!r.entry.notes().isBlank()) {
+            sb.append(">\n> ").append(r.entry.notes()).append('\n');
+        }
+        sb.append('\n');
+    }
+
+    private static String prettyStage(String s) {
+        if (s == null || s.isBlank()) return "—";
+        return switch (s) {
+            case "maven_central" -> "Maven Central";
+            case "compile_tested" -> "compile-tested";
+            case "in_progress" -> "in progress";
+            case "not_started" -> "not started";
+            default -> s;
+        };
     }
 
     private static void renderSummary(StringBuilder sb, Report r) {

@@ -1,0 +1,105 @@
+# BEASTLabs — what's left
+
+> **Scanned at:** 2026-05-07T19:54:20.995413  
+> **Local checkout:** `/Users/adru001/Git/BEASTLabs` — commit `840fd01` on `scalable-contract` *(dirty working tree)* — [view on GitHub](https://github.com/BEAST2-Dev/BEASTlabs/commit/840fd015587efb223a2b382f954b0e10c58fc173)  
+> **Pom version:** `2.1.0-SNAPSHOT`  
+> **Maven Central:** `io.github.beast2-dev:beast-labs:2.1.0-beta2`  
+> **Stage hint:** Maven Central
+
+## Summary
+
+- **Java classes:** 19 on spec, 5 mixed, 12 legacy of 140 total
+- **XMLs:** 0 on spec / 0 on `version="2.8"` / 26 total
+- **Maven Central:** 2.1.0-beta2
+
+## Java classes pending migration
+
+### Distributions — 2 legacy, 3 mixed (of 20 total)
+
+**Mixed** (already imports spec; finish removing legacy):
+
+- `beastlabs.math.distributions.GammaOneP` — uses `ParametricDistribution`
+- `beastlabs.math.distributions.SingleParamGamma` — uses `ParametricDistribution`
+- `beastlabs.math.distributions.WeibullDistribution` — uses `ParametricDistribution`
+
+**Legacy** (no spec imports yet):
+
+- `beastlabs.math.distributions.ExcludablePrior` — uses `Prior`, `BooleanParameter`, `RealParameter`, `IntegerParameter`
+- `beastlabs.math.distributions.ExcludablePriorIndex` — uses `Prior`, `BooleanParameter`, `RealParameter`, `IntegerParameter`
+
+### Operators — 1 legacy, 0 mixed (of 16 total)
+
+**Legacy** (no spec imports yet):
+
+- `beastlabs.evolution.operators.UniformOperatorSelective` — uses `RealParameter`, `IntegerParameter`, `Parameter`
+
+### Loggers — 1 legacy, 0 mixed (of 11 total)
+
+**Legacy** (no spec imports yet):
+
+- `beastlabs.core.util.ParameterConstrainer` — uses `RealParameter`
+
+### CalcNodes — 1 legacy, 0 mixed (of 10 total)
+
+**Legacy** (no spec imports yet):
+
+- `beastlabs.evolution.sitemodel.SiteModelGI` — uses `RealParameter`
+
+### Parameters — 2 legacy, 0 mixed (of 2 total)
+
+**Legacy** (no spec imports yet):
+
+- `beastlabs.core.parameter.CompoundRealParameter` — uses `RealParameter`
+- `beastlabs.core.parameter.NormalisedRealParameter` — uses `RealParameter`
+
+### StateNodes — 2 legacy, 0 mixed (of 7 total)
+
+**Legacy** (no spec imports yet):
+
+- `beastlabs.evolution.tree.ConstrainedClusterTree` — uses `ParametricDistribution`, `RealParameter`
+- `beastlabs.evolution.tree.SimpleRandomTree` — uses `ParametricDistribution`
+
+### Other — 3 legacy, 2 mixed (of 74 total)
+
+**Mixed** (already imports spec; finish removing legacy):
+
+- `beastlabs.app.beauti.DistributionViewer` — uses `Prior`
+- `beastlabs.tools.TraceStateNodeSource` — uses `RealParameter`, `IntegerParameter`, `BooleanParameter`, `Parameter`
+
+**Legacy** (no spec imports yet):
+
+- `beastlabs.evolution.operators.AttachAndUniformOperator` — uses `RealParameter`, `IntegerParameter`, `Parameter`
+- `beastlabs.evolution.speciation.RandomLocalYuleModel` — uses `BooleanParameter`, `RealParameter`
+- `beastlabs.math.distributions.MultiMRCAPriors` — uses `ParametricDistribution`
+
+## XMLs pending migration
+
+**Needs `version="2.8"`** (26):
+
+- `examples/testSA.xml`
+- `examples/testCladeSubstitutionModel.xml`
+- `examples/testAncestralStateLogger.xml`
+- `examples/testBactrianOperatorSchedule.xml`
+- `examples/testMCMCMC.xml`
+- `examples/testMultiParitionTreeLikelihood.xml`
+- `examples/testMultiChainMCMC.xml`
+- `examples/testAVMN.xml`
+- `examples/testWeightedDirichlet/testNoPrior.xml`
+- `examples/testWeightedDirichlet/testWeightedDirichlet.xml`
+- `examples/simulator/testSteppingStone.xml`
+- `examples/testTraitedTreeLikelihood.xml`
+- `examples/independentMCMC.xml`
+- `examples/testPrevalence.xml`
+- `examples/testWilsonBaldingOperator.xml`
+- `examples/benchmarking/testMultiParitionTreeLikelihoodRuntime.xml`
+- `examples/benchmarking/testTreeLikelihoodRuntime.xml`
+- `examples/testScript.xml`
+- `examples/posthocanalysis/testPostHocAnalysis.xml`
+- `examples/testBactrianOperators.xml`
+- `src/main/resources/beast.labs/fxtemplates/Weibull.xml`
+- `src/main/resources/beast.labs/fxtemplates/extras.xml`
+- `src/main/resources/beast.labs/fxtemplates/SelfTuningMCMC.xml`
+- `src/main/resources/beast.labs/fxtemplates/Weibull.xml`
+- `src/main/resources/beast.labs/fxtemplates/extras.xml`
+- `src/main/resources/beast.labs/fxtemplates/SelfTuningMCMC.xml`
+
