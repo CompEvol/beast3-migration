@@ -8,6 +8,7 @@ The jar files of the following packages are available in Maven Cental noew. But 
 - BEASTLabs
 - beast-classic
 - CoupledMCMC (https://github.com/CompEvol)
+- flc 
 - Mascot (https://github.com/CompEvol)
 - morph-models
 - sampled-ancestors
@@ -15,6 +16,9 @@ The jar files of the following packages are available in Maven Cental noew. But 
 CompEvol releases on Maven Central: https://central.sonatype.com/namespace/io.github.compevol
 
 Beast2-Dev releases on Maven Central: https://central.sonatype.com/namespace/io.github.beast2-dev
+
+FLC release on Maven Central:  https://central.sonatype.com/search?q=io.github.4ment
+
 
 ## Master/Main branch complied
 
