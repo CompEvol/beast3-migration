@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-07T21:34:25.844520+12:00",
+  "generatedAt": "2026-05-07T21:48:27.086306+12:00",
   "packages": [
     {
       "name": "beast3",
@@ -11,11 +11,11 @@
       "error": "",
       "java": {
         "distribution": {
-          "total": 68,
-          "spec": 54,
+          "total": 70,
+          "spec": 56,
           "mixed": 0,
-          "legacy": 1,
-          "neutral": 13
+          "legacy": 0,
+          "neutral": 14
         },
         "operator": {
           "total": 47,
@@ -53,11 +53,11 @@
           "neutral": 17
         },
         "other": {
-          "total": 610,
+          "total": 636,
           "spec": 18,
           "mixed": 0,
           "legacy": 0,
-          "neutral": 592
+          "neutral": 618
         }
       },
       "xml": {
@@ -72,8 +72,8 @@
         "clean": 6
       },
       "inputRule": {
-        "classesWithViolations": 5,
-        "totalViolations": 6
+        "classesWithViolations": 0,
+        "totalViolations": 0
       },
       "build": {
         "hasPom": true,
@@ -101,11 +101,11 @@
       "error": "",
       "java": {
         "distribution": {
-          "total": 21,
+          "total": 22,
           "spec": 1,
           "mixed": 0,
           "legacy": 5,
-          "neutral": 15
+          "neutral": 16
         },
         "operator": {
           "total": 21,
@@ -143,11 +143,11 @@
           "neutral": 8
         },
         "other": {
-          "total": 116,
+          "total": 123,
           "spec": 0,
           "mixed": 0,
           "legacy": 1,
-          "neutral": 115
+          "neutral": 122
         }
       },
       "xml": {
@@ -651,8 +651,8 @@
           "total": 13,
           "spec": 0,
           "mixed": 0,
-          "legacy": 0,
-          "neutral": 13
+          "legacy": 1,
+          "neutral": 12
         },
         "logger": {
           "total": 2,
@@ -683,11 +683,11 @@
           "neutral": 2
         },
         "other": {
-          "total": 34,
+          "total": 35,
           "spec": 0,
           "mixed": 0,
           "legacy": 3,
-          "neutral": 31
+          "neutral": 32
         }
       },
       "xml": {

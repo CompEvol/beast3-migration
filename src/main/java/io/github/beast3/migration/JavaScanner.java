@@ -140,8 +140,6 @@ public final class JavaScanner {
             "RealParameterList", "IntegerParameterList", "BooleanParameterList",
             "Function");
 
-    private static final Pattern BLOCK_COMMENT = Pattern.compile("/\\*[\\s\\S]*?\\*/");
-    private static final Pattern LINE_COMMENT = Pattern.compile("(?m)//[^\\n]*");
     private static final Pattern PACKAGE_DECL = Pattern.compile("(?m)^\\s*package\\s+([\\w.]+)\\s*;");
     private static final Pattern IMPORT = Pattern.compile("(?m)^\\s*import\\s+(?:static\\s+)?([\\w.$*]+)\\s*;");
     /**
@@ -194,8 +192,9 @@ public final class JavaScanner {
             report.error = appendError(report.error, "read " + file + ": " + e.getMessage());
             return;
         }
-        // strip comments so they don't pollute regex matches
-        String stripped = LINE_COMMENT.matcher(BLOCK_COMMENT.matcher(src).replaceAll("")).replaceAll("");
+        // strip comments so they don't pollute regex matches — string-aware
+        // because regex `//[^\n]*` would chomp `(http://...)` inside a string
+        String stripped = stripComments(src);
 
         Map<String, String> simpleToFqn = collectImports(stripped);
         String pkgName = extractPackage(stripped);
@@ -335,42 +334,86 @@ public final class JavaScanner {
     }
 
     /**
-     * Walks backward from the class declaration through any preceding
-     * annotations (correctly handling nested parens inside annotation args
-     * — so {@code @Description("...(cumulative)...")} doesn't break the
-     * scan) and returns true if any of them is {@code @Deprecated}.
+     * Returns true if a {@code @Deprecated} annotation appears immediately
+     * before the class declaration at {@code classDeclStart}. Scans forward
+     * from the previous statement boundary ({@code ;} / {@code }} or
+     * start-of-file), reading annotations and skipping their argument lists
+     * with proper string-literal handling — so
+     * {@code @Description("foo(bar)baz")} doesn't fool the paren balancer.
      */
     private static boolean hasDeprecatedAnnotation(String src, int classDeclStart) {
-        int i = classDeclStart - 1;
-        int safety = 8000;
-        while (i >= 0 && --safety > 0) {
-            while (i >= 0 && Character.isWhitespace(src.charAt(i))) i--;
-            if (i < 0) return false;
-            // Scan back over optional annotation arg parens
-            if (src.charAt(i) == ')') {
-                int depth = 1;
-                i--;
-                while (i >= 0 && depth > 0) {
-                    char c = src.charAt(i);
-                    if (c == ')') depth++;
-                    else if (c == '(') depth--;
-                    i--;
-                    if (--safety <= 0) return false;
-                }
-                if (i < 0) return false;
-                while (i >= 0 && Character.isWhitespace(src.charAt(i))) i--;
-                if (i < 0) return false;
-            }
-            // Walk back over the annotation name to '@'
-            int nameEnd = i + 1;
-            while (i >= 0 && (Character.isJavaIdentifierPart(src.charAt(i))
-                    || src.charAt(i) == '.')) i--;
-            if (i < 0 || src.charAt(i) != '@') return false;
-            String name = src.substring(i + 1, nameEnd);
+        int i = previousStatementBoundary(src, classDeclStart);
+        while (i < classDeclStart) {
+            while (i < classDeclStart && Character.isWhitespace(src.charAt(i))) i++;
+            if (i >= classDeclStart) return false;
+            if (src.charAt(i) != '@') return false;   // hit a modifier — stop
+            i++;
+            int nameStart = i;
+            while (i < classDeclStart && (Character.isJavaIdentifierPart(src.charAt(i))
+                    || src.charAt(i) == '.')) i++;
+            String name = src.substring(nameStart, i);
             if (name.equals("Deprecated") || name.endsWith(".Deprecated")) return true;
-            i--;
+            // Skip optional annotation args (...).
+            while (i < classDeclStart && Character.isWhitespace(src.charAt(i))) i++;
+            if (i < classDeclStart && src.charAt(i) == '(') {
+                int after = matchClosingParen(src, i);
+                if (after < 0) return false;
+                i = after;
+            }
         }
         return false;
+    }
+
+    /**
+     * Position of the last {@code ;} or {@code }} before {@code pos} that's
+     * not inside a string or char literal, or 0. Scans forward to handle
+     * strings correctly — a backward scan would mistake a semicolon inside
+     * {@code @Description("p(x;y)")} for a real statement boundary.
+     */
+    private static int previousStatementBoundary(String src, int pos) {
+        int boundary = 0;
+        int i = 0;
+        int n = Math.min(pos, src.length());
+        while (i < n) {
+            char c = src.charAt(i);
+            if (c == '"' || c == '\'') {
+                char q = c;
+                i++;
+                while (i < n && src.charAt(i) != q) {
+                    if (src.charAt(i) == '\\' && i + 1 < n) i++;
+                    i++;
+                }
+                i++;
+                continue;
+            }
+            if (c == ';' || c == '}') boundary = i + 1;
+            i++;
+        }
+        return boundary;
+    }
+
+    /** Returns position after matching {@code )} of {@code (} at {@code openPos}, or -1 if unbalanced. */
+    private static int matchClosingParen(String src, int openPos) {
+        int depth = 1;
+        int i = openPos + 1;
+        int n = src.length();
+        while (i < n && depth > 0) {
+            char c = src.charAt(i);
+            if (c == '"' || c == '\'') {
+                char quote = c;
+                i++;
+                while (i < n && src.charAt(i) != quote) {
+                    if (src.charAt(i) == '\\' && i + 1 < n) i++;
+                    i++;
+                }
+                if (i < n) i++;
+                continue;
+            }
+            if (c == '(') depth++;
+            else if (c == ')') depth--;
+            i++;
+        }
+        return depth == 0 ? i : -1;
     }
 
     /**
@@ -706,6 +749,57 @@ public final class JavaScanner {
     // outside any scanned package (rare; would need beast3 not in
     // packages.yaml), we'd miss it. The CHECKLIST scan always includes
     // beast3, so this is fine in practice.
+
+    /**
+     * Removes Java {@code //} and {@code /* … *}{@code /} comments from a
+     * source string while leaving string and char literals intact. The naive
+     * regex approach mistakes {@code //} inside {@code "(http://...)"} for a
+     * line comment.
+     */
+    static String stripComments(String src) {
+        StringBuilder out = new StringBuilder(src.length());
+        int i = 0;
+        int n = src.length();
+        while (i < n) {
+            char c = src.charAt(i);
+            if (c == '"' || c == '\'') {
+                char q = c;
+                out.append(c);
+                i++;
+                while (i < n && src.charAt(i) != q) {
+                    if (src.charAt(i) == '\\' && i + 1 < n) {
+                        out.append(src.charAt(i));
+                        out.append(src.charAt(i + 1));
+                        i += 2;
+                        continue;
+                    }
+                    out.append(src.charAt(i));
+                    i++;
+                }
+                if (i < n) {
+                    out.append(src.charAt(i));
+                    i++;
+                }
+                continue;
+            }
+            if (c == '/' && i + 1 < n) {
+                char next = src.charAt(i + 1);
+                if (next == '/') {
+                    while (i < n && src.charAt(i) != '\n') i++;
+                    continue;
+                }
+                if (next == '*') {
+                    i += 2;
+                    while (i + 1 < n && !(src.charAt(i) == '*' && src.charAt(i + 1) == '/')) i++;
+                    if (i + 1 < n) i += 2;
+                    continue;
+                }
+            }
+            out.append(c);
+            i++;
+        }
+        return out.toString();
+    }
 
     private static String appendError(String existing, String add) {
         if (existing == null || existing.isBlank()) return add;

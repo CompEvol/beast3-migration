@@ -7,7 +7,7 @@ for the high-level cross-package status table.
 
 | Package | Stage | Maven Central | Local commit | Pom version |
 |---|---|---|---|---|
-| [beast3](beast3.md) | Maven Central | `2.8.0-beta5` | `4e1ee72` | `2.8.0-SNAPSHOT` |
+| [beast3](beast3.md) | Maven Central | `2.8.0-beta5` | `d0c4bb7` | `2.8.0-SNAPSHOT` |
 | [BEASTLabs](BEASTLabs.md) | Maven Central | `2.1.0-beta2` | `840fd01` | `2.1.0-SNAPSHOT` |
 | [beast-classic](beast-classic.md) | Maven Central | `1.7.0-beta1` | `8baef54` | `1.7.0-SNAPSHOT` |
 | [CoupledMCMC](CoupledMCMC.md) | Maven Central | `1.3.0-beta1` | `39e9c05` | `1.3.0-beta1` |

@@ -1,7 +1,7 @@
 # beast3 — what's left
 
-> **Scanned at:** 2026-05-07T21:34:23.907103  
-> **Commit:** `4e1ee72` on `target-acceptance-1d-operators` — [view on GitHub](https://github.com/CompEvol/beast3/commit/4e1ee72a7cead616230d9dce5cb43e71400615e1)  
+> **Scanned at:** 2026-05-07T21:48:25.184515  
+> **Commit:** `d0c4bb7` on `fix/missing-deprecated-annotations` — [view on GitHub](https://github.com/CompEvol/beast3/commit/d0c4bb7353d91d6e8e1d3884600696036c8a95d7)  
 > **Pom version:** `2.8.0-SNAPSHOT`  
 > **Maven Central:** `io.github.compevol:beast3:2.8.0-beta5`  
 > **Stage hint:** Maven Central
@@ -10,46 +10,15 @@
 
 ## Summary
 
-- **Java classes:** 91 on spec, 0 mixed, 1 legacy of 814 total
+- **Java classes:** 93 on spec, 0 mixed, 0 legacy of 842 total
 - **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 78 total (+81 under legacy/)
 - **BEAUti fxtemplates:** 6 clean / 10 use spec / 10 total
-- **Input rule:** 5 classes hold 6 Input(s) declared too concretely
+- **Input rule:** all Inputs use the right carrier ✅
 - **Maven Central:** 2.8.0-beta5
 
-## Java classes pending migration
+## Java migration
 
-### Distributions — 1 legacy, 0 mixed (of 68 total)
-
-**Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
-
-- `beast.base.inference.distribution.Dirichlet` — extends `ParametricDistribution`
-
-## Inputs declared too concretely
-
-> Concrete spec params (`RealScalarParam`, `RealVectorParam`, …) belong only on Operators, which need to write the parameter. Distributions, CalcNodes, Loggers and other read-only holders should declare the interface (`RealScalar`, `RealVector`, …) so adapters and transforms can be substituted. Legacy `RealParameter` / `Function` Inputs are violations everywhere.
-
-### Distributions (1)
-
-- `beast.base.inference.distribution.Dirichlet`
-    - legacy: `Input<Function>`
-
-### Operators (2)
-
-- `beast.base.evolution.operator.ScaleOperator`
-    - legacy: `Input<RealParameter>`
-    - legacy: `Input<BooleanParameter>`
-- `beast.base.inference.operator.kernel.BactrianIntervalOperator`
-    - legacy: `Input<RealParameter>`
-
-### CalcNodes (1)
-
-- `beast.base.evolution.branchratemodel.BranchRateModel.Base`
-    - legacy: `Input<Function>`
-
-### Other (1)
-
-- `beastfx.app.beauti.PriorInputEditor`
-    - legacy: `Input<Function>`
+No Java classes flagged as legacy or mixed — all relevant types are on spec or have no parameter involvement. ✅
 
 ## Example XMLs pending migration
 

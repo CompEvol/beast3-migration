@@ -1,6 +1,6 @@
 # beast-classic — what's left
 
-> **Scanned at:** 2026-05-07T21:34:24.815809  
+> **Scanned at:** 2026-05-07T21:48:26.089508  
 > **Commit:** `8baef54` on `master` — [view on GitHub](https://github.com/BEAST2-Dev/beast-classic/commit/8baef5485aa4b218655729d03c7f8d7ef3ab9668)  
 > **Pom version:** `1.7.0-SNAPSHOT`  
 > **Maven Central:** `io.github.beast2-dev:beast-classic:1.7.0-beta1`  

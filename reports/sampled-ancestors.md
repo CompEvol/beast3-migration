@@ -1,6 +1,6 @@
 # sampled-ancestors — what's left
 
-> **Scanned at:** 2026-05-07T21:34:25.516819  
+> **Scanned at:** 2026-05-07T21:48:26.763589  
 > **Commit:** `09bc95c` on `master` — [view on GitHub](https://github.com/CompEvol/sampled-ancestors/commit/09bc95cd1771ce4d85452314331a612549948e69)  
 > **Pom version:** `2.3.0-beta1`  
 > **Maven Central:** `io.github.compevol:sampled-ancestors:2.3.0-beta1`  
@@ -8,7 +8,7 @@
 
 ## Summary
 
-- **Java classes:** 0 on spec, 0 mixed, 5 legacy of 62 total
+- **Java classes:** 0 on spec, 0 mixed, 6 legacy of 63 total
 - **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 3 total
 - **BEAUti fxtemplates:** 1 clean / 1 use spec / 1 total
 - **Input rule:** all Inputs use the right carrier ✅
@@ -23,7 +23,13 @@
 - `sa.math.distributions.DegenerateBeta` — extends `ParametricDistribution`
 - `sa.math.distributions.DegenerateUniform` — extends `ParametricDistribution`
 
-### Other — 3 legacy, 0 mixed (of 34 total)
+### Operators — 1 legacy, 0 mixed (of 13 total)
+
+**Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
+
+- `sa.evolution.operators.SAScaleOperator` — extends `ScaleOperator`
+
+### Other — 3 legacy, 0 mixed (of 35 total)
 
 **Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
 
