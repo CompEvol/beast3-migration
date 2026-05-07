@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-07T19:34:39.930920+12:00",
+  "generatedAt": "2026-05-07T19:42:36.457378+12:00",
   "packages": [
     {
       "name": "beast3",
@@ -19,25 +19,25 @@
           "neutral": 15
         },
         "operator": {
-          "total": 43,
-          "spec": 11,
+          "total": 45,
+          "spec": 12,
           "mixed": 1,
           "legacy": 21,
-          "neutral": 10
+          "neutral": 11
         },
         "logger": {
-          "total": 17,
+          "total": 16,
           "spec": 8,
           "mixed": 0,
           "legacy": 4,
-          "neutral": 5
+          "neutral": 4
         },
         "calcnode": {
-          "total": 10,
-          "spec": 6,
+          "total": 17,
+          "spec": 11,
           "mixed": 0,
           "legacy": 1,
-          "neutral": 3
+          "neutral": 5
         },
         "parameter": {
           "total": 5,
@@ -47,18 +47,18 @@
           "neutral": 0
         },
         "statenode": {
-          "total": 6,
-          "spec": 3,
-          "mixed": 0,
-          "legacy": 0,
-          "neutral": 3
+          "total": 16,
+          "spec": 6,
+          "mixed": 1,
+          "legacy": 2,
+          "neutral": 7
         },
         "other": {
-          "total": 464,
-          "spec": 83,
-          "mixed": 5,
-          "legacy": 35,
-          "neutral": 341
+          "total": 446,
+          "spec": 74,
+          "mixed": 4,
+          "legacy": 33,
+          "neutral": 335
         }
       },
       "xml": {
@@ -101,11 +101,11 @@
           "neutral": 9
         },
         "operator": {
-          "total": 15,
+          "total": 16,
           "spec": 1,
           "mixed": 0,
           "legacy": 1,
-          "neutral": 13
+          "neutral": 14
         },
         "logger": {
           "total": 11,
@@ -115,11 +115,11 @@
           "neutral": 8
         },
         "calcnode": {
-          "total": 0,
-          "spec": 0,
+          "total": 10,
+          "spec": 5,
           "mixed": 0,
-          "legacy": 0,
-          "neutral": 0
+          "legacy": 1,
+          "neutral": 4
         },
         "parameter": {
           "total": 2,
@@ -129,18 +129,18 @@
           "neutral": 0
         },
         "statenode": {
-          "total": 1,
-          "spec": 0,
+          "total": 7,
+          "spec": 1,
           "mixed": 0,
-          "legacy": 0,
-          "neutral": 1
+          "legacy": 2,
+          "neutral": 4
         },
         "other": {
-          "total": 91,
-          "spec": 10,
+          "total": 74,
+          "spec": 4,
           "mixed": 2,
-          "legacy": 6,
-          "neutral": 73
+          "legacy": 3,
+          "neutral": 65
         }
       },
       "xml": {
@@ -183,8 +183,8 @@
           "neutral": 0
         },
         "operator": {
-          "total": 10,
-          "spec": 10,
+          "total": 11,
+          "spec": 11,
           "mixed": 0,
           "legacy": 0,
           "neutral": 0
@@ -197,11 +197,11 @@
           "neutral": 3
         },
         "calcnode": {
-          "total": 4,
-          "spec": 2,
+          "total": 13,
+          "spec": 6,
           "mixed": 0,
           "legacy": 0,
-          "neutral": 2
+          "neutral": 7
         },
         "parameter": {
           "total": 1,
@@ -211,18 +211,18 @@
           "neutral": 0
         },
         "statenode": {
-          "total": 0,
+          "total": 2,
           "spec": 0,
           "mixed": 0,
           "legacy": 0,
-          "neutral": 0
+          "neutral": 2
         },
         "other": {
-          "total": 40,
-          "spec": 14,
+          "total": 28,
+          "spec": 9,
           "mixed": 1,
           "legacy": 0,
-          "neutral": 25
+          "neutral": 18
         }
       },
       "xml": {
@@ -361,11 +361,11 @@
           "neutral": 0
         },
         "calcnode": {
-          "total": 0,
-          "spec": 0,
+          "total": 5,
+          "spec": 3,
           "mixed": 0,
           "legacy": 0,
-          "neutral": 0
+          "neutral": 2
         },
         "parameter": {
           "total": 0,
@@ -382,11 +382,11 @@
           "neutral": 0
         },
         "other": {
-          "total": 11,
-          "spec": 6,
+          "total": 6,
+          "spec": 3,
           "mixed": 0,
           "legacy": 0,
-          "neutral": 5
+          "neutral": 3
         }
       },
       "xml": {
@@ -457,18 +457,18 @@
           "neutral": 0
         },
         "statenode": {
-          "total": 0,
+          "total": 1,
           "spec": 0,
           "mixed": 0,
           "legacy": 0,
-          "neutral": 0
+          "neutral": 1
         },
         "other": {
-          "total": 67,
+          "total": 66,
           "spec": 10,
           "mixed": 0,
           "legacy": 2,
-          "neutral": 55
+          "neutral": 54
         }
       },
       "xml": {
@@ -525,8 +525,8 @@
           "neutral": 0
         },
         "calcnode": {
-          "total": 0,
-          "spec": 0,
+          "total": 2,
+          "spec": 2,
           "mixed": 0,
           "legacy": 0,
           "neutral": 0
@@ -539,18 +539,18 @@
           "neutral": 0
         },
         "statenode": {
-          "total": 0,
+          "total": 1,
           "spec": 0,
           "mixed": 0,
           "legacy": 0,
-          "neutral": 0
+          "neutral": 1
         },
         "other": {
-          "total": 7,
-          "spec": 2,
+          "total": 4,
+          "spec": 0,
           "mixed": 0,
           "legacy": 0,
-          "neutral": 5
+          "neutral": 4
         }
       },
       "xml": {
@@ -593,11 +593,11 @@
           "neutral": 1
         },
         "operator": {
-          "total": 11,
+          "total": 13,
           "spec": 9,
           "mixed": 0,
           "legacy": 0,
-          "neutral": 2
+          "neutral": 4
         },
         "logger": {
           "total": 2,
@@ -621,18 +621,18 @@
           "neutral": 0
         },
         "statenode": {
-          "total": 0,
+          "total": 2,
           "spec": 0,
           "mixed": 0,
           "legacy": 0,
-          "neutral": 0
+          "neutral": 2
         },
         "other": {
-          "total": 31,
+          "total": 27,
           "spec": 3,
           "mixed": 0,
           "legacy": 0,
-          "neutral": 28
+          "neutral": 24
         }
       },
       "xml": {

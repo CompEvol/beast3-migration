@@ -3,9 +3,9 @@ package io.github.beast3.migration;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -60,6 +60,60 @@ public final class JavaScanner {
             "beast.base.inference.distribution.ParametricDistribution",
             "beast.base.core.Function$Constant");
 
+    /**
+     * Package prefixes that classify the *kind* of a base class regardless of
+     * its simple name. This catches classes that {@code extends Base} where
+     * {@code Base} is e.g. {@code SubstitutionModel.Base} resolved through an
+     * import. Order matters: more specific kinds first.
+     */
+    private static final Map<String, Kind> PACKAGE_KINDS = orderedPackageKinds();
+
+    private static Map<String, Kind> orderedPackageKinds() {
+        Map<String, Kind> m = new java.util.LinkedHashMap<>();
+        // Distributions
+        m.put("beast.base.spec.inference.distribution.", Kind.DISTRIBUTION);
+        m.put("beast.base.inference.distribution.",      Kind.DISTRIBUTION);
+        m.put("beast.base.spec.evolution.speciation.",   Kind.DISTRIBUTION);
+        m.put("beast.base.evolution.speciation.",        Kind.DISTRIBUTION);
+        // Operators
+        m.put("beast.base.spec.inference.operator.",     Kind.OPERATOR);
+        m.put("beast.base.inference.operator.",          Kind.OPERATOR);
+        m.put("beast.base.spec.evolution.operator.",     Kind.OPERATOR);
+        m.put("beast.base.evolution.operator.",          Kind.OPERATOR);
+        // Parameters
+        m.put("beast.base.spec.inference.parameter.",    Kind.PARAMETER);
+        m.put("beast.base.inference.parameter.",         Kind.PARAMETER);
+        // Calculation-node-flavoured model components
+        m.put("beast.base.spec.evolution.branchratemodel.",  Kind.CALCNODE);
+        m.put("beast.base.evolution.branchratemodel.",       Kind.CALCNODE);
+        m.put("beast.base.spec.evolution.substitutionmodel.",Kind.CALCNODE);
+        m.put("beast.base.evolution.substitutionmodel.",     Kind.CALCNODE);
+        m.put("beast.base.spec.evolution.sitemodel.",        Kind.CALCNODE);
+        m.put("beast.base.evolution.sitemodel.",             Kind.CALCNODE);
+        m.put("beast.base.spec.evolution.likelihood.",       Kind.CALCNODE);
+        m.put("beast.base.evolution.likelihood.",            Kind.CALCNODE);
+        m.put("beast.base.spec.evolution.tree.coalescent.",  Kind.CALCNODE);
+        m.put("beast.base.evolution.tree.coalescent.",       Kind.CALCNODE);
+        return m;
+    }
+
+    private static final Set<String> CALCNODE_FQNS = Set.of(
+            "beast.base.inference.CalculationNode",
+            "beast.base.evolution.tree.coalescent.PopulationFunction",
+            "beast.base.evolution.substitutionmodel.SubstitutionModel",
+            "beast.base.evolution.sitemodel.SiteModel",
+            "beast.base.evolution.sitemodel.SiteModelInterface",
+            "beast.base.evolution.branchratemodel.BranchRateModel",
+            "beast.base.evolution.likelihood.GenericTreeLikelihood");
+
+    private static final Set<String> STATENODE_FQNS = Set.of(
+            "beast.base.inference.StateNode",
+            "beast.base.evolution.tree.Tree",
+            "beast.base.evolution.alignment.Alignment");
+
+    private static final Set<String> LOGGER_FQNS = Set.of(
+            "beast.base.core.Loggable");
+
     private static final Pattern BLOCK_COMMENT = Pattern.compile("/\\*[\\s\\S]*?\\*/");
     private static final Pattern LINE_COMMENT = Pattern.compile("(?m)//[^\\n]*");
     private static final Pattern PACKAGE = Pattern.compile("(?m)^\\s*package\\s+([\\w.]+)\\s*;");
@@ -112,35 +166,62 @@ public final class JavaScanner {
         // strip comments so they don't pollute regex matches
         String stripped = LINE_COMMENT.matcher(BLOCK_COMMENT.matcher(src).replaceAll("")).replaceAll("");
 
-        Set<String> imports = collectImports(stripped);
+        Map<String, String> simpleToFqn = collectImports(stripped);
+        Set<String> importFqns = new HashSet<>(simpleToFqn.values());
 
         Matcher cm = CLASS_DECL.matcher(stripped);
-        // Only the first top-level class drives classification; nested classes
-        // are skipped because the regex matches `^` at line start in
-        // multiline mode and nested classes are typically indented.
-        while (cm.find()) {
-            String className = cm.group(1);
+        if (cm.find()) {
             String extendsClause = cm.group(2);
             String implementsClause = cm.group(3);
 
-            // Skip non top-level: indentation indicates nesting in compiled
-            // sources. We additionally require start-of-line by virtue of ^.
-            // Heuristic: ignore if preceded directly by tab/4 spaces — already
-            // handled by the regex, but we also bail after the first match.
             Set<String> tokens = parseTypeTokens(extendsClause, implementsClause);
+            Set<String> resolved = resolveTokens(tokens, simpleToFqn);
 
-            Kind kind = classify(tokens);
-            Status status = migrationStatus(tokens, imports);
+            Kind kind = classify(tokens, resolved);
+            Status status = migrationStatus(tokens, importFqns, resolved);
             report.javaCounts.get(kind).add(status);
-            // Only count the primary (first) declaration per file.
-            return;
         }
     }
 
-    private static Set<String> collectImports(String src) {
-        Set<String> out = new HashSet<>();
+    /** Maps simple class name → FQN for every {@code import} in the file. */
+    private static Map<String, String> collectImports(String src) {
+        Map<String, String> out = new HashMap<>();
         Matcher m = IMPORT.matcher(src);
-        while (m.find()) out.add(m.group(1));
+        while (m.find()) {
+            String fqn = m.group(1);
+            if (fqn.endsWith(".*")) continue; // wildcard imports — can't resolve simple names
+            int dot = fqn.lastIndexOf('.');
+            String simple = dot >= 0 ? fqn.substring(dot + 1) : fqn;
+            // Inner classes: import a.b.C$D would expose D as well as C$D.
+            if (simple.contains("$")) {
+                int dollar = simple.indexOf('$');
+                out.put(simple.substring(dollar + 1), fqn);
+            }
+            out.put(simple, fqn);
+        }
+        return out;
+    }
+
+    /**
+     * Expands every extends/implements token to its FQN using the import map.
+     * For a token like {@code SubstitutionModel.Base}, resolves the head
+     * {@code SubstitutionModel} via imports and reattaches {@code .Base}.
+     */
+    private static Set<String> resolveTokens(Set<String> tokens, Map<String, String> imports) {
+        Set<String> out = new HashSet<>();
+        for (String t : tokens) {
+            int dot = t.indexOf('.');
+            if (dot < 0) {
+                out.add(imports.getOrDefault(t, t));
+                continue;
+            }
+            // Already qualified — try first segment via imports, else assume FQN.
+            String head = t.substring(0, dot);
+            String tail = t.substring(dot);
+            String headFqn = imports.get(head);
+            if (headFqn != null) out.add(headFqn + tail);
+            else out.add(t);
+        }
         return out;
     }
 
@@ -166,16 +247,36 @@ public final class JavaScanner {
         }
     }
 
-    private static Kind classify(Set<String> tokens) {
-        if (anyMatch(tokens, DISTRIBUTION_BASES)) return Kind.DISTRIBUTION;
-        if (anyMatch(tokens, OPERATOR_BASES)) return Kind.OPERATOR;
-        if (anyMatch(tokens, LOGGER_INTERFACES)) return Kind.LOGGER;
-        if (anyMatch(tokens, PARAM_BASES)) return Kind.PARAMETER;
-        if (anyMatch(tokens, CALCNODE_BASES)) return Kind.CALCNODE;
-        if (anyMatch(tokens, STATENODE_BASES)) return Kind.STATENODE;
-        // Operator/Distribution names that end in "Operator" / "Distribution"
-        // are caught above by name; everything else is "other".
+    private static Kind classify(Set<String> simpleTokens, Set<String> resolvedFqns) {
+        // 1) Try to classify by FQN (catches transitive bases like
+        // SubstitutionModel.Base, BranchRateModel.Base, etc.)
+        Kind k = classifyByFqn(resolvedFqns);
+        if (k != null) return k;
+        // 2) Fall back to simple-name matching against well-known bases.
+        if (anyMatch(simpleTokens, DISTRIBUTION_BASES)) return Kind.DISTRIBUTION;
+        if (anyMatch(simpleTokens, OPERATOR_BASES)) return Kind.OPERATOR;
+        if (anyMatch(simpleTokens, LOGGER_INTERFACES)) return Kind.LOGGER;
+        if (anyMatch(simpleTokens, PARAM_BASES)) return Kind.PARAMETER;
+        if (anyMatch(simpleTokens, CALCNODE_BASES)) return Kind.CALCNODE;
+        if (anyMatch(simpleTokens, STATENODE_BASES)) return Kind.STATENODE;
         return Kind.OTHER;
+    }
+
+    private static Kind classifyByFqn(Set<String> fqns) {
+        // Logger first (Loggable is an interface; package-prefix would miss it).
+        for (String fqn : fqns) if (LOGGER_FQNS.contains(fqn)) return Kind.LOGGER;
+        // Then well-known calc-node FQNs (these classes themselves rather than
+        // their packages — e.g. CalculationNode lives in beast.base.inference).
+        for (String fqn : fqns) if (CALCNODE_FQNS.contains(fqn)) return Kind.CALCNODE;
+        // StateNode FQNs.
+        for (String fqn : fqns) if (STATENODE_FQNS.contains(fqn)) return Kind.STATENODE;
+        // Then by package prefix in declared order (more specific first).
+        for (String fqn : fqns) {
+            for (Map.Entry<String, Kind> e : PACKAGE_KINDS.entrySet()) {
+                if (fqn.startsWith(e.getKey())) return e.getValue();
+            }
+        }
+        return null;
     }
 
     private static boolean anyMatch(Set<String> tokens, Set<String> bases) {
@@ -183,7 +284,7 @@ public final class JavaScanner {
         return false;
     }
 
-    private static Status migrationStatus(Set<String> typeTokens, Set<String> imports) {
+    private static Status migrationStatus(Set<String> typeTokens, Set<String> imports, Set<String> resolvedFqns) {
         boolean hasSpec = false;
         boolean hasLegacy = false;
 
@@ -193,9 +294,18 @@ public final class JavaScanner {
             if (imp.startsWith("beast.base.inference.parameter.")) hasLegacy = true;
             if (imp.equals("beast.base.inference.distribution.Prior")) hasLegacy = true;
         }
-        // also: if extends/implements contains a known spec base name (via FQN), count as spec
+        // The base class the type extends/implements is the strongest signal:
+        // a class whose super lives under beast.base.spec.* is fully migrated
+        // even if the file otherwise has no spec imports.
+        for (String fqn : resolvedFqns) {
+            if (fqn.startsWith("beast.base.spec.")) hasSpec = true;
+            if (fqn.startsWith("beast.base.inference.parameter.")
+                    || fqn.equals("beast.base.inference.distribution.Prior")) {
+                hasLegacy = true;
+            }
+        }
+        // Simple-name fallbacks for cases where the import couldn't resolve.
         for (String t : typeTokens) {
-            if (t.startsWith("beast.base.spec.")) hasSpec = true;
             if (t.equals("RealScalarParam") || t.equals("RealVectorParam")
                     || t.equals("IntScalarParam") || t.equals("IntVectorParam")
                     || t.equals("BoolScalarParam") || t.equals("BoolVectorParam")
