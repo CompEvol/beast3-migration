@@ -1,6 +1,6 @@
 # CoupledMCMC — what's left
 
-> **Scanned at:** 2026-05-07T21:26:31.930028  
+> **Scanned at:** 2026-05-07T21:34:24.973306  
 > **Commit:** `39e9c05` on `master` — [view on GitHub](https://github.com/CompEvol/CoupledMCMC/commit/39e9c057e474cfe64953592e330a0e1652f9f2ed)  
 > **Pom version:** `1.3.0-beta1`  
 > **Maven Central:** `io.github.compevol:coupled-mcmc:1.3.0-beta1`  
@@ -8,7 +8,7 @@
 
 ## Summary
 
-- **Java classes:** 0 on spec, 0 mixed, 0 legacy of 14 total
+- **Java classes:** 0 on spec, 0 mixed, 0 legacy of 24 total
 - **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 1 total
 - **BEAUti fxtemplates:** 0 clean / 0 use spec / 1 total
 - **Input rule:** all Inputs use the right carrier ✅

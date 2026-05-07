@@ -1,6 +1,6 @@
 # BEASTLabs — what's left
 
-> **Scanned at:** 2026-05-07T21:26:31.609219  
+> **Scanned at:** 2026-05-07T21:34:24.626611  
 > **Commit:** `840fd01` on `scalable-contract` — [view on GitHub](https://github.com/BEAST2-Dev/BEASTlabs/commit/840fd015587efb223a2b382f954b0e10c58fc173)  
 > **Pom version:** `2.1.0-SNAPSHOT`  
 > **Maven Central:** `io.github.beast2-dev:beast-labs:2.1.0-beta2`  
@@ -8,7 +8,7 @@
 
 ## Summary
 
-- **Java classes:** 1 on spec, 0 mixed, 14 legacy of 140 total
+- **Java classes:** 1 on spec, 0 mixed, 16 legacy of 189 total
 - **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 20 total
 - **BEAUti fxtemplates:** 0 clean / 0 use spec / 3 total
 - **Input rule:** 16 classes hold 30 Input(s) declared too concretely
@@ -16,7 +16,7 @@
 
 ## Java classes pending migration
 
-### Distributions — 5 legacy, 0 mixed (of 22 total)
+### Distributions — 5 legacy, 0 mixed (of 21 total)
 
 **Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
 
@@ -32,12 +32,14 @@
 
 - `beastlabs.evolution.likelihood.AncestralStateLogger` — extends `TreeLikelihood`
 
-### CalcNodes — 5 legacy, 0 mixed (of 10 total)
+### CalcNodes — 7 legacy, 0 mixed (of 10 total)
 
 **Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
 
 - `beastlabs.evolution.likelihood.TraitedTreeLikelihood` — extends `TreeLikelihood`
+- `beastlabs.evolution.substitutionmodel.CladeSubstitutionModel` — extends `Base`
 - `beastlabs.evolution.substitutionmodel.EmpiricalAAModelFromFile` — extends `EmpiricalSubstitutionModel`
+- `beastlabs.evolution.substitutionmodel.EpochSubstitutionModel` — extends `Base`
 - `beastlabs.evolution.substitutionmodel.GeneralLazySubstitutionModel` — extends `GeneralSubstitutionModel`
 - `beastlabs.evolution.substitutionmodel.LazyHKY` — extends `HKY`
 - `beastlabs.evolution.tree.ConstrainedRandomTree` — extends `RandomTree`
@@ -49,7 +51,7 @@
 - `beastlabs.core.parameter.CompoundRealParameter` — extends `RealParameter`
 - `beastlabs.core.parameter.NormalisedRealParameter` — extends `RealParameter`
 
-### Other — 1 legacy, 0 mixed (of 66 total)
+### Other — 1 legacy, 0 mixed (of 116 total)
 
 **Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
 

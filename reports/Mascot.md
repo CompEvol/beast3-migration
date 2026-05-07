@@ -1,6 +1,6 @@
 # Mascot — what's left
 
-> **Scanned at:** 2026-05-07T21:26:32.148818  
+> **Scanned at:** 2026-05-07T21:34:25.185143  
 > **Commit:** `f9d1aca` on `master` — [view on GitHub](https://github.com/CompEvol/Mascot/commit/f9d1aca862f4c94a3e174e63fff51c8d7588b800)  
 > **Pom version:** `3.1.0-beta1`  
 > **Maven Central:** `io.github.compevol:mascot:3.1.0-beta1`  
@@ -8,7 +8,7 @@
 
 ## Summary
 
-- **Java classes:** 4 on spec, 0 mixed, 1 legacy of 112 total
+- **Java classes:** 4 on spec, 0 mixed, 1 legacy of 121 total
 - **Example XMLs:** 1 on spec / 1 on `version="2.8"` / 4 total
 - **BEAUti fxtemplates:** 0 clean / 0 use spec / 5 total
 - **Input rule:** 23 classes hold 45 Input(s) declared too concretely

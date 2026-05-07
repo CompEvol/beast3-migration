@@ -1,6 +1,6 @@
 # beast3 — what's left
 
-> **Scanned at:** 2026-05-07T21:26:30.986007  
+> **Scanned at:** 2026-05-07T21:34:23.907103  
 > **Commit:** `4e1ee72` on `target-acceptance-1d-operators` — [view on GitHub](https://github.com/CompEvol/beast3/commit/4e1ee72a7cead616230d9dce5cb43e71400615e1)  
 > **Pom version:** `2.8.0-SNAPSHOT`  
 > **Maven Central:** `io.github.compevol:beast3:2.8.0-beta5`  
@@ -10,7 +10,7 @@
 
 ## Summary
 
-- **Java classes:** 93 on spec, 0 mixed, 1 legacy of 604 total
+- **Java classes:** 91 on spec, 0 mixed, 1 legacy of 814 total
 - **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 78 total (+81 under legacy/)
 - **BEAUti fxtemplates:** 6 clean / 10 use spec / 10 total
 - **Input rule:** 5 classes hold 6 Input(s) declared too concretely
@@ -18,7 +18,7 @@
 
 ## Java classes pending migration
 
-### Distributions — 1 legacy, 0 mixed (of 70 total)
+### Distributions — 1 legacy, 0 mixed (of 68 total)
 
 **Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
 
@@ -41,10 +41,13 @@
 - `beast.base.inference.operator.kernel.BactrianIntervalOperator`
     - legacy: `Input<RealParameter>`
 
-### Other (2)
+### CalcNodes (1)
 
-- `beast.base.evolution.branchratemodel.BranchRateModel`
+- `beast.base.evolution.branchratemodel.BranchRateModel.Base`
     - legacy: `Input<Function>`
+
+### Other (1)
+
 - `beastfx.app.beauti.PriorInputEditor`
     - legacy: `Input<Function>`
 

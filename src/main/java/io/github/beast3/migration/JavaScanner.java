@@ -144,9 +144,14 @@ public final class JavaScanner {
     private static final Pattern LINE_COMMENT = Pattern.compile("(?m)//[^\\n]*");
     private static final Pattern PACKAGE_DECL = Pattern.compile("(?m)^\\s*package\\s+([\\w.]+)\\s*;");
     private static final Pattern IMPORT = Pattern.compile("(?m)^\\s*import\\s+(?:static\\s+)?([\\w.$*]+)\\s*;");
-    /** Top-level class declaration: capture name, optional extends list, optional implements list. */
+    /**
+     * Class declaration anywhere in the file. Allows leading whitespace so
+     * indented inner classes match too. Captures simple name + extends
+     * + implements clauses. Body opening brace is at the very end of the
+     * match (used for scope-bound determination).
+     */
     private static final Pattern CLASS_DECL = Pattern.compile(
-            "(?m)^(?:public\\s+|abstract\\s+|final\\s+|sealed\\s+|non-sealed\\s+|static\\s+)*" +
+            "(?m)^[ \\t]*(?:public\\s+|protected\\s+|private\\s+|abstract\\s+|final\\s+|sealed\\s+|non-sealed\\s+|static\\s+)*" +
                     "(?:class|interface|enum|record)\\s+(\\w+)" +
                     "(?:\\s*<[^{]*?>)?" +
                     "(?:\\s*\\([^)]*\\))?" +                       // record header
@@ -193,24 +198,41 @@ public final class JavaScanner {
         String stripped = LINE_COMMENT.matcher(BLOCK_COMMENT.matcher(src).replaceAll("")).replaceAll("");
 
         Map<String, String> simpleToFqn = collectImports(stripped);
-        Set<String> importFqns = new HashSet<>(simpleToFqn.values());
         String pkgName = extractPackage(stripped);
 
-        Matcher cm = CLASS_DECL.matcher(stripped);
-        if (cm.find()) {
-            String simpleName = cm.group(1);
-            String extendsClause = cm.group(2);
-            String implementsClause = cm.group(3);
+        java.util.List<ClassScope> scopes = findAllClassScopes(stripped);
+        if (scopes.isEmpty()) return;
+        ClassScope primary = scopes.get(0);
 
-            Set<String> tokens = parseTypeTokens(extendsClause, implementsClause);
+        // Pre-extract all Input<...> declarations with their source positions
+        // so we can attribute each to the innermost class scope containing it.
+        java.util.List<int[]> inputPositions = new java.util.ArrayList<>();
+        java.util.List<InputDecl> inputDecls = extractInputsWithPositions(stripped, inputPositions);
+
+        for (ClassScope s : scopes) {
+            // Track only the primary class and its direct inner classes —
+            // skip method-local / deeply-nested classes.
+            if (s != primary && !isDirectChildOf(s, primary, scopes)) continue;
+
+            boolean isInner = (s != primary);
+            String simpleName = isInner
+                    ? primary.simpleName + "." + s.simpleName
+                    : s.simpleName;
+
+            Set<String> tokens = parseTypeTokens(s.extendsClause, s.implementsClause);
             Set<String> resolved = resolveTokens(tokens, simpleToFqn);
-
-            String primaryExtendsFqn = resolvePrimaryExtends(extendsClause, simpleToFqn, pkgName);
+            String primaryExtendsFqn = resolvePrimaryExtends(s.extendsClause, simpleToFqn, pkgName);
             Kind ownKind = classify(tokens, resolved);
             boolean ownHasSpec = computeOwnHasSpec(tokens, resolved);
-            boolean isDeprecated = hasDeprecatedAnnotation(stripped, cm.start());
+            boolean isDeprecated = hasDeprecatedAnnotation(stripped, s.declStart);
 
-            java.util.List<InputDecl> inputs = extractInputs(stripped);
+            java.util.List<InputDecl> myInputs = new java.util.ArrayList<>();
+            for (int i = 0; i < inputDecls.size(); i++) {
+                int pos = inputPositions.get(i)[0];
+                if (innermostScopeContaining(scopes, pos) == s) {
+                    myInputs.add(inputDecls.get(i));
+                }
+            }
 
             // Counts and legacy-status are deferred until resolveAndTally()
             // — both depend on the global @Deprecated registry collected
@@ -219,8 +241,8 @@ public final class JavaScanner {
                     file,
                     pkgName,
                     simpleName,
-                    trim(extendsClause),
-                    trim(implementsClause),
+                    trim(s.extendsClause),
+                    trim(s.implementsClause),
                     java.util.List.of(),                  // populated by resolver
                     java.util.List.copyOf(specEvidence(resolved, tokens)),
                     ownKind,
@@ -228,8 +250,88 @@ public final class JavaScanner {
                     false,                                // ownHasLegacy filled by resolver
                     primaryExtendsFqn,
                     isDeprecated,
-                    java.util.List.copyOf(inputs)));
+                    java.util.List.copyOf(myInputs)));
         }
+    }
+
+    /** A scope owned by a single class declaration in the source. */
+    private record ClassScope(
+            String simpleName,
+            int declStart,
+            int bodyStart,
+            int bodyEnd,
+            String extendsClause,
+            String implementsClause) {}
+
+    private static java.util.List<ClassScope> findAllClassScopes(String src) {
+        java.util.List<ClassScope> out = new java.util.ArrayList<>();
+        Matcher m = CLASS_DECL.matcher(src);
+        while (m.find()) {
+            int bodyStart = m.end();
+            int bodyEnd = matchClosingBrace(src, bodyStart - 1);
+            if (bodyEnd < 0) continue;
+            out.add(new ClassScope(
+                    m.group(1), m.start(), bodyStart, bodyEnd,
+                    m.group(2), m.group(3)));
+        }
+        return out;
+    }
+
+    /**
+     * Returns the position right after the matching {@code }} of the
+     * {@code {} at {@code openBracePos}, or -1 if unbalanced. Skips string
+     * and char literals (comments are already stripped).
+     */
+    private static int matchClosingBrace(String src, int openBracePos) {
+        int depth = 1;
+        int i = openBracePos + 1;
+        int n = src.length();
+        while (i < n && depth > 0) {
+            char c = src.charAt(i);
+            if (c == '"' || c == '\'') {
+                char quote = c;
+                i++;
+                while (i < n && src.charAt(i) != quote) {
+                    if (src.charAt(i) == '\\' && i + 1 < n) i++;
+                    i++;
+                }
+                if (i < n) i++;
+                continue;
+            }
+            if (c == '{') depth++;
+            else if (c == '}') depth--;
+            i++;
+        }
+        return depth == 0 ? i : -1;
+    }
+
+    private static boolean isDirectChildOf(
+            ClassScope inner, ClassScope outer, java.util.List<ClassScope> all) {
+        if (inner == outer) return false;
+        if (inner.bodyStart < outer.bodyStart || inner.bodyEnd > outer.bodyEnd) return false;
+        for (ClassScope t : all) {
+            if (t == inner || t == outer) continue;
+            if (t.bodyStart > outer.bodyStart && t.bodyEnd < outer.bodyEnd
+                    && inner.bodyStart > t.bodyStart && inner.bodyEnd <= t.bodyEnd) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static ClassScope innermostScopeContaining(java.util.List<ClassScope> scopes, int pos) {
+        ClassScope best = null;
+        int bestSpan = Integer.MAX_VALUE;
+        for (ClassScope s : scopes) {
+            if (pos >= s.bodyStart && pos < s.bodyEnd) {
+                int span = s.bodyEnd - s.bodyStart;
+                if (span < bestSpan) {
+                    best = s;
+                    bestSpan = span;
+                }
+            }
+        }
+        return best;
     }
 
     /**
@@ -273,10 +375,13 @@ public final class JavaScanner {
 
     /**
      * Extracts every {@code Input<X>} field type argument from the source.
+     * If {@code positions} is non-null, parallel ints describing the source
+     * position where each {@code Input<} starts are appended to it (so the
+     * caller can attribute each input to its containing class scope).
      * Walks balanced angle brackets so nested generics like
      * {@code Input<RealScalar<? extends PositiveReal>>} work.
      */
-    static java.util.List<InputDecl> extractInputs(String src) {
+    static java.util.List<InputDecl> extractInputsWithPositions(String src, java.util.List<int[]> positions) {
         java.util.List<InputDecl> out = new java.util.ArrayList<>();
         int i = 0;
         while ((i = src.indexOf("Input<", i)) != -1) {
@@ -286,6 +391,7 @@ public final class JavaScanner {
                 i += 6;
                 continue;
             }
+            int matchPos = i;
             int start = i + 6;
             int depth = 1;
             int j = start;
@@ -297,13 +403,8 @@ public final class JavaScanner {
             }
             if (depth != 0) break;
             String inner = src.substring(start, j - 1).trim();
-            // Confirm this looks like a field declaration: next non-whitespace
-            // tokens should be an identifier and either `=` or `;`. Skip if it
-            // looks like a method return type (`Input<X> foo()`), local var,
-            // generic method type bound, etc.
             int k = j;
             while (k < src.length() && Character.isWhitespace(src.charAt(k))) k++;
-            // a field name at minimum
             if (k >= src.length() || !Character.isJavaIdentifierStart(src.charAt(k))) {
                 i = j;
                 continue;
@@ -316,13 +417,18 @@ public final class JavaScanner {
                 i = j;
                 continue;
             }
-            // Ignore trivial: empty name suggests bad parse.
             if (nameEnd > nameStart) {
                 out.add(new InputDecl(inner, classifyInputCarrier(inner)));
+                if (positions != null) positions.add(new int[] { matchPos });
             }
             i = j;
         }
         return out;
+    }
+
+    /** Position-less convenience kept for tests / external callers. */
+    static java.util.List<InputDecl> extractInputs(String src) {
+        return extractInputsWithPositions(src, null);
     }
 
     private static InputDecl.Carrier classifyInputCarrier(String inner) {

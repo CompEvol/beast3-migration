@@ -1,6 +1,6 @@
 # ORC — what's left
 
-> **Scanned at:** 2026-05-07T21:26:32.712722  
+> **Scanned at:** 2026-05-07T21:34:25.727174  
 > **Commit:** `bb6bdbb` on `master` — [view on GitHub](https://github.com/jordandouglas/ORC/commit/bb6bdbb3875b735c37aab49a8e992cf368257838)  
 > **Pom version:** `1.3.0-SNAPSHOT`  
 > **Maven Central:** not published as `io.github.jordandouglas:beast-orc` (not published (404))  
@@ -8,7 +8,7 @@
 
 ## Summary
 
-- **Java classes:** 1 on spec, 0 mixed, 0 legacy of 55 total
+- **Java classes:** 1 on spec, 0 mixed, 0 legacy of 59 total
 - **Example XMLs:** 0 on spec / 1 on `version="2.8"` / 1 total
 - **BEAUti fxtemplates:** 1 clean / 1 use spec / 1 total
 - **Input rule:** 1 classes hold 2 Input(s) declared too concretely
