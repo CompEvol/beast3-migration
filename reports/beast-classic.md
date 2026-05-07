@@ -1,6 +1,6 @@
 # beast-classic — what's left
 
-> **Scanned at:** 2026-05-07T20:10:32.697859  
+> **Scanned at:** 2026-05-07T20:16:32.978455  
 > **Local checkout:** `/Users/adru001/Git/beast-classic` — commit `8baef54` on `master` — [view on GitHub](https://github.com/BEAST2-Dev/beast-classic/commit/8baef5485aa4b218655729d03c7f8d7ef3ab9668)  
 > **Pom version:** `1.7.0-SNAPSHOT`  
 > **Maven Central:** `io.github.beast2-dev:beast-classic:1.7.0-beta1`  
@@ -8,14 +8,14 @@
 
 ## Summary
 
-- **Java classes:** 37 on spec, 1 mixed, 0 legacy of 68 total
+- **Java classes:** 39 on spec, 1 mixed, 0 legacy of 68 total
 - **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 10 total
 - **BEAUti fxtemplates:** 0 clean / 0 use spec / 5 total
 - **Maven Central:** 1.7.0-beta1
 
 ## Java classes pending migration
 
-### Other — 0 legacy, 1 mixed (of 28 total)
+### Other — 0 legacy, 1 mixed (of 20 total)
 
 **Mixed** (already imports spec; finish removing legacy):
 

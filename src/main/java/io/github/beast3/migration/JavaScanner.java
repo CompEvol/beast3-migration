@@ -179,21 +179,91 @@ public final class JavaScanner {
             Set<String> tokens = parseTypeTokens(extendsClause, implementsClause);
             Set<String> resolved = resolveTokens(tokens, simpleToFqn);
 
-            Kind kind = classify(tokens, resolved);
-            Status status = migrationStatus(tokens, importFqns, resolved);
-            report.javaCounts.get(kind).add(status);
+            Kind ownKind = classify(tokens, resolved);
+            boolean[] ownStatus = computeOwnStatus(tokens, importFqns, resolved);
+            String primaryExtendsFqn = resolvePrimaryExtends(extendsClause, simpleToFqn, pkgName);
 
+            // Counts are deferred until resolveAndTally() so subclass status
+            // can be inherited from in-package parents.
             report.classes.add(new ClassRecord(
                     file,
                     pkgName,
                     simpleName,
-                    kind,
-                    status,
                     trim(extendsClause),
                     trim(implementsClause),
                     java.util.List.copyOf(legacyEvidence(importFqns, resolved, tokens)),
-                    java.util.List.copyOf(specEvidence(importFqns, resolved, tokens))));
+                    java.util.List.copyOf(specEvidence(importFqns, resolved, tokens)),
+                    ownKind,
+                    ownStatus[0],
+                    ownStatus[1],
+                    primaryExtendsFqn));
         }
+    }
+
+    /**
+     * Walks the in-package primary-extends chain for every class collected
+     * during {@link #scan(Path, Report)}. A class inherits its parent's
+     * <em>kind</em> if its own kind was {@link Kind#OTHER} (subclasses of a
+     * model component are model components), and accumulates the parent's
+     * spec/legacy signals (a thin subclass of a spec base counts as on
+     * spec). Tallies the effective values into {@link Report#javaCounts}.
+     */
+    public static void resolveAndTally(Report report) {
+        Map<String, ClassRecord> byFqn = new java.util.HashMap<>();
+        for (ClassRecord c : report.classes) byFqn.put(c.fqn(), c);
+
+        for (ClassRecord c : report.classes) {
+            boolean effSpec = c.ownHasSpec;
+            boolean effLegacy = c.ownHasLegacy;
+            Kind effKind = c.ownKind;
+
+            ClassRecord cur = c;
+            Set<String> visited = new HashSet<>();
+            visited.add(c.fqn());
+            int hops = 0;
+            while (cur.primaryExtendsFqn != null && hops++ < 16) {
+                ClassRecord parent = byFqn.get(cur.primaryExtendsFqn);
+                if (parent == null) break;
+                if (!visited.add(parent.fqn())) break; // cycle guard
+                effSpec |= parent.ownHasSpec;
+                effLegacy |= parent.ownHasLegacy;
+                if (effKind == Kind.OTHER && parent.ownKind != Kind.OTHER) {
+                    effKind = parent.ownKind;
+                }
+                cur = parent;
+            }
+            c.setEffective(effKind, ClassRecord.toStatus(effSpec, effLegacy));
+            report.javaCounts.get(effKind).add(c.status());
+        }
+    }
+
+    private static boolean[] computeOwnStatus(Set<String> tokens, Set<String> imports, Set<String> resolved) {
+        Status s = migrationStatus(tokens, imports, resolved);
+        return new boolean[] {
+                s == Status.SPEC || s == Status.MIXED,
+                s == Status.LEGACY || s == Status.MIXED
+        };
+    }
+
+    private static String resolvePrimaryExtends(String extendsClause, Map<String, String> imports, String currentPkg) {
+        if (extendsClause == null || extendsClause.isBlank()) return null;
+        String stripped = extendsClause.replaceAll("<[^>]*>", "").trim();
+        if (stripped.isEmpty()) return null;
+        // Java has single inheritance for classes; abstract regex handles
+        // commas defensively (interface lists in `extends` for interfaces).
+        String first = stripped.split(",", 2)[0].trim();
+        if (first.isEmpty()) return null;
+        int dot = first.indexOf('.');
+        if (dot < 0) {
+            String fqn = imports.get(first);
+            if (fqn != null) return fqn;
+            // No import — assume the parent is in the same package.
+            return currentPkg.isBlank() ? first : currentPkg + "." + first;
+        }
+        String head = first.substring(0, dot);
+        String tail = first.substring(dot);
+        String headFqn = imports.get(head);
+        return headFqn != null ? headFqn + tail : first;
     }
 
     private static String extractPackage(String src) {

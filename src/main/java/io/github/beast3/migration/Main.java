@@ -172,6 +172,7 @@ public final class Main {
         if (r.pathExists) {
             r.git = GitInfo.read(entry.path());
             JavaScanner.scan(entry.path(), r);
+            JavaScanner.resolveAndTally(r);
             XmlScanner.scan(entry.path(), r);
             BuildScanner.scan(entry.path(), r);
         } else {

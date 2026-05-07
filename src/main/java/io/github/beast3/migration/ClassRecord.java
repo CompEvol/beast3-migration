@@ -7,25 +7,93 @@ import io.github.beast3.migration.Report.Kind;
 import io.github.beast3.migration.Report.Status;
 
 /**
- * Per-class record produced by {@link JavaScanner}, carrying enough
- * evidence to explain a punch-list entry.
+ * Per-class record produced by {@link JavaScanner}.
  *
- * <p>{@code legacyEvidence} / {@code specEvidence} hold imports or extends/
- * implements tokens that triggered the classification — useful when the
- * report needs to say <em>why</em> a class is still legacy.</p>
+ * <p>Carries both the <b>raw</b> signals from the file alone
+ * ({@link #ownKind}, {@link #ownHasSpec}, {@link #ownHasLegacy},
+ * {@link #primaryExtendsFqn}) and <b>effective</b> values
+ * ({@link #kind}, {@link #status}) that account for inheritance from
+ * an in-package parent. The effective fields are populated by
+ * {@code JavaScanner.resolveAndTally} after every package's classes
+ * have been collected.</p>
+ *
+ * <p>{@link #legacyEvidence} / {@link #specEvidence} hold imports and
+ * extends/implements tokens that triggered the classification — useful
+ * when a punch-list entry needs to explain <em>why</em> a class is
+ * still legacy.</p>
  */
-public record ClassRecord(
-        Path file,
-        String packageName,
-        String simpleName,
-        Kind kind,
-        Status status,
-        String extendsClause,
-        String implementsClause,
-        List<String> legacyEvidence,
-        List<String> specEvidence) {
+public final class ClassRecord {
+
+    public final Path file;
+    public final String packageName;
+    public final String simpleName;
+    public final String extendsClause;
+    public final String implementsClause;
+    public final List<String> legacyEvidence;
+    public final List<String> specEvidence;
+
+    /** Kind classified from this file's own {@code extends}/{@code implements}, ignoring inheritance. */
+    public final Kind ownKind;
+    /** Whether this file directly imports/extends a {@code beast.base.spec.*} type. */
+    public final boolean ownHasSpec;
+    /** Whether this file directly imports/extends a legacy parameter or {@code Prior} type. */
+    public final boolean ownHasLegacy;
+    /**
+     * Best-effort FQN of the class's primary {@code extends} target, resolved
+     * via the file's import map. Falls back to {@code currentPackage + "." + simpleName}
+     * for unqualified names with no import — that's how in-package parents are
+     * found during chain resolution.
+     */
+    public final String primaryExtendsFqn;
+
+    private Kind kind;
+    private Status status;
+
+    public ClassRecord(
+            Path file,
+            String packageName,
+            String simpleName,
+            String extendsClause,
+            String implementsClause,
+            List<String> legacyEvidence,
+            List<String> specEvidence,
+            Kind ownKind,
+            boolean ownHasSpec,
+            boolean ownHasLegacy,
+            String primaryExtendsFqn) {
+        this.file = file;
+        this.packageName = packageName;
+        this.simpleName = simpleName;
+        this.extendsClause = extendsClause;
+        this.implementsClause = implementsClause;
+        this.legacyEvidence = legacyEvidence;
+        this.specEvidence = specEvidence;
+        this.ownKind = ownKind;
+        this.ownHasSpec = ownHasSpec;
+        this.ownHasLegacy = ownHasLegacy;
+        this.primaryExtendsFqn = primaryExtendsFqn;
+        this.kind = ownKind;
+        this.status = toStatus(ownHasSpec, ownHasLegacy);
+    }
+
+    public Kind kind() { return kind; }
+    public Status status() { return status; }
+    public List<String> legacyEvidence() { return legacyEvidence; }
+    public List<String> specEvidence() { return specEvidence; }
+
+    void setEffective(Kind kind, Status status) {
+        this.kind = kind;
+        this.status = status;
+    }
 
     public String fqn() {
         return packageName.isBlank() ? simpleName : packageName + "." + simpleName;
+    }
+
+    static Status toStatus(boolean hasSpec, boolean hasLegacy) {
+        if (hasSpec && hasLegacy) return Status.MIXED;
+        if (hasSpec) return Status.SPEC;
+        if (hasLegacy) return Status.LEGACY;
+        return Status.NEUTRAL;
     }
 }

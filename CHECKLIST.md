@@ -27,7 +27,7 @@ exact local checkout commit it was scanned against.
 
 <!-- BEGIN AUTO -->
 
-_Last regenerated: 2026-05-07T20:10:33.688351+12:00_
+_Last regenerated: 2026-05-07T20:16:33.966652+12:00_
 
 ## Release & build status
 
@@ -48,16 +48,16 @@ _Last regenerated: 2026-05-07T20:10:33.688351+12:00_
 
 | Package | Distrs | Ops | Loggers | CalcNodes | Params | StateNodes | XMLs | FxTemplates |
 |---|---|---|---|---|---|---|---|---|
-| beast3 | 32 / 59 | 12 / 45 | 8 / 16 | 11 / 17 | 4 / 5 | 6 / 16 | 0 / 0 / 78 (+81 legacy) | 6 / 10 / 10 |
-| BEASTLabs | 6 / 20 | 1 / 16 | 2 / 11 | 5 / 10 | 0 / 2 | 1 / 7 | 0 / 0 / 20 | 0 / 0 / 3 |
-| beast-classic | 6 / 6 | 11 / 11 | 4 / 7 | 6 / 13 | 1 / 1 | 0 / 2 | 0 / 0 / 10 | 0 / 0 / 5 |
-| CoupledMCMC | — | — | 0 / 2 | — | — | — | 0 / 0 / 1 | 0 / 0 / 1 |
-| flc | — | — | — | 3 / 5 | — | — | 2 / 2 / 2 | — |
-| Mascot | 0 / 9 | 6 / 6 | 10 / 21 | 4 / 9 | — | 0 / 1 | 1 / 1 / 4 | 0 / 0 / 5 |
-| morph-models | — | — | — | 2 / 2 | — | 0 / 1 | 2 / 2 / 2 (+4 legacy) | 0 / 1 / 1 |
-| sampled-ancestors | 3 / 6 | 9 / 13 | 0 / 2 | 0 / 2 | — | 0 / 2 | 0 / 0 / 3 | 1 / 1 / 1 |
+| beast3 | 54 / 70 | 13 / 47 | 8 / 16 | 13 / 20 | 4 / 5 | 9 / 22 | 0 / 0 / 78 (+81 legacy) | 6 / 10 / 10 |
+| BEASTLabs | 6 / 22 | 1 / 21 | 2 / 11 | 5 / 10 | 0 / 2 | 1 / 8 | 0 / 0 / 20 | 0 / 0 / 3 |
+| beast-classic | 9 / 9 | 11 / 11 | 9 / 11 | 7 / 14 | 1 / 1 | 0 / 2 | 0 / 0 / 10 | 0 / 0 / 5 |
+| CoupledMCMC | — | — | 0 / 3 | — | — | — | 0 / 0 / 1 | 0 / 0 / 1 |
+| flc | — | — | — | 6 / 8 | — | — | 2 / 2 / 2 | — |
+| Mascot | 1 / 11 | 6 / 6 | 12 / 25 | 11 / 18 | — | 0 / 2 | 1 / 1 / 4 | 0 / 0 / 5 |
+| morph-models | — | — | — | 4 / 4 | — | 0 / 1 | 2 / 2 / 2 (+4 legacy) | 0 / 1 / 1 |
+| sampled-ancestors | 3 / 6 | 9 / 13 | 0 / 2 | 3 / 5 | — | 0 / 2 | 0 / 0 / 3 | 1 / 1 / 1 |
 | MutableAlignment | — | — | — | — | — | — | 0 / 0 / 2 | — |
-| ORC | 1 / 1 | 3 / 4 | 1 / 1 | — | — | — | 0 / 1 / 1 | 1 / 1 / 1 |
+| ORC | 1 / 1 | 51 / 52 | 1 / 1 | — | — | — | 0 / 1 / 1 | 1 / 1 / 1 |
 
 Legend: ✅ = present, ❌ = missing, `n / m` = `migrated / total`, `—` = no data.
 FxTemplates show `clean / spec / total` — `clean` = uses spec types and no legacy `parameter.RealParameter`-style attrs; `spec` = body references `beast.base.spec.*` at all.
@@ -69,16 +69,16 @@ Per package, for each kind: `spec / mixed / legacy / neutral · total`.
 
 | Package | Distributions | Operators | Loggers | CalcNodes | Parameters | StateNodes |
 |---|---|---|---|---|---|---|
-| beast3 | 32 / 1 / 11 / 15 · 59 | 12 / 1 / 21 / 11 · 45 | 8 / 0 / 4 / 4 · 16 | 11 / 0 / 1 / 5 · 17 | 4 / 0 / 1 / 0 · 5 | 6 / 1 / 2 / 7 · 16 |
-| BEASTLabs | 6 / 3 / 2 / 9 · 20 | 1 / 0 / 1 / 14 · 16 | 2 / 0 / 1 / 8 · 11 | 5 / 0 / 1 / 4 · 10 | 0 / 0 / 2 / 0 · 2 | 1 / 0 / 2 / 4 · 7 |
-| beast-classic | 6 / 0 / 0 / 0 · 6 | 11 / 0 / 0 / 0 · 11 | 4 / 0 / 0 / 3 · 7 | 6 / 0 / 0 / 7 · 13 | 1 / 0 / 0 / 0 · 1 | 0 / 0 / 0 / 2 · 2 |
-| CoupledMCMC | — | — | 0 / 0 / 0 / 2 · 2 | — | — | — |
-| flc | — | — | — | 3 / 0 / 0 / 2 · 5 | — | — |
-| Mascot | 0 / 5 / 0 / 4 · 9 | 6 / 0 / 0 / 0 · 6 | 10 / 0 / 0 / 11 · 21 | 4 / 0 / 0 / 5 · 9 | — | 0 / 0 / 0 / 1 · 1 |
-| morph-models | — | — | — | 2 / 0 / 0 / 0 · 2 | — | 0 / 0 / 0 / 1 · 1 |
-| sampled-ancestors | 3 / 1 / 1 / 1 · 6 | 9 / 0 / 0 / 4 · 13 | 0 / 0 / 0 / 2 · 2 | 0 / 0 / 0 / 2 · 2 | — | 0 / 0 / 0 / 2 · 2 |
+| beast3 | 54 / 15 / 0 / 1 · 70 | 13 / 1 / 22 / 11 · 47 | 8 / 0 / 4 / 4 · 16 | 13 / 1 / 2 / 4 · 20 | 4 / 1 / 0 / 0 · 5 | 9 / 1 / 3 / 9 · 22 |
+| BEASTLabs | 6 / 3 / 4 / 9 · 22 | 1 / 0 / 2 / 18 · 21 | 2 / 0 / 1 / 8 · 11 | 5 / 0 / 1 / 4 · 10 | 0 / 0 / 2 / 0 · 2 | 1 / 0 / 3 / 4 · 8 |
+| beast-classic | 9 / 0 / 0 / 0 · 9 | 11 / 0 / 0 / 0 · 11 | 9 / 0 / 0 / 2 · 11 | 7 / 0 / 0 / 7 · 14 | 1 / 0 / 0 / 0 · 1 | 0 / 0 / 0 / 2 · 2 |
+| CoupledMCMC | — | — | 0 / 0 / 0 / 3 · 3 | — | — | — |
+| flc | — | — | — | 6 / 0 / 0 / 2 · 8 | — | — |
+| Mascot | 1 / 5 / 0 / 5 · 11 | 6 / 0 / 0 / 0 · 6 | 12 / 0 / 0 / 13 · 25 | 11 / 0 / 0 / 7 · 18 | — | 0 / 0 / 0 / 2 · 2 |
+| morph-models | — | — | — | 4 / 0 / 0 / 0 · 4 | — | 0 / 0 / 0 / 1 · 1 |
+| sampled-ancestors | 3 / 1 / 1 / 1 · 6 | 9 / 0 / 0 / 4 · 13 | 0 / 0 / 0 / 2 · 2 | 3 / 0 / 0 / 2 · 5 | — | 0 / 0 / 0 / 2 · 2 |
 | MutableAlignment | — | — | — | — | — | — |
-| ORC | 1 / 0 / 0 / 0 · 1 | 3 / 1 / 0 / 0 · 4 | 1 / 0 / 0 / 0 · 1 | — | — | — |
+| ORC | 1 / 0 / 0 / 0 · 1 | 51 / 1 / 0 / 0 · 52 | 1 / 0 / 0 / 0 · 1 | — | — | — |
 
 ## Diagnostics
 

@@ -1,6 +1,6 @@
 # ORC — what's left
 
-> **Scanned at:** 2026-05-07T20:10:33.558934  
+> **Scanned at:** 2026-05-07T20:16:33.842817  
 > **Local checkout:** `/Users/adru001/Git/ORC` — commit `bb6bdbb` on `master` — [view on GitHub](https://github.com/jordandouglas/ORC/commit/bb6bdbb3875b735c37aab49a8e992cf368257838)  
 > **Pom version:** `1.3.0-SNAPSHOT`  
 > **Maven Central:** not published as `io.github.jordandouglas:beast-orc` (not published (404))  
@@ -8,7 +8,7 @@
 
 ## Summary
 
-- **Java classes:** 6 on spec, 1 mixed, 1 legacy of 55 total
+- **Java classes:** 53 on spec, 1 mixed, 1 legacy of 55 total
 - **Example XMLs:** 0 on spec / 1 on `version="2.8"` / 1 total
 - **BEAUti fxtemplates:** 1 clean / 1 use spec / 1 total
 - **Maven Central:** ❌ not published (not published (404))
@@ -23,13 +23,13 @@ Not yet published as `io.github.jordandouglas:beast-orc`. Verify the namespace o
 
 ## Java classes pending migration
 
-### Operators — 0 legacy, 1 mixed (of 4 total)
+### Operators — 0 legacy, 1 mixed (of 52 total)
 
 **Mixed** (already imports spec; finish removing legacy):
 
 - `orc.consoperators.SmallPulley` — uses `ParametricDistribution`, `RealParameter`, `CompoundRealParameter`
 
-### Other — 1 legacy, 0 mixed (of 49 total)
+### Other — 1 legacy, 0 mixed (of 1 total)
 
 **Legacy** (no spec imports yet):
 

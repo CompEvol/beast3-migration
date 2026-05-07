@@ -1,6 +1,6 @@
 # morph-models — what's left
 
-> **Scanned at:** 2026-05-07T20:10:33.227492  
+> **Scanned at:** 2026-05-07T20:16:33.507207  
 > **Local checkout:** `/Users/adru001/Git/morph-models` — commit `db64781` on `master` — [view on GitHub](https://github.com/CompEvol/morph-models/commit/db64781d130654714b8344de74e65dbe6929bd5a)  
 > **Pom version:** `1.3.0-beta3`  
 > **Maven Central:** `io.github.compevol:morph-models:1.3.0-beta3`  
@@ -8,7 +8,7 @@
 
 ## Summary
 
-- **Java classes:** 2 on spec, 0 mixed, 0 legacy of 7 total
+- **Java classes:** 4 on spec, 0 mixed, 0 legacy of 7 total
 - **Example XMLs:** 2 on spec / 2 on `version="2.8"` / 2 total (+4 under legacy/)
 - **BEAUti fxtemplates:** 0 clean / 1 use spec / 1 total
 - **Maven Central:** 1.3.0-beta3
