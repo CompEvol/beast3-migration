@@ -1,0 +1,825 @@
+{
+  "generatedAt": "2026-05-07T19:34:39.930920+12:00",
+  "packages": [
+    {
+      "name": "beast3",
+      "path": "/Users/adru001/Git/beast3",
+      "github": "CompEvol/beast3",
+      "maven": "io.github.compevol:beast3",
+      "stage": "maven_central",
+      "notes": "Core. Multi-module — beast-base / beast-fx / beast-pkgmgmt / beast-test-utils.",
+      "pathExists": true,
+      "error": "",
+      "java": {
+        "distribution": {
+          "total": 59,
+          "spec": 32,
+          "mixed": 1,
+          "legacy": 11,
+          "neutral": 15
+        },
+        "operator": {
+          "total": 43,
+          "spec": 11,
+          "mixed": 1,
+          "legacy": 21,
+          "neutral": 10
+        },
+        "logger": {
+          "total": 17,
+          "spec": 8,
+          "mixed": 0,
+          "legacy": 4,
+          "neutral": 5
+        },
+        "calcnode": {
+          "total": 10,
+          "spec": 6,
+          "mixed": 0,
+          "legacy": 1,
+          "neutral": 3
+        },
+        "parameter": {
+          "total": 5,
+          "spec": 4,
+          "mixed": 0,
+          "legacy": 1,
+          "neutral": 0
+        },
+        "statenode": {
+          "total": 6,
+          "spec": 3,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 3
+        },
+        "other": {
+          "total": 464,
+          "spec": 83,
+          "mixed": 5,
+          "legacy": 35,
+          "neutral": 341
+        }
+      },
+      "xml": {
+        "total": 93,
+        "migrated": 0,
+        "v28": 0,
+        "legacyDir": 82
+      },
+      "build": {
+        "hasPom": true,
+        "hasReleaseProfile": true,
+        "hasModuleInfo": true,
+        "hasGithubActions": true,
+        "hasReleaseScript": true,
+        "hasVersionXml": true,
+        "pomVersion": "2.8.0-SNAPSHOT"
+      },
+      "mavenCentral": {
+        "groupId": "io.github.compevol",
+        "artifactId": "beast3",
+        "latest": "2.8.0-beta5",
+        "error": ""
+      }
+    },
+    {
+      "name": "BEASTLabs",
+      "path": "/Users/adru001/Git/BEASTLabs",
+      "github": "BEAST2-Dev/BEASTlabs",
+      "maven": "io.github.beast2-dev:beast-labs",
+      "stage": "maven_central",
+      "notes": "",
+      "pathExists": true,
+      "error": "",
+      "java": {
+        "distribution": {
+          "total": 20,
+          "spec": 6,
+          "mixed": 3,
+          "legacy": 2,
+          "neutral": 9
+        },
+        "operator": {
+          "total": 15,
+          "spec": 1,
+          "mixed": 0,
+          "legacy": 1,
+          "neutral": 13
+        },
+        "logger": {
+          "total": 11,
+          "spec": 2,
+          "mixed": 0,
+          "legacy": 1,
+          "neutral": 8
+        },
+        "calcnode": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "parameter": {
+          "total": 2,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 2,
+          "neutral": 0
+        },
+        "statenode": {
+          "total": 1,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 1
+        },
+        "other": {
+          "total": 91,
+          "spec": 10,
+          "mixed": 2,
+          "legacy": 6,
+          "neutral": 73
+        }
+      },
+      "xml": {
+        "total": 26,
+        "migrated": 0,
+        "v28": 0,
+        "legacyDir": 0
+      },
+      "build": {
+        "hasPom": true,
+        "hasReleaseProfile": true,
+        "hasModuleInfo": true,
+        "hasGithubActions": true,
+        "hasReleaseScript": true,
+        "hasVersionXml": true,
+        "pomVersion": "2.1.0-SNAPSHOT"
+      },
+      "mavenCentral": {
+        "groupId": "io.github.beast2-dev",
+        "artifactId": "beast-labs",
+        "latest": "2.1.0-beta2",
+        "error": ""
+      }
+    },
+    {
+      "name": "beast-classic",
+      "path": "/Users/adru001/Git/beast-classic",
+      "github": "BEAST2-Dev/beast-classic",
+      "maven": "io.github.beast2-dev:beast-classic",
+      "stage": "maven_central",
+      "notes": "",
+      "pathExists": true,
+      "error": "",
+      "java": {
+        "distribution": {
+          "total": 6,
+          "spec": 6,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "operator": {
+          "total": 10,
+          "spec": 10,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "logger": {
+          "total": 7,
+          "spec": 4,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 3
+        },
+        "calcnode": {
+          "total": 4,
+          "spec": 2,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 2
+        },
+        "parameter": {
+          "total": 1,
+          "spec": 1,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "statenode": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "other": {
+          "total": 40,
+          "spec": 14,
+          "mixed": 1,
+          "legacy": 0,
+          "neutral": 25
+        }
+      },
+      "xml": {
+        "total": 19,
+        "migrated": 0,
+        "v28": 0,
+        "legacyDir": 0
+      },
+      "build": {
+        "hasPom": true,
+        "hasReleaseProfile": true,
+        "hasModuleInfo": true,
+        "hasGithubActions": true,
+        "hasReleaseScript": true,
+        "hasVersionXml": true,
+        "pomVersion": "1.7.0-SNAPSHOT"
+      },
+      "mavenCentral": {
+        "groupId": "io.github.beast2-dev",
+        "artifactId": "beast-classic",
+        "latest": "1.7.0-beta1",
+        "error": ""
+      }
+    },
+    {
+      "name": "CoupledMCMC",
+      "path": "/Users/adru001/Git/CoupledMCMC",
+      "github": "CompEvol/CoupledMCMC",
+      "maven": "io.github.compevol:coupled-mcmc",
+      "stage": "maven_central",
+      "notes": "",
+      "pathExists": true,
+      "error": "",
+      "java": {
+        "distribution": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "operator": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "logger": {
+          "total": 2,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 2
+        },
+        "calcnode": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "parameter": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "statenode": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "other": {
+          "total": 12,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 12
+        }
+      },
+      "xml": {
+        "total": 3,
+        "migrated": 0,
+        "v28": 0,
+        "legacyDir": 0
+      },
+      "build": {
+        "hasPom": true,
+        "hasReleaseProfile": true,
+        "hasModuleInfo": true,
+        "hasGithubActions": true,
+        "hasReleaseScript": true,
+        "hasVersionXml": true,
+        "pomVersion": "1.3.0-beta1"
+      },
+      "mavenCentral": {
+        "groupId": "io.github.compevol",
+        "artifactId": "coupled-mcmc",
+        "latest": "1.3.0-beta1",
+        "error": ""
+      }
+    },
+    {
+      "name": "flc",
+      "path": "/Users/adru001/Git/flc",
+      "github": "4ment/flc",
+      "maven": "io.github.4ment:flc",
+      "stage": "maven_central",
+      "notes": "",
+      "pathExists": true,
+      "error": "",
+      "java": {
+        "distribution": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "operator": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "logger": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "calcnode": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "parameter": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "statenode": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "other": {
+          "total": 11,
+          "spec": 6,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 5
+        }
+      },
+      "xml": {
+        "total": 2,
+        "migrated": 2,
+        "v28": 2,
+        "legacyDir": 0
+      },
+      "build": {
+        "hasPom": true,
+        "hasReleaseProfile": true,
+        "hasModuleInfo": true,
+        "hasGithubActions": true,
+        "hasReleaseScript": true,
+        "hasVersionXml": true,
+        "pomVersion": "1.3.0-beta1"
+      },
+      "mavenCentral": {
+        "groupId": "io.github.4ment",
+        "artifactId": "flc",
+        "latest": "1.3.0-beta1",
+        "error": ""
+      }
+    },
+    {
+      "name": "Mascot",
+      "path": "/Users/adru001/Git/Mascot",
+      "github": "CompEvol/Mascot",
+      "maven": "io.github.compevol:mascot",
+      "stage": "maven_central",
+      "notes": "",
+      "pathExists": true,
+      "error": "",
+      "java": {
+        "distribution": {
+          "total": 9,
+          "spec": 0,
+          "mixed": 5,
+          "legacy": 0,
+          "neutral": 4
+        },
+        "operator": {
+          "total": 6,
+          "spec": 6,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "logger": {
+          "total": 21,
+          "spec": 10,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 11
+        },
+        "calcnode": {
+          "total": 9,
+          "spec": 4,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 5
+        },
+        "parameter": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "statenode": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "other": {
+          "total": 67,
+          "spec": 10,
+          "mixed": 0,
+          "legacy": 2,
+          "neutral": 55
+        }
+      },
+      "xml": {
+        "total": 14,
+        "migrated": 1,
+        "v28": 1,
+        "legacyDir": 0
+      },
+      "build": {
+        "hasPom": true,
+        "hasReleaseProfile": true,
+        "hasModuleInfo": true,
+        "hasGithubActions": true,
+        "hasReleaseScript": true,
+        "hasVersionXml": true,
+        "pomVersion": "3.1.0-beta1"
+      },
+      "mavenCentral": {
+        "groupId": "io.github.compevol",
+        "artifactId": "mascot",
+        "latest": "3.1.0-beta1",
+        "error": ""
+      }
+    },
+    {
+      "name": "morph-models",
+      "path": "/Users/adru001/Git/morph-models",
+      "github": "CompEvol/morph-models",
+      "maven": "io.github.compevol:morph-models",
+      "stage": "maven_central",
+      "notes": "",
+      "pathExists": true,
+      "error": "",
+      "java": {
+        "distribution": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "operator": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "logger": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "calcnode": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "parameter": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "statenode": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "other": {
+          "total": 7,
+          "spec": 2,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 5
+        }
+      },
+      "xml": {
+        "total": 4,
+        "migrated": 0,
+        "v28": 2,
+        "legacyDir": 4
+      },
+      "build": {
+        "hasPom": true,
+        "hasReleaseProfile": true,
+        "hasModuleInfo": true,
+        "hasGithubActions": true,
+        "hasReleaseScript": true,
+        "hasVersionXml": true,
+        "pomVersion": "1.3.0-beta3"
+      },
+      "mavenCentral": {
+        "groupId": "io.github.compevol",
+        "artifactId": "morph-models",
+        "latest": "1.3.0-beta3",
+        "error": ""
+      }
+    },
+    {
+      "name": "sampled-ancestors",
+      "path": "/Users/adru001/Git/sampled-ancestors",
+      "github": "CompEvol/sampled-ancestors",
+      "maven": "io.github.compevol:sampled-ancestors",
+      "stage": "maven_central",
+      "notes": "",
+      "pathExists": true,
+      "error": "",
+      "java": {
+        "distribution": {
+          "total": 6,
+          "spec": 3,
+          "mixed": 1,
+          "legacy": 1,
+          "neutral": 1
+        },
+        "operator": {
+          "total": 11,
+          "spec": 9,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 2
+        },
+        "logger": {
+          "total": 2,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 2
+        },
+        "calcnode": {
+          "total": 2,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 2
+        },
+        "parameter": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "statenode": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "other": {
+          "total": 31,
+          "spec": 3,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 28
+        }
+      },
+      "xml": {
+        "total": 5,
+        "migrated": 0,
+        "v28": 0,
+        "legacyDir": 0
+      },
+      "build": {
+        "hasPom": true,
+        "hasReleaseProfile": true,
+        "hasModuleInfo": true,
+        "hasGithubActions": true,
+        "hasReleaseScript": true,
+        "hasVersionXml": true,
+        "pomVersion": "2.3.0-beta1"
+      },
+      "mavenCentral": {
+        "groupId": "io.github.compevol",
+        "artifactId": "sampled-ancestors",
+        "latest": "2.3.0-beta1",
+        "error": ""
+      }
+    },
+    {
+      "name": "MutableAlignment",
+      "path": "/Users/adru001/Git/MutableAlignment",
+      "github": "rbouckaert/MutableAlignment",
+      "maven": "",
+      "stage": "compile_tested",
+      "notes": "Ant-based (no pom.xml at root).",
+      "pathExists": true,
+      "error": "",
+      "java": {
+        "distribution": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "operator": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "logger": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "calcnode": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "parameter": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "statenode": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "other": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        }
+      },
+      "xml": {
+        "total": 2,
+        "migrated": 0,
+        "v28": 0,
+        "legacyDir": 0
+      },
+      "build": {
+        "hasPom": false,
+        "hasReleaseProfile": false,
+        "hasModuleInfo": false,
+        "hasGithubActions": false,
+        "hasReleaseScript": true,
+        "hasVersionXml": true,
+        "pomVersion": ""
+      },
+      "mavenCentral": {
+        "groupId": "",
+        "artifactId": "",
+        "latest": "",
+        "error": ""
+      }
+    },
+    {
+      "name": "ORC",
+      "path": "/Users/adru001/Git/ORC",
+      "github": "jordandouglas/ORC",
+      "maven": "io.github.jordandouglas:beast-orc",
+      "stage": "compile_tested",
+      "notes": "",
+      "pathExists": true,
+      "error": "",
+      "java": {
+        "distribution": {
+          "total": 1,
+          "spec": 1,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "operator": {
+          "total": 4,
+          "spec": 3,
+          "mixed": 1,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "logger": {
+          "total": 1,
+          "spec": 1,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "calcnode": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "parameter": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "statenode": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "other": {
+          "total": 49,
+          "spec": 1,
+          "mixed": 0,
+          "legacy": 1,
+          "neutral": 47
+        }
+      },
+      "xml": {
+        "total": 2,
+        "migrated": 0,
+        "v28": 1,
+        "legacyDir": 0
+      },
+      "build": {
+        "hasPom": true,
+        "hasReleaseProfile": true,
+        "hasModuleInfo": true,
+        "hasGithubActions": false,
+        "hasReleaseScript": true,
+        "hasVersionXml": true,
+        "pomVersion": "1.3.0-SNAPSHOT"
+      },
+      "mavenCentral": {
+        "groupId": "io.github.jordandouglas",
+        "artifactId": "beast-orc",
+        "latest": "",
+        "error": "not published (404)"
+      }
+    }
+  ]
+}

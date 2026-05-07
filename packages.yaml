@@ -1,0 +1,71 @@
+# Tracked BEAST packages for the beast3 migration.
+#
+# Fields:
+#   name:        Display name in CHECKLIST.md
+#   path:        Local checkout path (relative to this repo, or absolute)
+#   github:      "<org>/<repo>" used to link the package row
+#   maven:       "<groupId>:<artifactId>" — used to query Maven Central; omit if not published
+#   stage:       Author hint: maven_central | compile_tested | in_progress | not_started
+#   notes:       Optional free-text shown in the table
+
+packages:
+  - name: beast3
+    path: ../beast3
+    github: CompEvol/beast3
+    maven: io.github.compevol:beast3
+    stage: maven_central
+    notes: Core. Multi-module — beast-base / beast-fx / beast-pkgmgmt / beast-test-utils.
+
+  - name: BEASTLabs
+    path: ../BEASTLabs
+    github: BEAST2-Dev/BEASTlabs
+    maven: io.github.beast2-dev:beast-labs
+    stage: maven_central
+
+  - name: beast-classic
+    path: ../beast-classic
+    github: BEAST2-Dev/beast-classic
+    maven: io.github.beast2-dev:beast-classic
+    stage: maven_central
+
+  - name: CoupledMCMC
+    path: ../CoupledMCMC
+    github: CompEvol/CoupledMCMC
+    maven: io.github.compevol:coupled-mcmc
+    stage: maven_central
+
+  - name: flc
+    path: ../flc
+    github: 4ment/flc
+    maven: io.github.4ment:flc
+    stage: maven_central
+
+  - name: Mascot
+    path: ../Mascot
+    github: CompEvol/Mascot
+    maven: io.github.compevol:mascot
+    stage: maven_central
+
+  - name: morph-models
+    path: ../morph-models
+    github: CompEvol/morph-models
+    maven: io.github.compevol:morph-models
+    stage: maven_central
+
+  - name: sampled-ancestors
+    path: ../sampled-ancestors
+    github: CompEvol/sampled-ancestors
+    maven: io.github.compevol:sampled-ancestors
+    stage: maven_central
+
+  - name: MutableAlignment
+    path: ../MutableAlignment
+    github: rbouckaert/MutableAlignment
+    stage: compile_tested
+    notes: Ant-based (no pom.xml at root).
+
+  - name: ORC
+    path: ../ORC
+    github: jordandouglas/ORC
+    maven: io.github.jordandouglas:beast-orc
+    stage: compile_tested
