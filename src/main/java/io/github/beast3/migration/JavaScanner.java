@@ -48,17 +48,26 @@ public final class JavaScanner {
     private static final Set<String> STATENODE_BASES = Set.of(
             "StateNode");
 
-    /** Legacy fully-qualified imports we treat as "uses legacy types". */
-    private static final Set<String> LEGACY_FQNS = Set.of(
-            "beast.base.inference.parameter.RealParameter",
-            "beast.base.inference.parameter.IntegerParameter",
-            "beast.base.inference.parameter.BooleanParameter",
-            "beast.base.inference.parameter.RealParameterList",
-            "beast.base.inference.parameter.IntegerParameterList",
-            "beast.base.inference.parameter.BooleanParameterList",
+    /**
+     * Legacy base FQNs. A class is LEGACY when it {@code extends} or
+     * {@code implements} one of these, or any class under
+     * {@code beast.base.inference.parameter.*}. Merely importing a legacy
+     * type isn't a legacy signal — that comes from interop, not lineage.
+     *
+     * <p>Note: {@code beast.base.core.Function} is intentionally <em>not</em>
+     * here. The abstract {@code beast.base.inference.Distribution} itself
+     * declares {@code implements Function, RealScalar<Real>}, so every
+     * concrete distribution inherits {@code Function} regardless of
+     * migration status. Flagging it would mark every distribution legacy.
+     * The migration story for {@code Function} is handled by the
+     * input-rule check ({@code Input<Function>} is still a violation
+     * everywhere it appears).</p>
+     */
+    private static final Set<String> LEGACY_BASE_FQNS = Set.of(
             "beast.base.inference.distribution.Prior",
-            "beast.base.inference.distribution.ParametricDistribution",
-            "beast.base.core.Function$Constant");
+            "beast.base.inference.distribution.ParametricDistribution");
+
+    private static final String LEGACY_PARAM_PACKAGE = "beast.base.inference.parameter.";
 
     /**
      * Package prefixes that classify the *kind* of a base class regardless of
@@ -381,22 +390,14 @@ public final class JavaScanner {
     private static java.util.LinkedHashSet<String> legacyEvidence(
             Set<String> imports, Set<String> resolved, Set<String> tokens) {
         java.util.LinkedHashSet<String> out = new java.util.LinkedHashSet<>();
-        for (String imp : imports) {
-            if (LEGACY_FQNS.contains(imp)) out.add(imp);
-            else if (imp.startsWith("beast.base.inference.parameter.")) out.add(imp);
-            else if (imp.equals("beast.base.inference.distribution.Prior")) out.add(imp);
-        }
+        // Lineage-only — imports are interop and not legacy signals.
         for (String fqn : resolved) {
-            if (fqn.startsWith("beast.base.inference.parameter.")
-                    || fqn.equals("beast.base.inference.distribution.Prior")) {
+            if (LEGACY_BASE_FQNS.contains(fqn) || fqn.startsWith(LEGACY_PARAM_PACKAGE)) {
                 out.add("extends/implements " + fqn);
             }
         }
         for (String t : tokens) {
-            if (t.equals("RealParameter") || t.equals("IntegerParameter")
-                    || t.equals("BooleanParameter")) {
-                out.add("extends/implements " + t);
-            }
+            if (LEGACY_BASE_SIMPLE_NAMES.contains(t)) out.add("extends/implements " + t);
         }
         return out;
     }
@@ -404,8 +405,12 @@ public final class JavaScanner {
     private static java.util.LinkedHashSet<String> specEvidence(
             Set<String> imports, Set<String> resolved, Set<String> tokens) {
         java.util.LinkedHashSet<String> out = new java.util.LinkedHashSet<>();
-        for (String imp : imports) if (imp.startsWith("beast.base.spec.")) out.add(imp);
-        for (String fqn : resolved) if (fqn.startsWith("beast.base.spec.")) out.add("extends/implements " + fqn);
+        for (String fqn : resolved) {
+            if (fqn.startsWith("beast.base.spec.")) out.add("extends/implements " + fqn);
+        }
+        for (String t : tokens) {
+            if (SPEC_BASE_SIMPLE_NAMES.contains(t)) out.add("extends/implements " + t);
+        }
         return out;
     }
 
@@ -514,39 +519,17 @@ public final class JavaScanner {
         boolean hasSpec = false;
         boolean hasLegacy = false;
 
-        for (String imp : imports) {
-            if (imp.startsWith("beast.base.spec.")) hasSpec = true;
-            if (LEGACY_FQNS.contains(imp)) hasLegacy = true;
-            if (imp.startsWith("beast.base.inference.parameter.")) hasLegacy = true;
-            if (imp.equals("beast.base.inference.distribution.Prior")) hasLegacy = true;
-        }
-        // The base class the type extends/implements is the strongest signal:
-        // a class whose super lives under beast.base.spec.* is fully migrated
-        // even if the file otherwise has no spec imports.
+        // Lineage check — extends/implements (resolved to FQN). Imports alone
+        // are interop and not a migration signal.
         for (String fqn : resolvedFqns) {
             if (fqn.startsWith("beast.base.spec.")) hasSpec = true;
-            if (fqn.startsWith("beast.base.inference.parameter.")
-                    || fqn.equals("beast.base.inference.distribution.Prior")) {
-                hasLegacy = true;
-            }
+            if (LEGACY_BASE_FQNS.contains(fqn)) hasLegacy = true;
+            else if (fqn.startsWith(LEGACY_PARAM_PACKAGE)) hasLegacy = true;
         }
-        // Simple-name fallbacks for cases where the import couldn't resolve.
+        // Simple-name fallbacks for tokens whose import didn't resolve.
         for (String t : typeTokens) {
-            if (t.equals("RealScalarParam") || t.equals("RealVectorParam")
-                    || t.equals("IntScalarParam") || t.equals("IntVectorParam")
-                    || t.equals("BoolScalarParam") || t.equals("BoolVectorParam")
-                    || t.equals("SimplexParam")
-                    || t.equals("RealScalar") || t.equals("RealVector")
-                    || t.equals("IntScalar") || t.equals("IntVector")
-                    || t.equals("BoolScalar") || t.equals("BoolVector")
-                    || t.equals("Tensor") || t.equals("ScalarDistribution")
-                    || t.equals("TensorDistribution")) {
-                hasSpec = true;
-            }
-            if (t.equals("RealParameter") || t.equals("IntegerParameter")
-                    || t.equals("BooleanParameter")) {
-                hasLegacy = true;
-            }
+            if (SPEC_BASE_SIMPLE_NAMES.contains(t)) hasSpec = true;
+            if (LEGACY_BASE_SIMPLE_NAMES.contains(t)) hasLegacy = true;
         }
 
         if (hasSpec && hasLegacy) return Status.MIXED;
@@ -554,6 +537,26 @@ public final class JavaScanner {
         if (hasLegacy) return Status.LEGACY;
         return Status.NEUTRAL;
     }
+
+    private static final Set<String> SPEC_BASE_SIMPLE_NAMES = Set.of(
+            "RealScalarParam", "RealVectorParam",
+            "IntScalarParam", "IntVectorParam",
+            "BoolScalarParam", "BoolVectorParam",
+            "SimplexParam",
+            "RealScalar", "RealVector",
+            "IntScalar", "IntVector",
+            "BoolScalar", "BoolVector",
+            "Tensor", "Scalar", "Vector",
+            "Simplex", "IntSimplex",
+            "ScalarDistribution", "TensorDistribution");
+
+    private static final Set<String> LEGACY_BASE_SIMPLE_NAMES = Set.of(
+            "RealParameter", "IntegerParameter", "BooleanParameter",
+            "ParametricDistribution");
+            // Notable omissions: "Prior" (too easily collides with custom
+            // Prior subclasses — caught by FQN above instead), "Function"
+            // (every Distribution transitively implements it; not a useful
+            // migration signal — see LEGACY_BASE_FQNS comment).
 
     private static String appendError(String existing, String add) {
         if (existing == null || existing.isBlank()) return add;

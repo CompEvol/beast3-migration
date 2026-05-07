@@ -40,9 +40,12 @@ public final class Report {
             }
         }
 
+        /** Compact cell: classes still on a legacy base. ✅ when none. */
         public String tableCell() {
             if (total == 0) return "—";
-            return spec + " / " + total;
+            int needsWork = legacy + mixed;
+            if (needsWork == 0) return "✅ " + total;
+            return needsWork + " / " + total;
         }
     }
 

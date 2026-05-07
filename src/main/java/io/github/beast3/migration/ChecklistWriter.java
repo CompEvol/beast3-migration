@@ -44,12 +44,14 @@ public final class ChecklistWriter {
 
                 Counts:
                 * **Distributions / Operators / Loggers / CalcNodes / Parameters / StateNodes**
-                  — `migrated / total` Java classes by kind. *Migrated* means
-                  the class either imports from `beast.base.spec.*` or extends
-                  a spec base type and doesn't simultaneously import a legacy
-                  parameter type. The *Java class kinds* table below splits
-                  `migrated` into spec / mixed / legacy / neutral so you can
-                  see where each kind sits mid-migration.
+                  — Java classes by kind. Cell shows `legacy / total` —
+                  classes still extending a legacy base (`ParametricDistribution`,
+                  `Prior`, `RealParameter` / `IntegerParameter` /
+                  `BooleanParameter`). `✅ N` means none of the `N` classes have
+                  a legacy base. The *Java class kinds* detail table below
+                  splits each kind into `spec / mixed / legacy / neutral`;
+                  NEUTRAL = no migration target either way (e.g., a subclass
+                  of a base that has no spec equivalent yet).
                 * **XMLs** — `spec / v2.8 / total`: `spec` = `<beast>` root
                   has both `version="2.8"` and a `beast.base.spec.*` namespace;
                   `v2.8` = root has `version="2.8"` regardless of namespace;
@@ -102,7 +104,7 @@ public final class ChecklistWriter {
                     .append(" |\n");
         }
 
-        sb.append("\nLegend: ✅ = present, ❌ = missing, `n / m` = `migrated / total`, `—` = no data.\n");
+        sb.append("\nLegend: ✅ = clean, ❌ = missing, `legacy / total` = classes still on a legacy base, `—` = no data.\n");
         sb.append("FxTemplates show `clean / spec / total` — `clean` = uses spec types and no legacy `parameter.RealParameter`-style attrs; `spec` = body references `beast.base.spec.*` at all.\n");
         sb.append("Input rule shows `classes / violations`: classes with at least one Input declared too concretely / total violating Inputs. Concrete spec params (RealScalarParam, …) belong only on Operators; Distributions/CalcNodes/etc. should declare the interface (RealScalar, RealVector, …). 0 = ✅.\n\n");
 

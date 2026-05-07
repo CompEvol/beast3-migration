@@ -1,6 +1,6 @@
 # beast-classic — what's left
 
-> **Scanned at:** 2026-05-07T20:26:05.190106  
+> **Scanned at:** 2026-05-07T20:45:05.621942  
 > **Local checkout:** `/Users/adru001/Git/beast-classic` — commit `8baef54` on `master` — [view on GitHub](https://github.com/BEAST2-Dev/beast-classic/commit/8baef5485aa4b218655729d03c7f8d7ef3ab9668)  
 > **Pom version:** `1.7.0-SNAPSHOT`  
 > **Maven Central:** `io.github.beast2-dev:beast-classic:1.7.0-beta1`  
@@ -8,19 +8,15 @@
 
 ## Summary
 
-- **Java classes:** 39 on spec, 1 mixed, 0 legacy of 68 total
+- **Java classes:** 7 on spec, 0 mixed, 0 legacy of 68 total
 - **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 10 total
 - **BEAUti fxtemplates:** 0 clean / 0 use spec / 5 total
 - **Input rule:** 8 classes hold 16 Input(s) declared too concretely
 - **Maven Central:** 1.7.0-beta1
 
-## Java classes pending migration
+## Java migration
 
-### Other — 0 legacy, 1 mixed (of 20 total)
-
-**Mixed** (already imports spec; finish removing legacy):
-
-- `beastclassic.app.beauti.BeautiDiscreteTraitProvider` — uses `Prior`, `ParametricDistribution`
+No Java classes flagged as legacy or mixed — all relevant types are on spec or have no parameter involvement. ✅
 
 ## Inputs declared too concretely
 

@@ -7,11 +7,13 @@ cloning or updating any tracked package.
 
 Counts:
 * **Distributions / Operators / Loggers / CalcNodes / Parameters / StateNodes**
-  — `migrated / total` Java classes by kind. *Migrated* means the class
-  either imports from `beast.base.spec.*` or extends a spec base type and
-  doesn't simultaneously import a legacy parameter type. The
-  *Java class kinds* table below splits `migrated` into spec / mixed /
-  legacy / neutral so you can see where each kind sits mid-migration.
+  — Java classes by kind. Cell shows `legacy / total` — classes still
+  extending a legacy base (`ParametricDistribution`, `Prior`,
+  `RealParameter` / `IntegerParameter` / `BooleanParameter`). `✅ N` means
+  none of the `N` classes have a legacy base. The *Java class kinds*
+  detail table below splits each kind into `spec / mixed / legacy /
+  neutral`; NEUTRAL = no migration target either way (e.g., a subclass
+  of a base that has no spec equivalent yet).
 * **XMLs** — `spec / v2.8 / total`: `spec` = `<beast>` root has both
   `version="2.8"` and a `beast.base.spec.*` namespace; `v2.8` = root has
   `version="2.8"` regardless of namespace; `total` = every XML with a
@@ -27,7 +29,7 @@ exact local checkout commit it was scanned against.
 
 <!-- BEGIN AUTO -->
 
-_Last regenerated: 2026-05-07T20:26:06.149343+12:00_
+_Last regenerated: 2026-05-07T20:45:06.61311+12:00_
 
 ## Release & build status
 
@@ -48,18 +50,18 @@ _Last regenerated: 2026-05-07T20:26:06.149343+12:00_
 
 | Package | Distrs | Ops | Loggers | CalcNodes | Params | StateNodes | XMLs | FxTemplates | Input rule |
 |---|---|---|---|---|---|---|---|---|---|
-| beast3 | 54 / 70 | 13 / 47 | 8 / 16 | 13 / 20 | 4 / 5 | 9 / 22 | 0 / 0 / 78 (+81 legacy) | 6 / 10 / 10 | 56 / 105 |
-| BEASTLabs | 6 / 22 | 1 / 21 | 2 / 11 | 5 / 10 | 0 / 2 | 1 / 8 | 0 / 0 / 20 | 0 / 0 / 3 | 17 / 33 |
-| beast-classic | 9 / 9 | 11 / 11 | 9 / 11 | 7 / 14 | 1 / 1 | 0 / 2 | 0 / 0 / 10 | 0 / 0 / 5 | 8 / 16 |
-| CoupledMCMC | — | — | 0 / 3 | — | — | — | 0 / 0 / 1 | 0 / 0 / 1 | ✅ |
-| flc | — | — | — | 6 / 8 | — | — | 2 / 2 / 2 | — | ✅ |
-| Mascot | 1 / 11 | 6 / 6 | 12 / 25 | 11 / 18 | — | 0 / 2 | 1 / 1 / 4 | 0 / 0 / 5 | 23 / 45 |
-| morph-models | — | — | — | 4 / 4 | — | 0 / 1 | 2 / 2 / 2 (+4 legacy) | 0 / 1 / 1 | ✅ |
-| sampled-ancestors | 3 / 6 | 9 / 13 | 0 / 2 | 3 / 5 | — | 0 / 2 | 0 / 0 / 3 | 1 / 1 / 1 | ✅ |
+| beast3 | 13 / 70 | ✅ 47 | ✅ 16 | ✅ 20 | 1 / 5 | ✅ 22 | 0 / 0 / 78 (+81 legacy) | 6 / 10 / 10 | 56 / 105 |
+| BEASTLabs | 5 / 22 | ✅ 21 | ✅ 11 | ✅ 10 | 2 / 2 | ✅ 8 | 0 / 0 / 20 | 0 / 0 / 3 | 17 / 33 |
+| beast-classic | ✅ 9 | ✅ 11 | ✅ 11 | ✅ 14 | ✅ 1 | ✅ 2 | 0 / 0 / 10 | 0 / 0 / 5 | 8 / 16 |
+| CoupledMCMC | — | — | ✅ 3 | — | — | — | 0 / 0 / 1 | 0 / 0 / 1 | ✅ |
+| flc | — | — | — | ✅ 8 | — | — | 2 / 2 / 2 | — | ✅ |
+| Mascot | ✅ 11 | ✅ 6 | ✅ 25 | ✅ 18 | — | ✅ 2 | 1 / 1 / 4 | 0 / 0 / 5 | 23 / 45 |
+| morph-models | — | — | — | ✅ 4 | — | ✅ 1 | 2 / 2 / 2 (+4 legacy) | 0 / 1 / 1 | ✅ |
+| sampled-ancestors | 2 / 6 | ✅ 13 | ✅ 2 | ✅ 5 | — | ✅ 2 | 0 / 0 / 3 | 1 / 1 / 1 | ✅ |
 | MutableAlignment | — | — | — | — | — | — | 0 / 0 / 2 | — | ✅ |
-| ORC | 1 / 1 | 51 / 52 | 1 / 1 | — | — | — | 0 / 1 / 1 | 1 / 1 / 1 | 1 / 2 |
+| ORC | ✅ 1 | ✅ 52 | ✅ 1 | — | — | — | 0 / 1 / 1 | 1 / 1 / 1 | 1 / 2 |
 
-Legend: ✅ = present, ❌ = missing, `n / m` = `migrated / total`, `—` = no data.
+Legend: ✅ = clean, ❌ = missing, `legacy / total` = classes still on a legacy base, `—` = no data.
 FxTemplates show `clean / spec / total` — `clean` = uses spec types and no legacy `parameter.RealParameter`-style attrs; `spec` = body references `beast.base.spec.*` at all.
 Input rule shows `classes / violations`: classes with at least one Input declared too concretely / total violating Inputs. Concrete spec params (RealScalarParam, …) belong only on Operators; Distributions/CalcNodes/etc. should declare the interface (RealScalar, RealVector, …). 0 = ✅.
 
@@ -70,16 +72,16 @@ Per package, for each kind: `spec / mixed / legacy / neutral · total`.
 
 | Package | Distributions | Operators | Loggers | CalcNodes | Parameters | StateNodes |
 |---|---|---|---|---|---|---|
-| beast3 | 54 / 15 / 0 / 1 · 70 | 13 / 1 / 22 / 11 · 47 | 8 / 0 / 4 / 4 · 16 | 13 / 1 / 2 / 4 · 20 | 4 / 1 / 0 / 0 · 5 | 9 / 1 / 3 / 9 · 22 |
-| BEASTLabs | 6 / 3 / 4 / 9 · 22 | 1 / 0 / 2 / 18 · 21 | 2 / 0 / 1 / 8 · 11 | 5 / 0 / 1 / 4 · 10 | 0 / 0 / 2 / 0 · 2 | 1 / 0 / 3 / 4 · 8 |
-| beast-classic | 9 / 0 / 0 / 0 · 9 | 11 / 0 / 0 / 0 · 11 | 9 / 0 / 0 / 2 · 11 | 7 / 0 / 0 / 7 · 14 | 1 / 0 / 0 / 0 · 1 | 0 / 0 / 0 / 2 · 2 |
+| beast3 | 56 / 0 / 13 / 1 · 70 | 1 / 0 / 0 / 46 · 47 | 5 / 0 / 0 / 11 · 16 | 3 / 0 / 0 / 17 · 20 | 4 / 0 / 1 / 0 · 5 | 6 / 0 / 0 / 16 · 22 |
+| BEASTLabs | 1 / 0 / 5 / 16 · 22 | 0 / 0 / 0 / 21 · 21 | 0 / 0 / 0 / 11 · 11 | 0 / 0 / 0 / 10 · 10 | 0 / 0 / 2 / 0 · 2 | 0 / 0 / 0 / 8 · 8 |
+| beast-classic | 0 / 0 / 0 / 9 · 9 | 1 / 0 / 0 / 10 · 11 | 2 / 0 / 0 / 9 · 11 | 3 / 0 / 0 / 11 · 14 | 1 / 0 / 0 / 0 · 1 | 0 / 0 / 0 / 2 · 2 |
 | CoupledMCMC | — | — | 0 / 0 / 0 / 3 · 3 | — | — | — |
 | flc | — | — | — | 6 / 0 / 0 / 2 · 8 | — | — |
-| Mascot | 1 / 5 / 0 / 5 · 11 | 6 / 0 / 0 / 0 · 6 | 12 / 0 / 0 / 13 · 25 | 11 / 0 / 0 / 7 · 18 | — | 0 / 0 / 0 / 2 · 2 |
+| Mascot | 0 / 0 / 0 / 11 · 11 | 0 / 0 / 0 / 6 · 6 | 0 / 0 / 0 / 25 · 25 | 4 / 0 / 0 / 14 · 18 | — | 0 / 0 / 0 / 2 · 2 |
 | morph-models | — | — | — | 4 / 0 / 0 / 0 · 4 | — | 0 / 0 / 0 / 1 · 1 |
-| sampled-ancestors | 3 / 1 / 1 / 1 · 6 | 9 / 0 / 0 / 4 · 13 | 0 / 0 / 0 / 2 · 2 | 3 / 0 / 0 / 2 · 5 | — | 0 / 0 / 0 / 2 · 2 |
+| sampled-ancestors | 0 / 0 / 2 / 4 · 6 | 0 / 0 / 0 / 13 · 13 | 0 / 0 / 0 / 2 · 2 | 0 / 0 / 0 / 5 · 5 | — | 0 / 0 / 0 / 2 · 2 |
 | MutableAlignment | — | — | — | — | — | — |
-| ORC | 1 / 0 / 0 / 0 · 1 | 51 / 1 / 0 / 0 · 52 | 1 / 0 / 0 / 0 · 1 | — | — | — |
+| ORC | 1 / 0 / 0 / 0 · 1 | 0 / 0 / 0 / 52 · 52 | 0 / 0 / 0 / 1 · 1 | — | — | — |
 
 ## Diagnostics
 

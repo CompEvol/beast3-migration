@@ -200,13 +200,13 @@ public final class PackageReportWriter {
             sb.append(" (of ").append(total).append(" total)\n\n");
 
             if (!mixed.isEmpty()) {
-                sb.append("**Mixed** (already imports spec; finish removing legacy):\n\n");
+                sb.append("**Mixed** (extends a legacy base AND a spec interface — finish swapping the base):\n\n");
                 mixed.sort(Comparator.comparing(ClassRecord::fqn));
                 for (ClassRecord c : mixed) renderClassLine(sb, c);
                 sb.append('\n');
             }
             if (!legacy.isEmpty()) {
-                sb.append("**Legacy** (no spec imports yet):\n\n");
+                sb.append("**Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):\n\n");
                 legacy.sort(Comparator.comparing(ClassRecord::fqn));
                 for (ClassRecord c : legacy) renderClassLine(sb, c);
                 sb.append('\n');

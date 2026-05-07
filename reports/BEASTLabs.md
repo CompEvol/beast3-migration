@@ -1,6 +1,6 @@
 # BEASTLabs — what's left
 
-> **Scanned at:** 2026-05-07T20:26:05.014927  
+> **Scanned at:** 2026-05-07T20:45:05.428440  
 > **Local checkout:** `/Users/adru001/Git/BEASTLabs` — commit `840fd01` on `scalable-contract` — [view on GitHub](https://github.com/BEAST2-Dev/BEASTlabs/commit/840fd015587efb223a2b382f954b0e10c58fc173)  
 > **Pom version:** `2.1.0-SNAPSHOT`  
 > **Maven Central:** `io.github.beast2-dev:beast-labs:2.1.0-beta2`  
@@ -8,7 +8,7 @@
 
 ## Summary
 
-- **Java classes:** 19 on spec, 5 mixed, 13 legacy of 140 total
+- **Java classes:** 1 on spec, 0 mixed, 7 legacy of 140 total
 - **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 20 total
 - **BEAUti fxtemplates:** 0 clean / 0 use spec / 3 total
 - **Input rule:** 17 classes hold 33 Input(s) declared too concretely
@@ -16,61 +16,22 @@
 
 ## Java classes pending migration
 
-### Distributions — 4 legacy, 3 mixed (of 22 total)
+### Distributions — 5 legacy, 0 mixed (of 22 total)
 
-**Mixed** (already imports spec; finish removing legacy):
+**Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
 
+- `beastlabs.math.distributions.ExcludablePrior` — uses `Prior`
+- `beastlabs.math.distributions.ExcludablePriorIndex` — uses `Prior`
 - `beastlabs.math.distributions.GammaOneP` — uses `ParametricDistribution`
 - `beastlabs.math.distributions.SingleParamGamma` — uses `ParametricDistribution`
 - `beastlabs.math.distributions.WeibullDistribution` — uses `ParametricDistribution`
 
-**Legacy** (no spec imports yet):
-
-- `beastlabs.evolution.speciation.RandomLocalYuleModel` — uses `BooleanParameter`, `RealParameter`
-- `beastlabs.math.distributions.ExcludablePrior` — uses `Prior`, `BooleanParameter`, `RealParameter`, `IntegerParameter`
-- `beastlabs.math.distributions.ExcludablePriorIndex` — uses `Prior`, `BooleanParameter`, `RealParameter`, `IntegerParameter`
-- `beastlabs.math.distributions.MultiMRCAPriors` — uses `ParametricDistribution`
-
-### Operators — 2 legacy, 0 mixed (of 21 total)
-
-**Legacy** (no spec imports yet):
-
-- `beastlabs.evolution.operators.AttachAndUniformOperator` — uses `RealParameter`, `IntegerParameter`, `Parameter`
-- `beastlabs.evolution.operators.UniformOperatorSelective` — uses `RealParameter`, `IntegerParameter`, `Parameter`
-
-### Loggers — 1 legacy, 0 mixed (of 11 total)
-
-**Legacy** (no spec imports yet):
-
-- `beastlabs.core.util.ParameterConstrainer` — uses `RealParameter`
-
-### CalcNodes — 1 legacy, 0 mixed (of 10 total)
-
-**Legacy** (no spec imports yet):
-
-- `beastlabs.evolution.sitemodel.SiteModelGI` — uses `RealParameter`
-
 ### Parameters — 2 legacy, 0 mixed (of 2 total)
 
-**Legacy** (no spec imports yet):
+**Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
 
 - `beastlabs.core.parameter.CompoundRealParameter` — uses `RealParameter`
 - `beastlabs.core.parameter.NormalisedRealParameter` — uses `RealParameter`
-
-### StateNodes — 3 legacy, 0 mixed (of 8 total)
-
-**Legacy** (no spec imports yet):
-
-- `beastlabs.evolution.tree.ConstrainedClusterTree` — uses `ParametricDistribution`, `RealParameter`
-- `beastlabs.evolution.tree.SimpleConstrainedRandomTree`
-- `beastlabs.evolution.tree.SimpleRandomTree` — uses `ParametricDistribution`
-
-### Other — 0 legacy, 2 mixed (of 66 total)
-
-**Mixed** (already imports spec; finish removing legacy):
-
-- `beastlabs.app.beauti.DistributionViewer` — uses `Prior`
-- `beastlabs.tools.TraceStateNodeSource` — uses `RealParameter`, `IntegerParameter`, `BooleanParameter`, `Parameter`
 
 ## Inputs declared too concretely
 

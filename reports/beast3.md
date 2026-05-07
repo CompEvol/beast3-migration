@@ -1,6 +1,6 @@
 # beast3 — what's left
 
-> **Scanned at:** 2026-05-07T20:26:04.380827  
+> **Scanned at:** 2026-05-07T20:45:04.569385  
 > **Local checkout:** `/Users/adru001/Git/beast3` — commit `4e1ee72` on `target-acceptance-1d-operators` — [view on GitHub](https://github.com/CompEvol/beast3/commit/4e1ee72a7cead616230d9dce5cb43e71400615e1)  
 > **Pom version:** `2.8.0-SNAPSHOT`  
 > **Maven Central:** `io.github.compevol:beast3:2.8.0-beta5`  
@@ -10,7 +10,7 @@
 
 ## Summary
 
-- **Java classes:** 177 on spec, 29 mixed, 64 legacy of 604 total
+- **Java classes:** 93 on spec, 0 mixed, 14 legacy of 604 total
 - **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 78 total (+81 under legacy/)
 - **BEAUti fxtemplates:** 6 clean / 10 use spec / 10 total
 - **Input rule:** 56 classes hold 105 Input(s) declared too concretely
@@ -18,145 +18,29 @@
 
 ## Java classes pending migration
 
-### Distributions — 0 legacy, 15 mixed (of 70 total)
+### Distributions — 13 legacy, 0 mixed (of 70 total)
 
-**Mixed** (already imports spec; finish removing legacy):
+**Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
 
-- `beast.base.evolution.speciation.BirthDeathGernhard08Model` — uses `RealParameter`
-- `beast.base.evolution.speciation.CalibratedBirthDeathModel` — uses `RealParameter`
-- `beast.base.evolution.speciation.CalibratedYuleModel` — uses `ParametricDistribution`, `RealParameter`
-- `beast.base.evolution.speciation.GeneTreeForSpeciesTreeDistribution` — uses `RealParameter`
-- `beast.base.evolution.speciation.SpeciesTreePopFunction` — uses `RealParameter`
-- `beast.base.evolution.speciation.SpeciesTreePrior` — uses `RealParameter`
-- `beast.base.evolution.speciation.YuleModel` — uses `RealParameter`
-- `beast.base.evolution.tree.MRCAPrior` — uses `ParametricDistribution`
-- `beast.base.evolution.tree.coalescent.BayesianSkyline` — uses `IntegerParameter`
-- `beast.base.inference.distribution.ChiSquare` — uses `IntegerParameter`
+- `beast.base.inference.distribution.Beta` — uses `ParametricDistribution`
+- `beast.base.inference.distribution.ChiSquare` — uses `ParametricDistribution`
+- `beast.base.inference.distribution.Dirichlet` — uses `ParametricDistribution`
+- `beast.base.inference.distribution.Exponential` — uses `ParametricDistribution`
+- `beast.base.inference.distribution.Gamma` — uses `ParametricDistribution`
+- `beast.base.inference.distribution.InverseGamma` — uses `ParametricDistribution`
+- `beast.base.inference.distribution.LaplaceDistribution` — uses `ParametricDistribution`
 - `beast.base.inference.distribution.LogNormal`
-- `beast.base.inference.distribution.LogNormalDistributionModel` — uses `RealParameter`
-- `beast.base.inference.distribution.Poisson` — uses `RealParameter`
-- `beast.base.inference.distribution.Prior` — uses `RealParameter`, `IntegerParameter`
-- `beast.base.spec.inference.distribution.Prior` — uses `ParametricDistribution`
+- `beast.base.inference.distribution.LogNormalDistributionModel` — uses `ParametricDistribution`
+- `beast.base.inference.distribution.Normal` — uses `ParametricDistribution`
+- `beast.base.inference.distribution.OneOnX` — uses `ParametricDistribution`
+- `beast.base.inference.distribution.Poisson` — uses `ParametricDistribution`
+- `beast.base.inference.distribution.Uniform` — uses `ParametricDistribution`
 
-### Operators — 22 legacy, 1 mixed (of 47 total)
+### Parameters — 1 legacy, 0 mixed (of 5 total)
 
-**Mixed** (already imports spec; finish removing legacy):
-
-- `beast.base.inference.operator.UniformOperator` — uses `RealParameter`, `IntegerParameter`, `Parameter`
-
-**Legacy** (no spec imports yet):
-
-- `beast.base.evolution.operator.AdaptableOperatorSampler` — uses `RealParameter`, `CompoundRealParameter`, `IntegerParameter`
-- `beast.base.evolution.operator.EpochFlexOperator` — uses `IntegerParameter`
-- `beast.base.evolution.operator.ScaleOperator` — uses `BooleanParameter`, `RealParameter`
-- `beast.base.evolution.operator.SubtreeSlide` — uses `RealParameter`
-- `beast.base.evolution.operator.TipDatesScaler` — uses `RealParameter`
-- `beast.base.evolution.operator.TreeStretchOperator` — uses `RealParameter`
-- `beast.base.evolution.operator.Uniform` — uses `RealParameter`
-- `beast.base.evolution.operator.WilsonBalding` — uses `RealParameter`
-- `beast.base.evolution.operator.kernel.AdaptableVarianceMultivariateNormalOperator` — uses `RealParameter`
-- `beast.base.evolution.operator.kernel.BactrianScaleOperator` — uses `BooleanParameter`, `RealParameter`
-- `beast.base.evolution.tree.coalescent.SampleOffValues` — uses `BooleanParameter`, `ParametricDistribution`, `RealParameter`
-- `beast.base.inference.operator.BitFlipOperator` — uses `BooleanParameter`
-- `beast.base.inference.operator.DeltaExchangeOperator` — uses `RealParameter`, `IntegerParameter`
-- `beast.base.inference.operator.IntRandomWalkOperator` — uses `IntegerParameter`
-- `beast.base.inference.operator.IntUniformOperator` — uses `IntegerParameter`
-- `beast.base.inference.operator.RealRandomWalkOperator` — uses `RealParameter`
-- `beast.base.inference.operator.SwapOperator` — uses `RealParameter`, `IntegerParameter`, `BooleanParameter`, `Parameter`
-- `beast.base.inference.operator.UpDownOperator` — uses `RealParameter`, `Parameter`
-- `beast.base.inference.operator.kernel.BactrianDeltaExchangeOperator` — uses `RealParameter`, `IntegerParameter`
-- `beast.base.inference.operator.kernel.BactrianIntervalOperator` — uses `RealParameter`
-- `beast.base.inference.operator.kernel.BactrianRandomWalkOperator` — uses `RealParameter`
-- `beast.base.inference.operator.kernel.BactrianUpDownOperator` — uses `RealParameter`, `Parameter`
-
-### Loggers — 4 legacy, 0 mixed (of 16 total)
-
-**Legacy** (no spec imports yet):
-
-- `beast.base.evolution.Sum` — uses `IntegerParameter`, `BooleanParameter`
-- `beast.base.evolution.TreeWithMetaDataLogger` — uses `RealParameter`, `Parameter`
-- `beast.base.evolution.speciation.SpeciesTreeLogger` — uses `Parameter`
-- `beast.base.evolution.tree.coalescent.CompoundPopulationFunction` — uses `BooleanParameter`, `RealParameter`
-
-### CalcNodes — 2 legacy, 1 mixed (of 20 total)
-
-**Mixed** (already imports spec; finish removing legacy):
-
-- `beast.base.spec.evolution.speciation.RandomGeneTree`
-
-**Legacy** (no spec imports yet):
-
-- `beast.base.evolution.speciation.RandomGeneTree`
-- `beast.base.evolution.substitutionmodel.Frequencies` — uses `RealParameter`
-
-### Parameters — 0 legacy, 1 mixed (of 5 total)
-
-**Mixed** (already imports spec; finish removing legacy):
+**Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
 
 - `beast.base.inference.parameter.CompoundRealParameter` — uses `RealParameter`
-
-### StateNodes — 3 legacy, 1 mixed (of 22 total)
-
-**Mixed** (already imports spec; finish removing legacy):
-
-- `beast.base.spec.evolution.tree.coalescent.RandomTree` — uses `ParametricDistribution`
-
-**Legacy** (no spec imports yet):
-
-- `beast.base.evolution.alignment.FilteredAlignment` — uses `IntegerParameter`
-- `beast.base.evolution.speciation.StarBeastStartState` — uses `RealParameter`
-- `beast.base.evolution.tree.coalescent.RandomTree` — uses `ParametricDistribution`
-
-### Other — 33 legacy, 10 mixed (of 424 total)
-
-**Mixed** (already imports spec; finish removing legacy):
-
-- `beast.base.parser.XMLProducer`
-- `beastfx.app.beauti.PriorListInputEditor` — uses `Prior`, `RealParameter`
-- `beastfx.app.inputeditor.BeautiDoc` — uses `Parameter`, `Prior`
-- `beastfx.app.inputeditor.ParameterInputEditor` — uses `ParametricDistribution`, `Parameter`
-- `beastfx.app.inputeditor.ParametricDistributionInputEditor` — uses `Prior`, `ParametricDistribution`, `RealParameter`
-- `beastfx.app.inputeditor.SiteModelInputEditor` — uses `RealParameter`, `IntegerParameter`
-- `beastfx.app.methodsection.CitationPhrase`
-- `beastfx.app.methodsection.PartitionPhrase`
-- `beastfx.app.methodsection.Phrase` — uses `RealParameter`, `Parameter`
-- `beastfx.app.methodsection.SectionPhrase`
-
-**Legacy** (no spec imports yet):
-
-- `beast.base.evolution.branchratemodel.RandomLocalClockModel` — uses `BooleanParameter`, `RealParameter`
-- `beast.base.evolution.branchratemodel.StrictClockModel` — uses `RealParameter`
-- `beast.base.evolution.branchratemodel.UCRelaxedClockModel` — uses `ParametricDistribution`, `RealParameter`, `IntegerParameter`
-- `beast.base.evolution.operator.kernel.BactrianOperatorSchedule` — uses `RealParameter`
-- `beast.base.evolution.sitemodel.SiteModel` — uses `RealParameter`
-- `beast.base.evolution.speciation.CalibrationPoint` — uses `ParametricDistribution`
-- `beast.base.evolution.substitutionmodel.BinaryCovarion` — uses `RealParameter`
-- `beast.base.evolution.substitutionmodel.Blosum62`
-- `beast.base.evolution.substitutionmodel.CPREV`
-- `beast.base.evolution.substitutionmodel.Dayhoff`
-- `beast.base.evolution.substitutionmodel.EmpiricalSubstitutionModel` — uses `RealParameter`
-- `beast.base.evolution.substitutionmodel.GTR` — uses `RealParameter`
-- `beast.base.evolution.substitutionmodel.HKY` — uses `RealParameter`
-- `beast.base.evolution.substitutionmodel.JTT`
-- `beast.base.evolution.substitutionmodel.MTREV`
-- `beast.base.evolution.substitutionmodel.SYM` — uses `RealParameter`
-- `beast.base.evolution.substitutionmodel.TIM` — uses `RealParameter`
-- `beast.base.evolution.substitutionmodel.TN93` — uses `RealParameter`
-- `beast.base.evolution.substitutionmodel.TVM` — uses `RealParameter`
-- `beast.base.evolution.substitutionmodel.WAG`
-- `beast.base.evolution.tree.coalescent.ExponentialGrowth` — uses `RealParameter`
-- `beast.base.inference.distribution.DirichletSimulator` — uses `RealParameter`
-- `beast.base.inference.operator.CompoundParameterHelper` — uses `Parameter`
-- `beast.base.inference.operator.kernel.Transform` — uses `RealParameter`
-- `beast.base.parser.JSONParser` — uses `Parameter`
-- `beast.base.parser.JSONProducer` — uses `Parameter`
-- `beast.base.parser.NexusParser` — uses `ParametricDistribution`, `RealParameter`
-- `beast.base.parser.XMLParser` — uses `RealParameter`, `Parameter`
-- `beastfx.app.beauti.ClockModelListInputEditor` — uses `RealParameter`, `IntegerParameter`
-- `beastfx.app.beauti.PriorInputEditor` — uses `Prior`, `ParametricDistribution`, `RealParameter`, `IntegerParameter`
-- `beastfx.app.methodsection.implementation.ParameterMethodsText` — uses `Parameter`
-- `beastfx.app.methodsection.implementation.ParametricDistributionMethodsText` — uses `ParametricDistribution`
-- `beastfx.app.methodsection.implementation.PriorMethodsText` — uses `Prior`
 
 ## Inputs declared too concretely
 
