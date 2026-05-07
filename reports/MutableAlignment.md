@@ -1,7 +1,7 @@
 # MutableAlignment — what's left
 
-> **Scanned at:** 2026-05-07T19:54:22.111982  
-> **Local checkout:** `/Users/adru001/Git/MutableAlignment` — commit `d8204fa` on `fix-store-restore-for-mutable-tips-beast27` *(dirty working tree)* — [view on GitHub](https://github.com/rbouckaert/MutableAlignment/commit/d8204fad14f1fddeff851fabcd5ff3d8f8aa5db8)  
+> **Scanned at:** 2026-05-07T19:58:08.832814  
+> **Local checkout:** `/Users/adru001/Git/MutableAlignment` — commit `d8204fa` on `fix-store-restore-for-mutable-tips-beast27` — [view on GitHub](https://github.com/rbouckaert/MutableAlignment/commit/d8204fad14f1fddeff851fabcd5ff3d8f8aa5db8)  
 > **Stage hint:** compile-tested
 >
 > Ant-based (no pom.xml at root).

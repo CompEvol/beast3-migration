@@ -23,7 +23,11 @@ public record GitInfo(String shortSha, String fullSha, String branch, boolean di
             String shortSha = run(repo, "git", "rev-parse", "--short", "HEAD");
             String branch = run(repo, "git", "rev-parse", "--abbrev-ref", "HEAD");
             String status = run(repo, "git", "status", "--porcelain");
-            boolean dirty = !status.isBlank();
+            // "Dirty" should mean *tracked* changes only — untracked cruft
+            // (?? lines: target/, generated zips, .DS_Store) shouldn't flag
+            // a working tree as dirty.
+            boolean dirty = status.lines()
+                    .anyMatch(line -> !line.isBlank() && !line.startsWith("??"));
             return new GitInfo(shortSha, fullSha, branch, dirty);
         } catch (Exception e) {
             return MISSING;

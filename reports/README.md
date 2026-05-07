@@ -7,13 +7,13 @@ for the high-level cross-package status table.
 
 | Package | Stage | Maven Central | Local commit | Pom version |
 |---|---|---|---|---|
-| [beast3](beast3.md) | Maven Central | `2.8.0-beta5` | `4e1ee72` *(dirty)* | `2.8.0-SNAPSHOT` |
-| [BEASTLabs](BEASTLabs.md) | Maven Central | `2.1.0-beta2` | `840fd01` *(dirty)* | `2.1.0-SNAPSHOT` |
-| [beast-classic](beast-classic.md) | Maven Central | `1.7.0-beta1` | `8baef54` *(dirty)* | `1.7.0-SNAPSHOT` |
-| [CoupledMCMC](CoupledMCMC.md) | Maven Central | `1.3.0-beta1` | `39e9c05` *(dirty)* | `1.3.0-beta1` |
-| [flc](flc.md) | Maven Central | `1.3.0-beta1` | `8876fe3` *(dirty)* | `1.3.0-beta1` |
+| [beast3](beast3.md) | Maven Central | `2.8.0-beta5` | `4e1ee72` | `2.8.0-SNAPSHOT` |
+| [BEASTLabs](BEASTLabs.md) | Maven Central | `2.1.0-beta2` | `840fd01` | `2.1.0-SNAPSHOT` |
+| [beast-classic](beast-classic.md) | Maven Central | `1.7.0-beta1` | `8baef54` | `1.7.0-SNAPSHOT` |
+| [CoupledMCMC](CoupledMCMC.md) | Maven Central | `1.3.0-beta1` | `39e9c05` | `1.3.0-beta1` |
+| [flc](flc.md) | Maven Central | `1.3.0-beta1` | `8876fe3` | `1.3.0-beta1` |
 | [Mascot](Mascot.md) | Maven Central | `3.1.0-beta1` | `f9d1aca` | `3.1.0-beta1` |
 | [morph-models](morph-models.md) | Maven Central | `1.3.0-beta3` | `db64781` | `1.3.0-beta3` |
 | [sampled-ancestors](sampled-ancestors.md) | Maven Central | `2.3.0-beta1` | `09bc95c` | `2.3.0-beta1` |
-| [MutableAlignment](MutableAlignment.md) | compile-tested | — | `d8204fa` *(dirty)* | — |
+| [MutableAlignment](MutableAlignment.md) | compile-tested | — | `d8204fa` | — |
 | [ORC](ORC.md) | compile-tested | ❌ | `bb6bdbb` | `1.3.0-SNAPSHOT` |

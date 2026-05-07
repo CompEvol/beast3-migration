@@ -1,7 +1,7 @@
 # beast-classic — what's left
 
-> **Scanned at:** 2026-05-07T19:54:21.211892  
-> **Local checkout:** `/Users/adru001/Git/beast-classic` — commit `8baef54` on `master` *(dirty working tree)* — [view on GitHub](https://github.com/BEAST2-Dev/beast-classic/commit/8baef5485aa4b218655729d03c7f8d7ef3ab9668)  
+> **Scanned at:** 2026-05-07T19:58:08.070171  
+> **Local checkout:** `/Users/adru001/Git/beast-classic` — commit `8baef54` on `master` — [view on GitHub](https://github.com/BEAST2-Dev/beast-classic/commit/8baef5485aa4b218655729d03c7f8d7ef3ab9668)  
 > **Pom version:** `1.7.0-SNAPSHOT`  
 > **Maven Central:** `io.github.beast2-dev:beast-classic:1.7.0-beta1`  
 > **Stage hint:** Maven Central

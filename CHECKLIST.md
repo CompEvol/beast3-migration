@@ -27,7 +27,7 @@ exact local checkout commit it was scanned against.
 
 <!-- BEGIN AUTO -->
 
-_Last regenerated: 2026-05-07T19:54:22.371551+12:00_
+_Last regenerated: 2026-05-07T19:58:09.021309+12:00_
 
 ## Release & build status
 
