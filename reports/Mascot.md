@@ -1,6 +1,6 @@
 # Mascot — what's left
 
-> **Scanned at:** 2026-05-07T20:16:33.343870  
+> **Scanned at:** 2026-05-07T20:26:05.563583  
 > **Local checkout:** `/Users/adru001/Git/Mascot` — commit `f9d1aca` on `master` — [view on GitHub](https://github.com/CompEvol/Mascot/commit/f9d1aca862f4c94a3e174e63fff51c8d7588b800)  
 > **Pom version:** `3.1.0-beta1`  
 > **Maven Central:** `io.github.compevol:mascot:3.1.0-beta1`  
@@ -11,6 +11,7 @@
 - **Java classes:** 33 on spec, 5 mixed, 2 legacy of 112 total
 - **Example XMLs:** 1 on spec / 1 on `version="2.8"` / 4 total
 - **BEAUti fxtemplates:** 0 clean / 0 use spec / 5 total
+- **Input rule:** 23 classes hold 45 Input(s) declared too concretely
 - **Maven Central:** 3.1.0-beta1
 
 ## Java classes pending migration
@@ -31,6 +32,90 @@
 
 - `mascot.app.beauti.NeDynamicsListInputEditor` — uses `Prior`, `RealParameter`
 - `mascot.util.BEAUtiConnector` — uses `Prior`
+
+## Inputs declared too concretely
+
+> Concrete spec params (`RealScalarParam`, `RealVectorParam`, …) belong only on Operators, which need to write the parameter. Distributions, CalcNodes, Loggers and other read-only holders should declare the interface (`RealScalar`, `RealVector`, …) so adapters and transforms can be substituted. Legacy `RealParameter` / `Function` Inputs are violations everywhere.
+
+### Distributions (5)
+
+- `mascot.glmmodel.ErrorSmoothing`
+    - legacy: `Input<Function>`
+- `mascot.skyline.GLMPrior`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+    - concrete: `Input<BoolVectorParam>`
+- `mascot.skyline.GrowthRateSmoothingPrior`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+- `mascot.skyline.LogSmoothingPrior`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+- `mascot.util.LargerThan`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+
+### Loggers (10)
+
+- `mascot.distribution.MappedMascot`
+    - concrete: `Input<BoolVectorParam>`
+- `mascot.distribution.MappedMascotWithTipSampling`
+    - concrete: `Input<BoolVectorParam>`
+- `mascot.dynamics.Constant`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+- `mascot.dynamics.ConstantBSSVS`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+    - concrete: `Input<BoolVectorParam>`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+- `mascot.dynamics.DynamicEffectivePopulationSizesBSSVS`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+    - concrete: `Input<BoolVectorParam>`
+- `mascot.dynamics.StructuredMigrationSkyline`
+    - concrete: `Input<BoolVectorParam>`
+- `mascot.dynamics.StructuredSkyline`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+    - concrete: `Input<BoolVectorParam>`
+- `mascot.glmmodel.GlmModel`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+    - concrete: `Input<BoolVectorParam>`
+    - concrete: `Input<RealScalarParam<Real>>`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+- `mascot.logger.StructuredTreeLogger`
+    - concrete: `Input<BoolVectorParam>`
+- `mascot.logger.mappedProbLogger`
+    - concrete: `Input<BoolVectorParam>`
+
+### CalcNodes (7)
+
+- `mascot.parameterdynamics.ConstantNe`
+    - concrete: `Input<RealScalarParam<Real>>`
+- `mascot.parameterdynamics.ExponentialNe`
+    - concrete: `Input<RealScalarParam<Real>>`
+    - concrete: `Input<RealScalarParam<Real>>`
+- `mascot.parameterdynamics.LogLinearGLM`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+    - concrete: `Input<BoolVectorParam>`
+    - concrete: `Input<RealScalarParam<Real>>`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+- `mascot.parameterdynamics.LogisticNe`
+    - concrete: `Input<RealScalarParam<Real>>`
+    - concrete: `Input<RealScalarParam<Real>>`
+    - concrete: `Input<RealScalarParam<Real>>`
+- `mascot.parameterdynamics.NeSplineInterpolation`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+- `mascot.parameterdynamics.Skygrowth`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+- `mascot.parameterdynamics.StructuredSkygrid`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+
+### Other (1)
+
+- `mascot.glmmodel.CovariateList`
+    - concrete: `Input<BoolVectorParam>`
 
 ## Example XMLs pending migration
 

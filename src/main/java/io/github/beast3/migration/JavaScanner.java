@@ -114,6 +114,26 @@ public final class JavaScanner {
     private static final Set<String> LOGGER_FQNS = Set.of(
             "beast.base.core.Loggable");
 
+    /** Spec interface types — what Distributions/CalcNodes should declare in Inputs. */
+    private static final Set<String> INPUT_INTERFACE_NAMES = Set.of(
+            "RealScalar", "RealVector",
+            "IntScalar", "IntVector",
+            "BoolScalar", "BoolVector",
+            "Tensor", "Scalar", "Vector",
+            "Simplex", "IntSimplex");
+
+    /** Concrete spec param types — required only when the holder mutates the param. */
+    private static final Set<String> INPUT_CONCRETE_SPEC_NAMES = Set.of(
+            "RealScalarParam", "RealVectorParam",
+            "IntScalarParam", "IntVectorParam",
+            "BoolScalarParam", "BoolVectorParam",
+            "SimplexParam");
+
+    private static final Set<String> INPUT_LEGACY_NAMES = Set.of(
+            "RealParameter", "IntegerParameter", "BooleanParameter",
+            "RealParameterList", "IntegerParameterList", "BooleanParameterList",
+            "Function");
+
     private static final Pattern BLOCK_COMMENT = Pattern.compile("/\\*[\\s\\S]*?\\*/");
     private static final Pattern LINE_COMMENT = Pattern.compile("(?m)//[^\\n]*");
     private static final Pattern PACKAGE_DECL = Pattern.compile("(?m)^\\s*package\\s+([\\w.]+)\\s*;");
@@ -183,6 +203,8 @@ public final class JavaScanner {
             boolean[] ownStatus = computeOwnStatus(tokens, importFqns, resolved);
             String primaryExtendsFqn = resolvePrimaryExtends(extendsClause, simpleToFqn, pkgName);
 
+            java.util.List<InputDecl> inputs = extractInputs(stripped);
+
             // Counts are deferred until resolveAndTally() so subclass status
             // can be inherited from in-package parents.
             report.classes.add(new ClassRecord(
@@ -196,8 +218,83 @@ public final class JavaScanner {
                     ownKind,
                     ownStatus[0],
                     ownStatus[1],
-                    primaryExtendsFqn));
+                    primaryExtendsFqn,
+                    java.util.List.copyOf(inputs)));
         }
+    }
+
+    /**
+     * Extracts every {@code Input<X>} field type argument from the source.
+     * Walks balanced angle brackets so nested generics like
+     * {@code Input<RealScalar<? extends PositiveReal>>} work.
+     */
+    static java.util.List<InputDecl> extractInputs(String src) {
+        java.util.List<InputDecl> out = new java.util.ArrayList<>();
+        int i = 0;
+        while ((i = src.indexOf("Input<", i)) != -1) {
+            // Avoid matching identifiers that end in `Input` (e.g. `MyInput<`).
+            if (i > 0 && (Character.isJavaIdentifierPart(src.charAt(i - 1))
+                    || src.charAt(i - 1) == '.')) {
+                i += 6;
+                continue;
+            }
+            int start = i + 6;
+            int depth = 1;
+            int j = start;
+            while (j < src.length() && depth > 0) {
+                char c = src.charAt(j);
+                if (c == '<') depth++;
+                else if (c == '>') depth--;
+                j++;
+            }
+            if (depth != 0) break;
+            String inner = src.substring(start, j - 1).trim();
+            // Confirm this looks like a field declaration: next non-whitespace
+            // tokens should be an identifier and either `=` or `;`. Skip if it
+            // looks like a method return type (`Input<X> foo()`), local var,
+            // generic method type bound, etc.
+            int k = j;
+            while (k < src.length() && Character.isWhitespace(src.charAt(k))) k++;
+            // a field name at minimum
+            if (k >= src.length() || !Character.isJavaIdentifierStart(src.charAt(k))) {
+                i = j;
+                continue;
+            }
+            int nameStart = k;
+            while (k < src.length() && Character.isJavaIdentifierPart(src.charAt(k))) k++;
+            int nameEnd = k;
+            while (k < src.length() && Character.isWhitespace(src.charAt(k))) k++;
+            if (k >= src.length() || (src.charAt(k) != '=' && src.charAt(k) != ';')) {
+                i = j;
+                continue;
+            }
+            // Ignore trivial: empty name suggests bad parse.
+            if (nameEnd > nameStart) {
+                out.add(new InputDecl(inner, classifyInputCarrier(inner)));
+            }
+            i = j;
+        }
+        return out;
+    }
+
+    private static InputDecl.Carrier classifyInputCarrier(String inner) {
+        // Strip leading wildcards / bounds: `? extends X` → X.
+        String head = inner;
+        int lt = head.indexOf('<');
+        if (lt >= 0) head = head.substring(0, lt);
+        int comma = head.indexOf(',');
+        if (comma >= 0) head = head.substring(0, comma);
+        head = head.trim();
+        if (head.startsWith("?")) {
+            int sp = head.lastIndexOf(' ');
+            if (sp > 0) head = head.substring(sp + 1).trim();
+        }
+        int dot = head.lastIndexOf('.');
+        String simple = dot >= 0 ? head.substring(dot + 1) : head;
+        if (INPUT_INTERFACE_NAMES.contains(simple)) return InputDecl.Carrier.INTERFACE;
+        if (INPUT_CONCRETE_SPEC_NAMES.contains(simple)) return InputDecl.Carrier.CONCRETE_SPEC;
+        if (INPUT_LEGACY_NAMES.contains(simple)) return InputDecl.Carrier.LEGACY;
+        return InputDecl.Carrier.OTHER;
     }
 
     /**
@@ -234,6 +331,12 @@ public final class JavaScanner {
             }
             c.setEffective(effKind, ClassRecord.toStatus(effSpec, effLegacy));
             report.javaCounts.get(effKind).add(c.status());
+
+            int v = c.ruleViolatingInputs().size();
+            if (v > 0) {
+                report.classesWithInputViolations++;
+                report.inputViolations += v;
+            }
         }
     }
 

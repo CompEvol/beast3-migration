@@ -46,6 +46,9 @@ public final class ClassRecord {
      */
     public final String primaryExtendsFqn;
 
+    /** All {@code Input<X>} field declarations seen in the file. */
+    public final List<InputDecl> inputs;
+
     private Kind kind;
     private Status status;
 
@@ -60,7 +63,8 @@ public final class ClassRecord {
             Kind ownKind,
             boolean ownHasSpec,
             boolean ownHasLegacy,
-            String primaryExtendsFqn) {
+            String primaryExtendsFqn,
+            List<InputDecl> inputs) {
         this.file = file;
         this.packageName = packageName;
         this.simpleName = simpleName;
@@ -72,6 +76,7 @@ public final class ClassRecord {
         this.ownHasSpec = ownHasSpec;
         this.ownHasLegacy = ownHasLegacy;
         this.primaryExtendsFqn = primaryExtendsFqn;
+        this.inputs = inputs;
         this.kind = ownKind;
         this.status = toStatus(ownHasSpec, ownHasLegacy);
     }
@@ -88,6 +93,26 @@ public final class ClassRecord {
 
     public String fqn() {
         return packageName.isBlank() ? simpleName : packageName + "." + simpleName;
+    }
+
+    /**
+     * Inputs that violate the "concrete spec params only in Operators" rule
+     * given the class's effective {@link #kind}. For Operators only LEGACY
+     * inputs are violations; for everything else CONCRETE_SPEC and LEGACY
+     * are both violations.
+     */
+    public List<InputDecl> ruleViolatingInputs() {
+        java.util.List<InputDecl> out = new java.util.ArrayList<>();
+        for (InputDecl d : inputs) {
+            switch (d.carrier()) {
+                case LEGACY -> out.add(d);
+                case CONCRETE_SPEC -> {
+                    if (kind != Kind.OPERATOR) out.add(d);
+                }
+                default -> { /* INTERFACE and OTHER are fine in any holder. */ }
+            }
+        }
+        return out;
     }
 
     static Status toStatus(boolean hasSpec, boolean hasLegacy) {

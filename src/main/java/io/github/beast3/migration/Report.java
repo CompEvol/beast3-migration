@@ -59,6 +59,11 @@ public final class Report {
     public int fxWithSpec;          // fxtemplates whose body references beast.base.spec.*
     public int fxClean;             // fxtemplates with spec body AND no legacy parameter spec= attrs
 
+    /** Classes with at least one Input violating the carrier rule. */
+    public int classesWithInputViolations;
+    /** Total number of Input violations across the package. */
+    public int inputViolations;
+
     public boolean hasPom;
     public boolean hasReleaseProfile;
     public boolean hasModuleInfo;
@@ -119,6 +124,11 @@ public final class Report {
         fx.put("withSpec", fxWithSpec);
         fx.put("clean", fxClean);
         m.put("fxTemplates", fx);
+
+        Map<String, Object> ir = new LinkedHashMap<>();
+        ir.put("classesWithViolations", classesWithInputViolations);
+        ir.put("totalViolations", inputViolations);
+        m.put("inputRule", ir);
 
         Map<String, Object> build = new LinkedHashMap<>();
         build.put("hasPom", hasPom);

@@ -86,8 +86,8 @@ public final class ChecklistWriter {
         sb.append('\n');
 
         sb.append("## Migration progress (Java + XML)\n\n");
-        sb.append("| Package | Distrs | Ops | Loggers | CalcNodes | Params | StateNodes | XMLs | FxTemplates |\n");
-        sb.append("|---|---|---|---|---|---|---|---|---|\n");
+        sb.append("| Package | Distrs | Ops | Loggers | CalcNodes | Params | StateNodes | XMLs | FxTemplates | Input rule |\n");
+        sb.append("|---|---|---|---|---|---|---|---|---|---|\n");
         for (Report r : reports) {
             sb.append("| ").append(r.entry.name())
                     .append(" | ").append(r.javaCounts.get(Kind.DISTRIBUTION).tableCell())
@@ -98,11 +98,13 @@ public final class ChecklistWriter {
                     .append(" | ").append(r.javaCounts.get(Kind.STATENODE).tableCell())
                     .append(" | ").append(xmlCell(r))
                     .append(" | ").append(fxCell(r))
+                    .append(" | ").append(inputRuleCell(r))
                     .append(" |\n");
         }
 
         sb.append("\nLegend: ✅ = present, ❌ = missing, `n / m` = `migrated / total`, `—` = no data.\n");
-        sb.append("FxTemplates show `clean / spec / total` — `clean` = uses spec types and no legacy `parameter.RealParameter`-style attrs; `spec` = body references `beast.base.spec.*` at all.\n\n");
+        sb.append("FxTemplates show `clean / spec / total` — `clean` = uses spec types and no legacy `parameter.RealParameter`-style attrs; `spec` = body references `beast.base.spec.*` at all.\n");
+        sb.append("Input rule shows `classes / violations`: classes with at least one Input declared too concretely / total violating Inputs. Concrete spec params (RealScalarParam, …) belong only on Operators; Distributions/CalcNodes/etc. should declare the interface (RealScalar, RealVector, …). 0 = ✅.\n\n");
 
         // Detailed breakdown — useful when a class is mixed (in progress).
         sb.append("## Java class kinds (with mixed/legacy breakdown)\n\n");
@@ -163,6 +165,11 @@ public final class ChecklistWriter {
     private static String fxCell(Report r) {
         if (r.fxTotal == 0) return "—";
         return r.fxClean + " / " + r.fxWithSpec + " / " + r.fxTotal;
+    }
+
+    private static String inputRuleCell(Report r) {
+        if (r.inputViolations == 0 && r.classesWithInputViolations == 0) return "✅";
+        return r.classesWithInputViolations + " / " + r.inputViolations;
     }
 
     private static String xmlCell(Report r) {

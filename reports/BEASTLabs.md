@@ -1,6 +1,6 @@
 # BEASTLabs — what's left
 
-> **Scanned at:** 2026-05-07T20:16:32.796741  
+> **Scanned at:** 2026-05-07T20:26:05.014927  
 > **Local checkout:** `/Users/adru001/Git/BEASTLabs` — commit `840fd01` on `scalable-contract` — [view on GitHub](https://github.com/BEAST2-Dev/BEASTlabs/commit/840fd015587efb223a2b382f954b0e10c58fc173)  
 > **Pom version:** `2.1.0-SNAPSHOT`  
 > **Maven Central:** `io.github.beast2-dev:beast-labs:2.1.0-beta2`  
@@ -11,6 +11,7 @@
 - **Java classes:** 19 on spec, 5 mixed, 13 legacy of 140 total
 - **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 20 total
 - **BEAUti fxtemplates:** 0 clean / 0 use spec / 3 total
+- **Input rule:** 17 classes hold 33 Input(s) declared too concretely
 - **Maven Central:** 2.1.0-beta2
 
 ## Java classes pending migration
@@ -70,6 +71,75 @@
 
 - `beastlabs.app.beauti.DistributionViewer` — uses `Prior`
 - `beastlabs.tools.TraceStateNodeSource` — uses `RealParameter`, `IntegerParameter`, `BooleanParameter`, `Parameter`
+
+## Inputs declared too concretely
+
+> Concrete spec params (`RealScalarParam`, `RealVectorParam`, …) belong only on Operators, which need to write the parameter. Distributions, CalcNodes, Loggers and other read-only holders should declare the interface (`RealScalar`, `RealVector`, …) so adapters and transforms can be substituted. Legacy `RealParameter` / `Function` Inputs are violations everywhere.
+
+### Distributions (8)
+
+- `beastlabs.evolution.speciation.RandomLocalYuleModel`
+    - legacy: `Input<RealParameter>`
+    - legacy: `Input<BooleanParameter>`
+    - legacy: `Input<RealParameter>`
+- `beastlabs.math.distributions.BernoulliDistribution`
+    - concrete: `Input<RealVectorParam<? extends UnitInterval>>`
+    - concrete: `Input<BoolVectorParam>`
+    - concrete: `Input<IntScalarParam<? extends NonNegativeInt>>`
+- `beastlabs.math.distributions.BetaRange`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+- `beastlabs.math.distributions.ExcludablePrior`
+    - legacy: `Input<BooleanParameter>`
+- `beastlabs.math.distributions.ExcludablePriorIndex`
+    - legacy: `Input<BooleanParameter>`
+    - legacy: `Input<IntegerParameter>`
+- `beastlabs.math.distributions.MixtureDistribution`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+- `beastlabs.math.distributions.RandomCompositionPositive`
+    - concrete: `Input<IntVectorParam<? extends PositiveInt>>`
+    - concrete: `Input<IntScalarParam<? extends PositiveInt>>`
+    - concrete: `Input<IntScalarParam<? extends PositiveInt>>`
+- `beastlabs.prevalence.PrevalenceLikelihood`
+    - concrete: `Input<IntScalarParam<? extends PositiveInt>>`
+
+### Loggers (4)
+
+- `beastlabs.core.FilteredValuable`
+    - legacy: `Input<Function>`
+- `beastlabs.core.util.LoggableSum`
+    - legacy: `Input<Function>`
+- `beastlabs.core.util.ParameterConstrainer`
+    - legacy: `Input<RealParameter>`
+    - legacy: `Input<RealParameter>`
+    - legacy: `Input<RealParameter>`
+- `beastlabs.core.util.Slice`
+    - legacy: `Input<Function>`
+
+### CalcNodes (2)
+
+- `beastlabs.evolution.sitemodel.SiteModelGI`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+- `beastlabs.evolution.substitutionmodel.EpochSubstitutionModel`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+
+### StateNodes (2)
+
+- `beastlabs.evolution.tree.ConstrainedClusterTree`
+    - legacy: `Input<RealParameter>`
+- `beastlabs.evolution.tree.coalescent.StructuredCoalescentTree`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+    - concrete: `Input<IntVectorParam<? extends NonNegativeInt>>`
+
+### Other (1)
+
+- `beastlabs.evolution.tree.InitParamFromTree`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
 
 ## Example XMLs pending migration
 

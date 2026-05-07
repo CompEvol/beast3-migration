@@ -27,7 +27,7 @@ exact local checkout commit it was scanned against.
 
 <!-- BEGIN AUTO -->
 
-_Last regenerated: 2026-05-07T20:16:33.966652+12:00_
+_Last regenerated: 2026-05-07T20:26:06.149343+12:00_
 
 ## Release & build status
 
@@ -46,21 +46,22 @@ _Last regenerated: 2026-05-07T20:16:33.966652+12:00_
 
 ## Migration progress (Java + XML)
 
-| Package | Distrs | Ops | Loggers | CalcNodes | Params | StateNodes | XMLs | FxTemplates |
-|---|---|---|---|---|---|---|---|---|
-| beast3 | 54 / 70 | 13 / 47 | 8 / 16 | 13 / 20 | 4 / 5 | 9 / 22 | 0 / 0 / 78 (+81 legacy) | 6 / 10 / 10 |
-| BEASTLabs | 6 / 22 | 1 / 21 | 2 / 11 | 5 / 10 | 0 / 2 | 1 / 8 | 0 / 0 / 20 | 0 / 0 / 3 |
-| beast-classic | 9 / 9 | 11 / 11 | 9 / 11 | 7 / 14 | 1 / 1 | 0 / 2 | 0 / 0 / 10 | 0 / 0 / 5 |
-| CoupledMCMC | — | — | 0 / 3 | — | — | — | 0 / 0 / 1 | 0 / 0 / 1 |
-| flc | — | — | — | 6 / 8 | — | — | 2 / 2 / 2 | — |
-| Mascot | 1 / 11 | 6 / 6 | 12 / 25 | 11 / 18 | — | 0 / 2 | 1 / 1 / 4 | 0 / 0 / 5 |
-| morph-models | — | — | — | 4 / 4 | — | 0 / 1 | 2 / 2 / 2 (+4 legacy) | 0 / 1 / 1 |
-| sampled-ancestors | 3 / 6 | 9 / 13 | 0 / 2 | 3 / 5 | — | 0 / 2 | 0 / 0 / 3 | 1 / 1 / 1 |
-| MutableAlignment | — | — | — | — | — | — | 0 / 0 / 2 | — |
-| ORC | 1 / 1 | 51 / 52 | 1 / 1 | — | — | — | 0 / 1 / 1 | 1 / 1 / 1 |
+| Package | Distrs | Ops | Loggers | CalcNodes | Params | StateNodes | XMLs | FxTemplates | Input rule |
+|---|---|---|---|---|---|---|---|---|---|
+| beast3 | 54 / 70 | 13 / 47 | 8 / 16 | 13 / 20 | 4 / 5 | 9 / 22 | 0 / 0 / 78 (+81 legacy) | 6 / 10 / 10 | 56 / 105 |
+| BEASTLabs | 6 / 22 | 1 / 21 | 2 / 11 | 5 / 10 | 0 / 2 | 1 / 8 | 0 / 0 / 20 | 0 / 0 / 3 | 17 / 33 |
+| beast-classic | 9 / 9 | 11 / 11 | 9 / 11 | 7 / 14 | 1 / 1 | 0 / 2 | 0 / 0 / 10 | 0 / 0 / 5 | 8 / 16 |
+| CoupledMCMC | — | — | 0 / 3 | — | — | — | 0 / 0 / 1 | 0 / 0 / 1 | ✅ |
+| flc | — | — | — | 6 / 8 | — | — | 2 / 2 / 2 | — | ✅ |
+| Mascot | 1 / 11 | 6 / 6 | 12 / 25 | 11 / 18 | — | 0 / 2 | 1 / 1 / 4 | 0 / 0 / 5 | 23 / 45 |
+| morph-models | — | — | — | 4 / 4 | — | 0 / 1 | 2 / 2 / 2 (+4 legacy) | 0 / 1 / 1 | ✅ |
+| sampled-ancestors | 3 / 6 | 9 / 13 | 0 / 2 | 3 / 5 | — | 0 / 2 | 0 / 0 / 3 | 1 / 1 / 1 | ✅ |
+| MutableAlignment | — | — | — | — | — | — | 0 / 0 / 2 | — | ✅ |
+| ORC | 1 / 1 | 51 / 52 | 1 / 1 | — | — | — | 0 / 1 / 1 | 1 / 1 / 1 | 1 / 2 |
 
 Legend: ✅ = present, ❌ = missing, `n / m` = `migrated / total`, `—` = no data.
 FxTemplates show `clean / spec / total` — `clean` = uses spec types and no legacy `parameter.RealParameter`-style attrs; `spec` = body references `beast.base.spec.*` at all.
+Input rule shows `classes / violations`: classes with at least one Input declared too concretely / total violating Inputs. Concrete spec params (RealScalarParam, …) belong only on Operators; Distributions/CalcNodes/etc. should declare the interface (RealScalar, RealVector, …). 0 = ✅.
 
 ## Java class kinds (with mixed/legacy breakdown)
 

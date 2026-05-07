@@ -1,6 +1,6 @@
 # beast3 — what's left
 
-> **Scanned at:** 2026-05-07T20:16:32.136881  
+> **Scanned at:** 2026-05-07T20:26:04.380827  
 > **Local checkout:** `/Users/adru001/Git/beast3` — commit `4e1ee72` on `target-acceptance-1d-operators` — [view on GitHub](https://github.com/CompEvol/beast3/commit/4e1ee72a7cead616230d9dce5cb43e71400615e1)  
 > **Pom version:** `2.8.0-SNAPSHOT`  
 > **Maven Central:** `io.github.compevol:beast3:2.8.0-beta5`  
@@ -13,6 +13,7 @@
 - **Java classes:** 177 on spec, 29 mixed, 64 legacy of 604 total
 - **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 78 total (+81 under legacy/)
 - **BEAUti fxtemplates:** 6 clean / 10 use spec / 10 total
+- **Input rule:** 56 classes hold 105 Input(s) declared too concretely
 - **Maven Central:** 2.8.0-beta5
 
 ## Java classes pending migration
@@ -156,6 +157,189 @@
 - `beastfx.app.methodsection.implementation.ParameterMethodsText` — uses `Parameter`
 - `beastfx.app.methodsection.implementation.ParametricDistributionMethodsText` — uses `ParametricDistribution`
 - `beastfx.app.methodsection.implementation.PriorMethodsText` — uses `Prior`
+
+## Inputs declared too concretely
+
+> Concrete spec params (`RealScalarParam`, `RealVectorParam`, …) belong only on Operators, which need to write the parameter. Distributions, CalcNodes, Loggers and other read-only holders should declare the interface (`RealScalar`, `RealVector`, …) so adapters and transforms can be substituted. Legacy `RealParameter` / `Function` Inputs are violations everywhere.
+
+### Distributions (19)
+
+- `beast.base.evolution.speciation.BirthDeathGernhard08Model`
+    - legacy: `Input<RealParameter>`
+    - legacy: `Input<RealParameter>`
+- `beast.base.evolution.speciation.CalibratedBirthDeathModel`
+    - legacy: `Input<RealParameter>`
+    - legacy: `Input<RealParameter>`
+    - legacy: `Input<RealParameter>`
+- `beast.base.evolution.speciation.CalibratedYuleModel`
+    - legacy: `Input<RealParameter>`
+- `beast.base.evolution.speciation.SpeciesTreePopFunction`
+    - legacy: `Input<RealParameter>`
+    - legacy: `Input<RealParameter>`
+- `beast.base.evolution.speciation.SpeciesTreePrior`
+    - legacy: `Input<RealParameter>`
+- `beast.base.evolution.speciation.YuleModel`
+    - legacy: `Input<RealParameter>`
+    - legacy: `Input<RealParameter>`
+- `beast.base.evolution.tree.coalescent.BayesianSkyline`
+    - legacy: `Input<Function>`
+    - legacy: `Input<IntegerParameter>`
+- `beast.base.inference.distribution.Beta`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+- `beast.base.inference.distribution.ChiSquare`
+    - legacy: `Input<IntegerParameter>`
+- `beast.base.inference.distribution.Dirichlet`
+    - legacy: `Input<Function>`
+- `beast.base.inference.distribution.Exponential`
+    - legacy: `Input<Function>`
+- `beast.base.inference.distribution.Gamma`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+- `beast.base.inference.distribution.InverseGamma`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+- `beast.base.inference.distribution.LaplaceDistribution`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+- `beast.base.inference.distribution.LogNormalDistributionModel`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+- `beast.base.inference.distribution.MarkovChainDistribution`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+- `beast.base.inference.distribution.Normal`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+- `beast.base.inference.distribution.Poisson`
+    - legacy: `Input<Function>`
+- `beast.base.inference.distribution.Prior`
+    - legacy: `Input<Function>`
+
+### Operators (13)
+
+- `beast.base.evolution.operator.EpochFlexOperator`
+    - legacy: `Input<IntegerParameter>`
+- `beast.base.evolution.operator.ScaleOperator`
+    - legacy: `Input<RealParameter>`
+    - legacy: `Input<BooleanParameter>`
+- `beast.base.evolution.operator.TreeStretchOperator`
+    - legacy: `Input<RealParameter>`
+- `beast.base.evolution.tree.coalescent.SampleOffValues`
+    - legacy: `Input<RealParameter>`
+    - legacy: `Input<BooleanParameter>`
+- `beast.base.inference.operator.BitFlipOperator`
+    - legacy: `Input<BooleanParameter>`
+- `beast.base.inference.operator.DeltaExchangeOperator`
+    - legacy: `Input<IntegerParameter>`
+- `beast.base.inference.operator.IntRandomWalkOperator`
+    - legacy: `Input<IntegerParameter>`
+- `beast.base.inference.operator.IntUniformOperator`
+    - legacy: `Input<IntegerParameter>`
+- `beast.base.inference.operator.RealRandomWalkOperator`
+    - legacy: `Input<RealParameter>`
+- `beast.base.inference.operator.SwapOperator`
+    - legacy: `Input<RealParameter>`
+    - legacy: `Input<IntegerParameter>`
+    - legacy: `Input<BooleanParameter>`
+- `beast.base.inference.operator.kernel.BactrianDeltaExchangeOperator`
+    - legacy: `Input<IntegerParameter>`
+- `beast.base.inference.operator.kernel.BactrianIntervalOperator`
+    - legacy: `Input<RealParameter>`
+- `beast.base.inference.operator.kernel.BactrianRandomWalkOperator`
+    - legacy: `Input<RealParameter>`
+
+### Loggers (3)
+
+- `beast.base.evolution.speciation.SpeciesTreeLogger`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+- `beast.base.evolution.tree.coalescent.CompoundPopulationFunction`
+    - legacy: `Input<RealParameter>`
+    - legacy: `Input<BooleanParameter>`
+- `beast.base.inference.util.ESS`
+    - legacy: `Input<Function>`
+
+### CalcNodes (1)
+
+- `beast.base.evolution.substitutionmodel.Frequencies`
+    - legacy: `Input<RealParameter>`
+
+### StateNodes (3)
+
+- `beast.base.evolution.alignment.FilteredAlignment`
+    - legacy: `Input<IntegerParameter>`
+- `beast.base.evolution.speciation.StarBeastStartState`
+    - legacy: `Input<RealParameter>`
+    - legacy: `Input<RealParameter>`
+    - legacy: `Input<Function>`
+- `beast.base.evolution.tree.ClusterTree`
+    - legacy: `Input<Function>`
+
+### Other (17)
+
+- `beast.base.evolution.branchratemodel.BranchRateModel`
+    - legacy: `Input<Function>`
+- `beast.base.evolution.branchratemodel.RandomLocalClockModel`
+    - legacy: `Input<BooleanParameter>`
+    - legacy: `Input<RealParameter>`
+- `beast.base.evolution.branchratemodel.UCRelaxedClockModel`
+    - legacy: `Input<IntegerParameter>`
+    - legacy: `Input<RealParameter>`
+    - legacy: `Input<RealParameter>`
+- `beast.base.evolution.sitemodel.SiteModel`
+    - legacy: `Input<RealParameter>`
+    - legacy: `Input<RealParameter>`
+    - legacy: `Input<RealParameter>`
+- `beast.base.evolution.substitutionmodel.BinaryCovarion`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+- `beast.base.evolution.substitutionmodel.GTR`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+- `beast.base.evolution.substitutionmodel.GeneralSubstitutionModel`
+    - legacy: `Input<Function>`
+- `beast.base.evolution.substitutionmodel.HKY`
+    - legacy: `Input<Function>`
+- `beast.base.evolution.substitutionmodel.MutationDeathModel`
+    - legacy: `Input<Function>`
+- `beast.base.evolution.substitutionmodel.SYM`
+    - legacy: `Input<RealParameter>`
+    - legacy: `Input<RealParameter>`
+    - legacy: `Input<RealParameter>`
+    - legacy: `Input<RealParameter>`
+    - legacy: `Input<RealParameter>`
+    - legacy: `Input<RealParameter>`
+- `beast.base.evolution.substitutionmodel.TIM`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+- `beast.base.evolution.substitutionmodel.TN93`
+    - legacy: `Input<RealParameter>`
+    - legacy: `Input<RealParameter>`
+- `beast.base.evolution.substitutionmodel.TVM`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+- `beast.base.evolution.tree.coalescent.ConstantPopulation`
+    - legacy: `Input<Function>`
+- `beast.base.evolution.tree.coalescent.ExponentialGrowth`
+    - legacy: `Input<Function>`
+    - legacy: `Input<Function>`
+- `beast.base.evolution.tree.coalescent.ScaledPopulationFunction`
+    - legacy: `Input<Function>`
+- `beastfx.app.beauti.PriorInputEditor`
+    - legacy: `Input<Function>`
 
 ## Example XMLs pending migration
 

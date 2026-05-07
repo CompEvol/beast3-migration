@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-07T20:16:33.971233+12:00",
+  "generatedAt": "2026-05-07T20:26:06.153845+12:00",
   "packages": [
     {
       "name": "beast3",
@@ -71,6 +71,10 @@
         "total": 10,
         "withSpec": 10,
         "clean": 6
+      },
+      "inputRule": {
+        "classesWithViolations": 56,
+        "totalViolations": 105
       },
       "build": {
         "hasPom": true,
@@ -159,6 +163,10 @@
         "withSpec": 0,
         "clean": 0
       },
+      "inputRule": {
+        "classesWithViolations": 17,
+        "totalViolations": 33
+      },
       "build": {
         "hasPom": true,
         "hasReleaseProfile": true,
@@ -245,6 +253,10 @@
         "total": 5,
         "withSpec": 0,
         "clean": 0
+      },
+      "inputRule": {
+        "classesWithViolations": 8,
+        "totalViolations": 16
       },
       "build": {
         "hasPom": true,
@@ -333,6 +345,10 @@
         "withSpec": 0,
         "clean": 0
       },
+      "inputRule": {
+        "classesWithViolations": 0,
+        "totalViolations": 0
+      },
       "build": {
         "hasPom": true,
         "hasReleaseProfile": true,
@@ -419,6 +435,10 @@
         "total": 0,
         "withSpec": 0,
         "clean": 0
+      },
+      "inputRule": {
+        "classesWithViolations": 0,
+        "totalViolations": 0
       },
       "build": {
         "hasPom": true,
@@ -507,6 +527,10 @@
         "withSpec": 0,
         "clean": 0
       },
+      "inputRule": {
+        "classesWithViolations": 23,
+        "totalViolations": 45
+      },
       "build": {
         "hasPom": true,
         "hasReleaseProfile": true,
@@ -593,6 +617,10 @@
         "total": 1,
         "withSpec": 1,
         "clean": 0
+      },
+      "inputRule": {
+        "classesWithViolations": 0,
+        "totalViolations": 0
       },
       "build": {
         "hasPom": true,
@@ -681,6 +709,10 @@
         "withSpec": 1,
         "clean": 1
       },
+      "inputRule": {
+        "classesWithViolations": 0,
+        "totalViolations": 0
+      },
       "build": {
         "hasPom": true,
         "hasReleaseProfile": true,
@@ -768,6 +800,10 @@
         "withSpec": 0,
         "clean": 0
       },
+      "inputRule": {
+        "classesWithViolations": 0,
+        "totalViolations": 0
+      },
       "build": {
         "hasPom": false,
         "hasReleaseProfile": false,
@@ -854,6 +890,10 @@
         "total": 1,
         "withSpec": 1,
         "clean": 1
+      },
+      "inputRule": {
+        "classesWithViolations": 1,
+        "totalViolations": 2
       },
       "build": {
         "hasPom": true,

@@ -36,6 +36,7 @@ public final class PackageReportWriter {
         renderBuildGaps(sb, r);
         renderMavenCentral(sb, r);
         renderJavaPunchList(sb, r);
+        renderInputRulePunchList(sb, r);
         renderXmlPunchList(sb, r);
 
         if (sb.charAt(sb.length() - 1) != '\n') sb.append('\n');
@@ -121,6 +122,13 @@ public final class PackageReportWriter {
             sb.append("- **BEAUti fxtemplates:** ").append(r.fxClean).append(" clean / ")
                     .append(r.fxWithSpec).append(" use spec / ")
                     .append(r.fxTotal).append(" total\n");
+        }
+        if (r.inputViolations > 0) {
+            sb.append("- **Input rule:** ").append(r.classesWithInputViolations)
+                    .append(" classes hold ").append(r.inputViolations)
+                    .append(" Input(s) declared too concretely\n");
+        } else if (totalClasses > 0) {
+            sb.append("- **Input rule:** all Inputs use the right carrier ✅\n");
         }
         if (r.entry.hasMavenCoords() && !r.mavenCentralLatest.isBlank()) {
             sb.append("- **Maven Central:** ").append(r.mavenCentralLatest).append('\n');
@@ -232,6 +240,37 @@ public final class PackageReportWriter {
             return "`" + String.join("`, `", out) + "`, …";
         }
         return "`" + String.join("`, `", out) + "`";
+    }
+
+    private static void renderInputRulePunchList(StringBuilder sb, Report r) {
+        // Group offending classes by Kind for easier scanning.
+        Map<Report.Kind, List<ClassRecord>> byKind = new EnumMap<>(Report.Kind.class);
+        for (Report.Kind k : Report.Kind.values()) byKind.put(k, new ArrayList<>());
+        int total = 0;
+        for (ClassRecord c : r.classes) {
+            if (!c.ruleViolatingInputs().isEmpty()) {
+                byKind.get(c.kind()).add(c);
+                total++;
+            }
+        }
+        if (total == 0) return;
+
+        sb.append("## Inputs declared too concretely\n\n");
+        sb.append("> Concrete spec params (`RealScalarParam`, `RealVectorParam`, …) belong only on Operators, which need to write the parameter. Distributions, CalcNodes, Loggers and other read-only holders should declare the interface (`RealScalar`, `RealVector`, …) so adapters and transforms can be substituted. Legacy `RealParameter` / `Function` Inputs are violations everywhere.\n\n");
+        for (Report.Kind k : Report.Kind.values()) {
+            List<ClassRecord> list = byKind.get(k);
+            if (list.isEmpty()) continue;
+            list.sort(Comparator.comparing(ClassRecord::fqn));
+            sb.append("### ").append(k.label).append(" (").append(list.size()).append(")\n\n");
+            for (ClassRecord c : list) {
+                sb.append("- `").append(c.fqn()).append("`\n");
+                for (InputDecl d : c.ruleViolatingInputs()) {
+                    String tag = d.carrier() == InputDecl.Carrier.LEGACY ? "legacy" : "concrete";
+                    sb.append("    - ").append(tag).append(": `Input<").append(d.typeStr()).append(">`\n");
+                }
+            }
+            sb.append('\n');
+        }
     }
 
     private static void renderXmlPunchList(StringBuilder sb, Report r) {
