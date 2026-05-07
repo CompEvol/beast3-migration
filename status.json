@@ -1,9 +1,8 @@
 {
-  "generatedAt": "2026-05-07T21:22:13.115923+12:00",
+  "generatedAt": "2026-05-07T21:24:36.354867+12:00",
   "packages": [
     {
       "name": "beast3",
-      "path": "/Users/adru001/Git/beast3",
       "github": "CompEvol/beast3",
       "maven": "io.github.compevol:beast3",
       "stage": "maven_central",
@@ -94,7 +93,6 @@
     },
     {
       "name": "BEASTLabs",
-      "path": "/Users/adru001/Git/BEASTLabs",
       "github": "BEAST2-Dev/BEASTlabs",
       "maven": "io.github.beast2-dev:beast-labs",
       "stage": "maven_central",
@@ -185,7 +183,6 @@
     },
     {
       "name": "beast-classic",
-      "path": "/Users/adru001/Git/beast-classic",
       "github": "BEAST2-Dev/beast-classic",
       "maven": "io.github.beast2-dev:beast-classic",
       "stage": "maven_central",
@@ -276,7 +273,6 @@
     },
     {
       "name": "CoupledMCMC",
-      "path": "/Users/adru001/Git/CoupledMCMC",
       "github": "CompEvol/CoupledMCMC",
       "maven": "io.github.compevol:coupled-mcmc",
       "stage": "maven_central",
@@ -367,7 +363,6 @@
     },
     {
       "name": "flc",
-      "path": "/Users/adru001/Git/flc",
       "github": "4ment/flc",
       "maven": "io.github.4ment:flc",
       "stage": "maven_central",
@@ -458,7 +453,6 @@
     },
     {
       "name": "Mascot",
-      "path": "/Users/adru001/Git/Mascot",
       "github": "CompEvol/Mascot",
       "maven": "io.github.compevol:mascot",
       "stage": "maven_central",
@@ -549,7 +543,6 @@
     },
     {
       "name": "morph-models",
-      "path": "/Users/adru001/Git/morph-models",
       "github": "CompEvol/morph-models",
       "maven": "io.github.compevol:morph-models",
       "stage": "maven_central",
@@ -640,7 +633,6 @@
     },
     {
       "name": "sampled-ancestors",
-      "path": "/Users/adru001/Git/sampled-ancestors",
       "github": "CompEvol/sampled-ancestors",
       "maven": "io.github.compevol:sampled-ancestors",
       "stage": "maven_central",
@@ -731,7 +723,6 @@
     },
     {
       "name": "MutableAlignment",
-      "path": "/Users/adru001/Git/MutableAlignment",
       "github": "rbouckaert/MutableAlignment",
       "maven": "",
       "stage": "compile_tested",
@@ -822,7 +813,6 @@
     },
     {
       "name": "ORC",
-      "path": "/Users/adru001/Git/ORC",
       "github": "jordandouglas/ORC",
       "maven": "io.github.jordandouglas:beast-orc",
       "stage": "compile_tested",

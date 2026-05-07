@@ -25,7 +25,7 @@ public final class PackageReportWriter {
         renderHeader(sb, r);
 
         if (!r.pathExists) {
-            sb.append("> ⚠️ Local checkout not found at `").append(r.entry.path()).append("`. Clone it first.\n\n");
+            sb.append("> ⚠️ Local checkout not found. Clone the package and re-run the analyzer.\n\n");
             return sb.toString();
         }
         if (!r.error.isBlank()) {
@@ -46,12 +46,14 @@ public final class PackageReportWriter {
     private static void renderHeader(StringBuilder sb, Report r) {
         // The "version" of the report is whatever combination of fields
         // unambiguously identifies what was scanned: git commit, pom version,
-        // and (when available) the published Maven Central version.
+        // and (when available) the published Maven Central version. The
+        // local filesystem path is intentionally omitted — the GitHub commit
+        // link below identifies the scan target without leaking
+        // user-specific paths into the public repo.
         sb.append("> **Scanned at:** ")
                 .append(r.scannedAt.toLocalDateTime().toString()).append("  \n");
-        sb.append("> **Local checkout:** `").append(r.entry.path()).append('`');
         if (!r.git.shortSha().isBlank()) {
-            sb.append(" — commit `").append(r.git.shortSha()).append('`');
+            sb.append("> **Commit:** `").append(r.git.shortSha()).append('`');
             if (!r.git.branch().isBlank() && !r.git.branch().equals("HEAD")) {
                 sb.append(" on `").append(r.git.branch()).append('`');
             }
@@ -61,8 +63,8 @@ public final class PackageReportWriter {
                         .append(r.entry.github()).append("/commit/")
                         .append(r.git.fullSha()).append(')');
             }
+            sb.append("  \n");
         }
-        sb.append("  \n");
         if (!r.pomVersion.isBlank()) {
             sb.append("> **Pom version:** `").append(r.pomVersion).append("`  \n");
         }

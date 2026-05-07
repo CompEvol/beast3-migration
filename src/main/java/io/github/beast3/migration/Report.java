@@ -92,7 +92,8 @@ public final class Report {
     public Map<String, Object> toJsonLike() {
         Map<String, Object> m = new LinkedHashMap<>();
         m.put("name", entry.name());
-        m.put("path", entry.path().toString());
+        // Local filesystem path intentionally omitted — would leak
+        // user-specific paths into the published status.json.
         m.put("github", entry.github());
         m.put("maven", entry.hasMavenCoords()
                 ? entry.mavenGroupId() + ":" + entry.mavenArtifactId()
