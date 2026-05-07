@@ -241,14 +241,17 @@ public final class PackageReportWriter {
 
     private static void renderExampleXmlPunchList(StringBuilder sb, Report r) {
         List<XmlRecord> needsV28 = new ArrayList<>();
-        List<XmlRecord> needsSpec = new ArrayList<>();
+        List<XmlRecord> v28NoSpec = new ArrayList<>();
+        List<XmlRecord> hasLegacyParam = new ArrayList<>();
         for (XmlRecord x : r.xmls) {
             if (x.inLegacyDir() || x.isFxTemplate()) continue;
             if (!x.hasV28()) needsV28.add(x);
-            else if (!x.hasSpecNamespace()) needsSpec.add(x);
+            else if (!x.bodyHasSpec()) v28NoSpec.add(x);
+            else if (x.hasLegacyParam()) hasLegacyParam.add(x);
         }
-        if (needsV28.isEmpty() && needsSpec.isEmpty()) {
-            if (r.xmlTotal > 0) sb.append("## Example XMLs\n\nAll example XMLs are on `version=\"2.8\"` with the spec namespace. ✅\n\n");
+        boolean clean = needsV28.isEmpty() && v28NoSpec.isEmpty() && hasLegacyParam.isEmpty();
+        if (clean) {
+            if (r.xmlTotal > 0) sb.append("## Example XMLs\n\nAll example XMLs target `version=\"2.8\"` and use spec types with no legacy parameter declarations. ✅\n\n");
             return;
         }
         sb.append("## Example XMLs pending migration\n\n");
@@ -257,10 +260,16 @@ public final class PackageReportWriter {
             for (XmlRecord x : needsV28) sb.append("- `").append(x.relPath()).append("`\n");
             sb.append('\n');
         }
-        if (!needsSpec.isEmpty()) {
-            sb.append("**Targets BEAST 3 but missing `beast.base.spec.*` in namespace** (")
-                    .append(needsSpec.size()).append("):\n\n");
-            for (XmlRecord x : needsSpec) sb.append("- `").append(x.relPath()).append("`\n");
+        if (!v28NoSpec.isEmpty()) {
+            sb.append("**Targets BEAST 3 but body has no `beast.base.spec.*` references** (")
+                    .append(v28NoSpec.size()).append("):\n\n");
+            for (XmlRecord x : v28NoSpec) sb.append("- `").append(x.relPath()).append("`\n");
+            sb.append('\n');
+        }
+        if (!hasLegacyParam.isEmpty()) {
+            sb.append("**Uses spec types but still has legacy `parameter.RealParameter`-style declarations** (")
+                    .append(hasLegacyParam.size()).append("):\n\n");
+            for (XmlRecord x : hasLegacyParam) sb.append("- `").append(x.relPath()).append("`\n");
             sb.append('\n');
         }
     }
@@ -273,8 +282,8 @@ public final class PackageReportWriter {
         List<XmlRecord> clean = new ArrayList<>();
         for (XmlRecord x : r.xmls) {
             if (!x.isFxTemplate() || x.inLegacyDir()) continue;
-            if (!x.fxBodyHasSpec()) noSpec.add(x);
-            else if (x.fxHasLegacyParam()) mixed.add(x);
+            if (!x.bodyHasSpec()) noSpec.add(x);
+            else if (x.hasLegacyParam()) mixed.add(x);
             else clean.add(x);
         }
         if (noSpec.isEmpty() && mixed.isEmpty()) {

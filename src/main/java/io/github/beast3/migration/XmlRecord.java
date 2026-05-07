@@ -23,12 +23,18 @@ public record XmlRecord(
         Path relativeTo,
         boolean hasV28,
         boolean hasSpecNamespace,
+        boolean bodyHasSpec,         // body contains beast.base.spec.* FQN refs
+        boolean hasLegacyParam,      // body has spec='parameter.RealParameter'-style attrs
         boolean inLegacyDir,
-        boolean isFxTemplate,
-        boolean fxBodyHasSpec,
-        boolean fxHasLegacyParam) {
+        boolean isFxTemplate) {
 
     public Path relPath() {
         return relativeTo.relativize(file);
+    }
+
+    /** An example XML is "migrated" when it targets BEAST 3 (v2.8), uses
+     *  spec types in the body, and has no legacy parameter declarations. */
+    public boolean isMigratedExample() {
+        return !isFxTemplate && hasV28 && bodyHasSpec && !hasLegacyParam;
     }
 }

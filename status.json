@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-07T20:06:37.287319+12:00",
+  "generatedAt": "2026-05-07T20:10:33.692768+12:00",
   "packages": [
     {
       "name": "beast3",
@@ -585,7 +585,7 @@
       },
       "xml": {
         "total": 2,
-        "migrated": 0,
+        "migrated": 2,
         "v28": 2,
         "legacyDir": 4
       },

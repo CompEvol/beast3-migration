@@ -74,7 +74,7 @@ public final class XmlScanner {
         if (isLegacyDir(root, file)) {
             report.xmlLegacyDir++;
             report.xmls.add(new XmlRecord(
-                    file, pkgRoot, false, false, true, false, false, false));
+                    file, pkgRoot, false, false, false, false, true, false));
             return;
         }
         String content;
@@ -90,24 +90,28 @@ public final class XmlScanner {
 
         boolean isFx = isFxTemplate(root, file, content);
         boolean v28 = VERSION_28.matcher(rootAttrs).find();
-        boolean spec = NAMESPACE_SPEC.matcher(rootAttrs).find();
+        boolean nsSpec = NAMESPACE_SPEC.matcher(rootAttrs).find();
+        boolean bodyHasSpec = SPEC_REF.matcher(content).find();
+        boolean hasLegacyParam = LEGACY_PARAM_REF.matcher(content).find();
 
         if (isFx) {
-            boolean fxSpec = SPEC_REF.matcher(content).find();
-            boolean fxLegacy = LEGACY_PARAM_REF.matcher(content).find();
             report.fxTotal++;
-            if (fxSpec) report.fxWithSpec++;
-            if (fxSpec && !fxLegacy) report.fxClean++;
+            if (bodyHasSpec) report.fxWithSpec++;
+            if (bodyHasSpec && !hasLegacyParam) report.fxClean++;
             report.xmls.add(new XmlRecord(
-                    file, pkgRoot, v28, spec, false, true, fxSpec, fxLegacy));
+                    file, pkgRoot, v28, nsSpec, bodyHasSpec, hasLegacyParam, false, true));
             return;
         }
 
         report.xmlTotal++;
         if (v28) report.xmlV28++;
-        if (v28 && spec) report.xmlMigrated++;
+        // "Migrated" = targets BEAST 3 runtime AND uses spec types in body
+        // AND has no legacy parameter declarations. Namespace listing of
+        // beast.base.spec.* is a hint, not a requirement — many migrated
+        // XMLs use spec FQNs everywhere and need no namespace help.
+        if (v28 && bodyHasSpec && !hasLegacyParam) report.xmlMigrated++;
         report.xmls.add(new XmlRecord(
-                file, pkgRoot, v28, spec, false, false, false, false));
+                file, pkgRoot, v28, nsSpec, bodyHasSpec, hasLegacyParam, false, false));
     }
 
     private static boolean isFxTemplate(Path root, Path file, String content) {

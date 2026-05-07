@@ -27,7 +27,7 @@ exact local checkout commit it was scanned against.
 
 <!-- BEGIN AUTO -->
 
-_Last regenerated: 2026-05-07T20:06:37.282846+12:00_
+_Last regenerated: 2026-05-07T20:10:33.688351+12:00_
 
 ## Release & build status
 
@@ -54,7 +54,7 @@ _Last regenerated: 2026-05-07T20:06:37.282846+12:00_
 | CoupledMCMC | — | — | 0 / 2 | — | — | — | 0 / 0 / 1 | 0 / 0 / 1 |
 | flc | — | — | — | 3 / 5 | — | — | 2 / 2 / 2 | — |
 | Mascot | 0 / 9 | 6 / 6 | 10 / 21 | 4 / 9 | — | 0 / 1 | 1 / 1 / 4 | 0 / 0 / 5 |
-| morph-models | — | — | — | 2 / 2 | — | 0 / 1 | 0 / 2 / 2 (+4 legacy) | 0 / 1 / 1 |
+| morph-models | — | — | — | 2 / 2 | — | 0 / 1 | 2 / 2 / 2 (+4 legacy) | 0 / 1 / 1 |
 | sampled-ancestors | 3 / 6 | 9 / 13 | 0 / 2 | 0 / 2 | — | 0 / 2 | 0 / 0 / 3 | 1 / 1 / 1 |
 | MutableAlignment | — | — | — | — | — | — | 0 / 0 / 2 | — |
 | ORC | 1 / 1 | 3 / 4 | 1 / 1 | — | — | — | 0 / 1 / 1 | 1 / 1 / 1 |

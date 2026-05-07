@@ -1,6 +1,6 @@
 # flc — what's left
 
-> **Scanned at:** 2026-05-07T20:06:36.549033  
+> **Scanned at:** 2026-05-07T20:10:32.961442  
 > **Local checkout:** `/Users/adru001/Git/flc` — commit `8876fe3` on `fix/ci-publish-clean` — [view on GitHub](https://github.com/4ment/flc/commit/8876fe3ef062f618d89ecbd99a00d92fd7ccd000)  
 > **Pom version:** `1.3.0-beta1`  
 > **Maven Central:** `io.github.4ment:flc:1.3.0-beta1`  
@@ -18,5 +18,5 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 
 ## Example XMLs
 
-All example XMLs are on `version="2.8"` with the spec namespace. ✅
+All example XMLs target `version="2.8"` and use spec types with no legacy parameter declarations. ✅
 

@@ -1,6 +1,6 @@
 # ORC — what's left
 
-> **Scanned at:** 2026-05-07T20:06:37.173322  
+> **Scanned at:** 2026-05-07T20:10:33.558934  
 > **Local checkout:** `/Users/adru001/Git/ORC` — commit `bb6bdbb` on `master` — [view on GitHub](https://github.com/jordandouglas/ORC/commit/bb6bdbb3875b735c37aab49a8e992cf368257838)  
 > **Pom version:** `1.3.0-SNAPSHOT`  
 > **Maven Central:** not published as `io.github.jordandouglas:beast-orc` (not published (404))  
@@ -37,7 +37,7 @@ Not yet published as `io.github.jordandouglas:beast-orc`. Verify the namespace o
 
 ## Example XMLs pending migration
 
-**Targets BEAST 3 but missing `beast.base.spec.*` in namespace** (1):
+**Uses spec types but still has legacy `parameter.RealParameter`-style declarations** (1):
 
 - `examples/caterpillars.xml`
 
