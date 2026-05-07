@@ -70,14 +70,26 @@ public final class ChecklistWriter {
                 .append(OffsetDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME))
                 .append("_\n\n");
 
-        sb.append("## Per-package migration status\n\n");
-        sb.append("| Package | Stage | Maven Central | Pom version | Distrs | Ops | Loggers | CalcNodes | Params | StateNodes | XMLs | JPMS | Release | CI |\n");
-        sb.append("|---|---|---|---|---|---|---|---|---|---|---|:-:|:-:|:-:|\n");
+        sb.append("## Release & build status\n\n");
+        sb.append("| Package | Stage | Maven Central | Pom version | JPMS | Release | CI |\n");
+        sb.append("|---|---|---|---|:-:|:-:|:-:|\n");
         for (Report r : reports) {
             sb.append("| ").append(linkPackage(r))
                     .append(" | ").append(prettyStage(r.entry.stage()))
                     .append(" | ").append(mavenCell(r))
                     .append(" | ").append(orDash(r.pomVersion))
+                    .append(" | ").append(check(r.hasModuleInfo))
+                    .append(" | ").append(check(r.hasReleaseProfile && (r.hasReleaseScript || r.hasPom)))
+                    .append(" | ").append(check(r.hasGithubActions))
+                    .append(" |\n");
+        }
+        sb.append('\n');
+
+        sb.append("## Migration progress (Java + XML)\n\n");
+        sb.append("| Package | Distrs | Ops | Loggers | CalcNodes | Params | StateNodes | XMLs |\n");
+        sb.append("|---|---|---|---|---|---|---|---|\n");
+        for (Report r : reports) {
+            sb.append("| ").append(r.entry.name())
                     .append(" | ").append(r.javaCounts.get(Kind.DISTRIBUTION).tableCell())
                     .append(" | ").append(r.javaCounts.get(Kind.OPERATOR).tableCell())
                     .append(" | ").append(r.javaCounts.get(Kind.LOGGER).tableCell())
@@ -85,9 +97,6 @@ public final class ChecklistWriter {
                     .append(" | ").append(r.javaCounts.get(Kind.PARAMETER).tableCell())
                     .append(" | ").append(r.javaCounts.get(Kind.STATENODE).tableCell())
                     .append(" | ").append(xmlCell(r))
-                    .append(" | ").append(check(r.hasModuleInfo))
-                    .append(" | ").append(check(r.hasReleaseProfile && (r.hasReleaseScript || r.hasPom)))
-                    .append(" | ").append(check(r.hasGithubActions))
                     .append(" |\n");
         }
 
