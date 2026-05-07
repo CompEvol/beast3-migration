@@ -1,6 +1,6 @@
 # beast3 migration progress
 
-## Maven release
+## Maven releases
 
 The following packages are available in Maven Cental.
 
