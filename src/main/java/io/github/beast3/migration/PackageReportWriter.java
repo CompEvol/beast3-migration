@@ -10,7 +10,7 @@ import io.github.beast3.migration.Report.Kind;
 import io.github.beast3.migration.Report.Status;
 
 /**
- * Renders a per-package "what's left to do" punch list. Sections appear only
+ * Renders a per-package migration status report. Sections appear only
  * if they have something to say, so a fully-migrated package gets a short
  * report.
  */

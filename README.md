@@ -3,7 +3,7 @@
 Tool and dashboard tracking the BEAST 2 → BEAST 3 migration across the
 CompEvol, BEAST2-Dev, and 4ment package ecosystems. A small Java
 program scans sibling checkouts of each tracked package and regenerates
-a cross-package status table plus per-package punch lists.
+a cross-package status table plus per-package migration status reports.
 
 ## Status
 
