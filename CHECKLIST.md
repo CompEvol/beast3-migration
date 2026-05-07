@@ -29,7 +29,7 @@ exact local checkout commit it was scanned against.
 
 <!-- BEGIN AUTO -->
 
-_Last regenerated: 2026-05-07T21:16:05.543182+12:00_
+_Last regenerated: 2026-05-07T21:22:13.111469+12:00_
 
 ## Release & build status
 
@@ -50,8 +50,8 @@ _Last regenerated: 2026-05-07T21:16:05.543182+12:00_
 
 | Package | Distrs | Ops | Loggers | CalcNodes | Params | StateNodes | XMLs | FxTemplates | Input rule |
 |---|---|---|---|---|---|---|---|---|---|
-| beast3 | 29 / 70 | 16 / 47 | 5 / 16 | 5 / 20 | 1 / 5 | 5 / 22 | 0 / 0 / 78 (+81 legacy) | 6 / 10 / 10 | 56 / 105 |
-| BEASTLabs | 5 / 22 | ✅ 21 | 1 / 11 | 6 / 10 | 2 / 2 | ✅ 8 | 0 / 0 / 20 | 0 / 0 / 3 | 17 / 33 |
+| beast3 | 1 / 70 | ✅ 47 | ✅ 16 | ✅ 20 | ✅ 5 | ✅ 22 | 0 / 0 / 78 (+81 legacy) | 6 / 10 / 10 | 56 / 105 |
+| BEASTLabs | 5 / 22 | ✅ 21 | 1 / 11 | 5 / 10 | 2 / 2 | ✅ 8 | 0 / 0 / 20 | 0 / 0 / 3 | 17 / 33 |
 | beast-classic | ✅ 9 | ✅ 11 | 4 / 11 | 3 / 14 | ✅ 1 | ✅ 2 | 0 / 0 / 10 | 0 / 0 / 5 | 8 / 16 |
 | CoupledMCMC | — | — | ✅ 3 | — | — | — | 0 / 0 / 1 | 0 / 0 / 1 | ✅ |
 | flc | — | — | — | ✅ 8 | — | — | 2 / 2 / 2 | — | ✅ |
@@ -72,8 +72,8 @@ Per package, for each kind: `spec / mixed / legacy / neutral · total`.
 
 | Package | Distributions | Operators | Loggers | CalcNodes | Parameters | StateNodes |
 |---|---|---|---|---|---|---|
-| beast3 | 41 / 15 / 14 / 0 · 70 | 1 / 0 / 16 / 30 · 47 | 5 / 0 / 5 / 6 · 16 | 3 / 0 / 5 / 12 · 20 | 4 / 0 / 1 / 0 · 5 | 6 / 0 / 5 / 11 · 22 |
-| BEASTLabs | 1 / 0 / 5 / 16 · 22 | 0 / 0 / 0 / 21 · 21 | 0 / 0 / 1 / 10 · 11 | 0 / 0 / 6 / 4 · 10 | 0 / 0 / 2 / 0 · 2 | 0 / 0 / 0 / 8 · 8 |
+| beast3 | 56 / 0 / 1 / 13 · 70 | 1 / 0 / 0 / 46 · 47 | 5 / 0 / 0 / 11 · 16 | 3 / 0 / 0 / 17 · 20 | 4 / 0 / 0 / 1 · 5 | 6 / 0 / 0 / 16 · 22 |
+| BEASTLabs | 1 / 0 / 5 / 16 · 22 | 0 / 0 / 0 / 21 · 21 | 0 / 0 / 1 / 10 · 11 | 0 / 0 / 5 / 5 · 10 | 0 / 0 / 2 / 0 · 2 | 0 / 0 / 0 / 8 · 8 |
 | beast-classic | 0 / 0 / 0 / 9 · 9 | 1 / 0 / 0 / 10 · 11 | 2 / 0 / 4 / 5 · 11 | 3 / 0 / 3 / 8 · 14 | 1 / 0 / 0 / 0 · 1 | 0 / 0 / 0 / 2 · 2 |
 | CoupledMCMC | — | — | 0 / 0 / 0 / 3 · 3 | — | — | — |
 | flc | — | — | — | 6 / 0 / 0 / 2 · 8 | — | — |

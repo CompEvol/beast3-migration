@@ -1,6 +1,6 @@
 # beast3 — what's left
 
-> **Scanned at:** 2026-05-07T21:16:03.273610  
+> **Scanned at:** 2026-05-07T21:22:11.161105  
 > **Local checkout:** `/Users/adru001/Git/beast3` — commit `4e1ee72` on `target-acceptance-1d-operators` — [view on GitHub](https://github.com/CompEvol/beast3/commit/4e1ee72a7cead616230d9dce5cb43e71400615e1)  
 > **Pom version:** `2.8.0-SNAPSHOT`  
 > **Maven Central:** `io.github.compevol:beast3:2.8.0-beta5`  
@@ -10,7 +10,7 @@
 
 ## Summary
 
-- **Java classes:** 78 on spec, 15 mixed, 78 legacy of 604 total
+- **Java classes:** 93 on spec, 0 mixed, 1 legacy of 604 total
 - **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 78 total (+81 under legacy/)
 - **BEAUti fxtemplates:** 6 clean / 10 use spec / 10 total
 - **Input rule:** 56 classes hold 105 Input(s) declared too concretely
@@ -18,136 +18,11 @@
 
 ## Java classes pending migration
 
-### Distributions — 14 legacy, 15 mixed (of 70 total)
-
-**Mixed** (extends a legacy base AND a spec interface — finish swapping the base):
-
-- `beast.base.evolution.likelihood.BeagleTreeLikelihood` — extends `BeagleTreeLikelihood`
-- `beast.base.evolution.likelihood.GenericTreeLikelihood` — extends `GenericTreeLikelihood`
-- `beast.base.evolution.likelihood.ThreadedTreeLikelihood` — extends `ThreadedTreeLikelihood`
-- `beast.base.evolution.likelihood.TreeLikelihood` — extends `TreeLikelihood`
-- `beast.base.evolution.speciation.BirthDeathGernhard08Model` — extends `BirthDeathGernhard08Model`
-- `beast.base.evolution.speciation.CalibratedBirthDeathModel` — extends `CalibratedBirthDeathModel`
-- `beast.base.evolution.speciation.CalibratedYuleModel` — extends `CalibratedYuleModel`
-- `beast.base.evolution.speciation.GeneTreeForSpeciesTreeDistribution` — extends `GeneTreeForSpeciesTreeDistribution`
-- `beast.base.evolution.speciation.SpeciesTreePopFunction` — extends `SpeciesTreePopFunction`
-- `beast.base.evolution.speciation.SpeciesTreePrior` — extends `SpeciesTreePrior`
-- `beast.base.evolution.speciation.YuleModel` — extends `YuleModel`
-- `beast.base.evolution.tree.MRCAPrior` — extends `MRCAPrior`
-- `beast.base.evolution.tree.coalescent.BayesianSkyline` — extends `BayesianSkyline`
-- `beast.base.inference.distribution.Prior` — extends `Prior`
-- `beast.base.spec.inference.distribution.Prior` — extends `Prior`
+### Distributions — 1 legacy, 0 mixed (of 70 total)
 
 **Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
 
-- `beast.base.inference.distribution.Beta` — extends `Beta`
-- `beast.base.inference.distribution.ChiSquare` — extends `ChiSquare`
 - `beast.base.inference.distribution.Dirichlet` — extends `ParametricDistribution`
-- `beast.base.inference.distribution.Exponential` — extends `Exponential`
-- `beast.base.inference.distribution.Gamma` — extends `Gamma`
-- `beast.base.inference.distribution.InverseGamma` — extends `InverseGamma`
-- `beast.base.inference.distribution.LaplaceDistribution` — extends `LaplaceDistribution`
-- `beast.base.inference.distribution.LogNormal` — extends `LogNormal`
-- `beast.base.inference.distribution.LogNormalDistributionModel` — extends `LogNormalDistributionModel`
-- `beast.base.inference.distribution.MarkovChainDistribution` — extends `MarkovChainDistribution`
-- `beast.base.inference.distribution.Normal` — extends `Normal`
-- `beast.base.inference.distribution.OneOnX` — extends `OneOnX`
-- `beast.base.inference.distribution.Poisson` — extends `Poisson`
-- `beast.base.inference.distribution.Uniform` — extends `Uniform`
-
-### Operators — 16 legacy, 0 mixed (of 47 total)
-
-**Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
-
-- `beast.base.evolution.operator.AdaptableOperatorSampler` — extends `AdaptableOperatorSampler`
-- `beast.base.evolution.operator.EpochFlexOperator` — extends `EpochFlexOperator`
-- `beast.base.evolution.operator.TreeStretchOperator` — extends `TreeStretchOperator`
-- `beast.base.evolution.operator.kernel.BactrianScaleOperator` — extends `BactrianScaleOperator`
-- `beast.base.evolution.tree.coalescent.SampleOffValues` — extends `SampleOffValues`
-- `beast.base.inference.operator.BitFlipOperator` — extends `BitFlipOperator`
-- `beast.base.inference.operator.DeltaExchangeOperator` — extends `DeltaExchangeOperator`
-- `beast.base.inference.operator.IntRandomWalkOperator` — extends `IntRandomWalkOperator`
-- `beast.base.inference.operator.IntUniformOperator` — extends `IntUniformOperator`
-- `beast.base.inference.operator.RealRandomWalkOperator` — extends `RealRandomWalkOperator`
-- `beast.base.inference.operator.SwapOperator` — extends `SwapOperator`
-- `beast.base.inference.operator.UniformOperator` — extends `UniformOperator`
-- `beast.base.inference.operator.UpDownOperator` — extends `UpDownOperator`
-- `beast.base.inference.operator.kernel.BactrianDeltaExchangeOperator` — extends `BactrianDeltaExchangeOperator`
-- `beast.base.inference.operator.kernel.BactrianRandomWalkOperator` — extends `BactrianRandomWalkOperator`
-- `beast.base.inference.operator.kernel.BactrianUpDownOperator` — extends `BactrianUpDownOperator`
-
-### Loggers — 5 legacy, 0 mixed (of 16 total)
-
-**Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
-
-- `beast.base.evolution.Sum` — extends `Sum`
-- `beast.base.evolution.TreeWithMetaDataLogger` — extends `TreeWithMetaDataLogger`
-- `beast.base.evolution.speciation.SpeciesTreeLogger` — extends `SpeciesTreeLogger`
-- `beast.base.evolution.tree.coalescent.CompoundPopulationFunction` — extends `CompoundPopulationFunction`
-- `beast.base.inference.util.ESS` — extends `ESS`
-
-### CalcNodes — 5 legacy, 0 mixed (of 20 total)
-
-**Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
-
-- `beast.base.evolution.speciation.RandomGeneTree` — extends `RandomGeneTree`
-- `beast.base.evolution.substitutionmodel.Frequencies` — extends `Frequencies`
-- `beast.base.inference.distribution.ParametricDistribution` — extends `ParametricDistribution`
-- `beast.base.inference.util.RPNcalculator` — extends `RPNcalculator`
-- `beast.base.spec.FunctionOfTensor` — extends `FunctionOfTensor`
-
-### Parameters — 1 legacy, 0 mixed (of 5 total)
-
-**Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
-
-- `beast.base.inference.parameter.CompoundRealParameter` — extends `CompoundRealParameter`
-
-### StateNodes — 5 legacy, 0 mixed (of 22 total)
-
-**Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
-
-- `beast.base.evolution.alignment.FilteredAlignment` — extends `FilteredAlignment`
-- `beast.base.evolution.speciation.CalibratedYuleInitialTree` — extends `CalibratedYuleInitialTree`
-- `beast.base.evolution.speciation.StarBeastStartState` — extends `StarBeastStartState`
-- `beast.base.evolution.tree.ClusterTree` — extends `ClusterTree`
-- `beast.base.evolution.tree.coalescent.RandomTree` — extends `RandomTree`
-
-### Other — 32 legacy, 0 mixed (of 424 total)
-
-**Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
-
-- `beast.base.core.Function` — extends `Function`
-- `beast.base.evolution.branchratemodel.RandomLocalClockModel` — extends `RandomLocalClockModel`
-- `beast.base.evolution.branchratemodel.StrictClockModel` — extends `StrictClockModel`
-- `beast.base.evolution.branchratemodel.UCRelaxedClockModel` — extends `UCRelaxedClockModel`
-- `beast.base.evolution.sitemodel.SiteModel` — extends `SiteModel`
-- `beast.base.evolution.speciation.CalibrationLineagesIterator` — extends `CalibrationLineagesIterator`
-- `beast.base.evolution.speciation.CalibrationPoint` — extends `CalibrationPoint`
-- `beast.base.evolution.substitutionmodel.BinaryCovarion` — extends `BinaryCovarion`
-- `beast.base.evolution.substitutionmodel.Blosum62` — extends `Blosum62`
-- `beast.base.evolution.substitutionmodel.CPREV` — extends `CPREV`
-- `beast.base.evolution.substitutionmodel.ComplexSubstitutionModel` — extends `ComplexSubstitutionModel`
-- `beast.base.evolution.substitutionmodel.Dayhoff` — extends `Dayhoff`
-- `beast.base.evolution.substitutionmodel.EmpiricalSubstitutionModel` — extends `EmpiricalSubstitutionModel`
-- `beast.base.evolution.substitutionmodel.GTR` — extends `GTR`
-- `beast.base.evolution.substitutionmodel.GeneralSubstitutionModel` — extends `GeneralSubstitutionModel`
-- `beast.base.evolution.substitutionmodel.HKY` — extends `HKY`
-- `beast.base.evolution.substitutionmodel.JTT` — extends `JTT`
-- `beast.base.evolution.substitutionmodel.JukesCantor` — extends `JukesCantor`
-- `beast.base.evolution.substitutionmodel.MTREV` — extends `MTREV`
-- `beast.base.evolution.substitutionmodel.MutationDeathModel` — extends `MutationDeathModel`
-- `beast.base.evolution.substitutionmodel.SYM` — extends `SYM`
-- `beast.base.evolution.substitutionmodel.TIM` — extends `TIM`
-- `beast.base.evolution.substitutionmodel.TN93` — extends `TN93`
-- `beast.base.evolution.substitutionmodel.TVM` — extends `TVM`
-- `beast.base.evolution.substitutionmodel.WAG` — extends `WAG`
-- `beast.base.evolution.tree.coalescent.ConstantPopulation` — extends `ConstantPopulation`
-- `beast.base.evolution.tree.coalescent.ExponentialGrowth` — extends `ExponentialGrowth`
-- `beast.base.evolution.tree.coalescent.ScaledPopulationFunction` — extends `ScaledPopulationFunction`
-- `beast.base.inference.parameter.BooleanParameter` — extends `BooleanParameter`
-- `beast.base.inference.parameter.IntegerParameter` — extends `IntegerParameter`
-- `beast.base.inference.parameter.Parameter` — extends `Parameter`
-- `beast.base.inference.parameter.RealParameter` — extends `RealParameter`
 
 ## Inputs declared too concretely
 

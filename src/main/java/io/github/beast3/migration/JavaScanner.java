@@ -365,21 +365,16 @@ public final class JavaScanner {
         for (ClassRecord c : report.classes) byFqn.put(c.fqn(), c);
 
         for (ClassRecord c : report.classes) {
+            // @Deprecated classes are known about (and slated for removal),
+            // so they're never reported as legacy regardless of what they
+            // extend — the migration concern is classes that aren't yet
+            // marked but DO extend a deprecated class.
             boolean effSpec = c.ownHasSpec;
-            // Two ways to be LEGACY:
-            //   1. the class itself is annotated @Deprecated (it IS one of
-            //      the legacy classes in beast3 / its own package), or
-            //   2. its primary extends target is a deprecated class.
-            boolean effLegacy = c.isDeprecated
-                    || (c.primaryExtendsFqn != null
-                            && deprecatedFqns.contains(c.primaryExtendsFqn));
+            boolean effLegacy = !c.isDeprecated
+                    && c.primaryExtendsFqn != null
+                    && deprecatedFqns.contains(c.primaryExtendsFqn);
             Kind effKind = c.ownKind;
-            String legacySource = null;
-            if (c.isDeprecated) {
-                legacySource = "@Deprecated " + c.fqn();
-            } else if (effLegacy) {
-                legacySource = c.primaryExtendsFqn;
-            }
+            String legacySource = effLegacy ? c.primaryExtendsFqn : null;
 
             ClassRecord cur = c;
             Set<String> visited = new HashSet<>();
@@ -390,18 +385,15 @@ public final class JavaScanner {
                 if (parent == null) break;
                 if (!visited.add(parent.fqn())) break; // cycle guard
                 effSpec |= parent.ownHasSpec;
-                // Inherit legacy via the chain: if the parent itself is
-                // deprecated or extends a deprecated class, this class is
-                // legacy too.
-                if (!effLegacy) {
-                    if (parent.isDeprecated) {
-                        effLegacy = true;
-                        legacySource = parent.fqn();
-                    } else if (parent.primaryExtendsFqn != null
-                            && deprecatedFqns.contains(parent.primaryExtendsFqn)) {
-                        effLegacy = true;
-                        legacySource = parent.primaryExtendsFqn;
-                    }
+                // Inherit legacy via the chain: if an in-package ancestor
+                // extends a deprecated class, this class is legacy too —
+                // unless this class itself is @Deprecated (which means it's
+                // already on the core team's radar).
+                if (!effLegacy && !c.isDeprecated
+                        && parent.primaryExtendsFqn != null
+                        && deprecatedFqns.contains(parent.primaryExtendsFqn)) {
+                    effLegacy = true;
+                    legacySource = parent.primaryExtendsFqn;
                 }
                 if (effKind == Kind.OTHER && parent.ownKind != Kind.OTHER) {
                     effKind = parent.ownKind;
@@ -410,8 +402,7 @@ public final class JavaScanner {
             }
             c.setEffective(effKind, ClassRecord.toStatus(effSpec, effLegacy));
             if (effLegacy && legacySource != null) {
-                String label = c.isDeprecated ? legacySource : "extends " + legacySource;
-                c.setLegacyEvidence(java.util.List.of(label));
+                c.setLegacyEvidence(java.util.List.of("extends " + legacySource));
             }
             report.javaCounts.get(effKind).add(c.status());
 
