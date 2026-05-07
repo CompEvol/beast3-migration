@@ -16,7 +16,7 @@ CompEvol releases on Maven Central: https://central.sonatype.com/namespace/io.gi
 
 Beast2-Dev releases on Maven Central: https://central.sonatype.com/namespace/io.github.beast2-dev
 
-## Complied
+## Master/Main branch complied
 
 **Note:** these packages are only compile-tested, using `mvn clean install -DskipTests`. Full migration may still require updates to tests, example XMLs, or BEAUti templates.
 
