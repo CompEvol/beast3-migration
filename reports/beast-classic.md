@@ -1,6 +1,6 @@
 # beast-classic — what's left
 
-> **Scanned at:** 2026-05-07T20:45:05.621942  
+> **Scanned at:** 2026-05-07T21:03:29.291886  
 > **Local checkout:** `/Users/adru001/Git/beast-classic` — commit `8baef54` on `master` — [view on GitHub](https://github.com/BEAST2-Dev/beast-classic/commit/8baef5485aa4b218655729d03c7f8d7ef3ab9668)  
 > **Pom version:** `1.7.0-SNAPSHOT`  
 > **Maven Central:** `io.github.beast2-dev:beast-classic:1.7.0-beta1`  
@@ -8,15 +8,23 @@
 
 ## Summary
 
-- **Java classes:** 7 on spec, 0 mixed, 0 legacy of 68 total
+- **Java classes:** 7 on spec, 0 mixed, 5 legacy of 68 total
 - **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 10 total
 - **BEAUti fxtemplates:** 0 clean / 0 use spec / 5 total
 - **Input rule:** 8 classes hold 16 Input(s) declared too concretely
 - **Maven Central:** 1.7.0-beta1
 
-## Java migration
+## Java classes pending migration
 
-No Java classes flagged as legacy or mixed — all relevant types are on spec or have no parameter involvement. ✅
+### CalcNodes — 5 legacy, 0 mixed (of 14 total)
+
+**Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
+
+- `beastclassic.continuous.MultivariateDiffusionModel` — via `ContinuousSubstitutionModel`
+- `beastclassic.evolution.substitutionmodel.ContinuousSubstitutionModel` — extends `Base`
+- `beastclassic.evolution.substitutionmodel.FLU` — extends `EmpiricalSubstitutionModel`
+- `beastclassic.evolution.substitutionmodel.GLMBasedSubstModel` — extends `GeneralSubstitutionModel`
+- `beastclassic.evolution.substitutionmodel.LG` — extends `EmpiricalSubstitutionModel`
 
 ## Inputs declared too concretely
 

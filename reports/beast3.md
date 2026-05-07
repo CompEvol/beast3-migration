@@ -1,6 +1,6 @@
 # beast3 — what's left
 
-> **Scanned at:** 2026-05-07T20:45:04.569385  
+> **Scanned at:** 2026-05-07T21:03:28.474286  
 > **Local checkout:** `/Users/adru001/Git/beast3` — commit `4e1ee72` on `target-acceptance-1d-operators` — [view on GitHub](https://github.com/CompEvol/beast3/commit/4e1ee72a7cead616230d9dce5cb43e71400615e1)  
 > **Pom version:** `2.8.0-SNAPSHOT`  
 > **Maven Central:** `io.github.compevol:beast3:2.8.0-beta5`  
@@ -10,7 +10,7 @@
 
 ## Summary
 
-- **Java classes:** 93 on spec, 0 mixed, 14 legacy of 604 total
+- **Java classes:** 93 on spec, 0 mixed, 34 legacy of 604 total
 - **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 78 total (+81 under legacy/)
 - **BEAUti fxtemplates:** 6 clean / 10 use spec / 10 total
 - **Input rule:** 56 classes hold 105 Input(s) declared too concretely
@@ -22,25 +22,50 @@
 
 **Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
 
-- `beast.base.inference.distribution.Beta` — uses `ParametricDistribution`
-- `beast.base.inference.distribution.ChiSquare` — uses `ParametricDistribution`
-- `beast.base.inference.distribution.Dirichlet` — uses `ParametricDistribution`
-- `beast.base.inference.distribution.Exponential` — uses `ParametricDistribution`
-- `beast.base.inference.distribution.Gamma` — uses `ParametricDistribution`
-- `beast.base.inference.distribution.InverseGamma` — uses `ParametricDistribution`
-- `beast.base.inference.distribution.LaplaceDistribution` — uses `ParametricDistribution`
-- `beast.base.inference.distribution.LogNormal`
-- `beast.base.inference.distribution.LogNormalDistributionModel` — uses `ParametricDistribution`
-- `beast.base.inference.distribution.Normal` — uses `ParametricDistribution`
-- `beast.base.inference.distribution.OneOnX` — uses `ParametricDistribution`
-- `beast.base.inference.distribution.Poisson` — uses `ParametricDistribution`
-- `beast.base.inference.distribution.Uniform` — uses `ParametricDistribution`
+- `beast.base.inference.distribution.Beta` — extends `ParametricDistribution`
+- `beast.base.inference.distribution.ChiSquare` — extends `ParametricDistribution`
+- `beast.base.inference.distribution.Dirichlet` — extends `ParametricDistribution`
+- `beast.base.inference.distribution.Exponential` — extends `ParametricDistribution`
+- `beast.base.inference.distribution.Gamma` — extends `ParametricDistribution`
+- `beast.base.inference.distribution.InverseGamma` — extends `ParametricDistribution`
+- `beast.base.inference.distribution.LaplaceDistribution` — extends `ParametricDistribution`
+- `beast.base.inference.distribution.LogNormal` — via `LogNormalDistributionModel`
+- `beast.base.inference.distribution.LogNormalDistributionModel` — extends `ParametricDistribution`
+- `beast.base.inference.distribution.Normal` — extends `ParametricDistribution`
+- `beast.base.inference.distribution.OneOnX` — extends `ParametricDistribution`
+- `beast.base.inference.distribution.Poisson` — extends `ParametricDistribution`
+- `beast.base.inference.distribution.Uniform` — extends `ParametricDistribution`
 
 ### Parameters — 1 legacy, 0 mixed (of 5 total)
 
 **Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
 
-- `beast.base.inference.parameter.CompoundRealParameter` — uses `RealParameter`
+- `beast.base.inference.parameter.CompoundRealParameter` — extends `RealParameter`
+
+### Other — 20 legacy, 0 mixed (of 424 total)
+
+**Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
+
+- `beast.base.evolution.branchratemodel.RandomLocalClockModel` — extends `Base`
+- `beast.base.evolution.branchratemodel.StrictClockModel` — extends `Base`
+- `beast.base.evolution.branchratemodel.UCRelaxedClockModel` — extends `Base`
+- `beast.base.evolution.substitutionmodel.BinaryCovarion` — extends `GeneralSubstitutionModel`
+- `beast.base.evolution.substitutionmodel.Blosum62` — extends `EmpiricalSubstitutionModel`
+- `beast.base.evolution.substitutionmodel.CPREV` — extends `EmpiricalSubstitutionModel`
+- `beast.base.evolution.substitutionmodel.ComplexColtEigenSystem` — extends `ColtEigenSystem`
+- `beast.base.evolution.substitutionmodel.ComplexSubstitutionModel` — extends `GeneralSubstitutionModel`
+- `beast.base.evolution.substitutionmodel.Dayhoff` — extends `EmpiricalSubstitutionModel`
+- `beast.base.evolution.substitutionmodel.EmpiricalSubstitutionModel` — extends `GeneralSubstitutionModel`
+- `beast.base.evolution.substitutionmodel.GTR` — extends `GeneralSubstitutionModel`
+- `beast.base.evolution.substitutionmodel.GeneralSubstitutionModel` — extends `Base`
+- `beast.base.evolution.substitutionmodel.JTT` — extends `EmpiricalSubstitutionModel`
+- `beast.base.evolution.substitutionmodel.JukesCantor` — extends `Base`
+- `beast.base.evolution.substitutionmodel.MTREV` — extends `EmpiricalSubstitutionModel`
+- `beast.base.evolution.substitutionmodel.MutationDeathModel` — extends `Base`
+- `beast.base.evolution.substitutionmodel.SYM` — extends `GeneralSubstitutionModel`
+- `beast.base.evolution.substitutionmodel.TIM` — extends `GeneralSubstitutionModel`
+- `beast.base.evolution.substitutionmodel.TVM` — extends `GeneralSubstitutionModel`
+- `beast.base.evolution.substitutionmodel.WAG` — extends `EmpiricalSubstitutionModel`
 
 ## Inputs declared too concretely
 

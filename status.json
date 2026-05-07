@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-07T20:45:06.617856+12:00",
+  "generatedAt": "2026-05-07T21:03:30.425877+12:00",
   "packages": [
     {
       "name": "beast3",
@@ -57,8 +57,8 @@
           "total": 424,
           "spec": 18,
           "mixed": 0,
-          "legacy": 0,
-          "neutral": 406
+          "legacy": 20,
+          "neutral": 386
         }
       },
       "xml": {
@@ -127,8 +127,8 @@
           "total": 10,
           "spec": 0,
           "mixed": 0,
-          "legacy": 0,
-          "neutral": 10
+          "legacy": 5,
+          "neutral": 5
         },
         "parameter": {
           "total": 2,
@@ -148,8 +148,8 @@
           "total": 66,
           "spec": 0,
           "mixed": 0,
-          "legacy": 0,
-          "neutral": 66
+          "legacy": 1,
+          "neutral": 65
         }
       },
       "xml": {
@@ -218,8 +218,8 @@
           "total": 14,
           "spec": 3,
           "mixed": 0,
-          "legacy": 0,
-          "neutral": 11
+          "legacy": 5,
+          "neutral": 6
         },
         "parameter": {
           "total": 1,

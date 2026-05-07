@@ -1,6 +1,6 @@
 # sampled-ancestors — what's left
 
-> **Scanned at:** 2026-05-07T20:45:06.275162  
+> **Scanned at:** 2026-05-07T21:03:29.984636  
 > **Local checkout:** `/Users/adru001/Git/sampled-ancestors` — commit `09bc95c` on `master` — [view on GitHub](https://github.com/CompEvol/sampled-ancestors/commit/09bc95cd1771ce4d85452314331a612549948e69)  
 > **Pom version:** `2.3.0-beta1`  
 > **Maven Central:** `io.github.compevol:sampled-ancestors:2.3.0-beta1`  
@@ -20,8 +20,8 @@
 
 **Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
 
-- `sa.math.distributions.DegenerateBeta` — uses `ParametricDistribution`
-- `sa.math.distributions.DegenerateUniform` — uses `ParametricDistribution`
+- `sa.math.distributions.DegenerateBeta` — extends `ParametricDistribution`
+- `sa.math.distributions.DegenerateUniform` — extends `ParametricDistribution`
 
 ## Example XMLs pending migration
 

@@ -217,7 +217,14 @@ public final class PackageReportWriter {
     private static void renderClassLine(StringBuilder sb, ClassRecord c) {
         sb.append("- `").append(c.fqn()).append('`');
         String evidence = formatEvidence(c.legacyEvidence());
-        if (!evidence.isBlank()) sb.append(" — uses ").append(evidence);
+        if (!evidence.isBlank()) {
+            sb.append(" — extends ").append(evidence);
+        } else if (c.primaryExtendsFqn != null && !c.primaryExtendsFqn.isBlank()) {
+            // Class inherited LEGACY via the chain resolver; cite the in-package parent.
+            int dot = c.primaryExtendsFqn.lastIndexOf('.');
+            String parent = dot >= 0 ? c.primaryExtendsFqn.substring(dot + 1) : c.primaryExtendsFqn;
+            sb.append(" — via `").append(parent).append('`');
+        }
         sb.append('\n');
     }
 

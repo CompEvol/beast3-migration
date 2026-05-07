@@ -49,17 +49,15 @@ public final class JavaScanner {
             "StateNode");
 
     /**
-     * Legacy base FQNs. A class is LEGACY when it {@code extends} or
-     * {@code implements} one of these, or any class under
-     * {@code beast.base.inference.parameter.*}. Merely importing a legacy
-     * type isn't a legacy signal — that comes from interop, not lineage.
+     * Legacy base FQNs. A class is LEGACY when its primary {@code extends}
+     * resolves to one of these. Lineage only — imports / implements aren't
+     * legacy signals.
      *
      * <p>Note: {@code beast.base.core.Function} is intentionally <em>not</em>
      * here. The abstract {@code beast.base.inference.Distribution} itself
      * declares {@code implements Function, RealScalar<Real>}, so every
      * concrete distribution inherits {@code Function} regardless of
-     * migration status. Flagging it would mark every distribution legacy.
-     * The migration story for {@code Function} is handled by the
+     * migration status. The Function-replacement story is handled by the
      * input-rule check ({@code Input<Function>} is still a violation
      * everywhere it appears).</p>
      */
@@ -67,7 +65,41 @@ public final class JavaScanner {
             "beast.base.inference.distribution.Prior",
             "beast.base.inference.distribution.ParametricDistribution");
 
-    private static final String LEGACY_PARAM_PACKAGE = "beast.base.inference.parameter.";
+    /**
+     * Legacy package prefixes for the {@code extends} target. Only added
+     * when the spec replacement at the equivalent {@code beast.base.spec.…}
+     * path doesn't itself extend anything in the legacy package, so the
+     * spec replacement won't get falsely labelled MIXED.
+     *
+     * <ul>
+     *   <li>{@code branchratemodel} — spec {@code Base} extends
+     *       {@code CalculationNode}; clean.</li>
+     *   <li>{@code substitutionmodel} — spec {@code Base} extends
+     *       {@code CalculationNode}; clean.</li>
+     *   <li>{@code parameter} — concrete spec params extend their own
+     *       {@code Tensor*}/{@code Param*} hierarchy; clean.</li>
+     * </ul>
+     *
+     * <p>Notably absent (for now): sitemodel, likelihood, tree.coalescent,
+     * speciation — their spec equivalents still extend legacy bases (e.g.
+     * {@code spec.SiteModel extends SiteModelInterface.Base}), so a blanket
+     * package check would flag the spec classes themselves.</p>
+     */
+    private static final Set<String> LEGACY_BASE_PACKAGES = Set.of(
+            "beast.base.inference.parameter.",
+            "beast.base.evolution.branchratemodel.",
+            "beast.base.evolution.substitutionmodel.");
+
+    /**
+     * FQNs in legacy packages that should NOT trigger legacy status — bare
+     * interfaces that the spec hierarchy itself reuses (spec
+     * {@code branchratemodel.Base} implements {@code BranchRateModel};
+     * extending the interface to refine it, like flc's {@code CladeRateModel
+     * extends BranchRateModel}, isn't a legacy signal).
+     */
+    private static final Set<String> LEGACY_PACKAGE_EXEMPTIONS = Set.of(
+            "beast.base.evolution.branchratemodel.BranchRateModel",
+            "beast.base.evolution.substitutionmodel.SubstitutionModel");
 
     /**
      * Package prefixes that classify the *kind* of a base class regardless of
@@ -208,9 +240,9 @@ public final class JavaScanner {
             Set<String> tokens = parseTypeTokens(extendsClause, implementsClause);
             Set<String> resolved = resolveTokens(tokens, simpleToFqn);
 
-            Kind ownKind = classify(tokens, resolved);
-            boolean[] ownStatus = computeOwnStatus(tokens, importFqns, resolved);
             String primaryExtendsFqn = resolvePrimaryExtends(extendsClause, simpleToFqn, pkgName);
+            Kind ownKind = classify(tokens, resolved);
+            boolean[] ownStatus = computeOwnStatus(tokens, resolved, primaryExtendsFqn);
 
             java.util.List<InputDecl> inputs = extractInputs(stripped);
 
@@ -222,8 +254,8 @@ public final class JavaScanner {
                     simpleName,
                     trim(extendsClause),
                     trim(implementsClause),
-                    java.util.List.copyOf(legacyEvidence(importFqns, resolved, tokens)),
-                    java.util.List.copyOf(specEvidence(importFqns, resolved, tokens)),
+                    java.util.List.copyOf(legacyEvidence(resolved, tokens, primaryExtendsFqn)),
+                    java.util.List.copyOf(specEvidence(resolved, tokens)),
                     ownKind,
                     ownStatus[0],
                     ownStatus[1],
@@ -349,8 +381,8 @@ public final class JavaScanner {
         }
     }
 
-    private static boolean[] computeOwnStatus(Set<String> tokens, Set<String> imports, Set<String> resolved) {
-        Status s = migrationStatus(tokens, imports, resolved);
+    private static boolean[] computeOwnStatus(Set<String> tokens, Set<String> resolved, String primaryExtendsFqn) {
+        Status s = migrationStatus(tokens, resolved, primaryExtendsFqn);
         return new boolean[] {
                 s == Status.SPEC || s == Status.MIXED,
                 s == Status.LEGACY || s == Status.MIXED
@@ -388,22 +420,30 @@ public final class JavaScanner {
     }
 
     private static java.util.LinkedHashSet<String> legacyEvidence(
-            Set<String> imports, Set<String> resolved, Set<String> tokens) {
+            Set<String> resolved, Set<String> tokens, String primaryExtendsFqn) {
         java.util.LinkedHashSet<String> out = new java.util.LinkedHashSet<>();
-        // Lineage-only — imports are interop and not legacy signals.
-        for (String fqn : resolved) {
-            if (LEGACY_BASE_FQNS.contains(fqn) || fqn.startsWith(LEGACY_PARAM_PACKAGE)) {
-                out.add("extends/implements " + fqn);
+        // Lineage-only: cite only the primary extends parent if legacy.
+        if (primaryExtendsFqn != null && !LEGACY_PACKAGE_EXEMPTIONS.contains(primaryExtendsFqn)) {
+            boolean legacy = LEGACY_BASE_FQNS.contains(primaryExtendsFqn);
+            if (!legacy) {
+                for (String prefix : LEGACY_BASE_PACKAGES) {
+                    if (primaryExtendsFqn.startsWith(prefix)) { legacy = true; break; }
+                }
             }
+            if (legacy) out.add("extends " + primaryExtendsFqn);
         }
-        for (String t : tokens) {
-            if (LEGACY_BASE_SIMPLE_NAMES.contains(t)) out.add("extends/implements " + t);
+        // If the FQN didn't resolve, fall back to the simple-name token that
+        // matched our legacy set.
+        if (out.isEmpty()) {
+            for (String t : tokens) {
+                if (LEGACY_BASE_SIMPLE_NAMES.contains(t)) out.add("extends " + t);
+            }
         }
         return out;
     }
 
     private static java.util.LinkedHashSet<String> specEvidence(
-            Set<String> imports, Set<String> resolved, Set<String> tokens) {
+            Set<String> resolved, Set<String> tokens) {
         java.util.LinkedHashSet<String> out = new java.util.LinkedHashSet<>();
         for (String fqn : resolved) {
             if (fqn.startsWith("beast.base.spec.")) out.add("extends/implements " + fqn);
@@ -515,21 +555,43 @@ public final class JavaScanner {
         return false;
     }
 
-    private static Status migrationStatus(Set<String> typeTokens, Set<String> imports, Set<String> resolvedFqns) {
+    private static Status migrationStatus(
+            Set<String> typeTokens,
+            Set<String> resolvedFqns,
+            String primaryExtendsFqn) {
         boolean hasSpec = false;
         boolean hasLegacy = false;
 
-        // Lineage check — extends/implements (resolved to FQN). Imports alone
-        // are interop and not a migration signal.
+        // Spec: extends OR implements anything in beast.base.spec.*. A class
+        // gets the spec benefit from any spec lineage component.
         for (String fqn : resolvedFqns) {
             if (fqn.startsWith("beast.base.spec.")) hasSpec = true;
-            if (LEGACY_BASE_FQNS.contains(fqn)) hasLegacy = true;
-            else if (fqn.startsWith(LEGACY_PARAM_PACKAGE)) hasLegacy = true;
         }
-        // Simple-name fallbacks for tokens whose import didn't resolve.
         for (String t : typeTokens) {
             if (SPEC_BASE_SIMPLE_NAMES.contains(t)) hasSpec = true;
-            if (LEGACY_BASE_SIMPLE_NAMES.contains(t)) hasLegacy = true;
+        }
+
+        // Legacy: extends-only. The primary parent's lineage determines status.
+        // Implementing a legacy interface (e.g. spec Base implements
+        // BranchRateModel) is not a legacy signal.
+        if (primaryExtendsFqn != null && !LEGACY_PACKAGE_EXEMPTIONS.contains(primaryExtendsFqn)) {
+            if (LEGACY_BASE_FQNS.contains(primaryExtendsFqn)) {
+                hasLegacy = true;
+            } else {
+                for (String prefix : LEGACY_BASE_PACKAGES) {
+                    if (primaryExtendsFqn.startsWith(prefix)) { hasLegacy = true; break; }
+                }
+            }
+        }
+        // Simple-name fallback for the case where import resolution failed
+        // (e.g. wildcard import or stray `extends Base`). The token set holds
+        // both extends and implements names, but legacy bases are extends-only
+        // in practice (RealParameter is a class, ParametricDistribution is
+        // abstract, qualified inners like "BranchRateModel.Base" are classes).
+        if (!hasLegacy) {
+            for (String t : typeTokens) {
+                if (LEGACY_BASE_SIMPLE_NAMES.contains(t)) { hasLegacy = true; break; }
+            }
         }
 
         if (hasSpec && hasLegacy) return Status.MIXED;
@@ -552,11 +614,18 @@ public final class JavaScanner {
 
     private static final Set<String> LEGACY_BASE_SIMPLE_NAMES = Set.of(
             "RealParameter", "IntegerParameter", "BooleanParameter",
-            "ParametricDistribution");
+            "ParametricDistribution",
+            // Qualified inner classes — the parser produces both the simple
+            // name (`Base`) and the qualified form when seeing
+            // `extends BranchRateModel.Base`. Match the qualified form;
+            // bare `Base` is too generic.
+            "BranchRateModel.Base", "SubstitutionModel.Base");
             // Notable omissions: "Prior" (too easily collides with custom
             // Prior subclasses — caught by FQN above instead), "Function"
             // (every Distribution transitively implements it; not a useful
-            // migration signal — see LEGACY_BASE_FQNS comment).
+            // migration signal — see LEGACY_BASE_FQNS comment),
+            // "BranchRateModel" / "SubstitutionModel" alone (interfaces;
+            // spec Base implements them, so flagging would mark spec legacy).
 
     private static String appendError(String existing, String add) {
         if (existing == null || existing.isBlank()) return add;
