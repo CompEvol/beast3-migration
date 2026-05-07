@@ -2,7 +2,7 @@
 
 ## Maven releases
 
-The following packages are available in Maven Cental.
+The jar files of the following packages are available in Maven Cental noew. But full migration may still require updates to tests, example XMLs, or BEAUti templates.
 
 - beast3
 - BEASTLabs
