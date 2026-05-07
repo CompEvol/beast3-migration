@@ -18,52 +18,68 @@ public final class ChecklistWriter {
     public static final String BEGIN = "<!-- BEGIN AUTO -->";
     public static final String END = "<!-- END AUTO -->";
 
+    private static final String SCAFFOLD_HEAD = """
+            # BEAST 3 migration checklist
+
+            Auto-generated from `packages.yaml` by the `beast3-migration-status`
+            Java tool. Regenerate with `mvn -q exec:java` (or
+            `java -jar target/*-all.jar`) after cloning or updating a tracked
+            package. For per-package migration status ("what's left for `flc`?"),
+            see [`reports/`](reports/README.md). Notes on how to read the columns
+            are at the bottom of this page.
+
+            """;
+
+    private static final String SCAFFOLD_TAIL = """
+
+
+            ## Notes on how to read this
+
+            Most cells have an inline legend right below their table. The points
+            below cover what those legends don't.
+
+            - **Java class counts.** Each kind cell shows `legacy / total` —
+              classes still extending a legacy base (`ParametricDistribution`,
+              `Prior`, `RealParameter` / `IntegerParameter` / `BooleanParameter`).
+              `✅ N` means none of the `N` classes have a legacy base. The *Java
+              class kinds* detail table splits each kind into
+              `spec / mixed / legacy / neutral`; **NEUTRAL** = no migration target
+              either way (e.g., a subclass of a base that has no spec equivalent
+              yet).
+            - **XML counts** — `spec / v2.8 / total`: `spec` = `<beast>` root has
+              both `version="2.8"` and a `beast.base.spec.*` namespace; `v2.8` =
+              root has `version="2.8"` regardless of namespace; `total` = every
+              XML with a `<beast>` root. Files under `examples/legacy*/` are
+              reported separately as `(+N legacy)` and excluded from the totals.
+            - **Build / release columns** are simple presence checks. The Maven
+              Central column shows the latest released version, or `—` if not
+              published.
+            """;
+
     private ChecklistWriter() {}
 
     public static void write(Path checklist, List<Report> reports) throws IOException {
         String generated = render(reports);
-        if (Files.isRegularFile(checklist)) {
-            String existing = Files.readString(checklist);
-            int b = existing.indexOf(BEGIN);
-            int e = existing.indexOf(END);
-            if (b >= 0 && e > b) {
-                String head = existing.substring(0, b);
-                String tail = existing.substring(e + END.length());
-                Files.writeString(checklist, head + BEGIN + "\n" + generated + END + tail);
-                return;
-            }
+
+        // First run: file doesn't exist yet — write the canonical scaffold.
+        if (!Files.isRegularFile(checklist)) {
+            Files.writeString(checklist, SCAFFOLD_HEAD + BEGIN + "\n" + generated + END + SCAFFOLD_TAIL);
+            return;
         }
-        // No file or no markers — write a fresh one with default scaffold.
-        String scaffold = """
-                # BEAST 3 migration checklist
 
-                The table below is generated from `packages.yaml` by the
-                `beast3-migration-status` Java tool. Re-run with
-                `mvn -q exec:java` (or `java -jar target/*-all.jar`) after
-                cloning or updating any tracked package.
-
-                Counts:
-                * **Distributions / Operators / Loggers / CalcNodes / Parameters / StateNodes**
-                  — Java classes by kind. Cell shows `legacy / total` —
-                  classes still extending a legacy base (`ParametricDistribution`,
-                  `Prior`, `RealParameter` / `IntegerParameter` /
-                  `BooleanParameter`). `✅ N` means none of the `N` classes have
-                  a legacy base. The *Java class kinds* detail table below
-                  splits each kind into `spec / mixed / legacy / neutral`;
-                  NEUTRAL = no migration target either way (e.g., a subclass
-                  of a base that has no spec equivalent yet).
-                * **XMLs** — `spec / v2.8 / total`: `spec` = `<beast>` root
-                  has both `version="2.8"` and a `beast.base.spec.*` namespace;
-                  `v2.8` = root has `version="2.8"` regardless of namespace;
-                  `total` = every XML with a `<beast>` root. Files under
-                  `examples/legacy*/` are reported separately as `(+N legacy)`
-                  and excluded from the totals.
-
-                Build/release columns are simple presence checks. Maven Central
-                shows the latest released version (or `—` if not published).
-
-                """ + BEGIN + "\n" + generated + END + "\n";
-        Files.writeString(checklist, scaffold);
+        // Normal run: splice the generated block between the markers, leave
+        // any author-edited prose outside the markers untouched.
+        String existing = Files.readString(checklist);
+        int b = existing.indexOf(BEGIN);
+        int e = existing.indexOf(END);
+        if (b < 0 || e <= b) {
+            throw new IOException("CHECKLIST.md is missing the AUTO markers ('"
+                    + BEGIN + "' / '" + END + "'). Restore them or delete the file"
+                    + " to regenerate from scratch.");
+        }
+        String head = existing.substring(0, b);
+        String tail = existing.substring(e + END.length());
+        Files.writeString(checklist, head + BEGIN + "\n" + generated + END + tail);
     }
 
     private static String render(List<Report> reports) {
