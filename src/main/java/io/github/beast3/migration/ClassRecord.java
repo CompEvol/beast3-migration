@@ -29,7 +29,7 @@ public final class ClassRecord {
     public final String simpleName;
     public final String extendsClause;
     public final String implementsClause;
-    public final List<String> legacyEvidence;
+    private List<String> legacyEvidence;   // populated by JavaScanner.resolveAndTally
     public final List<String> specEvidence;
 
     /** Kind classified from this file's own {@code extends}/{@code implements}, ignoring inheritance. */
@@ -45,6 +45,10 @@ public final class ClassRecord {
      * found during chain resolution.
      */
     public final String primaryExtendsFqn;
+
+    /** True if the source carries a {@code @Deprecated} annotation on the
+     *  primary class declaration — beast3's authoritative legacy marker. */
+    public final boolean isDeprecated;
 
     /** All {@code Input<X>} field declarations seen in the file. */
     public final List<InputDecl> inputs;
@@ -64,6 +68,7 @@ public final class ClassRecord {
             boolean ownHasSpec,
             boolean ownHasLegacy,
             String primaryExtendsFqn,
+            boolean isDeprecated,
             List<InputDecl> inputs) {
         this.file = file;
         this.packageName = packageName;
@@ -76,6 +81,7 @@ public final class ClassRecord {
         this.ownHasSpec = ownHasSpec;
         this.ownHasLegacy = ownHasLegacy;
         this.primaryExtendsFqn = primaryExtendsFqn;
+        this.isDeprecated = isDeprecated;
         this.inputs = inputs;
         this.kind = ownKind;
         this.status = toStatus(ownHasSpec, ownHasLegacy);
@@ -89,6 +95,10 @@ public final class ClassRecord {
     void setEffective(Kind kind, Status status) {
         this.kind = kind;
         this.status = status;
+    }
+
+    void setLegacyEvidence(List<String> evidence) {
+        this.legacyEvidence = evidence;
     }
 
     public String fqn() {

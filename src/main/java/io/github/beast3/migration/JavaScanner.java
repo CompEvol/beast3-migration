@@ -12,7 +12,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import io.github.beast3.migration.Report.Kind;
-import io.github.beast3.migration.Report.Status;
 
 /**
  * Walks a package's Java source tree and classifies each top-level class by
@@ -49,57 +48,23 @@ public final class JavaScanner {
             "StateNode");
 
     /**
-     * Legacy base FQNs. A class is LEGACY when its primary {@code extends}
-     * resolves to one of these. Lineage only — imports / implements aren't
-     * legacy signals.
+     * Authoritative legacy registry: every class annotated {@code @Deprecated}
+     * across all scanned packages. Built in two phases by {@link Main} —
+     * Phase 1 scans every package collecting {@link ClassRecord}s with
+     * {@link ClassRecord#isDeprecated}; Phase 2 collects their FQNs into a
+     * global set; Phase 3 calls {@link #resolveAndTally(Report, Set)} which
+     * marks a class LEGACY when its {@code primaryExtendsFqn} is in the set
+     * (and the chain resolver propagates).
      *
-     * <p>Note: {@code beast.base.core.Function} is intentionally <em>not</em>
-     * here. The abstract {@code beast.base.inference.Distribution} itself
-     * declares {@code implements Function, RealScalar<Real>}, so every
-     * concrete distribution inherits {@code Function} regardless of
-     * migration status. The Function-replacement story is handled by the
-     * input-rule check ({@code Input<Function>} is still a violation
-     * everywhere it appears).</p>
+     * <p>This replaces the previous hand-curated lists. {@code @Deprecated}
+     * is the canonical source of truth in beast3 — {@code Prior},
+     * {@code ParametricDistribution}, {@code RealParameter}, {@code Function},
+     * {@code HKY}, {@code GTR}, every legacy substitution / branch-rate /
+     * coalescent / site-model class, etc., are all explicitly annotated.
+     * Notable non-deprecated: the canonical interfaces
+     * {@code BranchRateModel} and {@code SubstitutionModel} (spec {@code Base}
+     * still implements them).</p>
      */
-    private static final Set<String> LEGACY_BASE_FQNS = Set.of(
-            "beast.base.inference.distribution.Prior",
-            "beast.base.inference.distribution.ParametricDistribution");
-
-    /**
-     * Legacy package prefixes for the {@code extends} target. Only added
-     * when the spec replacement at the equivalent {@code beast.base.spec.…}
-     * path doesn't itself extend anything in the legacy package, so the
-     * spec replacement won't get falsely labelled MIXED.
-     *
-     * <ul>
-     *   <li>{@code branchratemodel} — spec {@code Base} extends
-     *       {@code CalculationNode}; clean.</li>
-     *   <li>{@code substitutionmodel} — spec {@code Base} extends
-     *       {@code CalculationNode}; clean.</li>
-     *   <li>{@code parameter} — concrete spec params extend their own
-     *       {@code Tensor*}/{@code Param*} hierarchy; clean.</li>
-     * </ul>
-     *
-     * <p>Notably absent (for now): sitemodel, likelihood, tree.coalescent,
-     * speciation — their spec equivalents still extend legacy bases (e.g.
-     * {@code spec.SiteModel extends SiteModelInterface.Base}), so a blanket
-     * package check would flag the spec classes themselves.</p>
-     */
-    private static final Set<String> LEGACY_BASE_PACKAGES = Set.of(
-            "beast.base.inference.parameter.",
-            "beast.base.evolution.branchratemodel.",
-            "beast.base.evolution.substitutionmodel.");
-
-    /**
-     * FQNs in legacy packages that should NOT trigger legacy status — bare
-     * interfaces that the spec hierarchy itself reuses (spec
-     * {@code branchratemodel.Base} implements {@code BranchRateModel};
-     * extending the interface to refine it, like flc's {@code CladeRateModel
-     * extends BranchRateModel}, isn't a legacy signal).
-     */
-    private static final Set<String> LEGACY_PACKAGE_EXEMPTIONS = Set.of(
-            "beast.base.evolution.branchratemodel.BranchRateModel",
-            "beast.base.evolution.substitutionmodel.SubstitutionModel");
 
     /**
      * Package prefixes that classify the *kind* of a base class regardless of
@@ -242,26 +207,68 @@ public final class JavaScanner {
 
             String primaryExtendsFqn = resolvePrimaryExtends(extendsClause, simpleToFqn, pkgName);
             Kind ownKind = classify(tokens, resolved);
-            boolean[] ownStatus = computeOwnStatus(tokens, resolved, primaryExtendsFqn);
+            boolean ownHasSpec = computeOwnHasSpec(tokens, resolved);
+            boolean isDeprecated = hasDeprecatedAnnotation(stripped, cm.start());
 
             java.util.List<InputDecl> inputs = extractInputs(stripped);
 
-            // Counts are deferred until resolveAndTally() so subclass status
-            // can be inherited from in-package parents.
+            // Counts and legacy-status are deferred until resolveAndTally()
+            // — both depend on the global @Deprecated registry collected
+            // across all scanned packages.
             report.classes.add(new ClassRecord(
                     file,
                     pkgName,
                     simpleName,
                     trim(extendsClause),
                     trim(implementsClause),
-                    java.util.List.copyOf(legacyEvidence(resolved, tokens, primaryExtendsFqn)),
+                    java.util.List.of(),                  // populated by resolver
                     java.util.List.copyOf(specEvidence(resolved, tokens)),
                     ownKind,
-                    ownStatus[0],
-                    ownStatus[1],
+                    ownHasSpec,
+                    false,                                // ownHasLegacy filled by resolver
                     primaryExtendsFqn,
+                    isDeprecated,
                     java.util.List.copyOf(inputs)));
         }
+    }
+
+    /**
+     * Walks backward from the class declaration through any preceding
+     * annotations (correctly handling nested parens inside annotation args
+     * — so {@code @Description("...(cumulative)...")} doesn't break the
+     * scan) and returns true if any of them is {@code @Deprecated}.
+     */
+    private static boolean hasDeprecatedAnnotation(String src, int classDeclStart) {
+        int i = classDeclStart - 1;
+        int safety = 8000;
+        while (i >= 0 && --safety > 0) {
+            while (i >= 0 && Character.isWhitespace(src.charAt(i))) i--;
+            if (i < 0) return false;
+            // Scan back over optional annotation arg parens
+            if (src.charAt(i) == ')') {
+                int depth = 1;
+                i--;
+                while (i >= 0 && depth > 0) {
+                    char c = src.charAt(i);
+                    if (c == ')') depth++;
+                    else if (c == '(') depth--;
+                    i--;
+                    if (--safety <= 0) return false;
+                }
+                if (i < 0) return false;
+                while (i >= 0 && Character.isWhitespace(src.charAt(i))) i--;
+                if (i < 0) return false;
+            }
+            // Walk back over the annotation name to '@'
+            int nameEnd = i + 1;
+            while (i >= 0 && (Character.isJavaIdentifierPart(src.charAt(i))
+                    || src.charAt(i) == '.')) i--;
+            if (i < 0 || src.charAt(i) != '@') return false;
+            String name = src.substring(i + 1, nameEnd);
+            if (name.equals("Deprecated") || name.endsWith(".Deprecated")) return true;
+            i--;
+        }
+        return false;
     }
 
     /**
@@ -340,20 +347,39 @@ public final class JavaScanner {
 
     /**
      * Walks the in-package primary-extends chain for every class collected
-     * during {@link #scan(Path, Report)}. A class inherits its parent's
-     * <em>kind</em> if its own kind was {@link Kind#OTHER} (subclasses of a
-     * model component are model components), and accumulates the parent's
-     * spec/legacy signals (a thin subclass of a spec base counts as on
-     * spec). Tallies the effective values into {@link Report#javaCounts}.
+     * during {@link #scan(Path, Report)}, using the global {@code deprecatedFqns}
+     * registry to decide LEGACY status. A class is LEGACY iff:
+     * <ul>
+     *   <li>its primary {@code extends} target is a deprecated class anywhere
+     *       in the scanned set, or</li>
+     *   <li>(transitively) its in-package parent inherited LEGACY this way.</li>
+     * </ul>
+     *
+     * <p>A class inherits its parent's <em>kind</em> if its own kind was
+     * {@link Kind#OTHER} (subclasses of a model component are model
+     * components), and accumulates the parent's spec signals. Tallies the
+     * effective values into {@link Report#javaCounts}.</p>
      */
-    public static void resolveAndTally(Report report) {
+    public static void resolveAndTally(Report report, Set<String> deprecatedFqns) {
         Map<String, ClassRecord> byFqn = new java.util.HashMap<>();
         for (ClassRecord c : report.classes) byFqn.put(c.fqn(), c);
 
         for (ClassRecord c : report.classes) {
             boolean effSpec = c.ownHasSpec;
-            boolean effLegacy = c.ownHasLegacy;
+            // Two ways to be LEGACY:
+            //   1. the class itself is annotated @Deprecated (it IS one of
+            //      the legacy classes in beast3 / its own package), or
+            //   2. its primary extends target is a deprecated class.
+            boolean effLegacy = c.isDeprecated
+                    || (c.primaryExtendsFqn != null
+                            && deprecatedFqns.contains(c.primaryExtendsFqn));
             Kind effKind = c.ownKind;
+            String legacySource = null;
+            if (c.isDeprecated) {
+                legacySource = "@Deprecated " + c.fqn();
+            } else if (effLegacy) {
+                legacySource = c.primaryExtendsFqn;
+            }
 
             ClassRecord cur = c;
             Set<String> visited = new HashSet<>();
@@ -364,13 +390,29 @@ public final class JavaScanner {
                 if (parent == null) break;
                 if (!visited.add(parent.fqn())) break; // cycle guard
                 effSpec |= parent.ownHasSpec;
-                effLegacy |= parent.ownHasLegacy;
+                // Inherit legacy via the chain: if the parent itself is
+                // deprecated or extends a deprecated class, this class is
+                // legacy too.
+                if (!effLegacy) {
+                    if (parent.isDeprecated) {
+                        effLegacy = true;
+                        legacySource = parent.fqn();
+                    } else if (parent.primaryExtendsFqn != null
+                            && deprecatedFqns.contains(parent.primaryExtendsFqn)) {
+                        effLegacy = true;
+                        legacySource = parent.primaryExtendsFqn;
+                    }
+                }
                 if (effKind == Kind.OTHER && parent.ownKind != Kind.OTHER) {
                     effKind = parent.ownKind;
                 }
                 cur = parent;
             }
             c.setEffective(effKind, ClassRecord.toStatus(effSpec, effLegacy));
+            if (effLegacy && legacySource != null) {
+                String label = c.isDeprecated ? legacySource : "extends " + legacySource;
+                c.setLegacyEvidence(java.util.List.of(label));
+            }
             report.javaCounts.get(effKind).add(c.status());
 
             int v = c.ruleViolatingInputs().size();
@@ -381,12 +423,26 @@ public final class JavaScanner {
         }
     }
 
-    private static boolean[] computeOwnStatus(Set<String> tokens, Set<String> resolved, String primaryExtendsFqn) {
-        Status s = migrationStatus(tokens, resolved, primaryExtendsFqn);
-        return new boolean[] {
-                s == Status.SPEC || s == Status.MIXED,
-                s == Status.LEGACY || s == Status.MIXED
-        };
+    /** Builds the global registry of {@code @Deprecated} FQNs across reports. */
+    public static Set<String> collectDeprecatedFqns(java.util.List<Report> reports) {
+        Set<String> out = new HashSet<>();
+        for (Report r : reports) {
+            for (ClassRecord c : r.classes) {
+                if (c.isDeprecated) out.add(c.fqn());
+            }
+        }
+        return out;
+    }
+
+    /** True if the class extends or implements anything in {@code beast.base.spec.*}. */
+    private static boolean computeOwnHasSpec(Set<String> tokens, Set<String> resolved) {
+        for (String fqn : resolved) {
+            if (fqn.startsWith("beast.base.spec.")) return true;
+        }
+        for (String t : tokens) {
+            if (SPEC_BASE_SIMPLE_NAMES.contains(t)) return true;
+        }
+        return false;
     }
 
     private static String resolvePrimaryExtends(String extendsClause, Map<String, String> imports, String currentPkg) {
@@ -417,29 +473,6 @@ public final class JavaScanner {
 
     private static String trim(String s) {
         return s == null ? "" : s.trim();
-    }
-
-    private static java.util.LinkedHashSet<String> legacyEvidence(
-            Set<String> resolved, Set<String> tokens, String primaryExtendsFqn) {
-        java.util.LinkedHashSet<String> out = new java.util.LinkedHashSet<>();
-        // Lineage-only: cite only the primary extends parent if legacy.
-        if (primaryExtendsFqn != null && !LEGACY_PACKAGE_EXEMPTIONS.contains(primaryExtendsFqn)) {
-            boolean legacy = LEGACY_BASE_FQNS.contains(primaryExtendsFqn);
-            if (!legacy) {
-                for (String prefix : LEGACY_BASE_PACKAGES) {
-                    if (primaryExtendsFqn.startsWith(prefix)) { legacy = true; break; }
-                }
-            }
-            if (legacy) out.add("extends " + primaryExtendsFqn);
-        }
-        // If the FQN didn't resolve, fall back to the simple-name token that
-        // matched our legacy set.
-        if (out.isEmpty()) {
-            for (String t : tokens) {
-                if (LEGACY_BASE_SIMPLE_NAMES.contains(t)) out.add("extends " + t);
-            }
-        }
-        return out;
     }
 
     private static java.util.LinkedHashSet<String> specEvidence(
@@ -555,51 +588,6 @@ public final class JavaScanner {
         return false;
     }
 
-    private static Status migrationStatus(
-            Set<String> typeTokens,
-            Set<String> resolvedFqns,
-            String primaryExtendsFqn) {
-        boolean hasSpec = false;
-        boolean hasLegacy = false;
-
-        // Spec: extends OR implements anything in beast.base.spec.*. A class
-        // gets the spec benefit from any spec lineage component.
-        for (String fqn : resolvedFqns) {
-            if (fqn.startsWith("beast.base.spec.")) hasSpec = true;
-        }
-        for (String t : typeTokens) {
-            if (SPEC_BASE_SIMPLE_NAMES.contains(t)) hasSpec = true;
-        }
-
-        // Legacy: extends-only. The primary parent's lineage determines status.
-        // Implementing a legacy interface (e.g. spec Base implements
-        // BranchRateModel) is not a legacy signal.
-        if (primaryExtendsFqn != null && !LEGACY_PACKAGE_EXEMPTIONS.contains(primaryExtendsFqn)) {
-            if (LEGACY_BASE_FQNS.contains(primaryExtendsFqn)) {
-                hasLegacy = true;
-            } else {
-                for (String prefix : LEGACY_BASE_PACKAGES) {
-                    if (primaryExtendsFqn.startsWith(prefix)) { hasLegacy = true; break; }
-                }
-            }
-        }
-        // Simple-name fallback for the case where import resolution failed
-        // (e.g. wildcard import or stray `extends Base`). The token set holds
-        // both extends and implements names, but legacy bases are extends-only
-        // in practice (RealParameter is a class, ParametricDistribution is
-        // abstract, qualified inners like "BranchRateModel.Base" are classes).
-        if (!hasLegacy) {
-            for (String t : typeTokens) {
-                if (LEGACY_BASE_SIMPLE_NAMES.contains(t)) { hasLegacy = true; break; }
-            }
-        }
-
-        if (hasSpec && hasLegacy) return Status.MIXED;
-        if (hasSpec) return Status.SPEC;
-        if (hasLegacy) return Status.LEGACY;
-        return Status.NEUTRAL;
-    }
-
     private static final Set<String> SPEC_BASE_SIMPLE_NAMES = Set.of(
             "RealScalarParam", "RealVectorParam",
             "IntScalarParam", "IntVectorParam",
@@ -612,20 +600,11 @@ public final class JavaScanner {
             "Simplex", "IntSimplex",
             "ScalarDistribution", "TensorDistribution");
 
-    private static final Set<String> LEGACY_BASE_SIMPLE_NAMES = Set.of(
-            "RealParameter", "IntegerParameter", "BooleanParameter",
-            "ParametricDistribution",
-            // Qualified inner classes — the parser produces both the simple
-            // name (`Base`) and the qualified form when seeing
-            // `extends BranchRateModel.Base`. Match the qualified form;
-            // bare `Base` is too generic.
-            "BranchRateModel.Base", "SubstitutionModel.Base");
-            // Notable omissions: "Prior" (too easily collides with custom
-            // Prior subclasses — caught by FQN above instead), "Function"
-            // (every Distribution transitively implements it; not a useful
-            // migration signal — see LEGACY_BASE_FQNS comment),
-            // "BranchRateModel" / "SubstitutionModel" alone (interfaces;
-            // spec Base implements them, so flagging would mark spec legacy).
+    // No simple-name fallback for legacy any more — the deprecated registry
+    // covers everything by FQN. If a class extends a deprecated parent that's
+    // outside any scanned package (rare; would need beast3 not in
+    // packages.yaml), we'd miss it. The CHECKLIST scan always includes
+    // beast3, so this is fine in practice.
 
     private static String appendError(String existing, String add) {
         if (existing == null || existing.isBlank()) return add;

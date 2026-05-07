@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-07T21:03:30.425877+12:00",
+  "generatedAt": "2026-05-07T21:16:05.547651+12:00",
   "packages": [
     {
       "name": "beast3",
@@ -13,31 +13,31 @@
       "java": {
         "distribution": {
           "total": 70,
-          "spec": 56,
-          "mixed": 0,
-          "legacy": 13,
-          "neutral": 1
+          "spec": 41,
+          "mixed": 15,
+          "legacy": 14,
+          "neutral": 0
         },
         "operator": {
           "total": 47,
           "spec": 1,
           "mixed": 0,
-          "legacy": 0,
-          "neutral": 46
+          "legacy": 16,
+          "neutral": 30
         },
         "logger": {
           "total": 16,
           "spec": 5,
           "mixed": 0,
-          "legacy": 0,
-          "neutral": 11
+          "legacy": 5,
+          "neutral": 6
         },
         "calcnode": {
           "total": 20,
           "spec": 3,
           "mixed": 0,
-          "legacy": 0,
-          "neutral": 17
+          "legacy": 5,
+          "neutral": 12
         },
         "parameter": {
           "total": 5,
@@ -50,15 +50,15 @@
           "total": 22,
           "spec": 6,
           "mixed": 0,
-          "legacy": 0,
-          "neutral": 16
+          "legacy": 5,
+          "neutral": 11
         },
         "other": {
           "total": 424,
           "spec": 18,
           "mixed": 0,
-          "legacy": 20,
-          "neutral": 386
+          "legacy": 32,
+          "neutral": 374
         }
       },
       "xml": {
@@ -120,15 +120,15 @@
           "total": 11,
           "spec": 0,
           "mixed": 0,
-          "legacy": 0,
-          "neutral": 11
+          "legacy": 1,
+          "neutral": 10
         },
         "calcnode": {
           "total": 10,
           "spec": 0,
           "mixed": 0,
-          "legacy": 5,
-          "neutral": 5
+          "legacy": 6,
+          "neutral": 4
         },
         "parameter": {
           "total": 2,
@@ -148,8 +148,8 @@
           "total": 66,
           "spec": 0,
           "mixed": 0,
-          "legacy": 1,
-          "neutral": 65
+          "legacy": 2,
+          "neutral": 64
         }
       },
       "xml": {
@@ -211,15 +211,15 @@
           "total": 11,
           "spec": 2,
           "mixed": 0,
-          "legacy": 0,
-          "neutral": 9
+          "legacy": 4,
+          "neutral": 5
         },
         "calcnode": {
           "total": 14,
           "spec": 3,
           "mixed": 0,
-          "legacy": 5,
-          "neutral": 6
+          "legacy": 3,
+          "neutral": 8
         },
         "parameter": {
           "total": 1,
@@ -484,8 +484,8 @@
           "total": 25,
           "spec": 0,
           "mixed": 0,
-          "legacy": 0,
-          "neutral": 25
+          "legacy": 1,
+          "neutral": 24
         },
         "calcnode": {
           "total": 18,
@@ -603,8 +603,8 @@
           "total": 2,
           "spec": 0,
           "mixed": 0,
-          "legacy": 0,
-          "neutral": 2
+          "legacy": 1,
+          "neutral": 1
         }
       },
       "xml": {
@@ -694,8 +694,8 @@
           "total": 24,
           "spec": 0,
           "mixed": 0,
-          "legacy": 0,
-          "neutral": 24
+          "legacy": 3,
+          "neutral": 21
         }
       },
       "xml": {

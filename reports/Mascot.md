@@ -1,6 +1,6 @@
 # Mascot — what's left
 
-> **Scanned at:** 2026-05-07T21:03:29.684334  
+> **Scanned at:** 2026-05-07T21:16:04.761727  
 > **Local checkout:** `/Users/adru001/Git/Mascot` — commit `f9d1aca` on `master` — [view on GitHub](https://github.com/CompEvol/Mascot/commit/f9d1aca862f4c94a3e174e63fff51c8d7588b800)  
 > **Pom version:** `3.1.0-beta1`  
 > **Maven Central:** `io.github.compevol:mascot:3.1.0-beta1`  
@@ -8,15 +8,19 @@
 
 ## Summary
 
-- **Java classes:** 4 on spec, 0 mixed, 0 legacy of 112 total
+- **Java classes:** 4 on spec, 0 mixed, 1 legacy of 112 total
 - **Example XMLs:** 1 on spec / 1 on `version="2.8"` / 4 total
 - **BEAUti fxtemplates:** 0 clean / 0 use spec / 5 total
 - **Input rule:** 23 classes hold 45 Input(s) declared too concretely
 - **Maven Central:** 3.1.0-beta1
 
-## Java migration
+## Java classes pending migration
 
-No Java classes flagged as legacy or mixed — all relevant types are on spec or have no parameter involvement. ✅
+### Loggers — 1 legacy, 0 mixed (of 25 total)
+
+**Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
+
+- `mascot.mapped.AncestralStateTreeLikelihood` — extends `TreeLikelihood`
 
 ## Inputs declared too concretely
 

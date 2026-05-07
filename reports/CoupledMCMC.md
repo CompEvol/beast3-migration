@@ -1,6 +1,6 @@
 # CoupledMCMC — what's left
 
-> **Scanned at:** 2026-05-07T21:03:29.444278  
+> **Scanned at:** 2026-05-07T21:16:04.414285  
 > **Local checkout:** `/Users/adru001/Git/CoupledMCMC` — commit `39e9c05` on `master` — [view on GitHub](https://github.com/CompEvol/CoupledMCMC/commit/39e9c057e474cfe64953592e330a0e1652f9f2ed)  
 > **Pom version:** `1.3.0-beta1`  
 > **Maven Central:** `io.github.compevol:coupled-mcmc:1.3.0-beta1`  

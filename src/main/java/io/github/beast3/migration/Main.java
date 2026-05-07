@@ -140,7 +140,23 @@ public final class Main {
             return;
         }
 
-        Report r = scanOne(entry, offline);
+        // Build the @Deprecated registry across all configured packages so
+        // legacy detection in this single report is consistent with the
+        // CHECKLIST run.
+        MavenCentralProbe probe = new MavenCentralProbe();
+        List<Report> all = new ArrayList<>();
+        Report target = null;
+        for (PackageEntry e : entries) {
+            Report rr = scanPhaseOne(e, probe, /* offline for non-target */
+                    !e.name().equalsIgnoreCase(pkgName) || offline);
+            all.add(rr);
+            if (e.name().equalsIgnoreCase(pkgName)) target = rr;
+        }
+        java.util.Set<String> deprecatedFqns = JavaScanner.collectDeprecatedFqns(all);
+        if (target != null && target.pathExists) {
+            JavaScanner.resolveAndTally(target, deprecatedFqns);
+        }
+        Report r = target;
         String text = PackageReportWriter.render(r);
         if (out != null) {
             Files.writeString(out, text);
@@ -154,25 +170,51 @@ public final class Main {
         List<PackageEntry> entries = loadConfig(config, repoRoot);
         System.out.println("Found " + entries.size() + " package(s).");
         MavenCentralProbe probe = new MavenCentralProbe();
+
+        // Phase 1 — collect class records, XML, build info, Maven Central
+        // metadata for every package. resolveAndTally is deferred so we can
+        // build a global @Deprecated registry first.
         List<Report> reports = new ArrayList<>();
         for (PackageEntry e : entries) {
             System.out.println("  - " + e.name() + " (" + e.path() + ")");
-            reports.add(scan(e, probe, offline));
+            reports.add(scanPhaseOne(e, probe, offline));
+        }
+
+        // Phase 2 — global @Deprecated FQN registry across all reports.
+        java.util.Set<String> deprecatedFqns = JavaScanner.collectDeprecatedFqns(reports);
+        System.out.println("Collected " + deprecatedFqns.size()
+                + " @Deprecated class(es) across all packages.");
+
+        // Phase 3 — chain-resolve and tally each report against the registry.
+        for (Report r : reports) {
+            if (r.pathExists) JavaScanner.resolveAndTally(r, deprecatedFqns);
         }
         return reports;
     }
 
-    private static Report scanOne(PackageEntry entry, boolean offline) {
-        return scan(entry, new MavenCentralProbe(), offline);
+    private static Report scanOne(PackageEntry entry, boolean offline) throws Exception {
+        // Single-package report mode still needs the @Deprecated registry,
+        // but we only have visibility into the packages.yaml entries — load
+        // them all and run Phase 1 for every package, then tally just the
+        // requested one. Cheap enough for our 10-package set.
+        Path config = entry.path().getParent().resolve("packages.yaml");
+        // Better: caller passes repoRoot/config. Fallback: use this entry only.
+        // (See reportMode for the proper invocation path.)
+        MavenCentralProbe probe = new MavenCentralProbe();
+        Report r = scanPhaseOne(entry, probe, offline);
+        if (r.pathExists) {
+            JavaScanner.resolveAndTally(r,
+                    JavaScanner.collectDeprecatedFqns(java.util.List.of(r)));
+        }
+        return r;
     }
 
-    private static Report scan(PackageEntry entry, MavenCentralProbe probe, boolean offline) {
+    private static Report scanPhaseOne(PackageEntry entry, MavenCentralProbe probe, boolean offline) {
         Report r = new Report(entry);
         r.pathExists = Files.isDirectory(entry.path());
         if (r.pathExists) {
             r.git = GitInfo.read(entry.path());
             JavaScanner.scan(entry.path(), r);
-            JavaScanner.resolveAndTally(r);
             XmlScanner.scan(entry.path(), r);
             BuildScanner.scan(entry.path(), r);
         } else {
