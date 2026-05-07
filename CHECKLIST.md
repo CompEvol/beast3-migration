@@ -9,7 +9,7 @@ are at the bottom of this page.
 
 <!-- BEGIN AUTO -->
 
-_Last regenerated: 2026-05-08T07:48:54.610614+12:00_
+_Last regenerated: 2026-05-08T08:25:24.921587+12:00_
 
 ## Release & build status
 
@@ -22,7 +22,7 @@ _Last regenerated: 2026-05-08T07:48:54.610614+12:00_
 | [flc](https://github.com/4ment/flc) | Maven Central | [1.3.0-beta1](https://central.sonatype.com/artifact/io.github.4ment/flc) | 1.3.0-beta1 | ✅ | ✅ | ✅ | 🟢 | 🟢 | — |
 | [Mascot](https://github.com/CompEvol/Mascot) | Maven Central | [3.1.0-beta1](https://central.sonatype.com/artifact/io.github.compevol/mascot) | 3.1.0-beta1 | ✅ | ✅ | ✅ | 🔴 | 🔴 | 🔴 |
 | [morph-models](https://github.com/CompEvol/morph-models) | Maven Central | [1.3.0-beta3](https://central.sonatype.com/artifact/io.github.compevol/morph-models) | 1.3.0-beta3 | ✅ | ✅ | ✅ | 🟢 | 🟢 | 🟡 |
-| [sampled-ancestors](https://github.com/CompEvol/sampled-ancestors) | Maven Central | [2.3.0-beta1](https://central.sonatype.com/artifact/io.github.compevol/sampled-ancestors) | 2.3.0-beta1 | ✅ | ✅ | ✅ | 🔴 | 🔴 | 🟢 |
+| [sampled-ancestors](https://github.com/CompEvol/sampled-ancestors) | Maven Central | [2.3.0-beta1](https://central.sonatype.com/artifact/io.github.compevol/sampled-ancestors) | 2.3.0-beta1 | ✅ | ✅ | ✅ | 🟢 | 🔴 | 🟢 |
 | [MutableAlignment](https://github.com/rbouckaert/MutableAlignment) | compile-tested | — | — | ❌ | ❌ | ❌ | — | 🔴 | — |
 | [ORC](https://github.com/jordandouglas/ORC) | compile-tested | — | 1.3.0-SNAPSHOT | ✅ | ✅ | ❌ | 🟡 | 🟡 | 🟢 |
 
@@ -39,7 +39,7 @@ Traffic-light columns: 🔴 any legacy lineage / non-migrated content, 🟡 no l
 | flc | — | — | — | ✅ 10 | — | — | 2 / 2 / 2 | — | ✅ |
 | Mascot | ✅ 11 | ✅ 6 | 1 / 25 | ✅ 18 | — | ✅ 2 | 1 / 1 / 4 | 0 / 0 / 5 | 23 / 45 |
 | morph-models | — | — | — | ✅ 4 | — | ✅ 1 | 2 / 2 / 2 (+4 legacy) | 0 / 1 / 1 | ✅ |
-| sampled-ancestors | 2 / 6 | 1 / 13 | ✅ 2 | ✅ 5 | — | ✅ 2 | 0 / 0 / 3 | 1 / 1 / 1 | ✅ |
+| sampled-ancestors | ✅ 6 | ✅ 13 | ✅ 2 | ✅ 5 | — | ✅ 2 | 0 / 0 / 3 | 1 / 1 / 1 | ✅ |
 | MutableAlignment | — | — | — | — | — | — | 0 / 0 / 2 | — | ✅ |
 | ORC | ✅ 1 | ✅ 52 | ✅ 1 | — | — | — | 0 / 1 / 1 | 1 / 1 / 1 | 1 / 2 |
 
@@ -61,7 +61,7 @@ Per package, for each kind: `spec / mixed / legacy / neutral · total`.
 | flc | — | — | — | 8 / 0 / 0 / 2 · 10 | — | — |
 | Mascot | 0 / 0 / 0 / 11 · 11 | 0 / 0 / 0 / 6 · 6 | 0 / 0 / 1 / 24 · 25 | 4 / 0 / 0 / 14 · 18 | — | 0 / 0 / 0 / 2 · 2 |
 | morph-models | — | — | — | 4 / 0 / 0 / 0 · 4 | — | 0 / 0 / 0 / 1 · 1 |
-| sampled-ancestors | 0 / 0 / 2 / 4 · 6 | 0 / 0 / 1 / 12 · 13 | 0 / 0 / 0 / 2 · 2 | 0 / 0 / 0 / 5 · 5 | — | 0 / 0 / 0 / 2 · 2 |
+| sampled-ancestors | 2 / 0 / 0 / 4 · 6 | 1 / 0 / 0 / 12 · 13 | 0 / 0 / 0 / 2 · 2 | 0 / 0 / 0 / 5 · 5 | — | 0 / 0 / 0 / 2 · 2 |
 | MutableAlignment | — | — | — | — | — | — |
 | ORC | 1 / 0 / 0 / 0 · 1 | 0 / 0 / 0 / 52 · 52 | 0 / 0 / 0 / 1 · 1 | — | — | — |
 

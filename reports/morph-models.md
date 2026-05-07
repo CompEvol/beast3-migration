@@ -1,6 +1,6 @@
 # morph-models — what's left
 
-> **Scanned at:** 2026-05-08T07:48:53.277020  
+> **Scanned at:** 2026-05-08T08:25:24.397958  
 > **Commit:** `6aee702` on `fix/spec-filtered-alignment` — [view on GitHub](https://github.com/CompEvol/morph-models/commit/6aee70263b5913573186954842df29d2010b51fd)  
 > **Pom version:** `1.3.0-beta3`  
 > **Maven Central:** `io.github.compevol:morph-models:1.3.0-beta3`  

@@ -1,6 +1,6 @@
 # Mascot — what's left
 
-> **Scanned at:** 2026-05-08T07:48:52.636780  
+> **Scanned at:** 2026-05-08T08:25:24.179684  
 > **Commit:** `f9d1aca` on `master` — [view on GitHub](https://github.com/CompEvol/Mascot/commit/f9d1aca862f4c94a3e174e63fff51c8d7588b800)  
 > **Pom version:** `3.1.0-beta1`  
 > **Maven Central:** `io.github.compevol:mascot:3.1.0-beta1`  
