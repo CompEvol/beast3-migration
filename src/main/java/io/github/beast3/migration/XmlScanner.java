@@ -21,37 +21,41 @@ public final class XmlScanner {
     private static final Pattern BEAST_ROOT = Pattern.compile(
             "<beast\\b([^>]*)>", Pattern.DOTALL);
     private static final Pattern VERSION_28 = Pattern.compile(
-            "version\\s*=\\s*\"2\\.8\"");
+            "version\\s*=\\s*[\"']2\\.8[\"']");
     private static final Pattern NAMESPACE_SPEC = Pattern.compile(
-            "namespace\\s*=\\s*\"[^\"]*beast\\.base\\.spec\\.");
+            "namespace\\s*=\\s*[\"'][^\"']*beast\\.base\\.spec\\.");
+    private static final Pattern MERGEWITH = Pattern.compile("<mergewith\\b");
+    private static final Pattern SPEC_REF = Pattern.compile("beast\\.base\\.spec\\.");
+    /** Legacy parameter spec= attribute, e.g. {@code spec='parameter.RealParameter'}. */
+    private static final Pattern LEGACY_PARAM_REF = Pattern.compile(
+            "spec\\s*=\\s*[\"']\\s*(?:beast\\.base\\.inference\\.)?parameter\\.(?:Real|Integer|Boolean)Parameter");
 
     private XmlScanner() {}
 
     public static void scan(Path pkgRoot, Report report) {
-        // Walk every common XML location across all submodules.
-        try (Stream<Path> stream = Files.walk(pkgRoot, 8)) {
-            stream.filter(Files::isDirectory)
-                    .filter(p -> {
-                        String n = p.getFileName() == null ? "" : p.getFileName().toString();
-                        return (n.equals("examples")
-                                || n.equals("fxtemplates")
-                                || p.endsWith(Path.of("src", "main", "resources")))
-                                && !p.toString().contains("/target/");
-                    })
-                    .forEach(d -> walk(d, pkgRoot, report));
+        // Walk the whole package once; filter out build/IDE noise.
+        try (Stream<Path> stream = Files.walk(pkgRoot)) {
+            stream.filter(Files::isRegularFile)
+                    .filter(p -> p.getFileName().toString().toLowerCase().endsWith(".xml"))
+                    .filter(XmlScanner::isInteresting)
+                    .forEach(p -> classify(pkgRoot, pkgRoot, p, report));
         } catch (IOException e) {
             // ignore
         }
     }
 
-    private static void walk(Path root, Path pkgRoot, Report report) {
-        try (Stream<Path> stream = Files.walk(root)) {
-            stream.filter(Files::isRegularFile)
-                    .filter(p -> p.getFileName().toString().toLowerCase().endsWith(".xml"))
-                    .forEach(p -> classify(root, pkgRoot, p, report));
-        } catch (IOException e) {
-            // Ignore — partial directories should not crash the run.
+    private static boolean isInteresting(Path p) {
+        for (Path part : p) {
+            String n = part.toString();
+            if (n.equals("target") || n.equals("build") || n.equals(".git")
+                    || n.equals(".idea") || n.equals("node_modules")) {
+                return false;
+            }
         }
+        // Exclude the obvious non-BEAST XML by filename. Anything else still
+        // gets the <beast> root check downstream.
+        String fn = p.getFileName().toString();
+        return !fn.equals("pom.xml") && !fn.equals("version.xml");
     }
 
     private static boolean isLegacyDir(Path root, Path file) {
@@ -67,10 +71,10 @@ public final class XmlScanner {
     }
 
     private static void classify(Path root, Path pkgRoot, Path file, Report report) {
-        boolean legacy = isLegacyDir(root, file);
-        if (legacy) {
+        if (isLegacyDir(root, file)) {
             report.xmlLegacyDir++;
-            report.xmls.add(new XmlRecord(file, pkgRoot, false, false, true));
+            report.xmls.add(new XmlRecord(
+                    file, pkgRoot, false, false, true, false, false, false));
             return;
         }
         String content;
@@ -83,12 +87,35 @@ public final class XmlScanner {
         Matcher m = BEAST_ROOT.matcher(content);
         if (!m.find()) return;
         String rootAttrs = m.group(1);
-        report.xmlTotal++;
 
+        boolean isFx = isFxTemplate(root, file, content);
         boolean v28 = VERSION_28.matcher(rootAttrs).find();
         boolean spec = NAMESPACE_SPEC.matcher(rootAttrs).find();
+
+        if (isFx) {
+            boolean fxSpec = SPEC_REF.matcher(content).find();
+            boolean fxLegacy = LEGACY_PARAM_REF.matcher(content).find();
+            report.fxTotal++;
+            if (fxSpec) report.fxWithSpec++;
+            if (fxSpec && !fxLegacy) report.fxClean++;
+            report.xmls.add(new XmlRecord(
+                    file, pkgRoot, v28, spec, false, true, fxSpec, fxLegacy));
+            return;
+        }
+
+        report.xmlTotal++;
         if (v28) report.xmlV28++;
         if (v28 && spec) report.xmlMigrated++;
-        report.xmls.add(new XmlRecord(file, pkgRoot, v28, spec, false));
+        report.xmls.add(new XmlRecord(
+                file, pkgRoot, v28, spec, false, false, false, false));
+    }
+
+    private static boolean isFxTemplate(Path root, Path file, String content) {
+        // Path signal: any segment named "fxtemplates".
+        for (Path part : file) {
+            if (part.toString().equalsIgnoreCase("fxtemplates")) return true;
+        }
+        // Content signal: BEAUti merge directive — definitive marker.
+        return MERGEWITH.matcher(content).find();
     }
 }

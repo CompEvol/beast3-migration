@@ -1,6 +1,6 @@
 # MutableAlignment — what's left
 
-> **Scanned at:** 2026-05-07T19:58:08.832814  
+> **Scanned at:** 2026-05-07T20:06:37.091907  
 > **Local checkout:** `/Users/adru001/Git/MutableAlignment` — commit `d8204fa` on `fix-store-restore-for-mutable-tips-beast27` — [view on GitHub](https://github.com/rbouckaert/MutableAlignment/commit/d8204fad14f1fddeff851fabcd5ff3d8f8aa5db8)  
 > **Stage hint:** compile-tested
 >
@@ -9,7 +9,7 @@
 ## Summary
 
 - **Java classes:** 0 on spec, 0 mixed, 0 legacy of 0 total
-- **XMLs:** 0 on spec / 0 on `version="2.8"` / 2 total
+- **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 2 total
 
 ## Build & release gaps
 
@@ -25,7 +25,7 @@ No `groupId:artifactId` recorded in `packages.yaml`. Add one to track publicatio
 
 No Java classes flagged as legacy or mixed — all relevant types are on spec or have no parameter involvement. ✅
 
-## XMLs pending migration
+## Example XMLs pending migration
 
 **Needs `version="2.8"`** (2):
 

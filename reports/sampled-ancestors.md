@@ -1,6 +1,6 @@
 # sampled-ancestors — what's left
 
-> **Scanned at:** 2026-05-07T19:58:08.704625  
+> **Scanned at:** 2026-05-07T20:06:36.959310  
 > **Local checkout:** `/Users/adru001/Git/sampled-ancestors` — commit `09bc95c` on `master` — [view on GitHub](https://github.com/CompEvol/sampled-ancestors/commit/09bc95cd1771ce4d85452314331a612549948e69)  
 > **Pom version:** `2.3.0-beta1`  
 > **Maven Central:** `io.github.compevol:sampled-ancestors:2.3.0-beta1`  
@@ -9,7 +9,8 @@
 ## Summary
 
 - **Java classes:** 15 on spec, 1 mixed, 1 legacy of 52 total
-- **XMLs:** 0 on spec / 0 on `version="2.8"` / 5 total
+- **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 3 total
+- **BEAUti fxtemplates:** 1 clean / 1 use spec / 1 total
 - **Maven Central:** 2.3.0-beta1
 
 ## Java classes pending migration
@@ -24,13 +25,15 @@
 
 - `sa.math.distributions.DegenerateUniform` — uses `ParametricDistribution`
 
-## XMLs pending migration
+## Example XMLs pending migration
 
-**Needs `version="2.8"`** (5):
+**Needs `version="2.8"`** (3):
 
 - `examples/bears_ranges.xml`
 - `examples/brachiopods.xml`
 - `examples/bears.xml`
-- `src/main/resources/sampled.ancestors/fxtemplates/FBD.xml`
-- `src/main/resources/sampled.ancestors/fxtemplates/FBD.xml`
+
+## FxTemplates
+
+All BEAUti fxtemplates use spec types with no legacy `parameter.*` declarations. ✅
 

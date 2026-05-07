@@ -50,10 +50,14 @@ public final class Report {
     public final Map<Kind, KindCounts> javaCounts = new EnumMap<>(Kind.class);
     public final List<ClassRecord> classes = new ArrayList<>();
     public final List<XmlRecord> xmls = new ArrayList<>();
-    public int xmlTotal;
+    public int xmlTotal;            // example XMLs only (excludes fxtemplates)
     public int xmlMigrated;         // version="2.8" AND beast.base.spec.* namespace
     public int xmlV28;              // version="2.8" (regardless of namespace)
     public int xmlLegacyDir;        // count of XMLs explicitly under examples/legacy*
+
+    public int fxTotal;             // BEAUti fxtemplates
+    public int fxWithSpec;          // fxtemplates whose body references beast.base.spec.*
+    public int fxClean;             // fxtemplates with spec body AND no legacy parameter spec= attrs
 
     public boolean hasPom;
     public boolean hasReleaseProfile;
@@ -109,6 +113,12 @@ public final class Report {
         xml.put("v28", xmlV28);
         xml.put("legacyDir", xmlLegacyDir);
         m.put("xml", xml);
+
+        Map<String, Object> fx = new LinkedHashMap<>();
+        fx.put("total", fxTotal);
+        fx.put("withSpec", fxWithSpec);
+        fx.put("clean", fxClean);
+        m.put("fxTemplates", fx);
 
         Map<String, Object> build = new LinkedHashMap<>();
         build.put("hasPom", hasPom);

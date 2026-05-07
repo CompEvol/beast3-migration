@@ -112,11 +112,16 @@ public final class PackageReportWriter {
                 .append(mixedClasses).append(" mixed, ")
                 .append(legacyClasses).append(" legacy of ")
                 .append(totalClasses).append(" total\n");
-        sb.append("- **XMLs:** ").append(r.xmlMigrated).append(" on spec / ")
+        sb.append("- **Example XMLs:** ").append(r.xmlMigrated).append(" on spec / ")
                 .append(r.xmlV28).append(" on `version=\"2.8\"` / ")
                 .append(r.xmlTotal).append(" total");
         if (r.xmlLegacyDir > 0) sb.append(" (+").append(r.xmlLegacyDir).append(" under legacy/)");
         sb.append('\n');
+        if (r.fxTotal > 0) {
+            sb.append("- **BEAUti fxtemplates:** ").append(r.fxClean).append(" clean / ")
+                    .append(r.fxWithSpec).append(" use spec / ")
+                    .append(r.fxTotal).append(" total\n");
+        }
         if (r.entry.hasMavenCoords() && !r.mavenCentralLatest.isBlank()) {
             sb.append("- **Maven Central:** ").append(r.mavenCentralLatest).append('\n');
         } else if (r.entry.hasMavenCoords()) {
@@ -230,18 +235,23 @@ public final class PackageReportWriter {
     }
 
     private static void renderXmlPunchList(StringBuilder sb, Report r) {
+        renderExampleXmlPunchList(sb, r);
+        renderFxTemplatePunchList(sb, r);
+    }
+
+    private static void renderExampleXmlPunchList(StringBuilder sb, Report r) {
         List<XmlRecord> needsV28 = new ArrayList<>();
         List<XmlRecord> needsSpec = new ArrayList<>();
         for (XmlRecord x : r.xmls) {
-            if (x.inLegacyDir()) continue;
+            if (x.inLegacyDir() || x.isFxTemplate()) continue;
             if (!x.hasV28()) needsV28.add(x);
             else if (!x.hasSpecNamespace()) needsSpec.add(x);
         }
         if (needsV28.isEmpty() && needsSpec.isEmpty()) {
-            if (r.xmlTotal > 0) sb.append("## XMLs\n\nAll example XMLs are on `version=\"2.8\"` with the spec namespace. ✅\n\n");
+            if (r.xmlTotal > 0) sb.append("## Example XMLs\n\nAll example XMLs are on `version=\"2.8\"` with the spec namespace. ✅\n\n");
             return;
         }
-        sb.append("## XMLs pending migration\n\n");
+        sb.append("## Example XMLs pending migration\n\n");
         if (!needsV28.isEmpty()) {
             sb.append("**Needs `version=\"2.8\"`** (").append(needsV28.size()).append("):\n\n");
             for (XmlRecord x : needsV28) sb.append("- `").append(x.relPath()).append("`\n");
@@ -251,6 +261,38 @@ public final class PackageReportWriter {
             sb.append("**Targets BEAST 3 but missing `beast.base.spec.*` in namespace** (")
                     .append(needsSpec.size()).append("):\n\n");
             for (XmlRecord x : needsSpec) sb.append("- `").append(x.relPath()).append("`\n");
+            sb.append('\n');
+        }
+    }
+
+    private static void renderFxTemplatePunchList(StringBuilder sb, Report r) {
+        if (r.fxTotal == 0) return;
+        // Categorise fxtemplates by spec/legacy-param signals.
+        List<XmlRecord> noSpec = new ArrayList<>();
+        List<XmlRecord> mixed = new ArrayList<>();
+        List<XmlRecord> clean = new ArrayList<>();
+        for (XmlRecord x : r.xmls) {
+            if (!x.isFxTemplate() || x.inLegacyDir()) continue;
+            if (!x.fxBodyHasSpec()) noSpec.add(x);
+            else if (x.fxHasLegacyParam()) mixed.add(x);
+            else clean.add(x);
+        }
+        if (noSpec.isEmpty() && mixed.isEmpty()) {
+            sb.append("## FxTemplates\n\nAll BEAUti fxtemplates use spec types with no legacy `parameter.*` declarations. ✅\n\n");
+            return;
+        }
+        sb.append("## FxTemplates pending migration\n\n");
+        sb.append("> Note: BEAUti templates conventionally keep `version='2.0'` (beast3 core does the same). Migration here means the body uses `beast.base.spec.*` types and parameter declarations use `RealScalarParam` etc. rather than `parameter.RealParameter`.\n\n");
+        if (!mixed.isEmpty()) {
+            sb.append("**Uses spec types but still has legacy `parameter.*` declarations** (")
+                    .append(mixed.size()).append("):\n\n");
+            for (XmlRecord x : mixed) sb.append("- `").append(x.relPath()).append("`\n");
+            sb.append('\n');
+        }
+        if (!noSpec.isEmpty()) {
+            sb.append("**No `beast.base.spec.*` references in body** (")
+                    .append(noSpec.size()).append("):\n\n");
+            for (XmlRecord x : noSpec) sb.append("- `").append(x.relPath()).append("`\n");
             sb.append('\n');
         }
     }

@@ -1,6 +1,6 @@
 # beast3 — what's left
 
-> **Scanned at:** 2026-05-07T19:58:07.294750  
+> **Scanned at:** 2026-05-07T20:06:35.446160  
 > **Local checkout:** `/Users/adru001/Git/beast3` — commit `4e1ee72` on `target-acceptance-1d-operators` — [view on GitHub](https://github.com/CompEvol/beast3/commit/4e1ee72a7cead616230d9dce5cb43e71400615e1)  
 > **Pom version:** `2.8.0-SNAPSHOT`  
 > **Maven Central:** `io.github.compevol:beast3:2.8.0-beta5`  
@@ -11,7 +11,8 @@
 ## Summary
 
 - **Java classes:** 147 on spec, 7 mixed, 73 legacy of 604 total
-- **XMLs:** 0 on spec / 0 on `version="2.8"` / 93 total (+82 under legacy/)
+- **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 78 total (+81 under legacy/)
+- **BEAUti fxtemplates:** 6 clean / 10 use spec / 10 total
 - **Maven Central:** 2.8.0-beta5
 
 ## Java classes pending migration
@@ -143,25 +144,10 @@
 - `beastfx.app.methodsection.implementation.ParametricDistributionMethodsText` — uses `ParametricDistribution`
 - `beastfx.app.methodsection.implementation.PriorMethodsText` — uses `Prior`
 
-## XMLs pending migration
+## Example XMLs pending migration
 
-**Needs `version="2.8"`** (93):
+**Needs `version="2.8"`** (78):
 
-- `beast-fx/src/main/resources/beast.fx/fxtemplates/ClockModels.xml`
-- `beast-fx/src/main/resources/beast.fx/fxtemplates/Standard.xml`
-- `beast-fx/src/main/resources/beast.fx/fxtemplates/ParametricDistributions.xml`
-- `beast-fx/src/main/resources/beast.fx/fxtemplates/TreePriors.xml`
-- `beast-fx/src/main/resources/beast.fx/fxtemplates/SubstModels.xml`
-- `beast-fx/src/main/resources/beast.fx/fxtemplates/ClockModels.xml`
-- `beast-fx/src/main/resources/beast.fx/fxtemplates/Standard.xml`
-- `beast-fx/src/main/resources/beast.fx/fxtemplates/ParametricDistributions.xml`
-- `beast-fx/src/main/resources/beast.fx/fxtemplates/TreePriors.xml`
-- `beast-fx/src/main/resources/beast.fx/fxtemplates/SubstModels.xml`
-- `release/Mac/output/BEAST.app/Contents/fxtemplates/ClockModels.xml`
-- `release/Mac/output/BEAST.app/Contents/fxtemplates/Standard.xml`
-- `release/Mac/output/BEAST.app/Contents/fxtemplates/ParametricDistributions.xml`
-- `release/Mac/output/BEAST.app/Contents/fxtemplates/TreePriors.xml`
-- `release/Mac/output/BEAST.app/Contents/fxtemplates/SubstModels.xml`
 - `beast-base/src/test/resources/beast.base/examples/benchmark/II/testHKY1748.xml`
 - `beast-base/src/test/resources/beast.base/examples/benchmark/II/testHKY1749.xml`
 - `beast-base/src/test/resources/beast.base/examples/benchmark/II/testHKY1366.xml`
@@ -240,4 +226,15 @@
 - `beast-base/src/test/resources/beast.base/examples/testYuleUncalibrated.xml`
 - `beast-base/src/test/resources/beast.base/examples/testSeqGen.xml`
 - `beast-base/src/test/resources/beast.base/examples/testYuleCalibrated.xml`
+
+## FxTemplates pending migration
+
+> Note: BEAUti templates conventionally keep `version='2.0'` (beast3 core does the same). Migration here means the body uses `beast.base.spec.*` types and parameter declarations use `RealScalarParam` etc. rather than `parameter.RealParameter`.
+
+**Uses spec types but still has legacy `parameter.*` declarations** (4):
+
+- `beast-fx/src/main/resources/beast.fx/fxtemplates/Standard.xml`
+- `beast-fx/src/main/resources/beast.fx/fxtemplates/ParametricDistributions.xml`
+- `release/Mac/output/BEAST.app/Contents/fxtemplates/Standard.xml`
+- `release/Mac/output/BEAST.app/Contents/fxtemplates/ParametricDistributions.xml`
 

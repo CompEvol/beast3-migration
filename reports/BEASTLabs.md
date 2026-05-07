@@ -1,6 +1,6 @@
 # BEASTLabs — what's left
 
-> **Scanned at:** 2026-05-07T19:58:07.901047  
+> **Scanned at:** 2026-05-07T20:06:36.098610  
 > **Local checkout:** `/Users/adru001/Git/BEASTLabs` — commit `840fd01` on `scalable-contract` — [view on GitHub](https://github.com/BEAST2-Dev/BEASTlabs/commit/840fd015587efb223a2b382f954b0e10c58fc173)  
 > **Pom version:** `2.1.0-SNAPSHOT`  
 > **Maven Central:** `io.github.beast2-dev:beast-labs:2.1.0-beta2`  
@@ -9,7 +9,8 @@
 ## Summary
 
 - **Java classes:** 19 on spec, 5 mixed, 12 legacy of 140 total
-- **XMLs:** 0 on spec / 0 on `version="2.8"` / 26 total
+- **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 20 total
+- **BEAUti fxtemplates:** 0 clean / 0 use spec / 3 total
 - **Maven Central:** 2.1.0-beta2
 
 ## Java classes pending migration
@@ -72,9 +73,9 @@
 - `beastlabs.evolution.speciation.RandomLocalYuleModel` — uses `BooleanParameter`, `RealParameter`
 - `beastlabs.math.distributions.MultiMRCAPriors` — uses `ParametricDistribution`
 
-## XMLs pending migration
+## Example XMLs pending migration
 
-**Needs `version="2.8"`** (26):
+**Needs `version="2.8"`** (20):
 
 - `examples/testSA.xml`
 - `examples/testCladeSubstitutionModel.xml`
@@ -96,9 +97,13 @@
 - `examples/testScript.xml`
 - `examples/posthocanalysis/testPostHocAnalysis.xml`
 - `examples/testBactrianOperators.xml`
-- `src/main/resources/beast.labs/fxtemplates/Weibull.xml`
-- `src/main/resources/beast.labs/fxtemplates/extras.xml`
-- `src/main/resources/beast.labs/fxtemplates/SelfTuningMCMC.xml`
+
+## FxTemplates pending migration
+
+> Note: BEAUti templates conventionally keep `version='2.0'` (beast3 core does the same). Migration here means the body uses `beast.base.spec.*` types and parameter declarations use `RealScalarParam` etc. rather than `parameter.RealParameter`.
+
+**No `beast.base.spec.*` references in body** (3):
+
 - `src/main/resources/beast.labs/fxtemplates/Weibull.xml`
 - `src/main/resources/beast.labs/fxtemplates/extras.xml`
 - `src/main/resources/beast.labs/fxtemplates/SelfTuningMCMC.xml`

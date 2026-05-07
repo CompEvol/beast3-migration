@@ -27,7 +27,7 @@ exact local checkout commit it was scanned against.
 
 <!-- BEGIN AUTO -->
 
-_Last regenerated: 2026-05-07T19:58:09.021309+12:00_
+_Last regenerated: 2026-05-07T20:06:37.282846+12:00_
 
 ## Release & build status
 
@@ -46,20 +46,21 @@ _Last regenerated: 2026-05-07T19:58:09.021309+12:00_
 
 ## Migration progress (Java + XML)
 
-| Package | Distrs | Ops | Loggers | CalcNodes | Params | StateNodes | XMLs |
-|---|---|---|---|---|---|---|---|
-| beast3 | 32 / 59 | 12 / 45 | 8 / 16 | 11 / 17 | 4 / 5 | 6 / 16 | 0 / 0 / 93 (+82 legacy) |
-| BEASTLabs | 6 / 20 | 1 / 16 | 2 / 11 | 5 / 10 | 0 / 2 | 1 / 7 | 0 / 0 / 26 |
-| beast-classic | 6 / 6 | 11 / 11 | 4 / 7 | 6 / 13 | 1 / 1 | 0 / 2 | 0 / 0 / 19 |
-| CoupledMCMC | — | — | 0 / 2 | — | — | — | 0 / 0 / 3 |
-| flc | — | — | — | 3 / 5 | — | — | 2 / 2 / 2 |
-| Mascot | 0 / 9 | 6 / 6 | 10 / 21 | 4 / 9 | — | 0 / 1 | 1 / 1 / 14 |
-| morph-models | — | — | — | 2 / 2 | — | 0 / 1 | 0 / 2 / 4 (+4 legacy) |
-| sampled-ancestors | 3 / 6 | 9 / 13 | 0 / 2 | 0 / 2 | — | 0 / 2 | 0 / 0 / 5 |
-| MutableAlignment | — | — | — | — | — | — | 0 / 0 / 2 |
-| ORC | 1 / 1 | 3 / 4 | 1 / 1 | — | — | — | 0 / 1 / 2 |
+| Package | Distrs | Ops | Loggers | CalcNodes | Params | StateNodes | XMLs | FxTemplates |
+|---|---|---|---|---|---|---|---|---|
+| beast3 | 32 / 59 | 12 / 45 | 8 / 16 | 11 / 17 | 4 / 5 | 6 / 16 | 0 / 0 / 78 (+81 legacy) | 6 / 10 / 10 |
+| BEASTLabs | 6 / 20 | 1 / 16 | 2 / 11 | 5 / 10 | 0 / 2 | 1 / 7 | 0 / 0 / 20 | 0 / 0 / 3 |
+| beast-classic | 6 / 6 | 11 / 11 | 4 / 7 | 6 / 13 | 1 / 1 | 0 / 2 | 0 / 0 / 10 | 0 / 0 / 5 |
+| CoupledMCMC | — | — | 0 / 2 | — | — | — | 0 / 0 / 1 | 0 / 0 / 1 |
+| flc | — | — | — | 3 / 5 | — | — | 2 / 2 / 2 | — |
+| Mascot | 0 / 9 | 6 / 6 | 10 / 21 | 4 / 9 | — | 0 / 1 | 1 / 1 / 4 | 0 / 0 / 5 |
+| morph-models | — | — | — | 2 / 2 | — | 0 / 1 | 0 / 2 / 2 (+4 legacy) | 0 / 1 / 1 |
+| sampled-ancestors | 3 / 6 | 9 / 13 | 0 / 2 | 0 / 2 | — | 0 / 2 | 0 / 0 / 3 | 1 / 1 / 1 |
+| MutableAlignment | — | — | — | — | — | — | 0 / 0 / 2 | — |
+| ORC | 1 / 1 | 3 / 4 | 1 / 1 | — | — | — | 0 / 1 / 1 | 1 / 1 / 1 |
 
 Legend: ✅ = present, ❌ = missing, `n / m` = `migrated / total`, `—` = no data.
+FxTemplates show `clean / spec / total` — `clean` = uses spec types and no legacy `parameter.RealParameter`-style attrs; `spec` = body references `beast.base.spec.*` at all.
 
 ## Java class kinds (with mixed/legacy breakdown)
 

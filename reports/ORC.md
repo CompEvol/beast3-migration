@@ -1,6 +1,6 @@
 # ORC — what's left
 
-> **Scanned at:** 2026-05-07T19:58:08.913157  
+> **Scanned at:** 2026-05-07T20:06:37.173322  
 > **Local checkout:** `/Users/adru001/Git/ORC` — commit `bb6bdbb` on `master` — [view on GitHub](https://github.com/jordandouglas/ORC/commit/bb6bdbb3875b735c37aab49a8e992cf368257838)  
 > **Pom version:** `1.3.0-SNAPSHOT`  
 > **Maven Central:** not published as `io.github.jordandouglas:beast-orc` (not published (404))  
@@ -9,7 +9,8 @@
 ## Summary
 
 - **Java classes:** 6 on spec, 1 mixed, 1 legacy of 55 total
-- **XMLs:** 0 on spec / 1 on `version="2.8"` / 2 total
+- **Example XMLs:** 0 on spec / 1 on `version="2.8"` / 1 total
+- **BEAUti fxtemplates:** 1 clean / 1 use spec / 1 total
 - **Maven Central:** ❌ not published (not published (404))
 
 ## Build & release gaps
@@ -34,13 +35,13 @@ Not yet published as `io.github.jordandouglas:beast-orc`. Verify the namespace o
 
 - `orc.consoperators.ConsOperatorUtils` — uses `ParametricDistribution`
 
-## XMLs pending migration
-
-**Needs `version="2.8"`** (1):
-
-- `fxtemplates/OptimisedRelaxedClock.xml`
+## Example XMLs pending migration
 
 **Targets BEAST 3 but missing `beast.base.spec.*` in namespace** (1):
 
 - `examples/caterpillars.xml`
+
+## FxTemplates
+
+All BEAUti fxtemplates use spec types with no legacy `parameter.*` declarations. ✅
 

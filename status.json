@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-07T19:58:09.024893+12:00",
+  "generatedAt": "2026-05-07T20:06:37.287319+12:00",
   "packages": [
     {
       "name": "beast3",
@@ -62,10 +62,15 @@
         }
       },
       "xml": {
-        "total": 93,
+        "total": 78,
         "migrated": 0,
         "v28": 0,
-        "legacyDir": 82
+        "legacyDir": 81
+      },
+      "fxTemplates": {
+        "total": 10,
+        "withSpec": 10,
+        "clean": 6
       },
       "build": {
         "hasPom": true,
@@ -144,10 +149,15 @@
         }
       },
       "xml": {
-        "total": 26,
+        "total": 20,
         "migrated": 0,
         "v28": 0,
         "legacyDir": 0
+      },
+      "fxTemplates": {
+        "total": 3,
+        "withSpec": 0,
+        "clean": 0
       },
       "build": {
         "hasPom": true,
@@ -226,10 +236,15 @@
         }
       },
       "xml": {
-        "total": 19,
+        "total": 10,
         "migrated": 0,
         "v28": 0,
         "legacyDir": 0
+      },
+      "fxTemplates": {
+        "total": 5,
+        "withSpec": 0,
+        "clean": 0
       },
       "build": {
         "hasPom": true,
@@ -308,10 +323,15 @@
         }
       },
       "xml": {
-        "total": 3,
+        "total": 1,
         "migrated": 0,
         "v28": 0,
         "legacyDir": 0
+      },
+      "fxTemplates": {
+        "total": 1,
+        "withSpec": 0,
+        "clean": 0
       },
       "build": {
         "hasPom": true,
@@ -395,6 +415,11 @@
         "v28": 2,
         "legacyDir": 0
       },
+      "fxTemplates": {
+        "total": 0,
+        "withSpec": 0,
+        "clean": 0
+      },
       "build": {
         "hasPom": true,
         "hasReleaseProfile": true,
@@ -472,10 +497,15 @@
         }
       },
       "xml": {
-        "total": 14,
+        "total": 4,
         "migrated": 1,
         "v28": 1,
         "legacyDir": 0
+      },
+      "fxTemplates": {
+        "total": 5,
+        "withSpec": 0,
+        "clean": 0
       },
       "build": {
         "hasPom": true,
@@ -554,10 +584,15 @@
         }
       },
       "xml": {
-        "total": 4,
+        "total": 2,
         "migrated": 0,
         "v28": 2,
         "legacyDir": 4
+      },
+      "fxTemplates": {
+        "total": 1,
+        "withSpec": 1,
+        "clean": 0
       },
       "build": {
         "hasPom": true,
@@ -636,10 +671,15 @@
         }
       },
       "xml": {
-        "total": 5,
+        "total": 3,
         "migrated": 0,
         "v28": 0,
         "legacyDir": 0
+      },
+      "fxTemplates": {
+        "total": 1,
+        "withSpec": 1,
+        "clean": 1
       },
       "build": {
         "hasPom": true,
@@ -723,6 +763,11 @@
         "v28": 0,
         "legacyDir": 0
       },
+      "fxTemplates": {
+        "total": 0,
+        "withSpec": 0,
+        "clean": 0
+      },
       "build": {
         "hasPom": false,
         "hasReleaseProfile": false,
@@ -800,10 +845,15 @@
         }
       },
       "xml": {
-        "total": 2,
+        "total": 1,
         "migrated": 0,
         "v28": 1,
         "legacyDir": 0
+      },
+      "fxTemplates": {
+        "total": 1,
+        "withSpec": 1,
+        "clean": 1
       },
       "build": {
         "hasPom": true,
