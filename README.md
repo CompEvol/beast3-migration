@@ -7,6 +7,8 @@
 - beast3
 - BEASTLabs
 - beast-classic
+- CoupledMCMC (https://github.com/CompEvol)
+- Mascot (https://github.com/CompEvol)
 - morph-models
 - MutableAlignment
 - ORC
