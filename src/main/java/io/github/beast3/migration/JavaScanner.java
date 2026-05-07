@@ -406,10 +406,14 @@ public final class JavaScanner {
             }
             report.javaCounts.get(effKind).add(c.status());
 
-            int v = c.ruleViolatingInputs().size();
-            if (v > 0) {
-                report.classesWithInputViolations++;
-                report.inputViolations += v;
+            // @Deprecated classes are known about — don't tally their Input
+            // violations either; they'll be removed wholesale.
+            if (!c.isDeprecated) {
+                int v = c.ruleViolatingInputs().size();
+                if (v > 0) {
+                    report.classesWithInputViolations++;
+                    report.inputViolations += v;
+                }
             }
         }
     }

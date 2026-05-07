@@ -29,7 +29,7 @@ exact local checkout commit it was scanned against.
 
 <!-- BEGIN AUTO -->
 
-_Last regenerated: 2026-05-07T21:24:36.350531+12:00_
+_Last regenerated: 2026-05-07T21:26:32.821766+12:00_
 
 ## Release & build status
 
@@ -50,8 +50,8 @@ _Last regenerated: 2026-05-07T21:24:36.350531+12:00_
 
 | Package | Distrs | Ops | Loggers | CalcNodes | Params | StateNodes | XMLs | FxTemplates | Input rule |
 |---|---|---|---|---|---|---|---|---|---|
-| beast3 | 1 / 70 | ✅ 47 | ✅ 16 | ✅ 20 | ✅ 5 | ✅ 22 | 0 / 0 / 78 (+81 legacy) | 6 / 10 / 10 | 56 / 105 |
-| BEASTLabs | 5 / 22 | ✅ 21 | 1 / 11 | 5 / 10 | 2 / 2 | ✅ 8 | 0 / 0 / 20 | 0 / 0 / 3 | 17 / 33 |
+| beast3 | 1 / 70 | ✅ 47 | ✅ 16 | ✅ 20 | ✅ 5 | ✅ 22 | 0 / 0 / 78 (+81 legacy) | 6 / 10 / 10 | 5 / 6 |
+| BEASTLabs | 5 / 22 | ✅ 21 | 1 / 11 | 5 / 10 | 2 / 2 | ✅ 8 | 0 / 0 / 20 | 0 / 0 / 3 | 16 / 30 |
 | beast-classic | ✅ 9 | ✅ 11 | 4 / 11 | 3 / 14 | ✅ 1 | ✅ 2 | 0 / 0 / 10 | 0 / 0 / 5 | 8 / 16 |
 | CoupledMCMC | — | — | ✅ 3 | — | — | — | 0 / 0 / 1 | 0 / 0 / 1 | ✅ |
 | flc | — | — | — | ✅ 8 | — | — | 2 / 2 / 2 | — | ✅ |

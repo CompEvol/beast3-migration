@@ -1,6 +1,6 @@
 # sampled-ancestors — what's left
 
-> **Scanned at:** 2026-05-07T21:24:36.032733  
+> **Scanned at:** 2026-05-07T21:26:32.505461  
 > **Commit:** `09bc95c` on `master` — [view on GitHub](https://github.com/CompEvol/sampled-ancestors/commit/09bc95cd1771ce4d85452314331a612549948e69)  
 > **Pom version:** `2.3.0-beta1`  
 > **Maven Central:** `io.github.compevol:sampled-ancestors:2.3.0-beta1`  

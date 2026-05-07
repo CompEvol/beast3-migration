@@ -1,6 +1,6 @@
 # BEASTLabs — what's left
 
-> **Scanned at:** 2026-05-07T21:24:35.159321  
+> **Scanned at:** 2026-05-07T21:26:31.609219  
 > **Commit:** `840fd01` on `scalable-contract` — [view on GitHub](https://github.com/BEAST2-Dev/BEASTlabs/commit/840fd015587efb223a2b382f954b0e10c58fc173)  
 > **Pom version:** `2.1.0-SNAPSHOT`  
 > **Maven Central:** `io.github.beast2-dev:beast-labs:2.1.0-beta2`  
@@ -11,7 +11,7 @@
 - **Java classes:** 1 on spec, 0 mixed, 14 legacy of 140 total
 - **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 20 total
 - **BEAUti fxtemplates:** 0 clean / 0 use spec / 3 total
-- **Input rule:** 17 classes hold 33 Input(s) declared too concretely
+- **Input rule:** 16 classes hold 30 Input(s) declared too concretely
 - **Maven Central:** 2.1.0-beta2
 
 ## Java classes pending migration
@@ -102,12 +102,8 @@
 - `beastlabs.core.util.Slice`
     - legacy: `Input<Function>`
 
-### CalcNodes (2)
+### CalcNodes (1)
 
-- `beastlabs.evolution.sitemodel.SiteModelGI`
-    - legacy: `Input<Function>`
-    - legacy: `Input<Function>`
-    - legacy: `Input<Function>`
 - `beastlabs.evolution.substitutionmodel.EpochSubstitutionModel`
     - concrete: `Input<RealVectorParam<? extends Real>>`
 

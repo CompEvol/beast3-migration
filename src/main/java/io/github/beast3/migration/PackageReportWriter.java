@@ -252,11 +252,14 @@ public final class PackageReportWriter {
     }
 
     private static void renderInputRulePunchList(StringBuilder sb, Report r) {
-        // Group offending classes by Kind for easier scanning.
+        // Group offending classes by Kind for easier scanning. @Deprecated
+        // classes are skipped — they'll be removed wholesale and don't need
+        // input-rule fixes.
         Map<Report.Kind, List<ClassRecord>> byKind = new EnumMap<>(Report.Kind.class);
         for (Report.Kind k : Report.Kind.values()) byKind.put(k, new ArrayList<>());
         int total = 0;
         for (ClassRecord c : r.classes) {
+            if (c.isDeprecated) continue;
             if (!c.ruleViolatingInputs().isEmpty()) {
                 byKind.get(c.kind()).add(c);
                 total++;

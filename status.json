@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-07T21:24:36.354867+12:00",
+  "generatedAt": "2026-05-07T21:26:32.826646+12:00",
   "packages": [
     {
       "name": "beast3",
@@ -72,8 +72,8 @@
         "clean": 6
       },
       "inputRule": {
-        "classesWithViolations": 56,
-        "totalViolations": 105
+        "classesWithViolations": 5,
+        "totalViolations": 6
       },
       "build": {
         "hasPom": true,
@@ -162,8 +162,8 @@
         "clean": 0
       },
       "inputRule": {
-        "classesWithViolations": 17,
-        "totalViolations": 33
+        "classesWithViolations": 16,
+        "totalViolations": 30
       },
       "build": {
         "hasPom": true,
