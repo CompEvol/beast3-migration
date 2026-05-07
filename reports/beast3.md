@@ -1,6 +1,6 @@
 # beast3 — what's left
 
-> **Scanned at:** 2026-05-07T21:48:25.184515  
+> **Scanned at:** 2026-05-07T22:00:48.978497  
 > **Commit:** `d0c4bb7` on `fix/missing-deprecated-annotations` — [view on GitHub](https://github.com/CompEvol/beast3/commit/d0c4bb7353d91d6e8e1d3884600696036c8a95d7)  
 > **Pom version:** `2.8.0-SNAPSHOT`  
 > **Maven Central:** `io.github.compevol:beast3:2.8.0-beta5`  

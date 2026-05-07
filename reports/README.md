@@ -13,7 +13,7 @@ for the high-level cross-package status table.
 | [CoupledMCMC](CoupledMCMC.md) | Maven Central | `1.3.0-beta1` | `39e9c05` | `1.3.0-beta1` |
 | [flc](flc.md) | Maven Central | `1.3.0-beta1` | `8876fe3` | `1.3.0-beta1` |
 | [Mascot](Mascot.md) | Maven Central | `3.1.0-beta1` | `f9d1aca` | `3.1.0-beta1` |
-| [morph-models](morph-models.md) | Maven Central | `1.3.0-beta3` | `db64781` | `1.3.0-beta3` |
+| [morph-models](morph-models.md) | Maven Central | `1.3.0-beta3` | `6aee702` | `1.3.0-beta3` |
 | [sampled-ancestors](sampled-ancestors.md) | Maven Central | `2.3.0-beta1` | `09bc95c` | `2.3.0-beta1` |
 | [MutableAlignment](MutableAlignment.md) | compile-tested | — | `d8204fa` | — |
 | [ORC](ORC.md) | compile-tested | ❌ | `bb6bdbb` | `1.3.0-SNAPSHOT` |

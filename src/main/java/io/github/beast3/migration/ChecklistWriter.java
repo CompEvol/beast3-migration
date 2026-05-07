@@ -73,8 +73,8 @@ public final class ChecklistWriter {
                 .append("_\n\n");
 
         sb.append("## Release & build status\n\n");
-        sb.append("| Package | Stage | Maven Central | Pom version | JPMS | Release | CI |\n");
-        sb.append("|---|---|---|---|:-:|:-:|:-:|\n");
+        sb.append("| Package | Stage | Maven Central | Pom version | JPMS | Release | CI | Code | XML | FxT |\n");
+        sb.append("|---|---|---|---|:-:|:-:|:-:|:-:|:-:|:-:|\n");
         for (Report r : reports) {
             sb.append("| ").append(linkPackage(r))
                     .append(" | ").append(prettyStage(r.entry.stage()))
@@ -83,9 +83,12 @@ public final class ChecklistWriter {
                     .append(" | ").append(check(r.hasModuleInfo))
                     .append(" | ").append(check(r.hasReleaseProfile && (r.hasReleaseScript || r.hasPom)))
                     .append(" | ").append(check(r.hasGithubActions))
+                    .append(" | ").append(codeLight(r))
+                    .append(" | ").append(xmlLight(r))
+                    .append(" | ").append(fxLight(r))
                     .append(" |\n");
         }
-        sb.append('\n');
+        sb.append("\nTraffic-light columns: 🔴 any legacy lineage / non-migrated content, 🟡 no legacy but some unnecessarily-concrete Inputs (Code) or stray legacy `parameter.*` declarations (XML / FxT), 🟢 clean, — = no data.\n\n");
 
         sb.append("## Migration progress (Java + XML)\n\n");
         sb.append("| Package | Distrs | Ops | Loggers | CalcNodes | Params | StateNodes | XMLs | FxTemplates | Input rule |\n");
@@ -167,6 +170,40 @@ public final class ChecklistWriter {
     private static String fxCell(Report r) {
         if (r.fxTotal == 0) return "—";
         return r.fxClean + " / " + r.fxWithSpec + " / " + r.fxTotal;
+    }
+
+    /** Code traffic light: 🔴 any legacy/mixed class, 🟡 clean lineage but
+     *  some Input-rule violations, 🟢 clean. */
+    private static String codeLight(Report r) {
+        int totalLegacy = 0, totalMixed = 0, totalClasses = 0;
+        for (Kind k : Kind.values()) {
+            Report.KindCounts c = r.javaCounts.get(k);
+            totalLegacy += c.legacy;
+            totalMixed += c.mixed;
+            totalClasses += c.total;
+        }
+        if (totalClasses == 0) return "—";
+        if (totalLegacy + totalMixed > 0) return "🔴";
+        if (r.inputViolations > 0) return "🟡";
+        return "🟢";
+    }
+
+    /** Example-XML traffic light: 🔴 any XML pre-v2.8, 🟡 all v2.8 but some
+     *  not fully spec / stray legacy `parameter.*` decls, 🟢 all migrated. */
+    private static String xmlLight(Report r) {
+        if (r.xmlTotal == 0) return "—";
+        if (r.xmlMigrated == r.xmlTotal) return "🟢";
+        if (r.xmlV28 == r.xmlTotal) return "🟡";
+        return "🔴";
+    }
+
+    /** FxTemplate traffic light: 🔴 any template with no spec body, 🟡 all
+     *  use spec but some still have legacy `parameter.*` decls, 🟢 clean. */
+    private static String fxLight(Report r) {
+        if (r.fxTotal == 0) return "—";
+        if (r.fxClean == r.fxTotal) return "🟢";
+        if (r.fxWithSpec == r.fxTotal) return "🟡";
+        return "🔴";
     }
 
     private static String inputRuleCell(Report r) {

@@ -1,6 +1,6 @@
 # flc — what's left
 
-> **Scanned at:** 2026-05-07T21:48:26.349770  
+> **Scanned at:** 2026-05-07T22:00:50.578504  
 > **Commit:** `8876fe3` on `fix/ci-publish-clean` — [view on GitHub](https://github.com/4ment/flc/commit/8876fe3ef062f618d89ecbd99a00d92fd7ccd000)  
 > **Pom version:** `1.3.0-beta1`  
 > **Maven Central:** `io.github.4ment:flc:1.3.0-beta1`  

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-07T21:48:27.086306+12:00",
+  "generatedAt": "2026-05-07T22:00:51.359823+12:00",
   "packages": [
     {
       "name": "beast3",
@@ -594,9 +594,9 @@
         },
         "other": {
           "total": 2,
-          "spec": 0,
+          "spec": 1,
           "mixed": 0,
-          "legacy": 1,
+          "legacy": 0,
           "neutral": 1
         }
       },
