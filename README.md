@@ -17,6 +17,10 @@ below) to refresh.
 - [`reports/`](reports/README.md) — one Markdown file per tracked
   package, with the exact local checkout commit it was scanned against
   and what's left to migrate.
+- [`BACKLOG.md`](BACKLOG.md) — v2.7 packages from CBAN
+  (`packages2.7.xml` + `packages-extra-2.7.xml`) that have not yet
+  appeared in `packages2.8.xml`. Regenerate with
+  `python3 scripts/gen-backlog.py`.
 
 ## Running the tool
 
