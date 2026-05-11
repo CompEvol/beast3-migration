@@ -1,6 +1,6 @@
 # obama — what's left
 
-> **Scanned at:** 2026-05-11T16:08:34.450085  
+> **Scanned at:** 2026-05-11T16:47:22.759985  
 > **Commit:** `7e14fd7` on `beast3-migration` — [view on GitHub](https://github.com/rbouckaert/obama/commit/7e14fd7ffbc792130fe401d1c8859aee7d422667)  
 > **Pom version:** `1.2.0-beta1`  
 > **Maven Central:** not published as `io.github.rbouckaert:obama` (not published (404))  
