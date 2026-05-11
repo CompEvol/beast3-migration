@@ -1,22 +1,41 @@
 # sampled-ancestors — what's left
 
-> **Scanned at:** 2026-05-08T08:25:24.524722  
-> **Commit:** `e518af7` on `migrate-spec-bases` — [view on GitHub](https://github.com/CompEvol/sampled-ancestors/commit/e518af717bcbc0a850f6f65e8aee70bd7c72eb40)  
+> **Scanned at:** 2026-05-11T16:08:33.913717  
+> **Commit:** `09bc95c` on `master` — [view on GitHub](https://github.com/CompEvol/sampled-ancestors/commit/09bc95cd1771ce4d85452314331a612549948e69)  
 > **Pom version:** `2.3.0-beta1`  
 > **Maven Central:** `io.github.compevol:sampled-ancestors:2.3.0-beta1`  
 > **Stage hint:** Maven Central
 
 ## Summary
 
-- **Java classes:** 6 on spec, 0 mixed, 0 legacy of 63 total
+- **Java classes:** 0 on spec, 0 mixed, 6 legacy of 63 total
 - **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 3 total
 - **BEAUti fxtemplates:** 1 clean / 1 use spec / 1 total
 - **Input rule:** all Inputs use the right carrier ✅
 - **Maven Central:** 2.3.0-beta1
 
-## Java migration
+## Java classes pending migration
 
-No Java classes flagged as legacy or mixed — all relevant types are on spec or have no parameter involvement. ✅
+### Distributions — 2 legacy, 0 mixed (of 6 total)
+
+**Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
+
+- `sa.math.distributions.DegenerateBeta` — extends `ParametricDistribution`
+- `sa.math.distributions.DegenerateUniform` — extends `ParametricDistribution`
+
+### Operators — 1 legacy, 0 mixed (of 13 total)
+
+**Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
+
+- `sa.evolution.operators.SAScaleOperator` — extends `ScaleOperator`
+
+### Other — 3 legacy, 0 mixed (of 35 total)
+
+**Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
+
+- `sa.evolution.tree.AncestryConstraint` — extends `MRCAPrior`
+- `sa.math.distributions.SAMRCAPrior` — extends `MRCAPrior`
+- `sa.math.distributions.SpecialMRCAPrior` — extends `MRCAPrior`
 
 ## Example XMLs pending migration
 

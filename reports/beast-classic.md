@@ -1,7 +1,7 @@
 # beast-classic — what's left
 
-> **Scanned at:** 2026-05-08T08:25:23.758361  
-> **Commit:** `8baef54` on `master` — [view on GitHub](https://github.com/BEAST2-Dev/beast-classic/commit/8baef5485aa4b218655729d03c7f8d7ef3ab9668)  
+> **Scanned at:** 2026-05-11T16:08:32.743711  
+> **Commit:** `bff64a7` on `wip-avmn-skyride-skygrid` — [view on GitHub](https://github.com/BEAST2-Dev/beast-classic/commit/bff64a7272d89e251245360c75b74c72fc8dc070)  
 > **Pom version:** `1.7.0-SNAPSHOT`  
 > **Maven Central:** `io.github.beast2-dev:beast-classic:1.7.0-beta1`  
 > **Stage hint:** Maven Central
@@ -10,7 +10,7 @@
 
 - **Java classes:** 7 on spec, 0 mixed, 9 legacy of 97 total
 - **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 10 total
-- **BEAUti fxtemplates:** 0 clean / 0 use spec / 5 total
+- **BEAUti fxtemplates:** 0 clean / 1 use spec / 5 total
 - **Input rule:** 8 classes hold 16 Input(s) declared too concretely
 - **Maven Central:** 1.7.0-beta1
 
@@ -94,11 +94,14 @@
 
 > Note: BEAUti templates conventionally keep `version='2.0'` (beast3 core does the same). Migration here means the body uses `beast.base.spec.*` types and parameter declarations use `RealScalarParam` etc. rather than `parameter.RealParameter`.
 
-**No `beast.base.spec.*` references in body** (5):
+**Uses spec types but still has legacy `parameter.*` declarations** (1):
+
+- `src/main/resources/beast.classic/fxtemplates/ClassicTreePriors.xml`
+
+**No `beast.base.spec.*` references in body** (4):
 
 - `src/main/resources/beast.classic/fxtemplates/RelaxedClockModels.xml`
 - `src/main/resources/beast.classic/fxtemplates/discrete-trait.xml`
-- `src/main/resources/beast.classic/fxtemplates/ClassicTreePriors.xml`
 - `src/main/resources/beast.classic/fxtemplates/ClassicSubtseModels.xml`
 - `src/main/resources/beast.classic/fxtemplates/StarBeast.xml`
 

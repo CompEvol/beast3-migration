@@ -1,7 +1,7 @@
 # BEASTLabs — what's left
 
-> **Scanned at:** 2026-05-08T08:25:23.539698  
-> **Commit:** `840fd01` on `scalable-contract` — [view on GitHub](https://github.com/BEAST2-Dev/BEASTlabs/commit/840fd015587efb223a2b382f954b0e10c58fc173)  
+> **Scanned at:** 2026-05-11T16:08:32.486665  
+> **Commit:** `8a075b6` on `master` — [view on GitHub](https://github.com/BEAST2-Dev/BEASTlabs/commit/8a075b6c58657065f4dab2a426d9f7d45f29c92b)  
 > **Pom version:** `2.1.0-SNAPSHOT`  
 > **Maven Central:** `io.github.beast2-dev:beast-labs:2.1.0-beta2`  
 > **Stage hint:** Maven Central

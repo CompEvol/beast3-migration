@@ -7,13 +7,15 @@ for the high-level cross-package status table.
 
 | Package | Stage | Maven Central | Local commit | Pom version |
 |---|---|---|---|---|
-| [beast3](beast3.md) | Maven Central | `2.8.0-beta5` | `d0c4bb7` | `2.8.0-SNAPSHOT` |
-| [BEASTLabs](BEASTLabs.md) | Maven Central | `2.1.0-beta2` | `840fd01` | `2.1.0-SNAPSHOT` |
-| [beast-classic](beast-classic.md) | Maven Central | `1.7.0-beta1` | `8baef54` | `1.7.0-SNAPSHOT` |
-| [CoupledMCMC](CoupledMCMC.md) | Maven Central | `1.3.0-beta1` | `39e9c05` | `1.3.0-beta1` |
-| [flc](flc.md) | Maven Central | `1.3.0-beta1` | `8876fe3` | `1.3.0-beta1` |
-| [Mascot](Mascot.md) | Maven Central | `3.1.0-beta1` | `f9d1aca` | `3.1.0-beta1` |
-| [morph-models](morph-models.md) | Maven Central | `1.3.0-beta3` | `6aee702` | `1.3.0-beta3` |
-| [sampled-ancestors](sampled-ancestors.md) | Maven Central | `2.3.0-beta1` | `e518af7` | `2.3.0-beta1` |
-| [MutableAlignment](MutableAlignment.md) | compile-tested | — | `d8204fa` | — |
-| [ORC](ORC.md) | compile-tested | ❌ | `bb6bdbb` | `1.3.0-SNAPSHOT` |
+| [beast3](beast3.md) | Maven Central | `2.8.0-beta5` | `d3ad887` | `2.8.0-SNAPSHOT` |
+| [BEASTLabs](BEASTLabs.md) | Maven Central | `2.1.0-beta2` | `8a075b6` | `2.1.0-SNAPSHOT` |
+| [beast-classic](beast-classic.md) | Maven Central | `1.7.0-beta1` | `bff64a7` | `1.7.0-SNAPSHOT` |
+| [CoupledMCMC](CoupledMCMC.md) | Maven Central | `1.3.0-beta1` | `9604167` | `1.3.0-beta1` |
+| [flc](flc.md) | Maven Central | `1.3.0-beta1` | `43218a5` | `1.3.0-beta1` |
+| [Mascot](Mascot.md) | Maven Central | `3.1.0-beta1` | `b7b7295` | `3.1.0-beta1` |
+| [morph-models](morph-models.md) | Maven Central | `1.3.0-beta3` | `db64781` | `1.3.0-beta3` |
+| [sampled-ancestors](sampled-ancestors.md) | Maven Central | `2.3.0-beta1` | `09bc95c` | `2.3.0-beta1` |
+| [MutableAlignment](MutableAlignment.md) | compile-tested | — | `1101943` | — |
+| [ORC](ORC.md) | compile-tested | ❌ | `a80e782` | `1.3.0-SNAPSHOT` |
+| [bModelTest](bModelTest.md) | compile-tested | ❌ | `f63ec16` | `1.4.0-beta1` |
+| [obama](obama.md) | compile-tested | ❌ | `7e14fd7` | `1.2.0-beta1` |

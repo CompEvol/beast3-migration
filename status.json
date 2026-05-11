@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-08T08:25:24.925911+12:00",
+  "generatedAt": "2026-05-11T16:08:34.613740+12:00",
   "packages": [
     {
       "name": "beast3",
@@ -72,8 +72,8 @@
         "clean": 6
       },
       "inputRule": {
-        "classesWithViolations": 0,
-        "totalViolations": 0
+        "classesWithViolations": 3,
+        "totalViolations": 3
       },
       "build": {
         "hasPom": true,
@@ -248,7 +248,7 @@
       },
       "fxTemplates": {
         "total": 5,
-        "withSpec": 0,
+        "withSpec": 1,
         "clean": 0
       },
       "inputRule": {
@@ -511,13 +511,13 @@
         }
       },
       "xml": {
-        "total": 4,
+        "total": 229,
         "migrated": 1,
         "v28": 1,
-        "legacyDir": 0
+        "legacyDir": 55
       },
       "fxTemplates": {
-        "total": 5,
+        "total": 14,
         "withSpec": 0,
         "clean": 0
       },
@@ -594,9 +594,9 @@
         },
         "other": {
           "total": 2,
-          "spec": 1,
+          "spec": 0,
           "mixed": 0,
-          "legacy": 0,
+          "legacy": 1,
           "neutral": 1
         }
       },
@@ -642,16 +642,16 @@
       "java": {
         "distribution": {
           "total": 6,
-          "spec": 2,
+          "spec": 0,
           "mixed": 0,
-          "legacy": 0,
+          "legacy": 2,
           "neutral": 4
         },
         "operator": {
           "total": 13,
-          "spec": 1,
+          "spec": 0,
           "mixed": 0,
-          "legacy": 0,
+          "legacy": 1,
           "neutral": 12
         },
         "logger": {
@@ -684,9 +684,9 @@
         },
         "other": {
           "total": 35,
-          "spec": 3,
+          "spec": 0,
           "mixed": 0,
-          "legacy": 0,
+          "legacy": 3,
           "neutral": 32
         }
       },
@@ -781,7 +781,7 @@
         }
       },
       "xml": {
-        "total": 2,
+        "total": 1,
         "migrated": 0,
         "v28": 0,
         "legacyDir": 0
@@ -800,7 +800,7 @@
         "hasReleaseProfile": false,
         "hasModuleInfo": false,
         "hasGithubActions": false,
-        "hasReleaseScript": true,
+        "hasReleaseScript": false,
         "hasVersionXml": true,
         "pomVersion": ""
       },
@@ -821,8 +821,8 @@
       "error": "",
       "java": {
         "distribution": {
-          "total": 1,
-          "spec": 1,
+          "total": 0,
+          "spec": 0,
           "mixed": 0,
           "legacy": 0,
           "neutral": 0
@@ -897,6 +897,186 @@
       "mavenCentral": {
         "groupId": "io.github.jordandouglas",
         "artifactId": "beast-orc",
+        "latest": "",
+        "error": "not published (404)"
+      }
+    },
+    {
+      "name": "bModelTest",
+      "github": "BEAST2-Dev/bModelTest",
+      "maven": "io.github.beast2-dev:bModelTest",
+      "stage": "compile_tested",
+      "notes": "",
+      "pathExists": true,
+      "error": "",
+      "java": {
+        "distribution": {
+          "total": 3,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 3
+        },
+        "operator": {
+          "total": 4,
+          "spec": 1,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 3
+        },
+        "logger": {
+          "total": 3,
+          "spec": 2,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 1
+        },
+        "calcnode": {
+          "total": 3,
+          "spec": 3,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "parameter": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "statenode": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "other": {
+          "total": 7,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 7
+        }
+      },
+      "xml": {
+        "total": 2,
+        "migrated": 1,
+        "v28": 1,
+        "legacyDir": 1
+      },
+      "fxTemplates": {
+        "total": 1,
+        "withSpec": 1,
+        "clean": 1
+      },
+      "inputRule": {
+        "classesWithViolations": 0,
+        "totalViolations": 0
+      },
+      "build": {
+        "hasPom": true,
+        "hasReleaseProfile": true,
+        "hasModuleInfo": true,
+        "hasGithubActions": false,
+        "hasReleaseScript": false,
+        "hasVersionXml": true,
+        "pomVersion": "1.4.0-beta1"
+      },
+      "mavenCentral": {
+        "groupId": "io.github.beast2-dev",
+        "artifactId": "bModelTest",
+        "latest": "",
+        "error": "not published (404)"
+      }
+    },
+    {
+      "name": "obama",
+      "github": "rbouckaert/obama",
+      "maven": "io.github.rbouckaert:obama",
+      "stage": "compile_tested",
+      "notes": "",
+      "pathExists": true,
+      "error": "",
+      "java": {
+        "distribution": {
+          "total": 3,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 3
+        },
+        "operator": {
+          "total": 2,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 2
+        },
+        "logger": {
+          "total": 2,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 2
+        },
+        "calcnode": {
+          "total": 44,
+          "spec": 19,
+          "mixed": 0,
+          "legacy": 11,
+          "neutral": 14
+        },
+        "parameter": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "statenode": {
+          "total": 0,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "other": {
+          "total": 8,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 8
+        }
+      },
+      "xml": {
+        "total": 14,
+        "migrated": 0,
+        "v28": 0,
+        "legacyDir": 0
+      },
+      "fxTemplates": {
+        "total": 1,
+        "withSpec": 1,
+        "clean": 0
+      },
+      "inputRule": {
+        "classesWithViolations": 9,
+        "totalViolations": 18
+      },
+      "build": {
+        "hasPom": true,
+        "hasReleaseProfile": true,
+        "hasModuleInfo": true,
+        "hasGithubActions": false,
+        "hasReleaseScript": false,
+        "hasVersionXml": true,
+        "pomVersion": "1.2.0-beta1"
+      },
+      "mavenCentral": {
+        "groupId": "io.github.rbouckaert",
+        "artifactId": "obama",
         "latest": "",
         "error": "not published (404)"
       }

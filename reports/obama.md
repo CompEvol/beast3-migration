@@ -1,0 +1,110 @@
+# obama — what's left
+
+> **Scanned at:** 2026-05-11T16:08:34.450085  
+> **Commit:** `7e14fd7` on `beast3-migration` — [view on GitHub](https://github.com/rbouckaert/obama/commit/7e14fd7ffbc792130fe401d1c8859aee7d422667)  
+> **Pom version:** `1.2.0-beta1`  
+> **Maven Central:** not published as `io.github.rbouckaert:obama` (not published (404))  
+> **Stage hint:** compile-tested
+
+## Summary
+
+- **Java classes:** 19 on spec, 0 mixed, 11 legacy of 59 total
+- **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 14 total
+- **BEAUti fxtemplates:** 0 clean / 1 use spec / 1 total
+- **Input rule:** 9 classes hold 18 Input(s) declared too concretely
+- **Maven Central:** ❌ not published (not published (404))
+
+## Build & release gaps
+
+- **No `.github/workflows/*.yml`** — add CI to catch regressions on PRs.
+- **No `release.sh` or `release/` directory** — used to assemble the CBAN-style ZIP.
+
+## Maven Central
+
+Not yet published as `io.github.rbouckaert:obama`. Verify the namespace on central.sonatype.com and run the `release` profile to deploy.
+
+## Java classes pending migration
+
+### CalcNodes — 11 legacy, 0 mixed (of 44 total)
+
+**Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
+
+- `obama.likelihood.MixedTreeLikelihood` — extends `GenericTreeLikelihood`
+- `obama.likelihood.MixtureTreeLikelihood` — extends `TreeLikelihood`
+- `obama.operator.MixedOperator.MyBeagleTreeLikelihood` — extends `BeagleTreeLikelihood`
+- `obama.operator.MixedOperator.MyTreeLikelihood` — extends `TreeLikelihood`
+- `obama.sitemodel.OBAMAModelTestSiteModel` — extends `SiteModel`
+- `obama.substitutionmodel.PHAT` — extends `GeneralSubstitutionModel`
+- `obama.substitutionmodel.ScoreBasedSubstitutionModel` — extends `GeneralSubstitutionModel`
+- `obama.substitutionmodel.mixture.M1` — extends `EmpiricalSubstitutionModel`
+- `obama.substitutionmodel.mixture.M2` — extends `EmpiricalSubstitutionModel`
+- `obama.substitutionmodel.mixture.M3` — extends `EmpiricalSubstitutionModel`
+- `obama.substitutionmodel.mixture.M4` — extends `EmpiricalSubstitutionModel`
+
+## Inputs declared too concretely
+
+> Concrete spec params (`RealScalarParam`, `RealVectorParam`, …) belong only on Operators, which need to write the parameter. Distributions, CalcNodes, Loggers and other read-only holders should declare the interface (`RealScalar`, `RealVector`, …) so adapters and transforms can be substituted. Legacy `RealParameter` / `Function` Inputs are violations everywhere.
+
+### Distributions (2)
+
+- `obama.PhyloHMM`
+    - legacy: `Input<Function>`
+    - concrete: `Input<IntVectorParam<? extends NonNegativeInt>>`
+- `obama.PhyloHMMVar`
+    - concrete: `Input<BoolVectorParam>`
+
+### Loggers (1)
+
+- `obama.RatesForConservedRegions`
+    - concrete: `Input<RealScalarParam<? extends UnitInterval>>`
+
+### CalcNodes (6)
+
+- `obama.sitemodel.MixedSiteModel`
+    - concrete: `Input<IntVectorParam<? extends NonNegativeInt>>`
+    - concrete: `Input<RealVectorParam<? extends PositiveReal>>`
+- `obama.sitemodel.MixtureSiteModel`
+    - concrete: `Input<RealVectorParam<? extends NonNegativeReal>>`
+    - concrete: `Input<RealVectorParam<? extends PositiveReal>>`
+    - concrete: `Input<RealScalarParam<? extends PositiveReal>>`
+- `obama.sitemodel.OBAMAModelTestSiteModel`
+    - concrete: `Input<IntScalarParam<? extends NonNegativeInt>>`
+    - concrete: `Input<IntScalarParam<? extends NonNegativeInt>>`
+- `obama.substitutionmodel.OBAMAComplexModel`
+    - concrete: `Input<BoolScalarParam>`
+    - concrete: `Input<IntScalarParam<? extends NonNegativeInt>>`
+- `obama.substitutionmodel.OBAMAModel`
+    - concrete: `Input<BoolScalarParam>`
+    - concrete: `Input<IntScalarParam<? extends NonNegativeInt>>`
+- `obama.substitutionmodel.ParameterisedAminoAcidModel`
+    - concrete: `Input<RealScalarParam<? extends PositiveReal>>`
+    - concrete: `Input<RealScalarParam<? extends PositiveReal>>`
+    - concrete: `Input<RealScalarParam<? extends PositiveReal>>`
+
+## Example XMLs pending migration
+
+**Needs `version="2.8"`** (14):
+
+- `examples/testLG4X.xml`
+- `examples/testPhyloHMMMap.xml`
+- `examples/testC60.xml`
+- `examples/testC10.xml`
+- `examples/testOBAMA.xml`
+- `examples/testC30.xml`
+- `examples/testPhyloHMM2.xml`
+- `examples/testC20.xml`
+- `examples/testC50.xml`
+- `examples/testPhyloHMMSparse.xml`
+- `examples/testC20Mixed.xml`
+- `examples/testPhyloHMM.xml`
+- `examples/testLG4.xml`
+- `examples/testC40.xml`
+
+## FxTemplates pending migration
+
+> Note: BEAUti templates conventionally keep `version='2.0'` (beast3 core does the same). Migration here means the body uses `beast.base.spec.*` types and parameter declarations use `RealScalarParam` etc. rather than `parameter.RealParameter`.
+
+**Uses spec types but still has legacy `parameter.*` declarations** (1):
+
+- `src/main/resources/obama/fxtemplates/OBAMA.xml`
+

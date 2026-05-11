@@ -1,7 +1,7 @@
 # beast3 — what's left
 
-> **Scanned at:** 2026-05-08T08:25:22.722059  
-> **Commit:** `d0c4bb7` on `fix/missing-deprecated-annotations` — [view on GitHub](https://github.com/CompEvol/beast3/commit/d0c4bb7353d91d6e8e1d3884600696036c8a95d7)  
+> **Scanned at:** 2026-05-11T16:08:31.464644  
+> **Commit:** `d3ad887` on `fix/offset-real-calculate-logp` — [view on GitHub](https://github.com/CompEvol/beast3/commit/d3ad887fb81ba516a9769594ce51d3a007ac0941)  
 > **Pom version:** `2.8.0-SNAPSHOT`  
 > **Maven Central:** `io.github.compevol:beast3:2.8.0-beta5`  
 > **Stage hint:** Maven Central
@@ -13,12 +13,31 @@
 - **Java classes:** 93 on spec, 0 mixed, 0 legacy of 842 total
 - **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 78 total (+81 under legacy/)
 - **BEAUti fxtemplates:** 6 clean / 10 use spec / 10 total
-- **Input rule:** all Inputs use the right carrier ✅
+- **Input rule:** 3 classes hold 3 Input(s) declared too concretely
 - **Maven Central:** 2.8.0-beta5
 
 ## Java migration
 
 No Java classes flagged as legacy or mixed — all relevant types are on spec or have no parameter involvement. ✅
+
+## Inputs declared too concretely
+
+> Concrete spec params (`RealScalarParam`, `RealVectorParam`, …) belong only on Operators, which need to write the parameter. Distributions, CalcNodes, Loggers and other read-only holders should declare the interface (`RealScalar`, `RealVector`, …) so adapters and transforms can be substituted. Legacy `RealParameter` / `Function` Inputs are violations everywhere.
+
+### Operators (1)
+
+- `beast.base.inference.operator.kernel.BactrianIntervalOperator`
+    - legacy: `Input<RealParameter>`
+
+### CalcNodes (1)
+
+- `beast.base.evolution.branchratemodel.BranchRateModel.Base`
+    - legacy: `Input<Function>`
+
+### Other (1)
+
+- `beastfx.app.beauti.PriorInputEditor`
+    - legacy: `Input<Function>`
 
 ## Example XMLs pending migration
 

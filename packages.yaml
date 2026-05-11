@@ -69,3 +69,15 @@ packages:
     github: jordandouglas/ORC
     maven: io.github.jordandouglas:beast-orc
     stage: compile_tested
+
+  - name: bModelTest
+    path: ../bModelTest
+    github: BEAST2-Dev/bModelTest
+    maven: io.github.beast2-dev:bModelTest
+    stage: compile_tested
+
+  - name: obama
+    path: ../obama-beast3
+    github: rbouckaert/obama
+    maven: io.github.rbouckaert:obama
+    stage: compile_tested
