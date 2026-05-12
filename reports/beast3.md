@@ -1,6 +1,6 @@
 # beast3 — what's left
 
-> **Scanned at:** 2026-05-13T11:39:26.133013  
+> **Scanned at:** 2026-05-13T11:45:31.216237  
 > **Commit:** `d3ad887` on `fix/offset-real-calculate-logp` — [view on GitHub](https://github.com/CompEvol/beast3/commit/d3ad887fb81ba516a9769594ce51d3a007ac0941)  
 > **Pom version:** `2.8.0-SNAPSHOT`  
 > **Maven Central:** `io.github.compevol:beast3:2.8.0-beta5`  

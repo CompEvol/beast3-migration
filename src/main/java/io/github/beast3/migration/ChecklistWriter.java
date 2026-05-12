@@ -105,8 +105,8 @@ public final class ChecklistWriter {
                     .append(" | ").append(depRefsCell(r))
                     .append(" |\n");
         }
-        sb.append("\nTraffic-light columns: 🔴 any legacy lineage / non-migrated content, 🟡 no legacy but some unnecessarily-concrete Inputs (Code) or stray legacy `parameter.*` declarations (XML / FxT), 🟢 clean, — = no data.\n");
-        sb.append("**Dep refs** = number of references to `@Deprecated` classes found in this package's XMLs and fxtemplates (either as `spec=` attributes or `<map>` bodies). 0 = ✅. Per-package reports list each hit and the spec replacement.\n\n");
+        sb.append("\nTraffic-light columns: 🔴 any legacy lineage / non-migrated content, 🟡 no legacy but some unnecessarily-concrete Inputs (Code), or stray legacy `parameter.*` declarations / references to `@Deprecated` classes (XML / FxT), 🟢 clean, — = no data.\n");
+        sb.append("**Dep refs** = number of references to `@Deprecated` classes found in this package's XMLs and fxtemplates (either as `spec=` attributes or `<map>` bodies); also degrades the XML / FxT light to 🟡 when non-zero. 0 = ✅. Per-package reports list each hit and the spec replacement.\n\n");
 
         sb.append("## Migration progress (Java + XML)\n\n");
         sb.append("| Package | Distrs | Ops | Loggers | CalcNodes | Params | StateNodes | XMLs | FxTemplates | Input rule |\n");
@@ -207,21 +207,34 @@ public final class ChecklistWriter {
     }
 
     /** Example-XML traffic light: 🔴 any XML pre-v2.8, 🟡 all v2.8 but some
-     *  not fully spec / stray legacy `parameter.*` decls, 🟢 all migrated. */
+     *  not fully spec / stray legacy `parameter.*` decls or any reference
+     *  to an `@Deprecated` class, 🟢 all migrated and zero deprecated refs. */
     private static String xmlLight(Report r) {
         if (r.xmlTotal == 0) return "—";
-        if (r.xmlMigrated == r.xmlTotal) return "🟢";
+        if (r.xmlMigrated == r.xmlTotal) {
+            return hasDeprecatedRefsIn(r, /* fxTemplate */ false) ? "🟡" : "🟢";
+        }
         if (r.xmlV28 == r.xmlTotal) return "🟡";
         return "🔴";
     }
 
     /** FxTemplate traffic light: 🔴 any template with no spec body, 🟡 all
-     *  use spec but some still have legacy `parameter.*` decls, 🟢 clean. */
+     *  use spec but some still have legacy `parameter.*` decls or any
+     *  reference to an `@Deprecated` class, 🟢 clean and zero deprecated refs. */
     private static String fxLight(Report r) {
         if (r.fxTotal == 0) return "—";
-        if (r.fxClean == r.fxTotal) return "🟢";
+        if (r.fxClean == r.fxTotal) {
+            return hasDeprecatedRefsIn(r, /* fxTemplate */ true) ? "🟡" : "🟢";
+        }
         if (r.fxWithSpec == r.fxTotal) return "🟡";
         return "🔴";
+    }
+
+    private static boolean hasDeprecatedRefsIn(Report r, boolean fxTemplate) {
+        for (DeprecatedXmlRef ref : r.xmlDeprecatedRefs) {
+            if (ref.isFxTemplate() == fxTemplate) return true;
+        }
+        return false;
     }
 
     private static String inputRuleCell(Report r) {

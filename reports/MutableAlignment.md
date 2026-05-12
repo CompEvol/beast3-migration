@@ -1,6 +1,6 @@
 # MutableAlignment — what's left
 
-> **Scanned at:** 2026-05-13T11:39:28.638160  
+> **Scanned at:** 2026-05-13T11:45:33.878109  
 > **Commit:** `1101943` on `fix-store-restore-for-mutable-tips-beast27` — [view on GitHub](https://github.com/rbouckaert/MutableAlignment/commit/1101943c8cdd723b7a8457b158a84797f6700d0f)  
 > **Stage hint:** compile-tested
 >
