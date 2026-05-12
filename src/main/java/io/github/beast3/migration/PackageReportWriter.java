@@ -268,7 +268,7 @@ public final class PackageReportWriter {
         if (total == 0) return;
 
         sb.append("## Inputs declared too concretely\n\n");
-        sb.append("> Concrete spec params (`RealScalarParam`, `RealVectorParam`, …) belong only on Operators, which need to write the parameter. Distributions, CalcNodes, Loggers and other read-only holders should declare the interface (`RealScalar`, `RealVector`, …) so adapters and transforms can be substituted. Legacy `RealParameter` / `Function` Inputs are violations everywhere.\n\n");
+        sb.append("> Concrete spec params (`RealScalarParam`, `RealVectorParam`, …) belong on Operators, which need to write the parameter, and on Loggers, which need `getID()` to write column headers (the pure type interfaces deliberately do not extend `BEASTInterface`). Distributions, CalcNodes, and other read-only holders should declare the interface (`RealScalar`, `RealVector`, …) so adapters and transforms can be substituted. Legacy `RealParameter` / `Function` Inputs are violations everywhere.\n\n");
         for (Report.Kind k : Report.Kind.values()) {
             List<ClassRecord> list = byKind.get(k);
             if (list.isEmpty()) continue;

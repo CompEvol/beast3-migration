@@ -108,10 +108,12 @@ pass the array directly to the BEAST3 constructor (see also java-cleanup.md R4 f
 Wherever a field or local variable is declared as `RealParameter`, `IntegerParameter`, or
 `BooleanParameter`, change it to the appropriate BEAST3 type:
 
-- If the holder is an **Operator** (writes the param): use the concrete param class
-  (`RealScalarParam<PositiveReal>`, `RealVectorParam<?>`, etc.)
-- If the holder is a **Distribution / CalcNode / Logger / any read-only class**: use the interface
-  type (`RealScalar`, `RealVector`, `Simplex`, `IntScalar`, `IntVector`, `BoolScalar`, `BoolVector`)
+- If the holder is an **Operator** (writes the param) or a **Logger** (needs `getID()` to write
+  column headers — the pure type interfaces don't extend `BEASTInterface`): use the concrete
+  param class (`RealScalarParam<PositiveReal>`, `RealVectorParam<?>`, etc.)
+- If the holder is a **Distribution / CalcNode / any read-only computational class**: use the
+  interface type (`RealScalar`, `RealVector`, `Simplex`, `IntScalar`, `IntVector`, `BoolScalar`,
+  `BoolVector`) so adapters and transforms can be substituted.
 
 ### R5 — Input concreteness rule (critical)
 
@@ -124,20 +126,30 @@ because they need write access:
 public Input<RealScalarParam<PositiveReal>> kappaInput = new Input<>(...);
 ```
 
-**All other classes** (Distributions, CalcNodes, Loggers, Likelihood classes, etc.) MUST declare
-`Input` with the interface type, so adapters and transforms can be substituted:
+**Loggers** (classes that implement `Loggable` or extend `Logger`) MAY also declare `Input` with
+the concrete param type. The pure type interfaces (`RealScalar`, `RealVector`, …) deliberately
+do not extend `BEASTInterface`, so a logger that holds them has no compile-time access to
+`getID()` and must fall back to an unchecked cast. Declaring the concrete param keeps the code
+honest:
 ```java
-// Distribution / Logger / CalcNode — correct
+// Logger — also correct (concrete preferred over an unchecked BEASTInterface cast)
+public Input<RealVectorParam<NonNegativeReal>> ratesInput = new Input<>(...);
+```
+
+**Distributions, CalcNodes, Likelihood classes, and other read-only computational holders** MUST
+declare `Input` with the interface type, so adapters and transforms can be substituted:
+```java
+// Distribution / CalcNode — correct
 public Input<RealScalar> kappaInput = new Input<>(...);
 
-// WRONG in a non-Operator — do not write:
+// WRONG in a Distribution / CalcNode — do not write:
 // public Input<RealScalarParam<PositiveReal>> kappaInput = new Input<>(...);
 // public Input<RealParameter> kappaInput = new Input<>(...);   // legacy, also wrong
 // public Input<Function> kappaInput = new Input<>(...);        // legacy, also wrong
 ```
 
-When fixing a "declared too concretely" violation in a non-Operator, change only the `Input<>`
-generic; the concrete param can still be used at construction time in tests.
+When fixing a "declared too concretely" violation in a Distribution or CalcNode, change only the
+`Input<>` generic; the concrete param can still be used at construction time in tests.
 
 ### R6 — `initByName` call sites
 

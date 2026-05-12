@@ -125,7 +125,7 @@ public final class ChecklistWriter {
 
         sb.append("\nLegend: ✅ = clean, ❌ = missing, `legacy / total` = classes still on a legacy base, `—` = no data.\n");
         sb.append("FxTemplates show `clean / spec / total` — `clean` = uses spec types and no legacy `parameter.RealParameter`-style attrs; `spec` = body references `beast.base.spec.*` at all.\n");
-        sb.append("Input rule shows `classes / violations`: classes with at least one Input declared too concretely / total violating Inputs. Concrete spec params (RealScalarParam, …) belong only on Operators; Distributions/CalcNodes/etc. should declare the interface (RealScalar, RealVector, …). 0 = ✅.\n\n");
+        sb.append("Input rule shows `classes / violations`: classes with at least one Input declared too concretely / total violating Inputs. Concrete spec params (RealScalarParam, …) belong on Operators (which write the param) and Loggers (which need `getID()`, absent from the pure type interfaces); Distributions/CalcNodes/etc. should declare the interface (RealScalar, RealVector, …). 0 = ✅.\n\n");
 
         // Detailed breakdown — useful when a class is mixed (in progress).
         sb.append("## Java class kinds (with mixed/legacy breakdown)\n\n");

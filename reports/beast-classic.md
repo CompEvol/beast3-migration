@@ -1,6 +1,6 @@
 # beast-classic — what's left
 
-> **Scanned at:** 2026-05-13T10:15:02.174988  
+> **Scanned at:** 2026-05-13T10:21:13.936728  
 > **Commit:** `bff64a7` on `wip-avmn-skyride-skygrid` — [view on GitHub](https://github.com/BEAST2-Dev/beast-classic/commit/bff64a7272d89e251245360c75b74c72fc8dc070)  
 > **Pom version:** `1.7.0-SNAPSHOT`  
 > **Maven Central:** `io.github.beast2-dev:beast-classic:1.7.0-beta1`  
@@ -11,7 +11,7 @@
 - **Java classes:** 7 on spec, 0 mixed, 9 legacy of 97 total
 - **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 10 total
 - **BEAUti fxtemplates:** 0 clean / 1 use spec / 5 total
-- **Input rule:** 8 classes hold 16 Input(s) declared too concretely
+- **Input rule:** 5 classes hold 9 Input(s) declared too concretely
 - **Maven Central:** 1.7.0-beta1
 
 ## Java classes pending migration
@@ -37,7 +37,7 @@
 
 ## Inputs declared too concretely
 
-> Concrete spec params (`RealScalarParam`, `RealVectorParam`, …) belong only on Operators, which need to write the parameter. Distributions, CalcNodes, Loggers and other read-only holders should declare the interface (`RealScalar`, `RealVector`, …) so adapters and transforms can be substituted. Legacy `RealParameter` / `Function` Inputs are violations everywhere.
+> Concrete spec params (`RealScalarParam`, `RealVectorParam`, …) belong on Operators, which need to write the parameter, and on Loggers, which need `getID()` to write column headers (the pure type interfaces deliberately do not extend `BEASTInterface`). Distributions, CalcNodes, and other read-only holders should declare the interface (`RealScalar`, `RealVector`, …) so adapters and transforms can be substituted. Legacy `RealParameter` / `Function` Inputs are violations everywhere.
 
 ### Distributions (2)
 
@@ -49,19 +49,6 @@
     - concrete: `Input<RealVectorParam<? extends Real>>`
     - concrete: `Input<RealScalarParam<? extends PositiveReal>>`
     - concrete: `Input<RealScalarParam<? extends UnitInterval>>`
-
-### Loggers (3)
-
-- `beastclassic.continuous.AbstractMultivariateTraitLikelihood`
-    - concrete: `Input<RealVectorParam<? extends Real>>`
-- `beastclassic.continuous.IntegratedMultivariateTraitLikelihood`
-    - concrete: `Input<RealVectorParam<? extends Real>>`
-- `beastclassic.evolution.substitutionmodel.GlmModel`
-    - concrete: `Input<RealVectorParam<? extends PositiveReal>>`
-    - concrete: `Input<BoolVectorParam>`
-    - concrete: `Input<RealScalarParam<? extends PositiveReal>>`
-    - concrete: `Input<RealVectorParam<? extends NonNegativeReal>>`
-    - concrete: `Input<RealVectorParam<? extends NonNegativeReal>>`
 
 ### CalcNodes (2)
 

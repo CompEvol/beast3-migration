@@ -1,6 +1,6 @@
 # BEASTLabs — what's left
 
-> **Scanned at:** 2026-05-13T10:15:01.754370  
+> **Scanned at:** 2026-05-13T10:21:13.696272  
 > **Commit:** `8a075b6` on `master` — [view on GitHub](https://github.com/BEAST2-Dev/BEASTlabs/commit/8a075b6c58657065f4dab2a426d9f7d45f29c92b)  
 > **Pom version:** `2.1.0-SNAPSHOT`  
 > **Maven Central:** `io.github.beast2-dev:beast-labs:2.1.0-beta2`  
@@ -59,7 +59,7 @@
 
 ## Inputs declared too concretely
 
-> Concrete spec params (`RealScalarParam`, `RealVectorParam`, …) belong only on Operators, which need to write the parameter. Distributions, CalcNodes, Loggers and other read-only holders should declare the interface (`RealScalar`, `RealVector`, …) so adapters and transforms can be substituted. Legacy `RealParameter` / `Function` Inputs are violations everywhere.
+> Concrete spec params (`RealScalarParam`, `RealVectorParam`, …) belong on Operators, which need to write the parameter, and on Loggers, which need `getID()` to write column headers (the pure type interfaces deliberately do not extend `BEASTInterface`). Distributions, CalcNodes, and other read-only holders should declare the interface (`RealScalar`, `RealVector`, …) so adapters and transforms can be substituted. Legacy `RealParameter` / `Function` Inputs are violations everywhere.
 
 ### Distributions (8)
 

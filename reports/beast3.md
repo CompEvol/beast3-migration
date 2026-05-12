@@ -1,6 +1,6 @@
 # beast3 — what's left
 
-> **Scanned at:** 2026-05-13T10:15:00.317304  
+> **Scanned at:** 2026-05-13T10:21:12.732944  
 > **Commit:** `d3ad887` on `fix/offset-real-calculate-logp` — [view on GitHub](https://github.com/CompEvol/beast3/commit/d3ad887fb81ba516a9769594ce51d3a007ac0941)  
 > **Pom version:** `2.8.0-SNAPSHOT`  
 > **Maven Central:** `io.github.compevol:beast3:2.8.0-beta5`  
@@ -22,7 +22,7 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 
 ## Inputs declared too concretely
 
-> Concrete spec params (`RealScalarParam`, `RealVectorParam`, …) belong only on Operators, which need to write the parameter. Distributions, CalcNodes, Loggers and other read-only holders should declare the interface (`RealScalar`, `RealVector`, …) so adapters and transforms can be substituted. Legacy `RealParameter` / `Function` Inputs are violations everywhere.
+> Concrete spec params (`RealScalarParam`, `RealVectorParam`, …) belong on Operators, which need to write the parameter, and on Loggers, which need `getID()` to write column headers (the pure type interfaces deliberately do not extend `BEASTInterface`). Distributions, CalcNodes, and other read-only holders should declare the interface (`RealScalar`, `RealVector`, …) so adapters and transforms can be substituted. Legacy `RealParameter` / `Function` Inputs are violations everywhere.
 
 ### Operators (1)
 

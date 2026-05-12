@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-13T10:15:05.067376+12:00",
+  "generatedAt": "2026-05-13T10:21:15.729632+12:00",
   "packages": [
     {
       "name": "beast3",
@@ -252,8 +252,8 @@
         "clean": 0
       },
       "inputRule": {
-        "classesWithViolations": 8,
-        "totalViolations": 16
+        "classesWithViolations": 5,
+        "totalViolations": 9
       },
       "build": {
         "hasPom": true,
@@ -522,8 +522,8 @@
         "clean": 0
       },
       "inputRule": {
-        "classesWithViolations": 23,
-        "totalViolations": 45
+        "classesWithViolations": 13,
+        "totalViolations": 23
       },
       "build": {
         "hasPom": true,
@@ -882,8 +882,8 @@
         "clean": 1
       },
       "inputRule": {
-        "classesWithViolations": 1,
-        "totalViolations": 2
+        "classesWithViolations": 0,
+        "totalViolations": 0
       },
       "build": {
         "hasPom": true,
@@ -1062,8 +1062,8 @@
         "clean": 0
       },
       "inputRule": {
-        "classesWithViolations": 9,
-        "totalViolations": 18
+        "classesWithViolations": 8,
+        "totalViolations": 17
       },
       "build": {
         "hasPom": true,

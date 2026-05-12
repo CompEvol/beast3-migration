@@ -10,7 +10,9 @@ public record InputDecl(String typeStr, Carrier carrier) {
     public enum Carrier {
         /** Spec interface — read-only, polymorphic. RealScalar, RealVector, IntScalar, … */
         INTERFACE,
-        /** Concrete spec param — required when the holder mutates the parameter. RealScalarParam, … */
+        /** Concrete spec param — allowed in Operators (which write the parameter) and
+         *  Loggers (which need {@code getID()}, absent from the pure type interfaces).
+         *  RealScalarParam, … */
         CONCRETE_SPEC,
         /** Legacy beast.base parameter or {@code Function}. */
         LEGACY,

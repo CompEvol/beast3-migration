@@ -1,6 +1,6 @@
 # Mascot — what's left
 
-> **Scanned at:** 2026-05-13T10:15:02.730036  
+> **Scanned at:** 2026-05-13T10:21:14.331762  
 > **Commit:** `b7b7295` on `update-citations-and-readme` — [view on GitHub](https://github.com/CompEvol/Mascot/commit/b7b72958436854fbe07d91bb82fed3d3de2aa91d)  
 > **Pom version:** `3.1.0-beta1`  
 > **Maven Central:** `io.github.compevol:mascot:3.1.0-beta1`  
@@ -11,7 +11,7 @@
 - **Java classes:** 4 on spec, 0 mixed, 1 legacy of 121 total
 - **Example XMLs:** 1 on spec / 1 on `version="2.8"` / 229 total (+55 under legacy/)
 - **BEAUti fxtemplates:** 0 clean / 0 use spec / 14 total
-- **Input rule:** 23 classes hold 45 Input(s) declared too concretely
+- **Input rule:** 13 classes hold 23 Input(s) declared too concretely
 - **Maven Central:** 3.1.0-beta1
 
 ## Java classes pending migration
@@ -24,7 +24,7 @@
 
 ## Inputs declared too concretely
 
-> Concrete spec params (`RealScalarParam`, `RealVectorParam`, …) belong only on Operators, which need to write the parameter. Distributions, CalcNodes, Loggers and other read-only holders should declare the interface (`RealScalar`, `RealVector`, …) so adapters and transforms can be substituted. Legacy `RealParameter` / `Function` Inputs are violations everywhere.
+> Concrete spec params (`RealScalarParam`, `RealVectorParam`, …) belong on Operators, which need to write the parameter, and on Loggers, which need `getID()` to write column headers (the pure type interfaces deliberately do not extend `BEASTInterface`). Distributions, CalcNodes, and other read-only holders should declare the interface (`RealScalar`, `RealVector`, …) so adapters and transforms can be substituted. Legacy `RealParameter` / `Function` Inputs are violations everywhere.
 
 ### Distributions (5)
 
@@ -40,41 +40,6 @@
 - `mascot.util.LargerThan`
     - legacy: `Input<Function>`
     - legacy: `Input<Function>`
-
-### Loggers (10)
-
-- `mascot.distribution.MappedMascot`
-    - concrete: `Input<BoolVectorParam>`
-- `mascot.distribution.MappedMascotWithTipSampling`
-    - concrete: `Input<BoolVectorParam>`
-- `mascot.dynamics.Constant`
-    - concrete: `Input<RealVectorParam<? extends Real>>`
-    - concrete: `Input<RealVectorParam<? extends Real>>`
-    - concrete: `Input<RealVectorParam<? extends Real>>`
-- `mascot.dynamics.ConstantBSSVS`
-    - concrete: `Input<RealVectorParam<? extends Real>>`
-    - concrete: `Input<RealVectorParam<? extends Real>>`
-    - concrete: `Input<RealVectorParam<? extends Real>>`
-    - concrete: `Input<BoolVectorParam>`
-    - concrete: `Input<RealVectorParam<? extends Real>>`
-- `mascot.dynamics.DynamicEffectivePopulationSizesBSSVS`
-    - concrete: `Input<RealVectorParam<? extends Real>>`
-    - concrete: `Input<BoolVectorParam>`
-- `mascot.dynamics.StructuredMigrationSkyline`
-    - concrete: `Input<BoolVectorParam>`
-- `mascot.dynamics.StructuredSkyline`
-    - concrete: `Input<RealVectorParam<? extends Real>>`
-    - concrete: `Input<BoolVectorParam>`
-- `mascot.glmmodel.GlmModel`
-    - concrete: `Input<RealVectorParam<? extends Real>>`
-    - concrete: `Input<BoolVectorParam>`
-    - concrete: `Input<RealScalarParam<Real>>`
-    - concrete: `Input<RealVectorParam<? extends Real>>`
-    - concrete: `Input<RealVectorParam<? extends Real>>`
-- `mascot.logger.StructuredTreeLogger`
-    - concrete: `Input<BoolVectorParam>`
-- `mascot.logger.mappedProbLogger`
-    - concrete: `Input<BoolVectorParam>`
 
 ### CalcNodes (7)
 

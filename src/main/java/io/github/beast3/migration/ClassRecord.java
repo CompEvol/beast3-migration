@@ -106,10 +106,12 @@ public final class ClassRecord {
     }
 
     /**
-     * Inputs that violate the "concrete spec params only in Operators" rule
-     * given the class's effective {@link #kind}. For Operators only LEGACY
-     * inputs are violations; for everything else CONCRETE_SPEC and LEGACY
-     * are both violations.
+     * Inputs that violate the "concrete spec params only in Operators and
+     * Loggers" rule given the class's effective {@link #kind}. Operators
+     * need write access; Loggers identify their target by ID, which the
+     * pure spec interfaces (RealScalar, RealVector, …) deliberately do not
+     * expose. For both, only LEGACY inputs are violations. For Distributions,
+     * CalcNodes, etc. CONCRETE_SPEC and LEGACY are both violations.
      */
     public List<InputDecl> ruleViolatingInputs() {
         java.util.List<InputDecl> out = new java.util.ArrayList<>();
@@ -117,7 +119,7 @@ public final class ClassRecord {
             switch (d.carrier()) {
                 case LEGACY -> out.add(d);
                 case CONCRETE_SPEC -> {
-                    if (kind != Kind.OPERATOR) out.add(d);
+                    if (kind != Kind.OPERATOR && kind != Kind.LOGGER) out.add(d);
                 }
                 default -> { /* INTERFACE and OTHER are fine in any holder. */ }
             }

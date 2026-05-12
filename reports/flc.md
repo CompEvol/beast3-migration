@@ -1,6 +1,6 @@
 # flc — what's left
 
-> **Scanned at:** 2026-05-13T10:15:02.605771  
+> **Scanned at:** 2026-05-13T10:21:14.228954  
 > **Commit:** `43218a5` on `master` — [view on GitHub](https://github.com/4ment/flc/commit/43218a505931bf1b3541bb34578f5b270a21476f)  
 > **Pom version:** `1.3.0-beta1`  
 > **Maven Central:** `io.github.4ment:flc:1.3.0-beta1`  

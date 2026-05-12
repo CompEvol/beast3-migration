@@ -9,7 +9,7 @@ are at the bottom of this page.
 
 <!-- BEGIN AUTO -->
 
-_Last regenerated: 2026-05-13T10:15:05.062043+12:00_
+_Last regenerated: 2026-05-13T10:21:15.724971+12:00_
 
 ## Release & build status
 
@@ -24,7 +24,7 @@ _Last regenerated: 2026-05-13T10:15:05.062043+12:00_
 | [morph-models](https://github.com/CompEvol/morph-models) | Maven Central | [1.3.0-beta3](https://central.sonatype.com/artifact/io.github.compevol/morph-models) | 1.3.0-beta3 | ✅ | ✅ | ✅ | 🔴 | 🟢 | 🟡 |
 | [sampled-ancestors](https://github.com/CompEvol/sampled-ancestors) | Maven Central | [2.3.0-beta1](https://central.sonatype.com/artifact/io.github.compevol/sampled-ancestors) | 2.3.0-beta1 | ✅ | ✅ | ✅ | 🔴 | 🔴 | 🟢 |
 | [MutableAlignment](https://github.com/rbouckaert/MutableAlignment) | compile-tested | — | — | ❌ | ❌ | ❌ | — | 🔴 | — |
-| [ORC](https://github.com/jordandouglas/ORC) | compile-tested | — | 1.3.0-SNAPSHOT | ✅ | ✅ | ❌ | 🟡 | 🟢 | 🟢 |
+| [ORC](https://github.com/jordandouglas/ORC) | compile-tested | — | 1.3.0-SNAPSHOT | ✅ | ✅ | ❌ | 🟢 | 🟢 | 🟢 |
 | [bModelTest](https://github.com/BEAST2-Dev/bModelTest) | compile-tested | — | 1.4.0-beta1 | ✅ | ✅ | ❌ | 🟢 | 🟢 | 🟢 |
 | [obama](https://github.com/rbouckaert/obama) | compile-tested | — | 1.2.0-beta1 | ✅ | ✅ | ❌ | 🔴 | 🔴 | 🟡 |
 
@@ -36,20 +36,20 @@ Traffic-light columns: 🔴 any legacy lineage / non-migrated content, 🟡 no l
 |---|---|---|---|---|---|---|---|---|---|
 | beast3 | ✅ 70 | ✅ 47 | ✅ 16 | ✅ 45 | ✅ 5 | ✅ 23 | 0 / 0 / 78 (+81 legacy) | 6 / 10 / 10 | 3 / 3 |
 | BEASTLabs | 5 / 22 | ✅ 21 | 1 / 11 | 7 / 10 | 2 / 2 | ✅ 8 | 0 / 0 / 20 | 0 / 0 / 3 | 16 / 30 |
-| beast-classic | ✅ 9 | ✅ 11 | 4 / 11 | 5 / 14 | ✅ 1 | ✅ 2 | 0 / 0 / 10 | 0 / 1 / 5 | 8 / 16 |
+| beast-classic | ✅ 9 | ✅ 11 | 4 / 11 | 5 / 14 | ✅ 1 | ✅ 2 | 0 / 0 / 10 | 0 / 1 / 5 | 5 / 9 |
 | CoupledMCMC | — | — | ✅ 4 | — | — | — | 0 / 0 / 1 | 0 / 0 / 1 | ✅ |
 | flc | — | — | — | ✅ 10 | — | — | 2 / 2 / 2 | — | ✅ |
-| Mascot | ✅ 11 | ✅ 6 | 1 / 25 | ✅ 18 | — | ✅ 2 | 1 / 1 / 229 (+55 legacy) | 0 / 0 / 14 | 23 / 45 |
+| Mascot | ✅ 11 | ✅ 6 | 1 / 25 | ✅ 18 | — | ✅ 2 | 1 / 1 / 229 (+55 legacy) | 0 / 0 / 14 | 13 / 23 |
 | morph-models | — | — | — | ✅ 4 | — | ✅ 1 | 2 / 2 / 2 (+4 legacy) | 0 / 1 / 1 | ✅ |
 | sampled-ancestors | 2 / 6 | 1 / 13 | ✅ 2 | ✅ 5 | — | ✅ 2 | 0 / 0 / 3 | 1 / 1 / 1 | ✅ |
 | MutableAlignment | — | — | — | — | — | — | 0 / 0 / 1 | — | ✅ |
-| ORC | ✅ 1 | ✅ 52 | ✅ 1 | — | — | — | 1 / 1 / 1 | 1 / 1 / 1 | 1 / 2 |
+| ORC | ✅ 1 | ✅ 52 | ✅ 1 | — | — | — | 1 / 1 / 1 | 1 / 1 / 1 | ✅ |
 | bModelTest | ✅ 3 | ✅ 4 | ✅ 3 | ✅ 3 | — | — | 2 / 2 / 2 (+1 legacy) | 1 / 1 / 1 | ✅ |
-| obama | ✅ 3 | ✅ 2 | ✅ 2 | 11 / 44 | — | — | 0 / 0 / 14 | 0 / 1 / 1 | 9 / 18 |
+| obama | ✅ 3 | ✅ 2 | ✅ 2 | 11 / 44 | — | — | 0 / 0 / 14 | 0 / 1 / 1 | 8 / 17 |
 
 Legend: ✅ = clean, ❌ = missing, `legacy / total` = classes still on a legacy base, `—` = no data.
 FxTemplates show `clean / spec / total` — `clean` = uses spec types and no legacy `parameter.RealParameter`-style attrs; `spec` = body references `beast.base.spec.*` at all.
-Input rule shows `classes / violations`: classes with at least one Input declared too concretely / total violating Inputs. Concrete spec params (RealScalarParam, …) belong only on Operators; Distributions/CalcNodes/etc. should declare the interface (RealScalar, RealVector, …). 0 = ✅.
+Input rule shows `classes / violations`: classes with at least one Input declared too concretely / total violating Inputs. Concrete spec params (RealScalarParam, …) belong on Operators (which write the param) and Loggers (which need `getID()`, absent from the pure type interfaces); Distributions/CalcNodes/etc. should declare the interface (RealScalar, RealVector, …). 0 = ✅.
 
 ## Java class kinds (with mixed/legacy breakdown)
 

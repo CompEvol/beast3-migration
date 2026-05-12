@@ -1,6 +1,6 @@
 # obama — what's left
 
-> **Scanned at:** 2026-05-13T10:15:04.852545  
+> **Scanned at:** 2026-05-13T10:21:15.581066  
 > **Commit:** `7e14fd7` on `beast3-migration` — [view on GitHub](https://github.com/rbouckaert/obama/commit/7e14fd7ffbc792130fe401d1c8859aee7d422667)  
 > **Pom version:** `1.2.0-beta1`  
 > **Maven Central:** not published as `io.github.rbouckaert:obama` (not published (404))  
@@ -11,7 +11,7 @@
 - **Java classes:** 19 on spec, 0 mixed, 11 legacy of 59 total
 - **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 14 total
 - **BEAUti fxtemplates:** 0 clean / 1 use spec / 1 total
-- **Input rule:** 9 classes hold 18 Input(s) declared too concretely
+- **Input rule:** 8 classes hold 17 Input(s) declared too concretely
 - **Maven Central:** ❌ not published (not published (404))
 
 ## Build & release gaps
@@ -43,7 +43,7 @@ Not yet published as `io.github.rbouckaert:obama`. Verify the namespace on centr
 
 ## Inputs declared too concretely
 
-> Concrete spec params (`RealScalarParam`, `RealVectorParam`, …) belong only on Operators, which need to write the parameter. Distributions, CalcNodes, Loggers and other read-only holders should declare the interface (`RealScalar`, `RealVector`, …) so adapters and transforms can be substituted. Legacy `RealParameter` / `Function` Inputs are violations everywhere.
+> Concrete spec params (`RealScalarParam`, `RealVectorParam`, …) belong on Operators, which need to write the parameter, and on Loggers, which need `getID()` to write column headers (the pure type interfaces deliberately do not extend `BEASTInterface`). Distributions, CalcNodes, and other read-only holders should declare the interface (`RealScalar`, `RealVector`, …) so adapters and transforms can be substituted. Legacy `RealParameter` / `Function` Inputs are violations everywhere.
 
 ### Distributions (2)
 
@@ -52,11 +52,6 @@ Not yet published as `io.github.rbouckaert:obama`. Verify the namespace on centr
     - concrete: `Input<IntVectorParam<? extends NonNegativeInt>>`
 - `obama.PhyloHMMVar`
     - concrete: `Input<BoolVectorParam>`
-
-### Loggers (1)
-
-- `obama.RatesForConservedRegions`
-    - concrete: `Input<RealScalarParam<? extends UnitInterval>>`
 
 ### CalcNodes (6)
 
