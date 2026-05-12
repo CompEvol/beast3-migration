@@ -89,8 +89,8 @@ public final class ChecklistWriter {
                 .append("_\n\n");
 
         sb.append("## Release & build status\n\n");
-        sb.append("| Package | Stage | Maven Central | Pom version | JPMS | Release | CI | Code | XML | FxT |\n");
-        sb.append("|---|---|---|---|:-:|:-:|:-:|:-:|:-:|:-:|\n");
+        sb.append("| Package | Stage | Maven Central | Pom version | JPMS | Release | CI | Code | XML | FxT | Dep refs |\n");
+        sb.append("|---|---|---|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|\n");
         for (Report r : reports) {
             sb.append("| ").append(linkPackage(r))
                     .append(" | ").append(prettyStage(r.entry.stage()))
@@ -102,9 +102,11 @@ public final class ChecklistWriter {
                     .append(" | ").append(codeLight(r))
                     .append(" | ").append(xmlLight(r))
                     .append(" | ").append(fxLight(r))
+                    .append(" | ").append(depRefsCell(r))
                     .append(" |\n");
         }
-        sb.append("\nTraffic-light columns: 🔴 any legacy lineage / non-migrated content, 🟡 no legacy but some unnecessarily-concrete Inputs (Code) or stray legacy `parameter.*` declarations (XML / FxT), 🟢 clean, — = no data.\n\n");
+        sb.append("\nTraffic-light columns: 🔴 any legacy lineage / non-migrated content, 🟡 no legacy but some unnecessarily-concrete Inputs (Code) or stray legacy `parameter.*` declarations (XML / FxT), 🟢 clean, — = no data.\n");
+        sb.append("**Dep refs** = number of references to `@Deprecated` classes found in this package's XMLs and fxtemplates (either as `spec=` attributes or `<map>` bodies). 0 = ✅. Per-package reports list each hit and the spec replacement.\n\n");
 
         sb.append("## Migration progress (Java + XML)\n\n");
         sb.append("| Package | Distrs | Ops | Loggers | CalcNodes | Params | StateNodes | XMLs | FxTemplates | Input rule |\n");
@@ -225,6 +227,15 @@ public final class ChecklistWriter {
     private static String inputRuleCell(Report r) {
         if (r.inputViolations == 0 && r.classesWithInputViolations == 0) return "✅";
         return r.classesWithInputViolations + " / " + r.inputViolations;
+    }
+
+    private static String depRefsCell(Report r) {
+        if (r.xmlDeprecatedRefs.isEmpty()) {
+            // No XMLs or fxtemplates at all → "—"; otherwise clean → ✅.
+            if (r.xmls.isEmpty()) return "—";
+            return "✅";
+        }
+        return String.valueOf(r.xmlDeprecatedRefs.size());
     }
 
     private static String xmlCell(Report r) {

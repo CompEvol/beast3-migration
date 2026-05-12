@@ -578,6 +578,85 @@ public final class JavaScanner {
         return out;
     }
 
+    /** Every class FQN seen across the scanned packages, deprecated or not. */
+    public static Set<String> collectAllClassFqns(java.util.List<Report> reports) {
+        Set<String> out = new HashSet<>();
+        for (Report r : reports) {
+            for (ClassRecord c : r.classes) {
+                out.add(c.fqn());
+            }
+        }
+        return out;
+    }
+
+    /**
+     * For each deprecated FQN, find a spec replacement: the same simple name
+     * under a package containing {@code .spec.}. Returns only the entries
+     * where a replacement was found.
+     */
+    public static java.util.Map<String, String> deriveSpecReplacements(
+            Set<String> deprecatedFqns, Set<String> allFqns) {
+        // Index allFqns by simple name → list of FQNs.
+        java.util.Map<String, java.util.List<String>> bySimpleName = new java.util.HashMap<>();
+        for (String fqn : allFqns) {
+            int dot = fqn.lastIndexOf('.');
+            String simple = dot < 0 ? fqn : fqn.substring(dot + 1);
+            bySimpleName.computeIfAbsent(simple, k -> new java.util.ArrayList<>()).add(fqn);
+        }
+        java.util.Map<String, String> out = new java.util.LinkedHashMap<>();
+        for (String dep : deprecatedFqns) {
+            int dot = dep.lastIndexOf('.');
+            String simple = dot < 0 ? dep : dep.substring(dot + 1);
+            java.util.List<String> candidates = bySimpleName.getOrDefault(simple, java.util.List.of());
+            String pick = null;
+            for (String cand : candidates) {
+                if (cand.equals(dep)) continue;
+                if (!cand.contains(".spec.")) continue;
+                if (deprecatedFqns.contains(cand)) continue;
+                // Prefer the candidate that shares the most of the deprecated package path.
+                if (pick == null || commonPrefixLen(cand, dep) > commonPrefixLen(pick, dep)) {
+                    pick = cand;
+                }
+            }
+            if (pick != null) out.put(dep, pick);
+        }
+        return out;
+    }
+
+    /**
+     * Short names whose every known FQN is deprecated — safe to flag a bare
+     * {@code spec="OneOnX"} reference because there's no non-deprecated class
+     * with that short name to confuse it with. Maps short name → one of the
+     * deprecated FQNs (used as the canonical "hit" in reports).
+     */
+    public static java.util.Map<String, String> deriveUnambiguouslyDeprecatedShortNames(
+            Set<String> deprecatedFqns, Set<String> allFqns) {
+        java.util.Map<String, java.util.List<String>> bySimpleName = new java.util.HashMap<>();
+        for (String fqn : allFqns) {
+            int dot = fqn.lastIndexOf('.');
+            String simple = dot < 0 ? fqn : fqn.substring(dot + 1);
+            bySimpleName.computeIfAbsent(simple, k -> new java.util.ArrayList<>()).add(fqn);
+        }
+        java.util.Map<String, String> out = new java.util.LinkedHashMap<>();
+        for (var e : bySimpleName.entrySet()) {
+            java.util.List<String> fqns = e.getValue();
+            if (fqns.isEmpty()) continue;
+            boolean allDeprecated = fqns.stream().allMatch(deprecatedFqns::contains);
+            if (!allDeprecated) continue;
+            // Pick the shortest FQN as the canonical representative; deterministic.
+            String canonical = fqns.stream().min(java.util.Comparator.comparingInt(String::length)).get();
+            out.put(e.getKey(), canonical);
+        }
+        return out;
+    }
+
+    private static int commonPrefixLen(String a, String b) {
+        int n = Math.min(a.length(), b.length());
+        int i = 0;
+        while (i < n && a.charAt(i) == b.charAt(i)) i++;
+        return i;
+    }
+
     /** True if the class extends or implements anything in {@code beast.base.spec.*}. */
     private static boolean computeOwnHasSpec(Set<String> tokens, Set<String> resolved) {
         for (String fqn : resolved) {

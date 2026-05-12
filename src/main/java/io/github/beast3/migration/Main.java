@@ -153,8 +153,15 @@ public final class Main {
             if (e.name().equalsIgnoreCase(pkgName)) target = rr;
         }
         java.util.Set<String> deprecatedFqns = JavaScanner.collectDeprecatedFqns(all);
+        java.util.Set<String> allFqns = JavaScanner.collectAllClassFqns(all);
+        java.util.Map<String, String> specReplacements =
+                JavaScanner.deriveSpecReplacements(deprecatedFqns, allFqns);
+        java.util.Map<String, String> deprecatedShortNames =
+                JavaScanner.deriveUnambiguouslyDeprecatedShortNames(deprecatedFqns, allFqns);
         if (target != null && target.pathExists) {
             JavaScanner.resolveAndTally(target, deprecatedFqns);
+            XmlScanner.scanForDeprecatedReferences(
+                    target, deprecatedFqns, deprecatedShortNames, specReplacements);
         }
         Report r = target;
         String text = PackageReportWriter.render(r);
@@ -182,12 +189,27 @@ public final class Main {
 
         // Phase 2 — global @Deprecated FQN registry across all reports.
         java.util.Set<String> deprecatedFqns = JavaScanner.collectDeprecatedFqns(reports);
+        java.util.Set<String> allFqns = JavaScanner.collectAllClassFqns(reports);
+        java.util.Map<String, String> specReplacements =
+                JavaScanner.deriveSpecReplacements(deprecatedFqns, allFqns);
+        java.util.Map<String, String> deprecatedShortNames =
+                JavaScanner.deriveUnambiguouslyDeprecatedShortNames(deprecatedFqns, allFqns);
         System.out.println("Collected " + deprecatedFqns.size()
-                + " @Deprecated class(es) across all packages.");
+                + " @Deprecated class(es) across all packages ("
+                + specReplacements.size() + " with spec replacements, "
+                + deprecatedShortNames.size() + " unambiguous short names).");
 
         // Phase 3 — chain-resolve and tally each report against the registry.
         for (Report r : reports) {
             if (r.pathExists) JavaScanner.resolveAndTally(r, deprecatedFqns);
+        }
+
+        // Phase 4 — second XML pass: flag deprecated class refs in bodies.
+        for (Report r : reports) {
+            if (r.pathExists) {
+                XmlScanner.scanForDeprecatedReferences(
+                        r, deprecatedFqns, deprecatedShortNames, specReplacements);
+            }
         }
         return reports;
     }

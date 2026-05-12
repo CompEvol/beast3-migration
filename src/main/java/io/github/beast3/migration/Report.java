@@ -53,6 +53,7 @@ public final class Report {
     public final Map<Kind, KindCounts> javaCounts = new EnumMap<>(Kind.class);
     public final List<ClassRecord> classes = new ArrayList<>();
     public final List<XmlRecord> xmls = new ArrayList<>();
+    public final List<DeprecatedXmlRef> xmlDeprecatedRefs = new ArrayList<>();
     public int xmlTotal;            // example XMLs only (excludes fxtemplates)
     public int xmlMigrated;         // version="2.8" AND beast.base.spec.* namespace
     public int xmlV28;              // version="2.8" (regardless of namespace)
@@ -133,6 +134,24 @@ public final class Report {
         ir.put("classesWithViolations", classesWithInputViolations);
         ir.put("totalViolations", inputViolations);
         m.put("inputRule", ir);
+
+        Map<String, Object> dep = new LinkedHashMap<>();
+        dep.put("count", xmlDeprecatedRefs.size());
+        List<Map<String, Object>> refs = new ArrayList<>();
+        for (DeprecatedXmlRef ref : xmlDeprecatedRefs) {
+            Map<String, Object> e = new LinkedHashMap<>();
+            // Relative path keeps status.json portable across checkouts.
+            e.put("file", ref.file().toString());
+            e.put("hit", ref.hit());
+            e.put("canonicalFqn", ref.canonicalFqn());
+            e.put("replacement", ref.replacement());
+            e.put("isFxTemplate", ref.isFxTemplate());
+            e.put("isFqn", ref.isFqn());
+            e.put("source", ref.source());
+            refs.add(e);
+        }
+        dep.put("refs", refs);
+        m.put("xmlDeprecated", dep);
 
         Map<String, Object> build = new LinkedHashMap<>();
         build.put("hasPom", hasPom);

@@ -38,6 +38,7 @@ public final class PackageReportWriter {
         renderJavaPunchList(sb, r);
         renderInputRulePunchList(sb, r);
         renderXmlPunchList(sb, r);
+        renderDeprecatedXmlRefs(sb, r);
 
         if (sb.charAt(sb.length() - 1) != '\n') sb.append('\n');
         return sb.toString();
@@ -353,6 +354,46 @@ public final class PackageReportWriter {
             sb.append("**No `beast.base.spec.*` references in body** (")
                     .append(noSpec.size()).append("):\n\n");
             for (XmlRecord x : noSpec) sb.append("- `").append(x.relPath()).append("`\n");
+            sb.append('\n');
+        }
+    }
+
+    private static void renderDeprecatedXmlRefs(StringBuilder sb, Report r) {
+        if (r.xmlDeprecatedRefs.isEmpty()) return;
+
+        sb.append("## Deprecated class references in XMLs\n\n");
+        sb.append("> Every entry below points at a class annotated `@Deprecated` in the spec sources. Replace each `spec=`/`<map>` reference with the suggested spec replacement, or drop it entirely if the surrounding `<prior>` wrapper or `<map>` is now unused. Short-name hits (no dots) resolve to deprecated classes whose simple name is unambiguous within the scanned packages.\n\n");
+
+        // Group by file, then by source ("spec" / "map"), preserving stable order.
+        java.util.Map<java.nio.file.Path, List<DeprecatedXmlRef>> byFile = new java.util.LinkedHashMap<>();
+        for (DeprecatedXmlRef ref : r.xmlDeprecatedRefs) {
+            byFile.computeIfAbsent(ref.file(), k -> new ArrayList<>()).add(ref);
+        }
+
+        for (var e : byFile.entrySet()) {
+            // Display path relative to the package root (use any xml record from the report to find pkgRoot).
+            java.nio.file.Path pkgRoot = r.xmls.isEmpty() ? null : r.xmls.get(0).relativeTo();
+            String displayPath = (pkgRoot != null)
+                    ? pkgRoot.relativize(e.getKey()).toString()
+                    : e.getKey().toString();
+            sb.append("**`").append(displayPath).append("`** (")
+                    .append(e.getValue().size()).append("):\n\n");
+            sb.append("| Where | Hit | Replacement |\n");
+            sb.append("|---|---|---|\n");
+            // Deduplicate identical (source, hit, replacement) tuples within a file.
+            java.util.Set<String> seen = new java.util.LinkedHashSet<>();
+            for (DeprecatedXmlRef ref : e.getValue()) {
+                String key = ref.source() + "\t" + ref.hit() + "\t" + ref.replacement();
+                if (!seen.add(key)) continue;
+                String repl = ref.replacement().isBlank()
+                        ? "_(no spec equivalent found)_"
+                        : "`" + ref.replacement() + "`";
+                String hitCell = ref.isFqn()
+                        ? "`" + ref.hit() + "`"
+                        : "`" + ref.hit() + "` → `" + ref.canonicalFqn() + "`";
+                sb.append("| `").append(ref.source()).append("=` | ")
+                        .append(hitCell).append(" | ").append(repl).append(" |\n");
+            }
             sb.append('\n');
         }
     }

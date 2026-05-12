@@ -1,6 +1,6 @@
 # beast-classic — what's left
 
-> **Scanned at:** 2026-05-13T10:21:13.936728  
+> **Scanned at:** 2026-05-13T11:04:01.894084  
 > **Commit:** `bff64a7` on `wip-avmn-skyride-skygrid` — [view on GitHub](https://github.com/BEAST2-Dev/beast-classic/commit/bff64a7272d89e251245360c75b74c72fc8dc070)  
 > **Pom version:** `1.7.0-SNAPSHOT`  
 > **Maven Central:** `io.github.beast2-dev:beast-classic:1.7.0-beta1`  
@@ -91,4 +91,145 @@
 - `src/main/resources/beast.classic/fxtemplates/discrete-trait.xml`
 - `src/main/resources/beast.classic/fxtemplates/ClassicSubtseModels.xml`
 - `src/main/resources/beast.classic/fxtemplates/StarBeast.xml`
+
+## Deprecated class references in XMLs
+
+> Every entry below points at a class annotated `@Deprecated` in the spec sources. Replace each `spec=`/`<map>` reference with the suggested spec replacement, or drop it entirely if the surrounding `<prior>` wrapper or `<map>` is now unused. Short-name hits (no dots) resolve to deprecated classes whose simple name is unambiguous within the scanned packages.
+
+**`examples/RacRABV_LogNRRW2.xml`** (21):
+
+| Where | Hit | Replacement |
+|---|---|---|
+| `spec=` | `beast.base.evolution.branchratemodel.UCRelaxedClockModel` | `beast.base.spec.evolution.branchratemodel.UCRelaxedClockModel` |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `RealParameter` → `beast.base.inference.parameter.RealParameter` | _(no spec equivalent found)_ |
+| `spec=` | `IntegerParameter` → `beast.base.inference.parameter.IntegerParameter` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
+| `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
+| `spec=` | `UniformOperator` → `beast.base.inference.operator.UniformOperator` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.evolution.TreeWithMetaDataLogger` | `beast.base.spec.evolution.TreeWithMetaDataLogger` |
+| `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
+| `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
+| `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
+| `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
+| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
+| `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
+| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
+
+**`examples/testSkyGrid.xml`** (13):
+
+| Where | Hit | Replacement |
+|---|---|---|
+| `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
+| `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
+| `spec=` | `beast.base.evolution.TreeWithMetaDataLogger` | `beast.base.spec.evolution.TreeWithMetaDataLogger` |
+| `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
+| `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
+| `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
+| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
+| `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
+| `map=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
+
+**`examples/H5N1_HA_discrete2.xml`** (6):
+
+| Where | Hit | Replacement |
+|---|---|---|
+| `spec=` | `beast.base.evolution.branchratemodel.UCRelaxedClockModel` | `beast.base.spec.evolution.branchratemodel.UCRelaxedClockModel` |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `IntegerParameter` → `beast.base.inference.parameter.IntegerParameter` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
+| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
+
+**`examples/testSkyRide.xml`** (13):
+
+| Where | Hit | Replacement |
+|---|---|---|
+| `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
+| `spec=` | `beast.base.evolution.TreeWithMetaDataLogger` | `beast.base.spec.evolution.TreeWithMetaDataLogger` |
+| `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
+| `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
+| `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
+| `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
+| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
+| `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
+| `map=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
+
+**`examples/testDiscreteSmall.xml`** (16):
+
+| Where | Hit | Replacement |
+|---|---|---|
+| `spec=` | `beast.base.evolution.branchratemodel.UCRelaxedClockModel` | `beast.base.spec.evolution.branchratemodel.UCRelaxedClockModel` |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `IntegerParameter` → `beast.base.inference.parameter.IntegerParameter` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
+| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Poisson` | `beast.base.spec.inference.distribution.Poisson` |
+| `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
+| `spec=` | `UniformOperator` → `beast.base.inference.operator.UniformOperator` | _(no spec equivalent found)_ |
+
+**`src/main/resources/beast.classic/fxtemplates/RelaxedClockModels.xml`** (6):
+
+| Where | Hit | Replacement |
+|---|---|---|
+| `spec=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
+| `spec=` | `UniformOperator` → `beast.base.inference.operator.UniformOperator` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
+
+**`src/main/resources/beast.classic/fxtemplates/discrete-trait.xml`** (11):
+
+| Where | Hit | Replacement |
+|---|---|---|
+| `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
+| `spec=` | `beast.base.evolution.Sum` | `beast.base.spec.evolution.Sum` |
+| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
+| `spec=` | `beast.base.inference.distribution.Poisson` | `beast.base.spec.inference.distribution.Poisson` |
+| `spec=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
+
+**`src/main/resources/beast.classic/fxtemplates/ClassicTreePriors.xml`** (2):
+
+| Where | Hit | Replacement |
+|---|---|---|
+| `spec=` | `beast.base.evolution.operator.AdaptableOperatorSampler` | `beast.base.spec.evolution.operator.AdaptableOperatorSampler` |
+
+**`src/main/resources/beast.classic/fxtemplates/StarBeast.xml`** (24):
+
+| Where | Hit | Replacement |
+|---|---|---|
+| `spec=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
+| `spec=` | `OneOnX` → `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
+| `spec=` | `beast.base.evolution.TreeWithMetaDataLogger` | `beast.base.spec.evolution.TreeWithMetaDataLogger` |
+| `spec=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
+| `spec=` | `beast.base.evolution.speciation.YuleModel` | `beast.base.spec.evolution.speciation.YuleModel` |
+| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
+| `spec=` | `SpeciesTreeLogger` → `beast.base.evolution.speciation.SpeciesTreeLogger` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.evolution.speciation.StarBeastStartState` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
+| `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
+| `map=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
+| `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
+| `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
+| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
+| `map=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
 

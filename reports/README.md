@@ -10,7 +10,7 @@ for the high-level cross-package status table.
 | [beast3](beast3.md) | Maven Central | `2.8.0-beta5` | `d3ad887` | `2.8.0-SNAPSHOT` |
 | [BEASTLabs](BEASTLabs.md) | Maven Central | `2.1.0-beta2` | `8a075b6` | `2.1.0-SNAPSHOT` |
 | [beast-classic](beast-classic.md) | Maven Central | `1.7.0-beta1` | `bff64a7` | `1.7.0-SNAPSHOT` |
-| [CoupledMCMC](CoupledMCMC.md) | Maven Central | `1.3.0-beta1` | `9604167` | `1.3.0-beta1` |
+| [CoupledMCMC](CoupledMCMC.md) | Maven Central | `1.3.0-beta1` | `9604167` *(dirty)* | `1.3.0-beta1` |
 | [flc](flc.md) | Maven Central | `1.3.0-beta1` | `43218a5` | `1.3.0-beta1` |
 | [Mascot](Mascot.md) | Maven Central | `3.1.0-beta1` | `b7b7295` | `3.1.0-beta1` |
 | [morph-models](morph-models.md) | Maven Central | `1.3.0-beta3` | `db64781` | `1.3.0-beta3` |

@@ -30,6 +30,13 @@ public final class XmlScanner {
     private static final Pattern LEGACY_PARAM_REF = Pattern.compile(
             "spec\\s*=\\s*[\"']\\s*(?:beast\\.base\\.inference\\.)?parameter\\.(?:Real|Integer|Boolean)Parameter");
 
+    /** Any {@code spec="X"} or {@code spec='X'} attribute. Captures the value. */
+    private static final Pattern SPEC_ATTR = Pattern.compile(
+            "\\bspec\\s*=\\s*[\"']([^\"']+)[\"']");
+    /** {@code <map name="...">FQN</map>} declaration. Captures the FQN body. */
+    private static final Pattern MAP_DECL = Pattern.compile(
+            "<map\\b[^>]*>\\s*([A-Za-z_][\\w.]*)\\s*</map>");
+
     private XmlScanner() {}
 
     public static void scan(Path pkgRoot, Report report) {
@@ -121,5 +128,64 @@ public final class XmlScanner {
         }
         // Content signal: BEAUti merge directive — definitive marker.
         return MERGEWITH.matcher(content).find();
+    }
+
+    /**
+     * Re-reads each XML/fxtemplate already classified for this report and
+     * records references to deprecated classes — fully-qualified hits matched
+     * against {@code deprecatedFqns}, plus unqualified hits matched against
+     * the unambiguously-deprecated short-name map. Replacement hints come
+     * from {@code specReplacements}.
+     *
+     * <p>Run this only after the global {@code @Deprecated} registry has been
+     * collected (Phase 2 in {@link Main#scanAll}); the maps are global across
+     * all tracked packages.</p>
+     */
+    public static void scanForDeprecatedReferences(
+            Report report,
+            java.util.Set<String> deprecatedFqns,
+            java.util.Map<String, String> deprecatedShortNames,
+            java.util.Map<String, String> specReplacements) {
+        for (XmlRecord rec : report.xmls) {
+            String content;
+            try {
+                content = java.nio.file.Files.readString(rec.file());
+            } catch (java.io.IOException e) {
+                continue;
+            }
+            collectFromAttribute(content, SPEC_ATTR, "spec", rec, report,
+                    deprecatedFqns, deprecatedShortNames, specReplacements);
+            collectFromAttribute(content, MAP_DECL, "map", rec, report,
+                    deprecatedFqns, deprecatedShortNames, specReplacements);
+        }
+    }
+
+    private static void collectFromAttribute(
+            String content, Pattern pattern, String source,
+            XmlRecord rec, Report report,
+            java.util.Set<String> deprecatedFqns,
+            java.util.Map<String, String> deprecatedShortNames,
+            java.util.Map<String, String> specReplacements) {
+        Matcher m = pattern.matcher(content);
+        while (m.find()) {
+            String value = m.group(1).trim();
+            if (value.isEmpty()) continue;
+            // FQN hit: literal match against the deprecated registry.
+            if (value.contains(".") && deprecatedFqns.contains(value)) {
+                report.xmlDeprecatedRefs.add(new DeprecatedXmlRef(
+                        rec.file(), value, value,
+                        specReplacements.getOrDefault(value, ""),
+                        rec.isFxTemplate(), true, source));
+                continue;
+            }
+            // Short-name hit: bare class name whose every FQN is deprecated.
+            if (!value.contains(".") && deprecatedShortNames.containsKey(value)) {
+                String canonical = deprecatedShortNames.get(value);
+                report.xmlDeprecatedRefs.add(new DeprecatedXmlRef(
+                        rec.file(), value, canonical,
+                        specReplacements.getOrDefault(canonical, ""),
+                        rec.isFxTemplate(), false, source));
+            }
+        }
     }
 }
