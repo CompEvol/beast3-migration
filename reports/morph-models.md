@@ -1,6 +1,6 @@
 # morph-models — what's left
 
-> **Scanned at:** 2026-05-13T11:11:53.578609  
+> **Scanned at:** 2026-05-13T11:39:28.351552  
 > **Commit:** `db64781` on `master` — [view on GitHub](https://github.com/CompEvol/morph-models/commit/db64781d130654714b8344de74e65dbe6929bd5a)  
 > **Pom version:** `1.3.0-beta3`  
 > **Maven Central:** `io.github.compevol:morph-models:1.3.0-beta3`  
@@ -44,16 +44,16 @@ All example XMLs target `version="2.8"` and use spec types with no legacy parame
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
 | `spec=` | `beast.base.evolution.branchratemodel.UCRelaxedClockModel` | `beast.base.spec.evolution.branchratemodel.UCRelaxedClockModel` |
-| `spec=` | `UniformOperator` → `beast.base.inference.operator.UniformOperator` | _(no spec equivalent found)_ |
+| `spec=` | `UniformOperator` → `beast.base.inference.operator.UniformOperator` | `beast.base.spec.inference.operator.uniform.IntervalOperator` |
 | `spec=` | `beast.base.evolution.TreeWithMetaDataLogger` | `beast.base.spec.evolution.TreeWithMetaDataLogger` |
 | `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
-| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
 | `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
 | `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
-| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | _(no spec equivalent found)_ |
-| `map=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
+| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
 | `map=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 
@@ -63,16 +63,16 @@ All example XMLs target `version="2.8"` and use spec types with no legacy parame
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
 | `spec=` | `beast.base.evolution.branchratemodel.UCRelaxedClockModel` | `beast.base.spec.evolution.branchratemodel.UCRelaxedClockModel` |
-| `spec=` | `UniformOperator` → `beast.base.inference.operator.UniformOperator` | _(no spec equivalent found)_ |
+| `spec=` | `UniformOperator` → `beast.base.inference.operator.UniformOperator` | `beast.base.spec.inference.operator.uniform.IntervalOperator` |
 | `spec=` | `beast.base.evolution.TreeWithMetaDataLogger` | `beast.base.spec.evolution.TreeWithMetaDataLogger` |
 | `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
-| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
 | `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
 | `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
-| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | _(no spec equivalent found)_ |
-| `map=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
+| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
 | `map=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 
@@ -82,7 +82,7 @@ All example XMLs target `version="2.8"` and use spec types with no legacy parame
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
 | `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
-| `map=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 
 **`examples/legacy-2.7/M3982.xml`** (13):
 
@@ -93,12 +93,12 @@ All example XMLs target `version="2.8"` and use spec types with no legacy parame
 | `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
 | `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
-| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
 | `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
 | `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
-| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | _(no spec equivalent found)_ |
-| `map=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
+| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
 | `map=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 

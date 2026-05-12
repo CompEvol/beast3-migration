@@ -50,6 +50,15 @@ public final class ClassRecord {
      *  primary class declaration — beast3's authoritative legacy marker. */
     public final boolean isDeprecated;
 
+    /**
+     * The {@code @deprecated} javadoc text immediately preceding the class
+     * declaration, if any. Empty otherwise. Used by
+     * {@link JavaScanner#deriveSpecReplacements} to find a replacement when
+     * the same-simple-name heuristic misses (e.g. {@code BactrianUpDownOperator}
+     * has a javadoc {@code @deprecated Use ... UpDownOperator instead.}).
+     */
+    public final String deprecationMessage;
+
     /** All {@code Input<X>} field declarations seen in the file. */
     public final List<InputDecl> inputs;
 
@@ -69,6 +78,7 @@ public final class ClassRecord {
             boolean ownHasLegacy,
             String primaryExtendsFqn,
             boolean isDeprecated,
+            String deprecationMessage,
             List<InputDecl> inputs) {
         this.file = file;
         this.packageName = packageName;
@@ -82,6 +92,7 @@ public final class ClassRecord {
         this.ownHasLegacy = ownHasLegacy;
         this.primaryExtendsFqn = primaryExtendsFqn;
         this.isDeprecated = isDeprecated;
+        this.deprecationMessage = deprecationMessage == null ? "" : deprecationMessage;
         this.inputs = inputs;
         this.kind = ownKind;
         this.status = toStatus(ownHasSpec, ownHasLegacy);

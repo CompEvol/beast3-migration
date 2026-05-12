@@ -1,7 +1,7 @@
 # flc — what's left
 
-> **Scanned at:** 2026-05-13T11:11:52.823637  
-> **Commit:** `43218a5` on `master` *(dirty working tree)* — [view on GitHub](https://github.com/4ment/flc/commit/43218a505931bf1b3541bb34578f5b270a21476f)  
+> **Scanned at:** 2026-05-13T11:39:27.608730  
+> **Commit:** `a21b797` on `mrcaprior-spec-fqn` — [view on GitHub](https://github.com/4ment/flc/commit/a21b797988485df5394edb6dc35415f9a598299d)  
 > **Pom version:** `1.3.0-beta1`  
 > **Maven Central:** `io.github.4ment:flc:1.3.0-beta1`  
 > **Stage hint:** Maven Central

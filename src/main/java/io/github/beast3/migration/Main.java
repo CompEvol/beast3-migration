@@ -155,7 +155,7 @@ public final class Main {
         java.util.Set<String> deprecatedFqns = JavaScanner.collectDeprecatedFqns(all);
         java.util.Set<String> allFqns = JavaScanner.collectAllClassFqns(all);
         java.util.Map<String, String> specReplacements =
-                JavaScanner.deriveSpecReplacements(deprecatedFqns, allFqns);
+                JavaScanner.deriveSpecReplacements(all, deprecatedFqns, allFqns);
         java.util.Map<String, String> deprecatedShortNames =
                 JavaScanner.deriveUnambiguouslyDeprecatedShortNames(deprecatedFqns, allFqns);
         if (target != null && target.pathExists) {
@@ -191,7 +191,7 @@ public final class Main {
         java.util.Set<String> deprecatedFqns = JavaScanner.collectDeprecatedFqns(reports);
         java.util.Set<String> allFqns = JavaScanner.collectAllClassFqns(reports);
         java.util.Map<String, String> specReplacements =
-                JavaScanner.deriveSpecReplacements(deprecatedFqns, allFqns);
+                JavaScanner.deriveSpecReplacements(reports, deprecatedFqns, allFqns);
         java.util.Map<String, String> deprecatedShortNames =
                 JavaScanner.deriveUnambiguouslyDeprecatedShortNames(deprecatedFqns, allFqns);
         System.out.println("Collected " + deprecatedFqns.size()

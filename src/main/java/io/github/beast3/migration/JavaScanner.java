@@ -224,6 +224,10 @@ public final class JavaScanner {
             Kind ownKind = classify(tokens, resolved);
             boolean ownHasSpec = computeOwnHasSpec(tokens, resolved);
             boolean isDeprecated = hasDeprecatedAnnotation(stripped, s.declStart);
+            // The javadoc is only present in the original (un-stripped) source.
+            String deprecationMessage = isDeprecated
+                    ? extractDeprecationMessage(src, simpleName)
+                    : "";
 
             java.util.List<InputDecl> myInputs = new java.util.ArrayList<>();
             for (int i = 0; i < inputDecls.size(); i++) {
@@ -249,6 +253,7 @@ public final class JavaScanner {
                     false,                                // ownHasLegacy filled by resolver
                     primaryExtendsFqn,
                     isDeprecated,
+                    deprecationMessage,
                     java.util.List.copyOf(myInputs)));
         }
     }
@@ -341,6 +346,100 @@ public final class JavaScanner {
      * with proper string-literal handling — so
      * {@code @Description("foo(bar)baz")} doesn't fool the paren balancer.
      */
+    /**
+     * Extracts the {@code @deprecated <text>} body from the javadoc that
+     * precedes the {@code class <simpleName>} declaration in {@code src},
+     * if any. Returns the raw text between {@code @deprecated} and the next
+     * javadoc tag (another {@code @}) or the end of the javadoc block;
+     * leading {@code *} characters and whitespace from each line are
+     * stripped. Returns empty string if no such javadoc is present.
+     *
+     * <p>This works against the <b>original</b> source, not the
+     * comment-stripped form used for offset-based scope analysis, because
+     * the javadoc text only exists in the original.</p>
+     */
+    private static String extractDeprecationMessage(String src, String simpleName) {
+        // Find the primary "class <simpleName>" declaration; tolerate "final",
+        // "public", "abstract" modifiers before the keyword.
+        java.util.regex.Matcher m = java.util.regex.Pattern
+                .compile("\\bclass\\s+" + java.util.regex.Pattern.quote(simpleName) + "\\b")
+                .matcher(src);
+        if (!m.find()) return "";
+        int classDeclStart = m.start();
+        // Find a javadoc block (closes with "*/") that ends at or before
+        // classDeclStart with only whitespace/annotations between.
+        int end = src.lastIndexOf("*/", classDeclStart);
+        if (end < 0) return "";
+        // Only accept if nothing but whitespace, annotations, or Java
+        // modifier keywords (public/final/abstract/static/sealed/...) sit
+        // between the comment close and the class declaration. Anything else
+        // means another statement intervenes and the javadoc isn't ours.
+        java.util.Set<String> modifiers = java.util.Set.of(
+                "public", "protected", "private", "abstract", "final",
+                "static", "sealed", "non-sealed", "strictfp");
+        int j = end + 2;
+        while (j < classDeclStart) {
+            char c = src.charAt(j);
+            if (Character.isWhitespace(c)) { j++; continue; }
+            if (c == '@') {
+                int idStart = j + 1;
+                int k = idStart;
+                while (k < classDeclStart && (Character.isJavaIdentifierPart(src.charAt(k))
+                        || src.charAt(k) == '.')) k++;
+                j = k;
+                while (j < classDeclStart && Character.isWhitespace(src.charAt(j))) j++;
+                if (j < classDeclStart && src.charAt(j) == '(') {
+                    int after = matchClosingParen(src, j);
+                    if (after < 0) return "";
+                    j = after;
+                }
+                continue;
+            }
+            if (Character.isJavaIdentifierStart(c)) {
+                int idStart = j;
+                while (j < classDeclStart && Character.isJavaIdentifierPart(src.charAt(j))) j++;
+                String tok = src.substring(idStart, j);
+                if (modifiers.contains(tok)) continue;
+                // Some other identifier — likely the next statement, bail.
+                return "";
+            }
+            // Stray character — bail.
+            return "";
+        }
+        int start = src.lastIndexOf("/**", end);
+        if (start < 0) return "";
+        String block = src.substring(start + 3, end);
+        int tag = block.indexOf("@deprecated");
+        if (tag < 0) return "";
+        int msgStart = tag + "@deprecated".length();
+        // Stop at the next javadoc tag boundary: @ at start of line (after
+        // optional whitespace and leading *) signals a new section.
+        int msgEnd = block.length();
+        for (int k = msgStart; k < block.length(); k++) {
+            if (block.charAt(k) != '\n') continue;
+            int p = k + 1;
+            while (p < block.length() && (block.charAt(p) == ' ' || block.charAt(p) == '\t')) p++;
+            if (p < block.length() && block.charAt(p) == '*') {
+                p++;
+                while (p < block.length() && (block.charAt(p) == ' ' || block.charAt(p) == '\t')) p++;
+            }
+            if (p < block.length() && block.charAt(p) == '@') {
+                msgEnd = k;
+                break;
+            }
+        }
+        String raw = block.substring(msgStart, msgEnd);
+        // Normalise: strip leading "*" per line, collapse whitespace.
+        StringBuilder out = new StringBuilder();
+        for (String line : raw.split("\n")) {
+            String t = line.trim();
+            if (t.startsWith("*")) t = t.substring(1).trim();
+            if (out.length() > 0) out.append(' ');
+            out.append(t);
+        }
+        return out.toString().trim();
+    }
+
     private static boolean hasDeprecatedAnnotation(String src, int classDeclStart) {
         int i = previousStatementBoundary(src, classDeclStart);
         while (i < classDeclStart) {
@@ -590,11 +689,18 @@ public final class JavaScanner {
     }
 
     /**
-     * For each deprecated FQN, find a spec replacement: the same simple name
-     * under a package containing {@code .spec.}. Returns only the entries
-     * where a replacement was found.
+     * For each deprecated FQN, find a spec replacement. First tries the
+     * same-simple-name heuristic (a class with the same simple name under a
+     * non-deprecated package containing {@code .spec.}). When that fails,
+     * falls back to parsing the {@code @deprecated <text>} javadoc on the
+     * deprecated class for any FQN or capitalised simple name that resolves
+     * to a class in the registry — this catches cases like
+     * {@code BactrianUpDownOperator -> UpDownOperator} where the spec class
+     * has a different simple name. Returns only the entries where a
+     * replacement was found.
      */
     public static java.util.Map<String, String> deriveSpecReplacements(
+            java.util.List<Report> reports,
             Set<String> deprecatedFqns, Set<String> allFqns) {
         // Index allFqns by simple name → list of FQNs.
         java.util.Map<String, java.util.List<String>> bySimpleName = new java.util.HashMap<>();
@@ -603,24 +709,83 @@ public final class JavaScanner {
             String simple = dot < 0 ? fqn : fqn.substring(dot + 1);
             bySimpleName.computeIfAbsent(simple, k -> new java.util.ArrayList<>()).add(fqn);
         }
+        // Index deprecation messages by FQN so the javadoc fallback can find them.
+        java.util.Map<String, String> deprecationMessages = new java.util.HashMap<>();
+        for (Report r : reports) {
+            for (ClassRecord c : r.classes) {
+                if (c.isDeprecated && !c.deprecationMessage.isBlank()) {
+                    deprecationMessages.put(c.fqn(), c.deprecationMessage);
+                }
+            }
+        }
         java.util.Map<String, String> out = new java.util.LinkedHashMap<>();
         for (String dep : deprecatedFqns) {
             int dot = dep.lastIndexOf('.');
             String simple = dot < 0 ? dep : dep.substring(dot + 1);
+            // Same-simple-name pass.
             java.util.List<String> candidates = bySimpleName.getOrDefault(simple, java.util.List.of());
             String pick = null;
             for (String cand : candidates) {
                 if (cand.equals(dep)) continue;
                 if (!cand.contains(".spec.")) continue;
                 if (deprecatedFqns.contains(cand)) continue;
-                // Prefer the candidate that shares the most of the deprecated package path.
                 if (pick == null || commonPrefixLen(cand, dep) > commonPrefixLen(pick, dep)) {
                     pick = cand;
                 }
             }
-            if (pick != null) out.put(dep, pick);
+            if (pick != null) {
+                out.put(dep, pick);
+                continue;
+            }
+            // Javadoc fallback: parse "Use beast.X.Y instead" / "{@link X}" / etc.
+            String msg = deprecationMessages.get(dep);
+            if (msg == null || msg.isBlank()) continue;
+            String hinted = findReplacementInDeprecationMessage(
+                    msg, deprecatedFqns, allFqns, bySimpleName);
+            if (hinted != null) out.put(dep, hinted);
         }
         return out;
+    }
+
+    /**
+     * Scan a {@code @deprecated} javadoc body for class-reference tokens and
+     * return the first one that resolves to a non-deprecated class in
+     * {@code allFqns}. Considers (in order): full FQNs, then capitalised
+     * simple names. Preference goes to candidates in {@code .spec.} packages.
+     */
+    private static String findReplacementInDeprecationMessage(
+            String msg,
+            Set<String> deprecatedFqns,
+            Set<String> allFqns,
+            java.util.Map<String, java.util.List<String>> bySimpleName) {
+        // Strip Javadoc {@link ...} braces but keep their content.
+        String cleaned = msg.replaceAll("\\{@(?:link|linkplain|code)\\s+", " ")
+                            .replaceAll("[{}]", " ");
+        // Pass 1 — full FQNs (contain at least one dot, start with lowercase package).
+        java.util.regex.Matcher fqnMatcher = java.util.regex.Pattern
+                .compile("\\b([a-z][a-zA-Z0-9_]*\\.[\\w.]*[A-Z][\\w]*)")
+                .matcher(cleaned);
+        while (fqnMatcher.find()) {
+            String fqn = fqnMatcher.group(1);
+            if (allFqns.contains(fqn) && !deprecatedFqns.contains(fqn)) return fqn;
+        }
+        // Pass 2 — bare capitalised simple names. Pick the first that has at
+        // least one non-deprecated FQN in the registry, preferring spec.
+        java.util.regex.Matcher simpleMatcher = java.util.regex.Pattern
+                .compile("\\b([A-Z][A-Za-z0-9_]+)\\b").matcher(cleaned);
+        while (simpleMatcher.find()) {
+            String simple = simpleMatcher.group(1);
+            java.util.List<String> candidates = bySimpleName.get(simple);
+            if (candidates == null) continue;
+            String pick = null;
+            for (String c : candidates) {
+                if (deprecatedFqns.contains(c)) continue;
+                if (c.contains(".spec.")) { pick = c; break; }
+                if (pick == null) pick = c;
+            }
+            if (pick != null) return pick;
+        }
+        return null;
     }
 
     /**

@@ -1,6 +1,6 @@
 # beast3 — what's left
 
-> **Scanned at:** 2026-05-13T11:11:50.457315  
+> **Scanned at:** 2026-05-13T11:39:26.133013  
 > **Commit:** `d3ad887` on `fix/offset-real-calculate-logp` — [view on GitHub](https://github.com/CompEvol/beast3/commit/d3ad887fb81ba516a9769594ce51d3a007ac0941)  
 > **Pom version:** `2.8.0-SNAPSHOT`  
 > **Maven Central:** `io.github.compevol:beast3:2.8.0-beta5`  
@@ -146,13 +146,13 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
 | `map=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
-| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
 | `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
 | `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
-| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
 | `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
-| `map=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 
 **`beast-fx/src/main/resources/beast.fx/fxtemplates/LegacyStandard.xml`** (28):
 
@@ -170,13 +170,13 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
 | `map=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
-| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
 | `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
 | `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
-| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
 | `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
-| `map=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 
 **`beast-fx/src/main/resources/beast.fx/fxtemplates/ParametricDistributions.xml`** (2):
 
@@ -189,9 +189,9 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `BactrianScaleOperator` → `beast.base.evolution.operator.kernel.BactrianScaleOperator` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.evolution.operator.kernel.BactrianScaleOperator` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.spec.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `BactrianScaleOperator` → `beast.base.evolution.operator.kernel.BactrianScaleOperator` | `beast.base.spec.inference.operator.ScaleOperator` |
+| `spec=` | `beast.base.evolution.operator.kernel.BactrianScaleOperator` | `beast.base.spec.inference.operator.ScaleOperator` |
+| `spec=` | `beast.base.spec.inference.distribution.Prior` | `beast.base.spec.inference.distribution.Normal` |
 
 **`release/Mac/output/BEAST.app/Contents/fxtemplates/Standard.xml`** (14):
 
@@ -202,13 +202,13 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
 | `map=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
-| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
 | `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
 | `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
-| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
 | `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
-| `map=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 
 **`release/Mac/output/BEAST.app/Contents/fxtemplates/LegacyStandard.xml`** (28):
 
@@ -226,13 +226,13 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
 | `map=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
-| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
 | `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
 | `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
-| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
 | `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
-| `map=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 
 **`release/Mac/output/BEAST.app/Contents/fxtemplates/ParametricDistributions.xml`** (2):
 
@@ -245,9 +245,9 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `BactrianScaleOperator` → `beast.base.evolution.operator.kernel.BactrianScaleOperator` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.evolution.operator.kernel.BactrianScaleOperator` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.spec.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `BactrianScaleOperator` → `beast.base.evolution.operator.kernel.BactrianScaleOperator` | `beast.base.spec.inference.operator.ScaleOperator` |
+| `spec=` | `beast.base.evolution.operator.kernel.BactrianScaleOperator` | `beast.base.spec.inference.operator.ScaleOperator` |
+| `spec=` | `beast.base.spec.inference.distribution.Prior` | `beast.base.spec.inference.distribution.Normal` |
 
 **`beast-base/src/test/resources/beast.base/examples/benchmark/II/testHKY1748.xml`** (4):
 
@@ -255,7 +255,7 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
 | `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 
 **`beast-base/src/test/resources/beast.base/examples/benchmark/II/testHKY1749.xml`** (4):
@@ -264,7 +264,7 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
 | `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 
 **`beast-base/src/test/resources/beast.base/examples/benchmark/II/testHKY1366.xml`** (4):
@@ -273,7 +273,7 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
 | `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 
 **`beast-base/src/test/resources/beast.base/examples/benchmark/II/testHKY767.xml`** (4):
@@ -282,7 +282,7 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
 | `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 
 **`beast-base/src/test/resources/beast.base/examples/benchmark/II/testHKY1809.xml`** (4):
@@ -291,7 +291,7 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
 | `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 
 **`beast-base/src/test/resources/beast.base/examples/benchmark/II/testHKY501.xml`** (4):
@@ -300,7 +300,7 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
 | `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 
 **`beast-base/src/test/resources/beast.base/examples/benchmark/II/testHKY3475.xml`** (4):
@@ -309,7 +309,7 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
 | `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 
 **`beast-base/src/test/resources/beast.base/examples/benchmark/II/testHKY1510.xml`** (4):
@@ -318,7 +318,7 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
 | `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 
 **`beast-base/src/test/resources/beast.base/examples/benchmark/II/testHKY1044.xml`** (4):
@@ -327,7 +327,7 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
 | `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 
 **`beast-base/src/test/resources/beast.base/examples/benchmark/II/testHKY520.xml`** (4):
@@ -336,7 +336,7 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
 | `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 
 **`beast-base/src/test/resources/beast.base/examples/benchmark/II/testHKY336.xml`** (4):
@@ -345,7 +345,7 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
 | `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 
 **`beast-base/src/test/resources/beast.base/examples/benchmark/II/testHKY755.xml`** (4):
@@ -354,7 +354,7 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
 | `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 
 **`beast-base/src/test/resources/beast.base/examples/testJukesCantorShortUncertain2.xml`** (2):
@@ -369,7 +369,7 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | Where | Hit | Replacement |
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
-| `spec=` | `beast.base.inference.parameter.RealParameter` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.parameter.RealParameter` | `beast.base.spec.inference.parameter.RealScalarParam` |
 
 **`beast-base/src/test/resources/beast.base/examples/testMultipleAlignments_randomTaxaOrder.xml`** (17):
 
@@ -380,12 +380,12 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | `spec=` | `beast.base.evolution.TreeWithMetaDataLogger` | `beast.base.spec.evolution.TreeWithMetaDataLogger` |
 | `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
-| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
 | `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
 | `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
-| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | _(no spec equivalent found)_ |
-| `map=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
+| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
 | `map=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 
@@ -394,7 +394,7 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | Where | Hit | Replacement |
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
-| `spec=` | `beast.base.inference.parameter.RealParameter` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.parameter.RealParameter` | `beast.base.spec.inference.parameter.RealScalarParam` |
 
 **`beast-base/src/test/resources/beast.base/examples/testGTR.xml`** (14):
 
@@ -407,11 +407,11 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
 | `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
 | `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
-| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
 | `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
-| `map=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
 | `map=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 | `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
 
@@ -421,7 +421,7 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
 | `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 
 **`beast-base/src/test/resources/beast.base/examples/testBSP.xml`** (5):
@@ -429,8 +429,8 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | Where | Hit | Replacement |
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `spec=` | `beast.base.inference.distribution.MarkovChainDistribution` | `beast.base.spec.inference.distribution.MarkovChainDistribution` |
 | `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
 
@@ -452,7 +452,7 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | Where | Hit | Replacement |
 |---|---|---|
 | `spec=` | `beast.base.evolution.alignment.FilteredAlignment` | `beast.base.spec.evolution.alignment.FilteredAlignment` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 | `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
 | `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
@@ -463,7 +463,7 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
 | `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 
 **`beast-base/src/test/resources/beast.base/examples/testJukesCantorShortUncertain2MLE.xml`** (2):
@@ -484,11 +484,11 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
 | `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
 | `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
-| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
 | `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
-| `map=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
 | `map=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 | `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
 
@@ -503,11 +503,11 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
 | `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
 | `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
-| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
 | `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
-| `map=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
 | `map=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 | `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
 
@@ -520,12 +520,12 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | `spec=` | `beast.base.evolution.TreeWithMetaDataLogger` | `beast.base.spec.evolution.TreeWithMetaDataLogger` |
 | `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
-| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
 | `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
 | `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
-| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | _(no spec equivalent found)_ |
-| `map=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
+| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
 | `map=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 
@@ -534,7 +534,7 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | Where | Hit | Replacement |
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
-| `spec=` | `beast.base.inference.parameter.RealParameter` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.parameter.RealParameter` | `beast.base.spec.inference.parameter.RealScalarParam` |
 
 **`beast-base/src/test/resources/beast.base/examples/testSYM.xml`** (14):
 
@@ -547,11 +547,11 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
 | `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
 | `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
-| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
 | `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
-| `map=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
 | `map=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 | `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
 
@@ -559,9 +559,9 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
 | `spec=` | `SpeciesTreeLogger` → `beast.base.evolution.speciation.SpeciesTreeLogger` | _(no spec equivalent found)_ |
 
@@ -578,17 +578,17 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
 | `spec=` | `beast.base.evolution.speciation.YuleModel` | `beast.base.spec.evolution.speciation.YuleModel` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
 | `spec=` | `beast.base.evolution.TreeWithMetaDataLogger` | `beast.base.spec.evolution.TreeWithMetaDataLogger` |
 | `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
 | `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
 | `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
-| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
 | `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
-| `map=` | `beast.base.spec.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.spec.inference.distribution.Prior` | `beast.base.spec.inference.distribution.Normal` |
+| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
 | `map=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 | `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
 
@@ -596,7 +596,7 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `beast.base.spec.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.spec.inference.distribution.Prior` | `beast.base.spec.inference.distribution.Normal` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 
 **`beast-base/src/test/resources/beast.base/examples/spec/testTN93.xml`** (14):
@@ -610,11 +610,11 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
 | `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
 | `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
-| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
 | `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
-| `map=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
 | `map=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 | `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
 
@@ -628,41 +628,41 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `spec=` | `beast.base.inference.distribution.Poisson` | `beast.base.spec.inference.distribution.Poisson` |
 
 **`beast-base/src/test/resources/beast.base/examples/spec/testEBSP.xml`** (12):
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.spec.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.spec.inference.distribution.Prior` | `beast.base.spec.inference.distribution.Normal` |
 | `spec=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
 
 **`beast-base/src/test/resources/beast.base/examples/bitflip.xml`** (1):
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `BooleanParameter` → `beast.base.inference.parameter.BooleanParameter` | _(no spec equivalent found)_ |
+| `spec=` | `BooleanParameter` → `beast.base.inference.parameter.BooleanParameter` | `beast.base.spec.inference.parameter.BoolScalarParam` |
 
 **`beast-base/src/test/resources/beast.base/examples/testClassicRootCalibrationPrior.xml`** (5):
 
 | Where | Hit | Replacement |
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.MRCAPrior` | `beast.base.spec.evolution.tree.MRCAPrior` |
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 
 **`beast-base/src/test/resources/beast.base/examples/testDirectSimulator2.xml`** (2):
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `spec=` | `RealParameter` → `beast.base.inference.parameter.RealParameter` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `spec=` | `RealParameter` → `beast.base.inference.parameter.RealParameter` | `beast.base.spec.inference.parameter.RealScalarParam` |
 
 **`beast-base/src/test/resources/beast.base/examples/testTN93.xml`** (14):
 
@@ -675,11 +675,11 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
 | `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
 | `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
-| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
 | `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
-| `map=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
 | `map=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 | `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
 
@@ -687,9 +687,9 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
 | `spec=` | `SpeciesTreeLogger` → `beast.base.evolution.speciation.SpeciesTreeLogger` | _(no spec equivalent found)_ |
 
@@ -711,11 +711,11 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
 | `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
 | `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
-| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
 | `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
-| `map=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
 | `map=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 | `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
 
@@ -723,24 +723,24 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 
 **`beast-base/src/test/resources/beast.base/examples/testDirectSimulator.xml`** (3):
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `RealParameter` → `beast.base.inference.parameter.RealParameter` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `RealParameter` → `beast.base.inference.parameter.RealParameter` | `beast.base.spec.inference.parameter.RealScalarParam` |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 
 **`beast-base/src/test/resources/beast.base/examples/testCalibration.xml`** (11):
 
 | Where | Hit | Replacement |
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `spec=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 | `spec=` | `beast.base.evolution.tree.MRCAPrior` | `beast.base.spec.evolution.tree.MRCAPrior` |
@@ -760,7 +760,7 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.MRCAPrior` | `beast.base.spec.evolution.tree.MRCAPrior` |
 | `spec=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 | `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
 | `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
@@ -776,11 +776,11 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
 | `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
 | `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
-| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
 | `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
-| `map=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
 | `map=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 | `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
 
@@ -794,8 +794,8 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `RealParameter` → `beast.base.inference.parameter.RealParameter` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `RealParameter` → `beast.base.inference.parameter.RealParameter` | `beast.base.spec.inference.parameter.RealScalarParam` |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 
 **`beast-base/src/test/resources/beast.base/examples/beast2vs1/testStrictClockTipDatesSampling.xml`** (11):
 
@@ -803,8 +803,8 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
 | `spec=` | `beast.base.evolution.tree.MRCAPrior` | `beast.base.spec.evolution.tree.MRCAPrior` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `spec=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 
@@ -812,8 +812,8 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
 | `spec=` | `SpeciesTreeLogger` → `beast.base.evolution.speciation.SpeciesTreeLogger` | _(no spec equivalent found)_ |
 
@@ -822,8 +822,8 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | Where | Hit | Replacement |
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `spec=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `spec=` | `beast.base.inference.distribution.MarkovChainDistribution` | `beast.base.spec.inference.distribution.MarkovChainDistribution` |
 | `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
@@ -833,11 +833,11 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | Where | Hit | Replacement |
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `spec=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.LaplaceDistribution` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
 
 **`beast-base/src/test/resources/beast.base/examples/beast2vs1/testYuleModel_10taxa.xml`** (1):
 
@@ -857,16 +857,16 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 |---|---|---|
 | `spec=` | `beast.base.evolution.alignment.FilteredAlignment` | `beast.base.spec.evolution.alignment.FilteredAlignment` |
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 
 **`beast-base/src/test/resources/beast.base/examples/beast2vs1/testStarBEASTConstant.xml`** (7):
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
 | `spec=` | `SpeciesTreeLogger` → `beast.base.evolution.speciation.SpeciesTreeLogger` | _(no spec equivalent found)_ |
 
@@ -881,8 +881,8 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | Where | Hit | Replacement |
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 
 **`beast-base/src/test/resources/beast.base/examples/beast2vs1/testCoalescentTipDates1.xml`** (1):
@@ -901,20 +901,20 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
-| `spec=` | `IntegerParameter` → `beast.base.inference.parameter.IntegerParameter` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
+| `spec=` | `IntegerParameter` → `beast.base.inference.parameter.IntegerParameter` | `beast.base.spec.inference.parameter.IntScalarParam` |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `spec=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 | `spec=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
-| `spec=` | `UniformOperator` → `beast.base.inference.operator.UniformOperator` | _(no spec equivalent found)_ |
+| `spec=` | `UniformOperator` → `beast.base.inference.operator.UniformOperator` | `beast.base.spec.inference.operator.uniform.IntervalOperator` |
 
 **`beast-base/src/test/resources/beast.base/examples/beast2vs1/testStarBEAST.xml`** (7):
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
 | `spec=` | `SpeciesTreeLogger` → `beast.base.evolution.speciation.SpeciesTreeLogger` | _(no spec equivalent found)_ |
 
@@ -922,8 +922,8 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
 | `spec=` | `SpeciesTreeLogger` → `beast.base.evolution.speciation.SpeciesTreeLogger` | _(no spec equivalent found)_ |
 
@@ -932,8 +932,8 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | Where | Hit | Replacement |
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `spec=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 
@@ -941,8 +941,8 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 | `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
 | `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
@@ -959,8 +959,8 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | Where | Hit | Replacement |
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `spec=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 | `spec=` | `beast.base.evolution.tree.MRCAPrior` | `beast.base.spec.evolution.tree.MRCAPrior` |
@@ -976,8 +976,8 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
 | `spec=` | `SpeciesTreeLogger` → `beast.base.evolution.speciation.SpeciesTreeLogger` | _(no spec equivalent found)_ |
 
@@ -986,8 +986,8 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | Where | Hit | Replacement |
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `spec=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 | `spec=` | `beast.base.evolution.tree.MRCAPrior` | `beast.base.spec.evolution.tree.MRCAPrior` |
@@ -998,8 +998,8 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | Where | Hit | Replacement |
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `spec=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 
@@ -1008,8 +1008,8 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | Where | Hit | Replacement |
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `spec=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 
@@ -1018,8 +1018,8 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | Where | Hit | Replacement |
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `spec=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 
@@ -1028,12 +1028,12 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | Where | Hit | Replacement |
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
-| `spec=` | `BooleanParameter` → `beast.base.inference.parameter.BooleanParameter` | _(no spec equivalent found)_ |
+| `spec=` | `BooleanParameter` → `beast.base.inference.parameter.BooleanParameter` | `beast.base.spec.inference.parameter.BoolScalarParam` |
 | `spec=` | `OneOnX` → `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 | `spec=` | `beast.base.evolution.Sum` | `beast.base.spec.evolution.Sum` |
 | `spec=` | `beast.base.evolution.tree.coalescent.ScaledPopulationFunction` | `beast.base.spec.evolution.tree.coalescent.ScaledPopulationFunction` |
 | `spec=` | `beast.base.evolution.tree.coalescent.CompoundPopulationFunction` | `beast.base.spec.evolution.tree.coalescent.CompoundPopulationFunction` |
-| `spec=` | `LogNormalDistributionModel` → `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `LogNormalDistributionModel` → `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `spec=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `spec=` | `beast.base.evolution.tree.coalescent.SampleOffValues` | `beast.base.spec.inference.operator.SampleOffValues` |
 
@@ -1041,7 +1041,7 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 
 **`beast-base/src/test/resources/beast.base/examples/beast2vs1/testRandomLocalClock.xml`** (12):
@@ -1049,9 +1049,9 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | Where | Hit | Replacement |
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
-| `spec=` | `BooleanParameter` → `beast.base.inference.parameter.BooleanParameter` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `BooleanParameter` → `beast.base.inference.parameter.BooleanParameter` | `beast.base.spec.inference.parameter.BoolScalarParam` |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `spec=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 | `spec=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
@@ -1062,9 +1062,9 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | Where | Hit | Replacement |
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
-| `spec=` | `IntegerParameter` → `beast.base.inference.parameter.IntegerParameter` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `IntegerParameter` → `beast.base.inference.parameter.IntegerParameter` | `beast.base.spec.inference.parameter.IntScalarParam` |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `spec=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `spec=` | `beast.base.inference.distribution.MarkovChainDistribution` | `beast.base.spec.inference.distribution.MarkovChainDistribution` |
 
@@ -1072,11 +1072,11 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
-| `spec=` | `IntegerParameter` → `beast.base.inference.parameter.IntegerParameter` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
+| `spec=` | `IntegerParameter` → `beast.base.inference.parameter.IntegerParameter` | `beast.base.spec.inference.parameter.IntScalarParam` |
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
-| `spec=` | `beast.base.inference.parameter.RealParameter` | _(no spec equivalent found)_ |
-| `spec=` | `UniformOperator` → `beast.base.inference.operator.UniformOperator` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.parameter.RealParameter` | `beast.base.spec.inference.parameter.RealScalarParam` |
+| `spec=` | `UniformOperator` → `beast.base.inference.operator.UniformOperator` | `beast.base.spec.inference.operator.uniform.IntervalOperator` |
 | `spec=` | `beast.base.evolution.TreeWithMetaDataLogger` | `beast.base.spec.evolution.TreeWithMetaDataLogger` |
 
 **`beast-base/src/test/resources/beast.base/examples/testTwoCalibrationsPrior.xml`** (8):
@@ -1086,7 +1086,7 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | `spec=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `spec=` | `beast.base.evolution.speciation.YuleModel` | `beast.base.spec.evolution.speciation.YuleModel` |
 | `spec=` | `beast.base.evolution.tree.MRCAPrior` | `beast.base.spec.evolution.tree.MRCAPrior` |
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 
 **`beast-base/src/test/resources/beast.base/examples/starbeastinit/sbi-01.xml`** (6):
 
@@ -1119,14 +1119,14 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `spec=` | `beast.base.inference.distribution.OneOnX` | _(no spec equivalent found)_ |
 | `spec=` | `beast.base.evolution.Sum` | `beast.base.spec.evolution.Sum` |
 | `spec=` | `beast.base.inference.distribution.Poisson` | `beast.base.spec.inference.distribution.Poisson` |
 | `spec=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
 | `spec=` | `beast.base.evolution.tree.coalescent.ScaledPopulationFunction` | `beast.base.spec.evolution.tree.coalescent.ScaledPopulationFunction` |
 | `spec=` | `beast.base.evolution.tree.coalescent.CompoundPopulationFunction` | `beast.base.spec.evolution.tree.coalescent.CompoundPopulationFunction` |
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
 | `spec=` | `beast.base.evolution.tree.coalescent.SampleOffValues` | `beast.base.spec.inference.operator.SampleOffValues` |
 
@@ -1134,19 +1134,19 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `BooleanParameter` → `beast.base.inference.parameter.BooleanParameter` | _(no spec equivalent found)_ |
+| `spec=` | `BooleanParameter` → `beast.base.inference.parameter.BooleanParameter` | `beast.base.spec.inference.parameter.BoolScalarParam` |
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
-| `spec=` | `beast.base.inference.parameter.RealParameter` | _(no spec equivalent found)_ |
-| `spec=` | `UniformOperator` → `beast.base.inference.operator.UniformOperator` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.parameter.RealParameter` | `beast.base.spec.inference.parameter.RealScalarParam` |
+| `spec=` | `UniformOperator` → `beast.base.inference.operator.UniformOperator` | `beast.base.spec.inference.operator.uniform.IntervalOperator` |
 
 **`beast-base/src/test/resources/beast.base/examples/testYuleUncalibrated.xml`** (12):
 
 | Where | Hit | Replacement |
 |---|---|---|
 | `spec=` | `beast.base.evolution.speciation.YuleModel` | `beast.base.spec.evolution.speciation.YuleModel` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `spec=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `spec=` | `beast.base.evolution.tree.MRCAPrior` | `beast.base.spec.evolution.tree.MRCAPrior` |
 | `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
 | `spec=` | `beast.base.evolution.TreeWithMetaDataLogger` | `beast.base.spec.evolution.TreeWithMetaDataLogger` |
@@ -1163,9 +1163,9 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | Where | Hit | Replacement |
 |---|---|---|
 | `spec=` | `beast.base.evolution.speciation.CalibratedYuleModel` | `beast.base.spec.evolution.speciation.CalibratedYuleModel` |
-| `spec=` | `beast.base.inference.distribution.Prior` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 | `spec=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
-| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | _(no spec equivalent found)_ |
+| `spec=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
 | `spec=` | `beast.base.evolution.tree.MRCAPrior` | `beast.base.spec.evolution.tree.MRCAPrior` |
 | `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
 | `spec=` | `beast.base.evolution.TreeWithMetaDataLogger` | `beast.base.spec.evolution.TreeWithMetaDataLogger` |
