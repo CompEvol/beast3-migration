@@ -9,7 +9,7 @@ are at the bottom of this page.
 
 <!-- BEGIN AUTO -->
 
-_Last regenerated: 2026-05-11T16:47:22.923693+12:00_
+_Last regenerated: 2026-05-13T10:15:05.062043+12:00_
 
 ## Release & build status
 
@@ -24,8 +24,8 @@ _Last regenerated: 2026-05-11T16:47:22.923693+12:00_
 | [morph-models](https://github.com/CompEvol/morph-models) | Maven Central | [1.3.0-beta3](https://central.sonatype.com/artifact/io.github.compevol/morph-models) | 1.3.0-beta3 | ✅ | ✅ | ✅ | 🔴 | 🟢 | 🟡 |
 | [sampled-ancestors](https://github.com/CompEvol/sampled-ancestors) | Maven Central | [2.3.0-beta1](https://central.sonatype.com/artifact/io.github.compevol/sampled-ancestors) | 2.3.0-beta1 | ✅ | ✅ | ✅ | 🔴 | 🔴 | 🟢 |
 | [MutableAlignment](https://github.com/rbouckaert/MutableAlignment) | compile-tested | — | — | ❌ | ❌ | ❌ | — | 🔴 | — |
-| [ORC](https://github.com/jordandouglas/ORC) | compile-tested | — | 1.3.0-SNAPSHOT | ✅ | ✅ | ❌ | 🟡 | 🟡 | 🟢 |
-| [bModelTest](https://github.com/BEAST2-Dev/bModelTest) | compile-tested | — | 1.4.0-beta1 | ✅ | ✅ | ❌ | 🟢 | 🔴 | 🟢 |
+| [ORC](https://github.com/jordandouglas/ORC) | compile-tested | — | 1.3.0-SNAPSHOT | ✅ | ✅ | ❌ | 🟡 | 🟢 | 🟢 |
+| [bModelTest](https://github.com/BEAST2-Dev/bModelTest) | compile-tested | — | 1.4.0-beta1 | ✅ | ✅ | ❌ | 🟢 | 🟢 | 🟢 |
 | [obama](https://github.com/rbouckaert/obama) | compile-tested | — | 1.2.0-beta1 | ✅ | ✅ | ❌ | 🔴 | 🔴 | 🟡 |
 
 Traffic-light columns: 🔴 any legacy lineage / non-migrated content, 🟡 no legacy but some unnecessarily-concrete Inputs (Code) or stray legacy `parameter.*` declarations (XML / FxT), 🟢 clean, — = no data.
@@ -43,8 +43,8 @@ Traffic-light columns: 🔴 any legacy lineage / non-migrated content, 🟡 no l
 | morph-models | — | — | — | ✅ 4 | — | ✅ 1 | 2 / 2 / 2 (+4 legacy) | 0 / 1 / 1 | ✅ |
 | sampled-ancestors | 2 / 6 | 1 / 13 | ✅ 2 | ✅ 5 | — | ✅ 2 | 0 / 0 / 3 | 1 / 1 / 1 | ✅ |
 | MutableAlignment | — | — | — | — | — | — | 0 / 0 / 1 | — | ✅ |
-| ORC | — | ✅ 52 | ✅ 1 | — | — | — | 0 / 1 / 1 | 1 / 1 / 1 | 1 / 2 |
-| bModelTest | ✅ 3 | ✅ 4 | ✅ 3 | ✅ 3 | — | — | 1 / 1 / 2 (+1 legacy) | 1 / 1 / 1 | ✅ |
+| ORC | ✅ 1 | ✅ 52 | ✅ 1 | — | — | — | 1 / 1 / 1 | 1 / 1 / 1 | 1 / 2 |
+| bModelTest | ✅ 3 | ✅ 4 | ✅ 3 | ✅ 3 | — | — | 2 / 2 / 2 (+1 legacy) | 1 / 1 / 1 | ✅ |
 | obama | ✅ 3 | ✅ 2 | ✅ 2 | 11 / 44 | — | — | 0 / 0 / 14 | 0 / 1 / 1 | 9 / 18 |
 
 Legend: ✅ = clean, ❌ = missing, `legacy / total` = classes still on a legacy base, `—` = no data.
@@ -67,7 +67,7 @@ Per package, for each kind: `spec / mixed / legacy / neutral · total`.
 | morph-models | — | — | — | 4 / 0 / 0 / 0 · 4 | — | 0 / 0 / 0 / 1 · 1 |
 | sampled-ancestors | 0 / 0 / 2 / 4 · 6 | 0 / 0 / 1 / 12 · 13 | 0 / 0 / 0 / 2 · 2 | 0 / 0 / 0 / 5 · 5 | — | 0 / 0 / 0 / 2 · 2 |
 | MutableAlignment | — | — | — | — | — | — |
-| ORC | — | 0 / 0 / 0 / 52 · 52 | 0 / 0 / 0 / 1 · 1 | — | — | — |
+| ORC | 1 / 0 / 0 / 0 · 1 | 0 / 0 / 0 / 52 · 52 | 0 / 0 / 0 / 1 · 1 | — | — | — |
 | bModelTest | 0 / 0 / 0 / 3 · 3 | 1 / 0 / 0 / 3 · 4 | 2 / 0 / 0 / 1 · 3 | 3 / 0 / 0 / 0 · 3 | — | — |
 | obama | 0 / 0 / 0 / 3 · 3 | 0 / 0 / 0 / 2 · 2 | 0 / 0 / 0 / 2 · 2 | 19 / 0 / 11 / 14 · 44 | — | — |
 

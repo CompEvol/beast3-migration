@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-11T16:47:22.928475+12:00",
+  "generatedAt": "2026-05-13T10:15:05.067376+12:00",
   "packages": [
     {
       "name": "beast3",
@@ -821,8 +821,8 @@
       "error": "",
       "java": {
         "distribution": {
-          "total": 0,
-          "spec": 0,
+          "total": 1,
+          "spec": 1,
           "mixed": 0,
           "legacy": 0,
           "neutral": 0
@@ -872,7 +872,7 @@
       },
       "xml": {
         "total": 1,
-        "migrated": 0,
+        "migrated": 1,
         "v28": 1,
         "legacyDir": 0
       },
@@ -962,8 +962,8 @@
       },
       "xml": {
         "total": 2,
-        "migrated": 1,
-        "v28": 1,
+        "migrated": 2,
+        "v28": 2,
         "legacyDir": 1
       },
       "fxTemplates": {

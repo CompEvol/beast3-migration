@@ -1,15 +1,15 @@
 # ORC — what's left
 
-> **Scanned at:** 2026-05-11T16:47:22.481423  
-> **Commit:** `a80e782` on `master` — [view on GitHub](https://github.com/jordandouglas/ORC/commit/a80e78252e870cafe47d637b333d26b5ac216201)  
+> **Scanned at:** 2026-05-13T10:15:04.527773  
+> **Commit:** `8bce4e5` on `master` — [view on GitHub](https://github.com/jordandouglas/ORC/commit/8bce4e5a3fa74a0fac285c3586c9a1bbb3ee1a6c)  
 > **Pom version:** `1.3.0-SNAPSHOT`  
 > **Maven Central:** not published as `io.github.jordandouglas:beast-orc` (not published (404))  
 > **Stage hint:** compile-tested
 
 ## Summary
 
-- **Java classes:** 0 on spec, 0 mixed, 0 legacy of 58 total
-- **Example XMLs:** 0 on spec / 1 on `version="2.8"` / 1 total
+- **Java classes:** 1 on spec, 0 mixed, 0 legacy of 59 total
+- **Example XMLs:** 1 on spec / 1 on `version="2.8"` / 1 total
 - **BEAUti fxtemplates:** 1 clean / 1 use spec / 1 total
 - **Input rule:** 1 classes hold 2 Input(s) declared too concretely
 - **Maven Central:** ❌ not published (not published (404))
@@ -36,11 +36,9 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
     - concrete: `Input<IntVectorParam<NonNegativeInt>>`
     - concrete: `Input<RealVectorParam<NonNegativeReal>>`
 
-## Example XMLs pending migration
+## Example XMLs
 
-**Uses spec types but still has legacy `parameter.RealParameter`-style declarations** (1):
-
-- `examples/caterpillars.xml`
+All example XMLs target `version="2.8"` and use spec types with no legacy parameter declarations. ✅
 
 ## FxTemplates
 
