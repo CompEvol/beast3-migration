@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-13T11:04:04.210275+12:00",
+  "generatedAt": "2026-05-13T11:11:54.797693+12:00",
   "packages": [
     {
       "name": "beast3",
@@ -9257,27 +9257,8 @@
         "totalViolations": 0
       },
       "xmlDeprecated": {
-        "count": 2,
-        "refs": [
-          {
-            "file": "/Users/adru001/Git/flc/examples/Human.H3.81-98-elc-StrictClock.xml",
-            "hit": "beast.base.evolution.tree.MRCAPrior",
-            "canonicalFqn": "beast.base.evolution.tree.MRCAPrior",
-            "replacement": "beast.base.spec.evolution.tree.MRCAPrior",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/flc/examples/Human.H3.81-98-elc.xml",
-            "hit": "beast.base.evolution.tree.MRCAPrior",
-            "canonicalFqn": "beast.base.evolution.tree.MRCAPrior",
-            "replacement": "beast.base.spec.evolution.tree.MRCAPrior",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          }
-        ]
+        "count": 0,
+        "refs": []
       },
       "build": {
         "hasPom": true,
