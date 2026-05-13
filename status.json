@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-13T14:50:59.134880+12:00",
+  "generatedAt": "2026-05-13T15:28:36.918430+12:00",
   "packages": [
     {
       "name": "beast3",
@@ -16109,16 +16109,16 @@
       "java": {
         "distribution": {
           "total": 6,
-          "spec": 0,
+          "spec": 2,
           "mixed": 0,
-          "legacy": 2,
+          "legacy": 0,
           "neutral": 4
         },
         "operator": {
           "total": 13,
-          "spec": 0,
+          "spec": 1,
           "mixed": 0,
-          "legacy": 1,
+          "legacy": 0,
           "neutral": 12
         },
         "logger": {
@@ -16151,16 +16151,16 @@
         },
         "other": {
           "total": 35,
-          "spec": 0,
+          "spec": 3,
           "mixed": 0,
-          "legacy": 3,
+          "legacy": 0,
           "neutral": 32
         }
       },
       "xml": {
         "total": 3,
-        "migrated": 0,
-        "v28": 0,
+        "migrated": 3,
+        "v28": 3,
         "legacyDir": 0
       },
       "fxTemplates": {
@@ -16177,396 +16177,8 @@
         "refs": []
       },
       "xmlDeprecated": {
-        "count": 43,
-        "refs": [
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears_ranges.xml",
-            "hit": "beast.base.evolution.tree.coalescent.RandomTree",
-            "canonicalFqn": "beast.base.evolution.tree.coalescent.RandomTree",
-            "replacement": "beast.base.spec.evolution.tree.coalescent.RandomTree",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears_ranges.xml",
-            "hit": "beast.base.evolution.tree.MRCAPrior",
-            "canonicalFqn": "beast.base.evolution.tree.MRCAPrior",
-            "replacement": "beast.base.spec.evolution.tree.MRCAPrior",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears_ranges.xml",
-            "hit": "beast.base.evolution.branchratemodel.UCRelaxedClockModel",
-            "canonicalFqn": "beast.base.evolution.branchratemodel.UCRelaxedClockModel",
-            "replacement": "beast.base.spec.evolution.branchratemodel.UCRelaxedClockModel",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears_ranges.xml",
-            "hit": "UniformOperator",
-            "canonicalFqn": "beast.base.inference.operator.UniformOperator",
-            "replacement": "beast.base.spec.inference.operator.uniform.IntervalOperator",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears_ranges.xml",
-            "hit": "beast.base.evolution.TreeWithMetaDataLogger",
-            "canonicalFqn": "beast.base.evolution.TreeWithMetaDataLogger",
-            "replacement": "beast.base.spec.evolution.TreeWithMetaDataLogger",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears_ranges.xml",
-            "hit": "beast.base.inference.distribution.Uniform",
-            "canonicalFqn": "beast.base.inference.distribution.Uniform",
-            "replacement": "beast.base.spec.inference.distribution.Uniform",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears_ranges.xml",
-            "hit": "beast.base.inference.distribution.Exponential",
-            "canonicalFqn": "beast.base.inference.distribution.Exponential",
-            "replacement": "beast.base.spec.inference.distribution.Exponential",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears_ranges.xml",
-            "hit": "beast.base.inference.distribution.LogNormalDistributionModel",
-            "canonicalFqn": "beast.base.inference.distribution.LogNormalDistributionModel",
-            "replacement": "beast.base.spec.inference.distribution.LogNormal",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears_ranges.xml",
-            "hit": "beast.base.inference.distribution.Normal",
-            "canonicalFqn": "beast.base.inference.distribution.Normal",
-            "replacement": "beast.base.spec.inference.distribution.Normal",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears_ranges.xml",
-            "hit": "beast.base.inference.distribution.Beta",
-            "canonicalFqn": "beast.base.inference.distribution.Beta",
-            "replacement": "beast.base.spec.inference.distribution.Beta",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears_ranges.xml",
-            "hit": "beast.base.inference.distribution.Gamma",
-            "canonicalFqn": "beast.base.inference.distribution.Gamma",
-            "replacement": "beast.base.spec.inference.distribution.Gamma",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears_ranges.xml",
-            "hit": "beast.base.inference.distribution.LaplaceDistribution",
-            "canonicalFqn": "beast.base.inference.distribution.LaplaceDistribution",
-            "replacement": "beast.base.spec.inference.distribution.Laplace",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears_ranges.xml",
-            "hit": "beast.base.inference.distribution.Prior",
-            "canonicalFqn": "beast.base.inference.distribution.Prior",
-            "replacement": "beast.base.spec.inference.distribution.TensorDistribution",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears_ranges.xml",
-            "hit": "beast.base.inference.distribution.InverseGamma",
-            "canonicalFqn": "beast.base.inference.distribution.InverseGamma",
-            "replacement": "beast.base.spec.inference.distribution.InverseGamma",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears_ranges.xml",
-            "hit": "beast.base.inference.distribution.OneOnX",
-            "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "beast.base.spec.inference.distribution.LogUniform",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/brachiopods.xml",
-            "hit": "beast.base.evolution.tree.coalescent.RandomTree",
-            "canonicalFqn": "beast.base.evolution.tree.coalescent.RandomTree",
-            "replacement": "beast.base.spec.evolution.tree.coalescent.RandomTree",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/brachiopods.xml",
-            "hit": "beast.base.evolution.branchratemodel.StrictClockModel",
-            "canonicalFqn": "beast.base.evolution.branchratemodel.StrictClockModel",
-            "replacement": "beast.base.spec.evolution.branchratemodel.StrictClockModel",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/brachiopods.xml",
-            "hit": "beast.base.evolution.TreeWithMetaDataLogger",
-            "canonicalFqn": "beast.base.evolution.TreeWithMetaDataLogger",
-            "replacement": "beast.base.spec.evolution.TreeWithMetaDataLogger",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/brachiopods.xml",
-            "hit": "beast.base.inference.distribution.Uniform",
-            "canonicalFqn": "beast.base.inference.distribution.Uniform",
-            "replacement": "beast.base.spec.inference.distribution.Uniform",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/brachiopods.xml",
-            "hit": "beast.base.inference.distribution.Exponential",
-            "canonicalFqn": "beast.base.inference.distribution.Exponential",
-            "replacement": "beast.base.spec.inference.distribution.Exponential",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/brachiopods.xml",
-            "hit": "beast.base.inference.distribution.LogNormalDistributionModel",
-            "canonicalFqn": "beast.base.inference.distribution.LogNormalDistributionModel",
-            "replacement": "beast.base.spec.inference.distribution.LogNormal",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/brachiopods.xml",
-            "hit": "beast.base.inference.distribution.Normal",
-            "canonicalFqn": "beast.base.inference.distribution.Normal",
-            "replacement": "beast.base.spec.inference.distribution.Normal",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/brachiopods.xml",
-            "hit": "beast.base.inference.distribution.Beta",
-            "canonicalFqn": "beast.base.inference.distribution.Beta",
-            "replacement": "beast.base.spec.inference.distribution.Beta",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/brachiopods.xml",
-            "hit": "beast.base.inference.distribution.Gamma",
-            "canonicalFqn": "beast.base.inference.distribution.Gamma",
-            "replacement": "beast.base.spec.inference.distribution.Gamma",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/brachiopods.xml",
-            "hit": "beast.base.inference.distribution.LaplaceDistribution",
-            "canonicalFqn": "beast.base.inference.distribution.LaplaceDistribution",
-            "replacement": "beast.base.spec.inference.distribution.Laplace",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/brachiopods.xml",
-            "hit": "beast.base.inference.distribution.Prior",
-            "canonicalFqn": "beast.base.inference.distribution.Prior",
-            "replacement": "beast.base.spec.inference.distribution.TensorDistribution",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/brachiopods.xml",
-            "hit": "beast.base.inference.distribution.InverseGamma",
-            "canonicalFqn": "beast.base.inference.distribution.InverseGamma",
-            "replacement": "beast.base.spec.inference.distribution.InverseGamma",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/brachiopods.xml",
-            "hit": "beast.base.inference.distribution.OneOnX",
-            "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "beast.base.spec.inference.distribution.LogUniform",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears.xml",
-            "hit": "beast.base.evolution.tree.coalescent.RandomTree",
-            "canonicalFqn": "beast.base.evolution.tree.coalescent.RandomTree",
-            "replacement": "beast.base.spec.evolution.tree.coalescent.RandomTree",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears.xml",
-            "hit": "beast.base.evolution.tree.MRCAPrior",
-            "canonicalFqn": "beast.base.evolution.tree.MRCAPrior",
-            "replacement": "beast.base.spec.evolution.tree.MRCAPrior",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears.xml",
-            "hit": "beast.base.evolution.branchratemodel.UCRelaxedClockModel",
-            "canonicalFqn": "beast.base.evolution.branchratemodel.UCRelaxedClockModel",
-            "replacement": "beast.base.spec.evolution.branchratemodel.UCRelaxedClockModel",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears.xml",
-            "hit": "UniformOperator",
-            "canonicalFqn": "beast.base.inference.operator.UniformOperator",
-            "replacement": "beast.base.spec.inference.operator.uniform.IntervalOperator",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears.xml",
-            "hit": "beast.base.evolution.TreeWithMetaDataLogger",
-            "canonicalFqn": "beast.base.evolution.TreeWithMetaDataLogger",
-            "replacement": "beast.base.spec.evolution.TreeWithMetaDataLogger",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears.xml",
-            "hit": "beast.base.inference.distribution.Uniform",
-            "canonicalFqn": "beast.base.inference.distribution.Uniform",
-            "replacement": "beast.base.spec.inference.distribution.Uniform",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears.xml",
-            "hit": "beast.base.inference.distribution.Exponential",
-            "canonicalFqn": "beast.base.inference.distribution.Exponential",
-            "replacement": "beast.base.spec.inference.distribution.Exponential",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears.xml",
-            "hit": "beast.base.inference.distribution.LogNormalDistributionModel",
-            "canonicalFqn": "beast.base.inference.distribution.LogNormalDistributionModel",
-            "replacement": "beast.base.spec.inference.distribution.LogNormal",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears.xml",
-            "hit": "beast.base.inference.distribution.Normal",
-            "canonicalFqn": "beast.base.inference.distribution.Normal",
-            "replacement": "beast.base.spec.inference.distribution.Normal",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears.xml",
-            "hit": "beast.base.inference.distribution.Beta",
-            "canonicalFqn": "beast.base.inference.distribution.Beta",
-            "replacement": "beast.base.spec.inference.distribution.Beta",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears.xml",
-            "hit": "beast.base.inference.distribution.Gamma",
-            "canonicalFqn": "beast.base.inference.distribution.Gamma",
-            "replacement": "beast.base.spec.inference.distribution.Gamma",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears.xml",
-            "hit": "beast.base.inference.distribution.LaplaceDistribution",
-            "canonicalFqn": "beast.base.inference.distribution.LaplaceDistribution",
-            "replacement": "beast.base.spec.inference.distribution.Laplace",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears.xml",
-            "hit": "beast.base.inference.distribution.Prior",
-            "canonicalFqn": "beast.base.inference.distribution.Prior",
-            "replacement": "beast.base.spec.inference.distribution.TensorDistribution",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears.xml",
-            "hit": "beast.base.inference.distribution.InverseGamma",
-            "canonicalFqn": "beast.base.inference.distribution.InverseGamma",
-            "replacement": "beast.base.spec.inference.distribution.InverseGamma",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/sampled-ancestors/examples/bears.xml",
-            "hit": "beast.base.inference.distribution.OneOnX",
-            "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "beast.base.spec.inference.distribution.LogUniform",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          }
-        ]
+        "count": 0,
+        "refs": []
       },
       "build": {
         "hasPom": true,
