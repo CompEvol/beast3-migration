@@ -5,90 +5,67 @@ metadata:
   type: skill
 ---
 
-Given a BEAST2 package project root, produce a working BEAST3 Maven build. All relative paths are
-anchored at the project root. The skeleton at `../beast-package-skeleton` and beast3 at
-`../beast3` must already be available (run the controller's Step 1 first).
+Given a BEAST2 package project root, produce a working BEAST3 Maven build. Prerequisites: `../beast-package-skeleton` and `../beast3` must exist (controller Step 1).
 
 ---
 
-## Detect the current build system
+## Detect build system
 
 ```bash
 ls pom.xml build.xml *.xml 2>/dev/null
 ```
 
-Identify which path applies:
-
 | Condition | Action |
 |---|---|
-| `pom.xml` with `<maven.compiler.release>25</maven.compiler.release>` | Already on BEAST3 Maven — skip to **Generate module-info.java** |
-| `pom.xml` targeting Java 11/17 | Update existing `pom.xml` — go to **Update existing pom.xml** |
-| `build.xml` (Ant) | Full Maven scaffold — go to **Scaffold full Maven directory structure** |
-| Neither | Full Maven scaffold — go to **Scaffold full Maven directory structure** |
+| `pom.xml` with `<maven.compiler.release>25</maven.compiler.release>` | Skip to **Generate module-info.java** |
+| `pom.xml` targeting Java 11/17 | **Update existing pom.xml** |
+| `build.xml` (Ant) or nothing | **Scaffold full Maven layout** |
 
 ---
 
-## Update existing `pom.xml` to BEAST3
+## Update existing `pom.xml`
 
-Read the project's existing `pom.xml`. Apply these changes:
+1. Set `<maven.compiler.release>25</maven.compiler.release>` and compiler plugin `<release>25</release>`.
+2. Replace BEAST2 deps with BEAST3 deps (`<scope>provided</scope>`); see `../beast3/README.md` → **Add BEAST dependencies**.
+3. Copy surefire, resources, and assembly plugin configs from `../beast-package-skeleton/pom.xml`.
 
-1. **Java version**: set `<maven.compiler.release>25</maven.compiler.release>` and compiler plugin
-   `<release>25</release>`.
-2. **BEAST3 dependencies**: see **Add BEAST dependencies** in `../beast3/README.md` for the exact
-   `<dependency>` blocks. Use `<scope>provided</scope>`.
-3. **Surefire, resources, and assembly plugins**: copy the corresponding plugin configurations
-   from `../beast-package-skeleton/pom.xml`.
-
-Then go to **Verify Maven dependency resolution** (skip Scaffold).
+Then skip to **Verify Maven dependency resolution**.
 
 ---
 
-## Scaffold full Maven directory structure
+## Scaffold full Maven layout
 
-For projects with no `pom.xml` or an Ant build, create the Maven layout from scratch using the
-skeleton as the template.
+Infer or ask the user for: `groupId`, `artifactId`, `version`, `beast.pkg.name`, GitHub org/repo.
 
-**Determine the package identity** by asking the user (or inferring from existing source files):
-- `groupId`, `artifactId`, `version`, `beast.pkg.name`, GitHub org/repo
-
-**Create directories** (only those that don't already exist):
+**Create directories** (only if missing):
 ```bash
 mkdir -p src/main/java src/main/resources src/test/java src/assembly
 mkdir -p src/test/resources/<groupId.with.dots>/examples
 ```
 
-**Move Java source files** from the legacy layout to `src/main/java/` and `src/test/java/`
-preserving their package subdirectory structure. For Ant projects the source root is typically
-`src/` or `java/` — confirm by checking where `.java` files live.
+**Move Java sources** from legacy root (`src/` or `java/`) to `src/main/java/` and `src/test/java/`, preserving package subdirectory paths.
 
-**Classify and move all non-Java files** according to whether they are needed by production code
-or only by tests. Use the table below to decide the destination, then use the path conventions
-derived from the beast3 source tree (`../beast3`):
+**Move non-Java files:**
 
-| File type | Loaded by | Destination | Path convention |
-|---|---|---|---|
-| BEAUti FxTemplate XMLs (`*.xml` in a `fxtemplates/` dir) | main GUI classes | `src/main/resources/` | `<groupId.with.dots>/fxtemplates/` |
-| FXML layout files | main GUI classes | `src/main/resources/` | mirrors the Java package path with `/` e.g. `<pkg/path>/MyDialog.fxml` |
-| Icons, images, CSS used by GUI | main GUI classes | `src/main/resources/` | alongside the FXML that uses them, e.g. `<pkg/path>/icon/` |
-| Grammar files (ANTLR `.g4`) | main Java code | `src/main/resources/` | mirrors the package of the generated parser |
-| Any file loaded via `getClass().getResource(...)` from main code | main Java code | `src/main/resources/` | mirrors the calling class's package path |
-| Example BEAST XML analyses | test classes only | `src/test/resources/` | `<groupId.with.dots>/examples/` |
-| Data files (NEXUS, FASTA, JSON, trees, logs) | test classes or example XMLs | `src/test/resources/` | `<groupId.with.dots>/examples/<type>/` e.g. `nexus/`, `fasta/` |
-| Test scripts (R, shell) | test classes only | `src/test/resources/` | `<groupId.with.dots>/examples/` |
-
-**Path naming conventions** (from beast3 layout):
-- In `src/main/resources/`: use **slash-separated Java package path** as subdirectory (e.g. `beast/base/evolution/tree/treeparser/`), so `getClass().getResource("Foo.fxml")` resolves correctly.
-- In `src/test/resources/`: use the **module name with dots** as the top-level folder (e.g. `beast.base/examples/`), not slashes. This matches how BEAST's test framework resolves example paths.
-
-**Disambiguation rule**: if unsure whether a file belongs in main or test resources, check which Java class loads it. If it is only ever referenced from a class under `src/test/java/`, it goes to `src/test/resources/`. If it is referenced from a class under `src/main/java/`, it goes to `src/main/resources/`.
-
-**Copy and customise template files** from the skeleton:
-
-| Source (skeleton) | Destination | Customisation needed |
+| File type | Destination | Path |
 |---|---|---|
-| `pom.xml` | `pom.xml` | Update groupId, artifactId, version, pkg name, GitHub URLs |
-| `src/assembly/beast-package.xml` | `src/assembly/beast-package.xml` | None (copy as-is) |
-| `version.xml` | `version.xml` | Update package name, version, service class list |
+| BEAUti FxTemplate XMLs | `src/main/resources/` | `<groupId.with.dots>/fxtemplates/` |
+| FXML, icons, CSS | `src/main/resources/` | mirrors calling class's package path |
+| Grammar files (ANTLR `.g4`) | `src/main/resources/` | mirrors generated parser's package |
+| Any `getClass().getResource(...)` file (main code) | `src/main/resources/` | mirrors calling class's package path |
+| Example BEAST XMLs | `src/test/resources/` | `<groupId.with.dots>/examples/` |
+| Data files (NEXUS, FASTA, JSON, trees, logs) | `src/test/resources/` | `<groupId.with.dots>/examples/<type>/` |
+| Test scripts (R, shell) | `src/test/resources/` | `<groupId.with.dots>/examples/` |
+
+If unsure, check which class loads the file: test-only → `src/test/resources/`; main code → `src/main/resources/`.
+
+**Copy and customise skeleton files:**
+
+| Source | Destination | Customise |
+|---|---|---|
+| `../beast-package-skeleton/pom.xml` | `pom.xml` | groupId, artifactId, version, pkg name, GitHub URLs |
+| `../beast-package-skeleton/src/assembly/beast-package.xml` | `src/assembly/beast-package.xml` | none |
+| `../beast-package-skeleton/version.xml` | `version.xml` | version numbers only; log other suggestions to `tmp/b3migration/TODO.md` |
 
 ---
 
@@ -98,33 +75,28 @@ derived from the beast3 source tree (`../beast3`):
 mvn dependency:resolve -q
 ```
 
-If BEAST3 artifacts are unresolved, ensure beast3 is installed locally — see
-**Alternative: local install or SNAPSHOT builds** in `../beast3/README.md`.
+If BEAST3 artifacts are unresolved, install them locally — see `../beast3/README.md` → **Alternative: local install or SNAPSHOT builds**.
 
 ---
 
 ## Generate `src/main/java/module-info.java`
 
-Apply **`module-info.md`** — it scans sources, generates `src/main/java/module-info.java`,
-and cross-checks `pom.xml` and `version.xml` for consistency.
+Apply **`module-info.md`**.
 
 ---
 
 ## Guard rails
 
-- Never delete source files — only move them when restructuring from Ant to Maven.
-- Only create directories and files that do not already exist.
+- Never delete source files — only move them.
+- Only create directories/files that don't already exist.
 - Do not modify files outside the project root.
-- If `groupId`, `artifactId`, or other identity fields cannot be inferred, ask the user before
-  writing any files.
+- Ask before writing if `groupId`, `artifactId`, or other identity fields cannot be inferred.
 
 ---
 
 ## Log (controller Step 7 report)
 
-Record the following for the Step 7 report table after this skill completes:
-
 - `pom.xml`: `created` or `updated (Java N → 25)`
 - `Sources moved`: `yes (Ant → Maven)` or `no`
 - `mvn dependency:resolve`: `PASS` or `FAIL — <reason>`
-- `module-info.java`: set by `module-info.md` (applied in the **Generate module-info.java** section)
+- `module-info.java`: set by `module-info.md`

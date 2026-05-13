@@ -5,112 +5,65 @@ metadata:
   type: skill
 ---
 
-Run the generation script (Python 3.8+, no extra dependencies) from the project root:
+Run from the project root:
 
 ```bash
 python ../beast3-migration/skills/scripts/gen_module_info.py .
 ```
 
-
 ---
 
 ## What the script does
 
-### A — Scan sources for BEAST providers
+**A — Scan sources** (`src/main/java/`, excluding `module-info.java`): detects concrete top-level classes that are BEAST providers if they carry `@Description(...)`, extend a known BEAST base class (`BEASTObject`, `CalculationNode`, `Distribution`, `Operator`, `Logger`, `DataType*`, `SubstitutionModel*`, etc.), or directly `implement BEASTInterface`. Abstract classes, interfaces, annotations, and inner classes are excluded.
 
-Walks every `.java` file under `src/main/java/` (excluding `module-info.java` itself) and
-identifies concrete top-level classes that are BEAST providers using source-level heuristics:
-- carries `@Description(...)`, OR
-- `extends` a known BEAST base class (`BEASTObject`, `CalculationNode`, `Distribution`,
-  `Operator`, `Logger`, `DataType*`, `SubstitutionModel*`, etc.), OR
-- directly `implements BEASTInterface`
-
-Abstract classes, interfaces, `@interface` annotations, and inner classes are excluded —
-JPMS requires concrete providers with a public no-arg constructor.
-
-### B — Generate `module-info.java`
-
-Writes `src/main/java/module-info.java` with:
-- `open module <groupId>` — module name taken from `groupId` in `pom.xml`
+**B — Write `module-info.java`** at `src/main/java/module-info.java`:
+- `open module <groupId>` (from `pom.xml`)
 - `requires beast.pkgmgmt` and `requires beast.base`
-- `exports` for every package found under `src/main/java/`
-- `provides beast.base.core.BEASTInterface with` listing all detected providers
+- `exports` for every package under `src/main/java/`
+- `provides beast.base.core.BEASTInterface with` all detected providers
 
-See `../beast3/beast-base/src/main/java/module-info.java` for a full real-world example
-with additional `requires`, `uses`, and multiple `provides` blocks.
+See `../beast3/beast-base/src/main/java/module-info.java` for a real-world example.
 
-### C — Cross-check pom.xml, version.xml, and module-info.java
+**C — Cross-check** and print consistency issues:
 
-After writing the file the script prints any consistency issues:
-
-| Check | What triggers it | Fix |
-|---|---|---|
-| Version mismatch | `pom.xml` version ≠ `version.xml` version | Align both to the same value |
-| SNAPSHOT | `pom.xml` version contains `SNAPSHOT` | Keep `version.xml` at last formal release; do not put a SNAPSHOT in it |
-| Pre-release warning | Either version contains `alpha`, `beta`, or `rc` | `version.xml` should only carry formal release versions |
-| In `version.xml` not `module-info` | Class in `<service>` block not detected by scan | Verify class still exists; add manually to `provides` or remove from `version.xml` |
-| In `module-info` not `version.xml` | Newly detected class missing from `version.xml` | Add `<provider classname="…"/>` to the `<service>` block |
-| `BEAST.base` version mismatch | `pom.xml` dep version ≠ `version.xml` `atleast` attribute | Align `atleast` to match the pom dependency version |
-
-Review the console output and fix every reported issue before proceeding. If the heuristic
-missed a class (e.g. one that implements `BEASTInterface` only transitively through a
-non-standard base), add it manually to both `module-info.java` and `version.xml`.
-
-Use **Option A (single module)** unless the package has substantial GUI code with multiple
-custom BEAUti editors, in which case use **Option B (core + fx)**. Both options are described
-in `../beast3/scripts/migration-guide.md`.
+| Issue | Fix |
+|---|---|
+| `pom.xml` version ≠ `version.xml` version | Align both |
+| `pom.xml` version contains `SNAPSHOT` | Keep `version.xml` at last formal release |
+| Either version contains `alpha`, `beta`, or `rc` | `version.xml` should only carry formal releases |
+| Class in `version.xml` `<service>` block not detected by scan | Verify class exists; add manually to `module-info.java`. Do not remove from `version.xml`. |
+| Detected class missing from `version.xml` | Do not add to `version.xml`. Log to `tmp/b3migration/TODO.md`. |
+| `pom.xml` beast-base dep version ≠ `version.xml` `atleast` attribute | Update `atleast` in `version.xml` to match pom version |
 
 ---
 
-## Code summary (`gen_module_info.py`)
+## After the script runs
 
-**Location:** `../beast3-migration/skills/scripts/gen_module_info.py`
-**Language:** Python 3.8+ — stdlib only (`re`, `sys`, `xml.etree.ElementTree`, `pathlib`)
-**Entry point:** `main()` — accepts optional `project_root` as `sys.argv[1]`, defaults to `"."`
+- **Fix `module-info.java`**: add any providers the heuristic missed (e.g. classes that implement `BEASTInterface` only transitively through a non-standard base).
+- **Do not modify `version.xml` structure**: only version-number edits (`<package version>` and `<depends atleast>`) are permitted.
+- **Log all provider discrepancies** to `tmp/b3migration/TODO.md` (create with header if missing):
 
-### Functions
-
-| Function | Inputs | Returns | Purpose |
-|---|---|---|---|
-| `scan_sources(src_java)` | `Path` to `src/main/java` | `(list[fqcn], list[package])` both sorted | Walks `*.java`, applies `_is_provider()`, collects packages |
-| `_is_provider(source)` | raw Java source `str` | `bool` | Returns `True` if concrete + (`@Description` or BEAST base or `implements BEASTInterface`) |
-| `read_pom(pom_path)` | `Path` to `pom.xml` | `dict` with keys `groupId`, `artifactId`, `version`, `module_name`, `deps` | Parses Maven POM; resolves `${property}` references; `deps` is `"g:a" → version` |
-| `read_version_xml(version_path)` | `Path` to `version.xml` | `dict` with keys `name`, `version`, `providers`, `depends` | Extracts `<service><provider classname>` list and `<depends on atleast>` list |
-| `generate_module_info(module_name, packages, providers)` | strings + sorted lists | `str` | Renders the `module-info.java` file content |
-| `check_consistency(pom, vxml, providers)` | dicts + provider list | `list[str]` of issue messages | Runs all six consistency checks; returns empty list if clean |
-
-### Detection regex patterns
-
-| Pattern variable | Matches | Purpose |
+```markdown
+# Migration TODOs
+| File | Class | Note |
 |---|---|---|
-| `_DESCRIPTION` | `@Description(` | BEAST annotation — primary heuristic |
-| `_BEAST_BASES` | `extends BEASTObject\|CalculationNode\|Distribution\|Operator\|Logger\|DataType*\|…` | Known abstract BEAST base classes |
-| `_IMPLEMENTS_BI` | `implements … BEASTInterface` (up to `{`) | Direct interface implementation |
-| `_ABSTRACT` | `abstract class` | Exclusion — abstract classes cannot be JPMS providers |
-| `_INTERFACE` | `public interface Foo` | Exclusion |
-| `_ANNOTATION` | `public @interface Foo` | Exclusion |
-| `_PACKAGE` | `package com.example;` | Extract package name for FQCNs and `exports` |
+| module-info.java | com.example.MyClass | missed by gen_module_info.py — extends Alignment (not in _BEAST_BASES); added manually |
+| version.xml | com.example.OtherClass | in module-info but not version.xml — verify and add <provider> manually after review |
+```
 
-### Consistency check logic
+---
 
-- **Version mismatch**: `pom["version"] != vxml["version"]`
-- **SNAPSHOT guard**: `"SNAPSHOT" in pom["version"].upper()` → always an issue for `version.xml`
-- **Pre-release** (`_PRE_RELEASE = re.compile(r"alpha|beta|rc|snapshot", re.IGNORECASE)`): checked on both `pom["version"]` and `vxml["version"]`
-- **Provider symmetric diff**: `set(vxml["providers"]) - set(providers)` and vice-versa
-- **BEAST.base atleast**: `pom["deps"]["io.github.compevol:beast-base"]` vs `vxml["depends"][*]["atleast"]` where `on` is `BEAST.base`, `beast-base`, or `beast.base`
+## Known limitations
 
-### Known limitations
-
-- Transitive `BEASTInterface` implementations through a non-standard base class are not detected — add them manually.
-- Inner class providers (e.g. `MyModel.Inner`) are excluded by design; JPMS cannot register them.
-- The script reads source files, not bytecode — a class that is generated at compile time will not appear.
+- Transitive `BEASTInterface` implementations through a non-standard base are not detected — add manually.
+- Inner class providers are excluded by design (JPMS cannot register them).
+- Compile-time-generated classes will not appear.
 
 ---
 
 ## Log (controller Step 7 report)
 
-Record the script's console output for the Step 7 report:
-
 - `Providers detected: N`
 - `Packages exported: N`
-- `Consistency issues: N resolved / N remaining` — list any that required manual fix
+- `Consistency issues: N resolved / N remaining` — list any requiring manual fix

@@ -38,6 +38,7 @@ and stop — do not proceed until the user confirms or asks you to run the missi
 | Step 5 | Step 2, Step 4 | Step 2 verified above; `tmp/b3migration/STATUS.md` exists with a file queue |
 | Step 6 | Step 5 | all rows in STATUS.md are `done` or `error` (none `pending` or `in-progress`) |
 | Step 7 | Step 5 | same as Step 6 |
+| Step 8 | Step 2 | `../beast3/.github/workflows/ci-publish.yml` exists |
 
 ### Path C — Fresh start
 
@@ -276,6 +277,33 @@ summary. Then print a brief summary to the user:
 | By sub-skill | How many Java files each sub-skill touched |
 | TODOs | Contents of `tmp/b3migration/TODO.md` |
 | `mvn test` result | Pass / fail with error count |
+| GitHub workflow | `copied and adapted (branch: <branch>)` or `copied (branch: master, no changes)` |
+
+---
+
+## Step 8 — Copy GitHub Actions workflow
+
+**Detect the project's default branch:**
+
+```bash
+git rev-parse --abbrev-ref HEAD
+```
+
+**Create the workflow directory if missing and copy the workflow:**
+
+```bash
+mkdir -p .github/workflows
+cp ../beast3/.github/workflows/ci-publish.yml .github/workflows/ci-publish.yml
+```
+
+**Adapt branch references** — if the detected branch is not `master`, replace every occurrence:
+
+| Original | Replacement |
+|---|---|
+| `branches: [ master ]` | `branches: [ <branch> ]` |
+| `refs/heads/master` | `refs/heads/<branch>` |
+
+If the branch is already `master`, no substitution is needed.
 
 ---
 
