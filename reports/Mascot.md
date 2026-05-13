@@ -1,6 +1,6 @@
 # Mascot — what's left
 
-> **Scanned at:** 2026-05-13T14:24:24.557159  
+> **Scanned at:** 2026-05-13T14:39:19.470595  
 > **Commit:** `b7b7295` on `update-citations-and-readme` — [view on GitHub](https://github.com/CompEvol/Mascot/commit/b7b72958436854fbe07d91bb82fed3d3de2aa91d)  
 > **Pom version:** `3.1.0-beta1`  
 > **Maven Central:** `io.github.compevol:mascot:3.1.0-beta1`  
@@ -9,7 +9,7 @@
 ## Summary
 
 - **Java classes:** 4 on spec, 0 mixed, 1 legacy of 121 total
-- **Example XMLs:** 1 on spec / 1 on `version="2.8"` / 229 total (+55 under legacy/)
+- **Example XMLs:** 1 on spec / 1 on `version="2.8"` / 284 total
 - **BEAUti fxtemplates:** 0 clean / 0 use spec / 14 total
 - **Input rule:** 13 classes hold 23 Input(s) declared too concretely
 - **Maven Central:** 3.1.0-beta1
@@ -138,7 +138,7 @@
 
 ## Example XMLs pending migration
 
-**Needs `version="2.8"`** (228):
+**Needs `version="2.8"`** (283):
 
 - `MASCOT6_glmcontinuous_asia_1201_a0.xml`
 - `beast-source/test/tmp123x666.xml`
@@ -333,6 +333,61 @@
 - `beast-source/examples/ratesDirichlet.xml`
 - `beast-source/examples/testCalYule_5t_2c.xml`
 - `beast-source/examples/testDirectSimulatorHierarchical.xml`
+- `beast-source/examples/beast2vs1/testStrictClockTipDatesSampling.xml`
+- `beast-source/examples/beast2vs1/testStarBEASTLinear.xml`
+- `beast-source/examples/beast2vs1/testBSP1.xml`
+- `beast-source/examples/beast2vs1/testExponentialGrowth.xml`
+- `beast-source/examples/beast2vs1/testYuleModel_10taxa.xml`
+- `beast-source/examples/beast2vs1/testBirthDeathModel_10taxa.xml`
+- `beast-source/examples/beast2vs1/testSRD06CP12_3.xml`
+- `beast-source/examples/beast2vs1/testStarBEASTConstant.xml`
+- `beast-source/examples/beast2vs1/testHKY.xml`
+- `beast-source/examples/beast2vs1/testStrictClock2.xml`
+- `beast-source/examples/beast2vs1/testCoalescentTipDates1.xml`
+- `beast-source/examples/beast2vs1/testCoalescentTipDates.xml`
+- `beast-source/examples/beast2vs1/testUCRelaxedClockLogNormal.xml`
+- `beast-source/examples/beast2vs1/testStarBEAST.xml`
+- `beast-source/examples/beast2vs1/testStarBeast2.xml`
+- `beast-source/examples/beast2vs1/beast1/testStrictClockTipDatesSampling.xml`
+- `beast-source/examples/beast2vs1/beast1/testStarBEASTLinear.xml`
+- `beast-source/examples/beast2vs1/beast1/testBSP1.xml`
+- `beast-source/examples/beast2vs1/beast1/testExponentialGrowth.xml`
+- `beast-source/examples/beast2vs1/beast1/testCoalescent.xml`
+- `beast-source/examples/beast2vs1/beast1/testYuleModel_10taxa.xml`
+- `beast-source/examples/beast2vs1/beast1/testBirthDeathModel_10taxa.xml`
+- `beast-source/examples/beast2vs1/beast1/testStrictClockNoDate2.xml`
+- `beast-source/examples/beast2vs1/beast1/testSRD06CP12_3.xml`
+- `beast-source/examples/beast2vs1/beast1/testStarBEASTConstant.xml`
+- `beast-source/examples/beast2vs1/beast1/testYule.xml`
+- `beast-source/examples/beast2vs1/beast1/testUCRelaxedClockLogNormal.xml`
+- `beast-source/examples/beast2vs1/beast1/testStrictClockNoDate.xml`
+- `beast-source/examples/beast2vs1/beast1/testCoalescentNoClock.xml`
+- `beast-source/examples/beast2vs1/beast1/testMultiSubstModel.xml`
+- `beast-source/examples/beast2vs1/beast1/testMCMC.xml`
+- `beast-source/examples/beast2vs1/beast1/testCalibration.xml`
+- `beast-source/examples/beast2vs1/beast1/testStarBEASTLinearConstRoot.xml`
+- `beast-source/examples/beast2vs1/beast1/testSiteModelAlpha.xml`
+- `beast-source/examples/beast2vs1/beast1/testStrictClockTipTime.xml`
+- `beast-source/examples/beast2vs1/beast1/testEBSP.xml`
+- `beast-source/examples/beast2vs1/beast1/testBirthDeathAsYule.xml`
+- `beast-source/examples/beast2vs1/beast1/testRandomLocalClock.xml`
+- `beast-source/examples/beast2vs1/beast1/testCoalescentNoClock1.xml`
+- `beast-source/examples/beast2vs1/beast1/testBSPNoClock.xml`
+- `beast-source/examples/beast2vs1/testCoalescentNoClock.xml`
+- `beast-source/examples/beast2vs1/testMultiSubstModel.xml`
+- `beast-source/examples/beast2vs1/testCoalescentTipDatesSampling.xml`
+- `beast-source/examples/beast2vs1/testCalibration.xml`
+- `beast-source/examples/beast2vs1/testTipDates.xml`
+- `beast-source/examples/beast2vs1/testStarBEASTLinearConstRoot.xml`
+- `beast-source/examples/beast2vs1/testCalibrationMono.xml`
+- `beast-source/examples/beast2vs1/testSiteModelAlpha.xml`
+- `beast-source/examples/beast2vs1/testStrictClock.xml`
+- `beast-source/examples/beast2vs1/testStrictClockTipTime.xml`
+- `beast-source/examples/beast2vs1/testEBSP.xml`
+- `beast-source/examples/beast2vs1/testBirthDeathAsYule.xml`
+- `beast-source/examples/beast2vs1/testRandomLocalClock.xml`
+- `beast-source/examples/beast2vs1/testCoalescentNoClock1.xml`
+- `beast-source/examples/beast2vs1/testBSPNoClock.xml`
 - `beast-source/examples/testRelaxedClock.xml`
 - `beast-source/examples/testTwoCalibrationsPrior.xml`
 - `beast-source/examples/testSliceHKY.xml`

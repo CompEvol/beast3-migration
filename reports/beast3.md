@@ -1,6 +1,6 @@
 # beast3 — what's left
 
-> **Scanned at:** 2026-05-13T14:24:22.905917  
+> **Scanned at:** 2026-05-13T14:39:16.979736  
 > **Commit:** `6df8243` on `oneonx-deprecation-points-at-loguniform` — [view on GitHub](https://github.com/CompEvol/beast3/commit/6df82436c8e13b4061a3477c393a74489ac6b314)  
 > **Pom version:** `2.8.0-SNAPSHOT`  
 > **Maven Central:** `io.github.compevol:beast3:2.8.0-beta5`  
@@ -11,7 +11,7 @@
 ## Summary
 
 - **Java classes:** 74 on spec, 0 mixed, 0 legacy of 187 total
-- **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 78 total (+81 under legacy/)
+- **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 157 total (+2 under legacy/)
 - **BEAUti fxtemplates:** 6 clean / 10 use spec / 10 total
 - **Input rule:** all Inputs use the right carrier ✅
 - **Maven Central:** 2.8.0-beta5
@@ -22,7 +22,7 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 
 ## Example XMLs pending migration
 
-**Needs `version="2.8"`** (78):
+**Needs `version="2.8"`** (157):
 
 - `beast-base/src/test/resources/beast.base/examples/benchmark/II/testHKY1748.xml`
 - `beast-base/src/test/resources/beast.base/examples/benchmark/II/testHKY1749.xml`
@@ -72,6 +72,30 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 - `beast-base/src/test/resources/beast.base/examples/spec/testBSP.xml`
 - `beast-base/src/test/resources/beast.base/examples/spec/testHKY.xml`
 - `beast-base/src/test/resources/beast.base/examples/spec/testTN93.xml`
+- `beast-base/src/test/resources/beast.base/examples/spec/beast2vs1/testStrictClockTipDatesSampling.xml`
+- `beast-base/src/test/resources/beast.base/examples/spec/beast2vs1/testBSP1.xml`
+- `beast-base/src/test/resources/beast.base/examples/spec/beast2vs1/testExponentialGrowth.xml`
+- `beast-base/src/test/resources/beast.base/examples/spec/beast2vs1/testYuleModel_10taxa.xml`
+- `beast-base/src/test/resources/beast.base/examples/spec/beast2vs1/testBirthDeathModel_10taxa.xml`
+- `beast-base/src/test/resources/beast.base/examples/spec/beast2vs1/testSRD06CP12_3.xml`
+- `beast-base/src/test/resources/beast.base/examples/spec/beast2vs1/testHKY.xml`
+- `beast-base/src/test/resources/beast.base/examples/spec/beast2vs1/testStrictClock2.xml`
+- `beast-base/src/test/resources/beast.base/examples/spec/beast2vs1/testCoalescentTipDates1.xml`
+- `beast-base/src/test/resources/beast.base/examples/spec/beast2vs1/testCoalescentTipDates.xml`
+- `beast-base/src/test/resources/beast.base/examples/spec/beast2vs1/testUCRelaxedClockLogNormal.xml`
+- `beast-base/src/test/resources/beast.base/examples/spec/beast2vs1/testCoalescentNoClock.xml`
+- `beast-base/src/test/resources/beast.base/examples/spec/beast2vs1/testMultiSubstModel.xml`
+- `beast-base/src/test/resources/beast.base/examples/spec/beast2vs1/testCoalescentTipDatesSampling.xml`
+- `beast-base/src/test/resources/beast.base/examples/spec/beast2vs1/testCalibration.xml`
+- `beast-base/src/test/resources/beast.base/examples/spec/beast2vs1/testCalibrationMono.xml`
+- `beast-base/src/test/resources/beast.base/examples/spec/beast2vs1/testSiteModelAlpha.xml`
+- `beast-base/src/test/resources/beast.base/examples/spec/beast2vs1/testStrictClock.xml`
+- `beast-base/src/test/resources/beast.base/examples/spec/beast2vs1/testStrictClockTipTime.xml`
+- `beast-base/src/test/resources/beast.base/examples/spec/beast2vs1/testEBSP.xml`
+- `beast-base/src/test/resources/beast.base/examples/spec/beast2vs1/testBirthDeathAsYule.xml`
+- `beast-base/src/test/resources/beast.base/examples/spec/beast2vs1/testRandomLocalClock.xml`
+- `beast-base/src/test/resources/beast.base/examples/spec/beast2vs1/testCoalescentNoClock1.xml`
+- `beast-base/src/test/resources/beast.base/examples/spec/beast2vs1/testBSPNoClock.xml`
 - `beast-base/src/test/resources/beast.base/examples/spec/testEBSP.xml`
 - `beast-base/src/test/resources/beast.base/examples/bitflip.xml`
 - `beast-base/src/test/resources/beast.base/examples/testClassicRootCalibrationPrior.xml`
@@ -88,6 +112,61 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 - `beast-base/src/test/resources/beast.base/examples/testTVM.xml`
 - `beast-base/src/test/resources/beast.base/examples/testCalYule_5t_2c.xml`
 - `beast-base/src/test/resources/beast.base/examples/testDirectSimulatorHierarchical.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testStrictClockTipDatesSampling.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testStarBEASTLinear.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testBSP1.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testExponentialGrowth.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testYuleModel_10taxa.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testBirthDeathModel_10taxa.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testSRD06CP12_3.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testStarBEASTConstant.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testHKY.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testStrictClock2.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testCoalescentTipDates1.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testCoalescentTipDates.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testUCRelaxedClockLogNormal.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testStarBEAST.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testStarBeast2.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/beast1/testStrictClockTipDatesSampling.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/beast1/testStarBEASTLinear.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/beast1/testBSP1.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/beast1/testExponentialGrowth.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/beast1/testCoalescent.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/beast1/testYuleModel_10taxa.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/beast1/testBirthDeathModel_10taxa.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/beast1/testStrictClockNoDate2.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/beast1/testSRD06CP12_3.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/beast1/testStarBEASTConstant.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/beast1/testYule.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/beast1/testUCRelaxedClockLogNormal.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/beast1/testStrictClockNoDate.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/beast1/testCoalescentNoClock.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/beast1/testMultiSubstModel.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/beast1/testMCMC.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/beast1/testCalibration.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/beast1/testStarBEASTLinearConstRoot.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/beast1/testSiteModelAlpha.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/beast1/testStrictClockTipTime.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/beast1/testEBSP.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/beast1/testBirthDeathAsYule.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/beast1/testRandomLocalClock.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/beast1/testCoalescentNoClock1.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/beast1/testBSPNoClock.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testCoalescentNoClock.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testMultiSubstModel.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testCoalescentTipDatesSampling.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testCalibration.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testTipDates.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testStarBEASTLinearConstRoot.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testCalibrationMono.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testSiteModelAlpha.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testStrictClock.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testStrictClockTipTime.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testEBSP.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testBirthDeathAsYule.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testRandomLocalClock.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testCoalescentNoClock1.xml`
+- `beast-base/src/test/resources/beast.base/examples/beast2vs1/testBSPNoClock.xml`
 - `beast-base/src/test/resources/beast.base/examples/testRelaxedClock.xml`
 - `beast-base/src/test/resources/beast.base/examples/testTwoCalibrationsPrior.xml`
 - `beast-base/src/test/resources/beast.base/examples/testDirichlet/testDirichlet.xml`
@@ -135,30 +214,6 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
 | `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
 
-**`beast-fx/src/main/resources/beast.fx/fxtemplates/LegacyStandard.xml`** (28):
-
-| Where | Hit | Replacement |
-|---|---|---|
-| `spec=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
-| `spec=` | `OneOnX` → `beast.base.inference.distribution.OneOnX` | `beast.base.spec.inference.distribution.LogUniform` |
-| `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.evolution.TreeWithMetaDataLogger` | `beast.base.spec.evolution.TreeWithMetaDataLogger` |
-| `spec=` | `beast.base.evolution.operator.EpochFlexOperator` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.evolution.operator.TreeStretchOperator` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
-| `spec=` | `beast.base.evolution.operator.AdaptableOperatorSampler` | `beast.base.spec.evolution.operator.AdaptableOperatorSampler` |
-| `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
-| `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
-| `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
-| `map=` | `beast.base.inference.distribution.OneOnX` | `beast.base.spec.inference.distribution.LogUniform` |
-| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
-| `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
-| `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
-| `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
-| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
-| `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
-| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
-
 **`beast-fx/src/main/resources/beast.fx/fxtemplates/ParametricDistributions.xml`** (2):
 
 | Where | Hit | Replacement |
@@ -179,30 +234,6 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | Where | Hit | Replacement |
 |---|---|---|
 | `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
-| `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
-| `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
-| `map=` | `beast.base.inference.distribution.OneOnX` | `beast.base.spec.inference.distribution.LogUniform` |
-| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
-| `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
-| `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
-| `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
-| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
-| `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
-| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
-
-**`release/Mac/output/BEAST.app/Contents/fxtemplates/LegacyStandard.xml`** (28):
-
-| Where | Hit | Replacement |
-|---|---|---|
-| `spec=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
-| `spec=` | `OneOnX` → `beast.base.inference.distribution.OneOnX` | `beast.base.spec.inference.distribution.LogUniform` |
-| `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.evolution.TreeWithMetaDataLogger` | `beast.base.spec.evolution.TreeWithMetaDataLogger` |
-| `spec=` | `beast.base.evolution.operator.EpochFlexOperator` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.evolution.operator.TreeStretchOperator` | _(no spec equivalent found)_ |
-| `spec=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
-| `spec=` | `beast.base.evolution.operator.AdaptableOperatorSampler` | `beast.base.spec.evolution.operator.AdaptableOperatorSampler` |
 | `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
 | `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |

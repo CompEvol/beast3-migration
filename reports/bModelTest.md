@@ -1,6 +1,6 @@
 # bModelTest — what's left
 
-> **Scanned at:** 2026-05-13T14:24:25.728299  
+> **Scanned at:** 2026-05-13T14:39:20.650048  
 > **Commit:** `5d6043c` on `beast3-migration` — [view on GitHub](https://github.com/BEAST2-Dev/bModelTest/commit/5d6043c4f75bb479fde8f9f9b62ab45ee9e456f1)  
 > **Pom version:** `1.4.0-beta1`  
 > **Maven Central:** not published as `io.github.beast2-dev:bModelTest` (not published (404))  
@@ -9,7 +9,7 @@
 ## Summary
 
 - **Java classes:** 6 on spec, 0 mixed, 0 legacy of 20 total
-- **Example XMLs:** 2 on spec / 2 on `version="2.8"` / 2 total (+1 under legacy/)
+- **Example XMLs:** 2 on spec / 2 on `version="2.8"` / 3 total
 - **BEAUti fxtemplates:** 1 clean / 1 use spec / 1 total
 - **Input rule:** all Inputs use the right carrier ✅
 - **Maven Central:** ❌ not published (not published (404))
@@ -27,9 +27,11 @@ Not yet published as `io.github.beast2-dev:bModelTest`. Verify the namespace on 
 
 No Java classes flagged as legacy or mixed — all relevant types are on spec or have no parameter involvement. ✅
 
-## Example XMLs
+## Example XMLs pending migration
 
-All example XMLs target `version="2.8"` and use spec types with no legacy parameter declarations. ✅
+**Needs `version="2.8"`** (1):
+
+- `examples/beast2-paper.xml`
 
 ## FxTemplates
 

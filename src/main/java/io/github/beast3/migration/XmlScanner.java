@@ -12,9 +12,11 @@ import java.util.stream.Stream;
  * if the root element declares {@code version="2.8"} and the namespace
  * attribute references {@code beast.base.spec.*}.
  *
- * <p>XMLs under any directory whose name starts with {@code legacy} are
- * counted separately and excluded from the migrated/total totals — they're
- * intentional pre-migration snapshots.</p>
+ * <p>XMLs under a directory named {@code legacy*}, {@code 2.7*}, or
+ * {@code v2.7*} are counted separately and excluded from the migrated /
+ * total totals — they're intentional pre-migration snapshots. Deprecated-
+ * class references inside them are also skipped (see
+ * {@link #scanForDeprecatedReferences}).</p>
  */
 public final class XmlScanner {
 
@@ -66,11 +68,17 @@ public final class XmlScanner {
     }
 
     private static boolean isLegacyDir(Path root, Path file) {
+        // Legacy snapshots live under directories named `legacy*` or
+        // pinned to the previous major (`2.7` / `v2.7`). `beast2*` was
+        // historically included but false-positives badly: `beast2vs1/`
+        // is a standard BEAST 1-vs-BEAST 2 comparison suite (found even
+        // under beast3's `.../examples/spec/beast2vs1/`, i.e. the
+        // migration target).
         Path rel = root.relativize(file);
         for (Path part : rel) {
             String name = part.toString().toLowerCase();
-            if (name.startsWith("legacy") || name.startsWith("beast2")
-                    || name.startsWith("v2.7") || name.startsWith("2.7")) {
+            if (name.startsWith("legacy") || name.startsWith("v2.7")
+                    || name.startsWith("2.7")) {
                 return true;
             }
         }
@@ -147,6 +155,11 @@ public final class XmlScanner {
             java.util.Map<String, String> deprecatedShortNames,
             java.util.Map<String, String> specReplacements) {
         for (XmlRecord rec : report.xmls) {
+            // Files under any `legacy*` / `beast2*` / `2.7` directory are
+            // pre-migration snapshots intentionally kept for reference —
+            // they're already excluded from the example-XML counters, so
+            // don't surface their deprecated `spec=`/`<map>` hits either.
+            if (rec.inLegacyDir()) continue;
             String content;
             try {
                 content = java.nio.file.Files.readString(rec.file());
