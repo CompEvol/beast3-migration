@@ -1,6 +1,6 @@
 # feast — what's left
 
-> **Scanned at:** 2026-05-13T15:33:06.170809  
+> **Scanned at:** 2026-05-13T15:37:35.855907  
 > **Commit:** `224b618` on `beast2.8-migration` — [view on GitHub](https://github.com/tgvaughan/feast/commit/224b618715c41e4ed58f5d4dc2c161dab4000099)  
 > **Pom version:** `11.0.0`  
 > **Maven Central:** not published as `io.github.tgvaughan:feast` (not published (404))  
@@ -13,7 +13,7 @@
 - **Java classes:** 22 on spec, 0 mixed, 0 legacy of 88 total
 - **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 9 total
 - **BEAUti fxtemplates:** 0 clean / 0 use spec / 1 total
-- **Input rule:** 2 classes hold 2 Input(s) declared too concretely
+- **Input rule:** 1 classes hold 1 Input(s) declared too concretely
 - **Maven Central:** ❌ not published (not published (404))
 
 ## Build & release gaps
@@ -31,11 +31,6 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 ## Inputs declared too concretely
 
 > Concrete spec params (`RealScalarParam`, `RealVectorParam`, …) belong on Operators, which need to write the parameter, and on Loggers, which need `getID()` to write column headers (the pure type interfaces deliberately do not extend `BEASTInterface`). Distributions, CalcNodes, and other read-only holders should declare the interface (`RealScalar`, `RealVector`, …) so adapters and transforms can be substituted. Legacy `RealParameter` / `Function` Inputs are violations everywhere.
-
-### Parameters (1)
-
-- `feast.parameter.RandomRealVectorParam`
-    - concrete: `Input<RealVectorParam<Real>>`
 
 ### Other (1)
 

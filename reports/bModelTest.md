@@ -1,6 +1,6 @@
 # bModelTest — what's left
 
-> **Scanned at:** 2026-05-13T15:33:05.863679  
+> **Scanned at:** 2026-05-13T15:37:35.561812  
 > **Commit:** `2f45ba7` on `beast3-migration` — [view on GitHub](https://github.com/BEAST2-Dev/bModelTest/commit/2f45ba71ff4f4919c55bfe45e695ec3bdc5625dc)  
 > **Pom version:** `1.4.0-beta1`  
 > **Maven Central:** not published as `io.github.beast2-dev:bModelTest` (not published (404))  

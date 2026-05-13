@@ -223,6 +223,7 @@ public final class JavaScanner {
             String primaryExtendsFqn = resolvePrimaryExtends(s.extendsClause, simpleToFqn, pkgName);
             Kind ownKind = classify(tokens, resolved);
             boolean ownHasSpec = computeOwnHasSpec(tokens, resolved);
+            boolean isStateNodeInitialiser = computeIsStateNodeInitialiser(tokens, resolved);
             boolean isDeprecated = hasDeprecatedAnnotation(stripped, s.declStart);
             // The javadoc is only present in the original (un-stripped) source.
             String deprecationMessage = isDeprecated
@@ -254,6 +255,7 @@ public final class JavaScanner {
                     primaryExtendsFqn,
                     isDeprecated,
                     deprecationMessage,
+                    isStateNodeInitialiser,
                     java.util.List.copyOf(myInputs)));
         }
     }
@@ -838,6 +840,21 @@ public final class JavaScanner {
         int i = 0;
         while (i < n && a.charAt(i) == b.charAt(i)) i++;
         return i;
+    }
+
+    /**
+     * True if the class directly extends/implements
+     * {@code beast.base.inference.StateNodeInitialiser}. Used to exempt
+     * initialiser classes from the concrete-spec-param input rule, since
+     * they legitimately need to write into the state nodes they're handed.
+     * Only direct extends/implements is detected; transitive parents are
+     * not walked here.
+     */
+    private static boolean computeIsStateNodeInitialiser(Set<String> tokens, Set<String> resolved) {
+        for (String fqn : resolved) {
+            if (fqn.equals("beast.base.inference.StateNodeInitialiser")) return true;
+        }
+        return tokens.contains("StateNodeInitialiser");
     }
 
     /** True if the class extends or implements anything in {@code beast.base.spec.*}. */

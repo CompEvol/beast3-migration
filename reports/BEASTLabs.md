@@ -1,6 +1,6 @@
 # BEASTLabs — what's left
 
-> **Scanned at:** 2026-05-13T15:33:04.010414  
+> **Scanned at:** 2026-05-13T15:37:33.723247  
 > **Commit:** `8a075b6` on `master` — [view on GitHub](https://github.com/BEAST2-Dev/BEASTlabs/commit/8a075b6c58657065f4dab2a426d9f7d45f29c92b)  
 > **Pom version:** `2.1.0-SNAPSHOT`  
 > **Maven Central:** `io.github.beast2-dev:beast-labs:2.1.0-beta2`  
@@ -11,7 +11,7 @@
 - **Java classes:** 1 on spec, 0 mixed, 16 legacy of 197 total
 - **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 20 total
 - **BEAUti fxtemplates:** 0 clean / 0 use spec / 3 total
-- **Input rule:** 16 classes hold 30 Input(s) declared too concretely
+- **Input rule:** 15 classes hold 29 Input(s) declared too concretely
 - **Maven Central:** 2.1.0-beta2
 
 ## Java classes pending migration
@@ -116,11 +116,6 @@
 - `beastlabs.evolution.tree.coalescent.StructuredCoalescentTree`
     - concrete: `Input<RealVectorParam<? extends Real>>`
     - concrete: `Input<IntVectorParam<? extends NonNegativeInt>>`
-
-### Other (1)
-
-- `beastlabs.evolution.tree.InitParamFromTree`
-    - concrete: `Input<RealVectorParam<? extends Real>>`
 
 ## Inputs declaring `@Deprecated` types
 

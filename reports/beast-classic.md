@@ -1,6 +1,6 @@
 # beast-classic — what's left
 
-> **Scanned at:** 2026-05-13T15:33:04.256678  
+> **Scanned at:** 2026-05-13T15:37:33.970526  
 > **Commit:** `bff64a7` on `wip-avmn-skyride-skygrid` — [view on GitHub](https://github.com/BEAST2-Dev/beast-classic/commit/bff64a7272d89e251245360c75b74c72fc8dc070)  
 > **Pom version:** `1.7.0-SNAPSHOT`  
 > **Maven Central:** `io.github.beast2-dev:beast-classic:1.7.0-beta1`  
@@ -11,7 +11,7 @@
 - **Java classes:** 7 on spec, 0 mixed, 9 legacy of 97 total
 - **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 10 total
 - **BEAUti fxtemplates:** 0 clean / 1 use spec / 5 total
-- **Input rule:** 5 classes hold 9 Input(s) declared too concretely
+- **Input rule:** 4 classes hold 8 Input(s) declared too concretely
 - **Maven Central:** 1.7.0-beta1
 
 ## Java classes pending migration
@@ -55,11 +55,6 @@
 - `beastclassic.evolution.likelihood.LeafTrait`
     - concrete: `Input<IntVectorParam<? extends Int>>`
 - `beastclassic.evolution.substitutionmodel.SVSGeneralSubstitutionModel`
-    - concrete: `Input<BoolVectorParam>`
-
-### Other (1)
-
-- `beastclassic.phylogeography.RateIndicatorInitializer`
     - concrete: `Input<BoolVectorParam>`
 
 ## Example XMLs pending migration

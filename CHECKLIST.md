@@ -9,7 +9,7 @@ are at the bottom of this page.
 
 <!-- BEGIN AUTO -->
 
-_Last regenerated: 2026-05-13T15:33:06.880594+12:00_
+_Last regenerated: 2026-05-13T15:37:36.494902+12:00_
 
 ## Release & build status
 
@@ -37,8 +37,8 @@ Traffic-light columns: 🔴 any legacy lineage / non-migrated content, 🟡 no l
 | Package | Distrs | Ops | Loggers | CalcNodes | Params | StateNodes | XMLs | FxTemplates | Input rule |
 |---|---|---|---|---|---|---|---|---|---|
 | beast3 | ✅ 38 | ✅ 15 | ✅ 7 | ✅ 33 | ✅ 4 | ✅ 13 | 0 / 0 / 157 (+2 legacy) | 6 / 10 / 10 | ✅ |
-| BEASTLabs | 5 / 22 | ✅ 21 | 1 / 11 | 7 / 10 | 2 / 2 | ✅ 8 | 0 / 0 / 20 | 0 / 0 / 3 | 16 / 30 |
-| beast-classic | ✅ 9 | ✅ 11 | 4 / 11 | 5 / 14 | ✅ 1 | ✅ 2 | 0 / 0 / 10 | 0 / 1 / 5 | 5 / 9 |
+| BEASTLabs | 5 / 22 | ✅ 21 | 1 / 11 | 7 / 10 | 2 / 2 | ✅ 8 | 0 / 0 / 20 | 0 / 0 / 3 | 15 / 29 |
+| beast-classic | ✅ 9 | ✅ 11 | 4 / 11 | 5 / 14 | ✅ 1 | ✅ 2 | 0 / 0 / 10 | 0 / 1 / 5 | 4 / 8 |
 | CoupledMCMC | — | — | ✅ 4 | — | — | — | 1 / 1 / 1 | 1 / 1 / 1 | ✅ |
 | flc | — | — | — | ✅ 10 | — | — | 2 / 2 / 2 | — | ✅ |
 | Mascot | ✅ 11 | ✅ 6 | 1 / 25 | ✅ 18 | — | ✅ 2 | 1 / 1 / 284 | 0 / 0 / 14 | 13 / 23 |
@@ -48,7 +48,7 @@ Traffic-light columns: 🔴 any legacy lineage / non-migrated content, 🟡 no l
 | ORC | ✅ 1 | ✅ 52 | ✅ 1 | — | — | — | 1 / 1 / 1 | 1 / 1 / 1 | ✅ |
 | bModelTest | ✅ 3 | ✅ 4 | ✅ 3 | ✅ 3 | — | — | 3 / 3 / 3 | 1 / 1 / 1 | ✅ |
 | obama | ✅ 3 | ✅ 2 | ✅ 2 | 11 / 44 | — | — | 0 / 0 / 14 | 0 / 1 / 1 | 8 / 17 |
-| feast | ✅ 3 | ✅ 8 | ✅ 15 | ✅ 3 | ✅ 6 | ✅ 5 | 0 / 0 / 9 | 0 / 0 / 1 | 2 / 2 |
+| feast | ✅ 3 | ✅ 8 | ✅ 15 | ✅ 3 | ✅ 6 | ✅ 5 | 0 / 0 / 9 | 0 / 0 / 1 | 1 / 1 |
 
 Legend: ✅ = clean, ❌ = missing, `legacy / total` = classes still on a legacy base, `—` = no data.
 FxTemplates show `clean / spec / total` — `clean` = uses spec types and no legacy `parameter.RealParameter`-style attrs; `spec` = body references `beast.base.spec.*` at all.

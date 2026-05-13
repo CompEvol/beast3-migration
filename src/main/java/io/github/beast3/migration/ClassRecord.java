@@ -51,6 +51,15 @@ public final class ClassRecord {
     public final boolean isDeprecated;
 
     /**
+     * True if the class directly extends/implements
+     * {@code beast.base.inference.StateNodeInitialiser}. Initialisers write
+     * into the state nodes they're handed, so the concrete-spec-param input
+     * rule (see {@link #ruleViolatingInputs}) treats them like Operators —
+     * they're allowed to declare {@code Input<RealScalarParam>} etc.
+     */
+    public final boolean isStateNodeInitialiser;
+
+    /**
      * The {@code @deprecated} javadoc text immediately preceding the class
      * declaration, if any. Empty otherwise. Used by
      * {@link JavaScanner#deriveSpecReplacements} to find a replacement when
@@ -79,6 +88,7 @@ public final class ClassRecord {
             String primaryExtendsFqn,
             boolean isDeprecated,
             String deprecationMessage,
+            boolean isStateNodeInitialiser,
             List<InputDecl> inputs) {
         this.file = file;
         this.packageName = packageName;
@@ -93,6 +103,7 @@ public final class ClassRecord {
         this.primaryExtendsFqn = primaryExtendsFqn;
         this.isDeprecated = isDeprecated;
         this.deprecationMessage = deprecationMessage == null ? "" : deprecationMessage;
+        this.isStateNodeInitialiser = isStateNodeInitialiser;
         this.inputs = inputs;
         this.kind = ownKind;
         this.status = toStatus(ownHasSpec, ownHasLegacy);
@@ -130,7 +141,12 @@ public final class ClassRecord {
             switch (d.carrier()) {
                 case LEGACY -> out.add(d);
                 case CONCRETE_SPEC -> {
-                    if (kind != Kind.OPERATOR && kind != Kind.LOGGER) out.add(d);
+                    // StateNodeInitialiser writes to its input state nodes,
+                    // same justification as the Operator exemption.
+                    if (kind != Kind.OPERATOR && kind != Kind.LOGGER
+                            && !isStateNodeInitialiser) {
+                        out.add(d);
+                    }
                 }
                 default -> { /* INTERFACE and OTHER are fine in any holder. */ }
             }
