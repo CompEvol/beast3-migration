@@ -1,7 +1,7 @@
 # bModelTest — what's left
 
-> **Scanned at:** 2026-05-13T13:53:47.610301  
-> **Commit:** `ecf0aaf` on `beast3-migration` *(dirty working tree)* — [view on GitHub](https://github.com/BEAST2-Dev/bModelTest/commit/ecf0aaf87e8ab4a680f9d09c50efcadda9d83839)  
+> **Scanned at:** 2026-05-13T14:24:25.728299  
+> **Commit:** `5d6043c` on `beast3-migration` — [view on GitHub](https://github.com/BEAST2-Dev/bModelTest/commit/5d6043c4f75bb479fde8f9f9b62ab45ee9e456f1)  
 > **Pom version:** `1.4.0-beta1`  
 > **Maven Central:** not published as `io.github.beast2-dev:bModelTest` (not published (404))  
 > **Stage hint:** compile-tested

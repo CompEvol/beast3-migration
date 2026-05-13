@@ -7,6 +7,11 @@
 #   maven:       "<groupId>:<artifactId>" — used to query Maven Central; omit if not published
 #   stage:       Author hint: maven_central | compile_tested | in_progress | not_started
 #   notes:       Optional free-text shown in the table
+#   specFocus:   true if the migration target is the `.spec.` Java sub-packages
+#                only — Java checks (tally, input rule, Input<@Deprecated>,
+#                punch lists) restrict to classes in `.spec.` packages and
+#                ignore the legacy classes still in place. Leave unset (default
+#                false) for packages still being assessed end-to-end.
 
 packages:
   - name: beast3
@@ -14,6 +19,7 @@ packages:
     github: CompEvol/beast3
     maven: io.github.compevol:beast3
     stage: maven_central
+    specFocus: true
     notes: Core. Multi-module — beast-base / beast-fx / beast-pkgmgmt / beast-test-utils.
 
   - name: BEASTLabs

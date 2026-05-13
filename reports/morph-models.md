@@ -1,6 +1,6 @@
 # morph-models — what's left
 
-> **Scanned at:** 2026-05-13T13:53:47.072445  
+> **Scanned at:** 2026-05-13T14:24:25.227741  
 > **Commit:** `db64781` on `master` — [view on GitHub](https://github.com/CompEvol/morph-models/commit/db64781d130654714b8344de74e65dbe6929bd5a)  
 > **Pom version:** `1.3.0-beta3`  
 > **Maven Central:** `io.github.compevol:morph-models:1.3.0-beta3`  

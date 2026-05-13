@@ -1,6 +1,6 @@
 # beast-classic — what's left
 
-> **Scanned at:** 2026-05-13T13:53:45.944592  
+> **Scanned at:** 2026-05-13T14:24:24.143853  
 > **Commit:** `bff64a7` on `wip-avmn-skyride-skygrid` — [view on GitHub](https://github.com/BEAST2-Dev/beast-classic/commit/bff64a7272d89e251245360c75b74c72fc8dc070)  
 > **Pom version:** `1.7.0-SNAPSHOT`  
 > **Maven Central:** `io.github.beast2-dev:beast-classic:1.7.0-beta1`  

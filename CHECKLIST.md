@@ -9,13 +9,13 @@ are at the bottom of this page.
 
 <!-- BEGIN AUTO -->
 
-_Last regenerated: 2026-05-13T13:53:48.409736+12:00_
+_Last regenerated: 2026-05-13T14:24:26.518527+12:00_
 
 ## Release & build status
 
 | Package | Stage | Maven Central | Pom version | JPMS | Release | CI | Code | XML | FxT | Dep refs |
 |---|---|---|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| [beast3](https://github.com/CompEvol/beast3) | Maven Central | [2.8.0-beta5](https://central.sonatype.com/artifact/io.github.compevol/beast3) | 2.8.0-SNAPSHOT | ✅ | ✅ | ✅ | 🟡 | 🔴 | 🟡 | 693 |
+| [beast3](https://github.com/CompEvol/beast3) | Maven Central | [2.8.0-beta5](https://central.sonatype.com/artifact/io.github.compevol/beast3) | 2.8.0-SNAPSHOT | ✅ | ✅ | ✅ | 🟢 | 🔴 | 🟡 | 693 |
 | [BEASTLabs](https://github.com/BEAST2-Dev/BEASTlabs) | Maven Central | [2.1.0-beta2](https://central.sonatype.com/artifact/io.github.beast2-dev/beast-labs) | 2.1.0-SNAPSHOT | ✅ | ✅ | ✅ | 🔴 | 🔴 | 🔴 | 173 |
 | [beast-classic](https://github.com/BEAST2-Dev/beast-classic) | Maven Central | [1.7.0-beta1](https://central.sonatype.com/artifact/io.github.beast2-dev/beast-classic) | 1.7.0-SNAPSHOT | ✅ | ✅ | ✅ | 🔴 | 🔴 | 🔴 | 112 |
 | [CoupledMCMC](https://github.com/CompEvol/CoupledMCMC) | Maven Central | [1.3.0-beta1](https://central.sonatype.com/artifact/io.github.compevol/coupled-mcmc) | 1.3.0-beta1 | ✅ | ✅ | ✅ | 🟢 | 🟢 | 🟢 | ✅ |
@@ -35,7 +35,7 @@ Traffic-light columns: 🔴 any legacy lineage / non-migrated content, 🟡 no l
 
 | Package | Distrs | Ops | Loggers | CalcNodes | Params | StateNodes | XMLs | FxTemplates | Input rule |
 |---|---|---|---|---|---|---|---|---|---|
-| beast3 | ✅ 70 | ✅ 47 | ✅ 16 | ✅ 45 | ✅ 5 | ✅ 23 | 0 / 0 / 78 (+81 legacy) | 6 / 10 / 10 | 3 / 3 |
+| beast3 | ✅ 38 | ✅ 15 | ✅ 7 | ✅ 33 | ✅ 4 | ✅ 13 | 0 / 0 / 78 (+81 legacy) | 6 / 10 / 10 | ✅ |
 | BEASTLabs | 5 / 22 | ✅ 21 | 1 / 11 | 7 / 10 | 2 / 2 | ✅ 8 | 0 / 0 / 20 | 0 / 0 / 3 | 16 / 30 |
 | beast-classic | ✅ 9 | ✅ 11 | 4 / 11 | 5 / 14 | ✅ 1 | ✅ 2 | 0 / 0 / 10 | 0 / 1 / 5 | 5 / 9 |
 | CoupledMCMC | — | — | ✅ 4 | — | — | — | 1 / 1 / 1 | 1 / 1 / 1 | ✅ |
@@ -59,7 +59,7 @@ Per package, for each kind: `spec / mixed / legacy / neutral · total`.
 
 | Package | Distributions | Operators | Loggers | CalcNodes | Parameters | StateNodes |
 |---|---|---|---|---|---|---|
-| beast3 | 56 / 0 / 0 / 14 · 70 | 1 / 0 / 0 / 46 · 47 | 5 / 0 / 0 / 11 · 16 | 3 / 0 / 0 / 42 · 45 | 4 / 0 / 0 / 1 · 5 | 6 / 0 / 0 / 17 · 23 |
+| beast3 | 38 / 0 / 0 / 0 · 38 | 1 / 0 / 0 / 14 · 15 | 4 / 0 / 0 / 3 · 7 | 3 / 0 / 0 / 30 · 33 | 4 / 0 / 0 / 0 · 4 | 6 / 0 / 0 / 7 · 13 |
 | BEASTLabs | 1 / 0 / 5 / 16 · 22 | 0 / 0 / 0 / 21 · 21 | 0 / 0 / 1 / 10 · 11 | 0 / 0 / 7 / 3 · 10 | 0 / 0 / 2 / 0 · 2 | 0 / 0 / 0 / 8 · 8 |
 | beast-classic | 0 / 0 / 0 / 9 · 9 | 1 / 0 / 0 / 10 · 11 | 2 / 0 / 4 / 5 · 11 | 3 / 0 / 5 / 6 · 14 | 1 / 0 / 0 / 0 · 1 | 0 / 0 / 0 / 2 · 2 |
 | CoupledMCMC | — | — | 0 / 0 / 0 / 4 · 4 | — | — | — |

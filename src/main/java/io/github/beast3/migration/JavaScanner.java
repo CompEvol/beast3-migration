@@ -607,10 +607,21 @@ public final class JavaScanner {
      * {@link Kind#OTHER} (subclasses of a model component are model
      * components), and accumulates the parent's spec signals. Tallies the
      * effective values into {@link Report#javaCounts}.</p>
+     *
+     * <p>When the package entry opts in via {@code specFocus: true} in
+     * {@code packages.yaml}, only classes whose Java package contains
+     * {@code .spec.} are tallied / counted against the input-rule, and
+     * {@code report.classes} is pruned to the spec subset so downstream
+     * phases (Input<@Deprecated> scan, punch-list rendering) naturally
+     * operate on the focused set. Chain resolution still uses every class
+     * so a spec child's legacy parent remains reachable through
+     * {@code byFqn}. Packages without {@code specFocus} are unfiltered.</p>
      */
     public static void resolveAndTally(Report report, Set<String> deprecatedFqns) {
         Map<String, ClassRecord> byFqn = new java.util.HashMap<>();
         for (ClassRecord c : report.classes) byFqn.put(c.fqn(), c);
+
+        boolean specFilter = report.entry.specFocus();
 
         for (ClassRecord c : report.classes) {
             // @Deprecated classes are known about (and slated for removal),
@@ -652,6 +663,7 @@ public final class JavaScanner {
             if (effLegacy && legacySource != null) {
                 c.setLegacyEvidence(java.util.List.of("extends " + legacySource));
             }
+            if (specFilter && !isInSpecPackage(c)) continue;
             report.javaCounts.get(effKind).add(c.status());
 
             // @Deprecated classes are known about — don't tally their Input
@@ -664,6 +676,12 @@ public final class JavaScanner {
                 }
             }
         }
+
+        if (specFilter) report.classes.removeIf(c -> !isInSpecPackage(c));
+    }
+
+    private static boolean isInSpecPackage(ClassRecord c) {
+        return c.packageName != null && c.packageName.contains(".spec.");
     }
 
     /** Builds the global registry of {@code @Deprecated} FQNs across reports. */

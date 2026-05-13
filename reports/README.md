@@ -17,5 +17,5 @@ for the high-level cross-package status table.
 | [sampled-ancestors](sampled-ancestors.md) | Maven Central | `2.3.0-beta1` | `09bc95c` | `2.3.0-beta1` |
 | [MutableAlignment](MutableAlignment.md) | compile-tested | — | `1101943` | — |
 | [ORC](ORC.md) | compile-tested | `1.3.1` | `c1c5910` | `1.3.0-SNAPSHOT` |
-| [bModelTest](bModelTest.md) | compile-tested | ❌ | `ecf0aaf` *(dirty)* | `1.4.0-beta1` |
+| [bModelTest](bModelTest.md) | compile-tested | ❌ | `5d6043c` | `1.4.0-beta1` |
 | [obama](obama.md) | compile-tested | ❌ | `7e14fd7` | `1.2.0-beta1` |

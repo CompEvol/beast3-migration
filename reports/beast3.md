@@ -1,6 +1,6 @@
 # beast3 — what's left
 
-> **Scanned at:** 2026-05-13T13:53:43.839022  
+> **Scanned at:** 2026-05-13T14:24:22.905917  
 > **Commit:** `6df8243` on `oneonx-deprecation-points-at-loguniform` — [view on GitHub](https://github.com/CompEvol/beast3/commit/6df82436c8e13b4061a3477c393a74489ac6b314)  
 > **Pom version:** `2.8.0-SNAPSHOT`  
 > **Maven Central:** `io.github.compevol:beast3:2.8.0-beta5`  
@@ -10,68 +10,15 @@
 
 ## Summary
 
-- **Java classes:** 93 on spec, 0 mixed, 0 legacy of 842 total
+- **Java classes:** 74 on spec, 0 mixed, 0 legacy of 187 total
 - **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 78 total (+81 under legacy/)
 - **BEAUti fxtemplates:** 6 clean / 10 use spec / 10 total
-- **Input rule:** 3 classes hold 3 Input(s) declared too concretely
+- **Input rule:** all Inputs use the right carrier ✅
 - **Maven Central:** 2.8.0-beta5
 
 ## Java migration
 
 No Java classes flagged as legacy or mixed — all relevant types are on spec or have no parameter involvement. ✅
-
-## Inputs declared too concretely
-
-> Concrete spec params (`RealScalarParam`, `RealVectorParam`, …) belong on Operators, which need to write the parameter, and on Loggers, which need `getID()` to write column headers (the pure type interfaces deliberately do not extend `BEASTInterface`). Distributions, CalcNodes, and other read-only holders should declare the interface (`RealScalar`, `RealVector`, …) so adapters and transforms can be substituted. Legacy `RealParameter` / `Function` Inputs are violations everywhere.
-
-### Operators (1)
-
-- `beast.base.inference.operator.kernel.BactrianIntervalOperator`
-    - legacy: `Input<RealParameter>`
-
-### CalcNodes (1)
-
-- `beast.base.evolution.branchratemodel.BranchRateModel.Base`
-    - legacy: `Input<Function>`
-
-### Other (1)
-
-- `beastfx.app.beauti.PriorInputEditor`
-    - legacy: `Input<Function>`
-
-## Inputs declaring `@Deprecated` types
-
-> Each entry below is an `Input<T>` field where `T` (or one of its generic parameters) is annotated `@Deprecated` somewhere in the scanned packages. Such Inputs block XML migration: downstream XMLs cannot supply a non-deprecated value to them. Replace the declared type with the suggested spec equivalent (and update the field/local variable types accordingly).
-
-**`beastfx.app.beauti.PriorInputEditor`** (1):
-
-| Input type | Hit | Replacement |
-|---|---|---|
-| `Function` | `Function` → `beast.base.core.Function` | _(no spec equivalent found)_ |
-
-**`beast.base.evolution.branchratemodel.BranchRateModel.Base`** (1):
-
-| Input type | Hit | Replacement |
-|---|---|---|
-| `Function` | `Function` → `beast.base.core.Function` | _(no spec equivalent found)_ |
-
-**`beast.base.inference.operator.kernel.Transform.UnivariableTransform`** (1):
-
-| Input type | Hit | Replacement |
-|---|---|---|
-| `List<Function>` | `Function` → `beast.base.core.Function` | _(no spec equivalent found)_ |
-
-**`beast.base.inference.operator.kernel.Transform.MultivariableTransform`** (1):
-
-| Input type | Hit | Replacement |
-|---|---|---|
-| `List<Function>` | `Function` → `beast.base.core.Function` | _(no spec equivalent found)_ |
-
-**`beast.base.inference.operator.kernel.BactrianIntervalOperator`** (1):
-
-| Input type | Hit | Replacement |
-|---|---|---|
-| `RealParameter` | `RealParameter` → `beast.base.inference.parameter.RealParameter` | `beast.base.spec.inference.parameter.RealScalarParam` |
 
 ## Example XMLs pending migration
 

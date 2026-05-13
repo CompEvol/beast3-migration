@@ -11,7 +11,8 @@ public record PackageEntry(
         String mavenGroupId,
         String mavenArtifactId,
         String stage,
-        String notes) {
+        String notes,
+        boolean specFocus) {
 
     public static PackageEntry from(Map<String, Object> raw, Path repoRoot) {
         String name = str(raw, "name");
@@ -26,6 +27,9 @@ public record PackageEntry(
                 artifactId = maven.substring(colon + 1).trim();
             }
         }
+        Object focus = raw.get("specFocus");
+        boolean specFocus = focus instanceof Boolean b ? b
+                : focus != null && Boolean.parseBoolean(focus.toString());
         return new PackageEntry(
                 name,
                 path,
@@ -33,7 +37,8 @@ public record PackageEntry(
                 groupId,
                 artifactId,
                 Optional.ofNullable((String) raw.get("stage")).orElse(""),
-                Optional.ofNullable((String) raw.get("notes")).orElse(""));
+                Optional.ofNullable((String) raw.get("notes")).orElse(""),
+                specFocus);
     }
 
     private static String str(Map<String, Object> raw, String key) {

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-13T13:53:48.414115+12:00",
+  "generatedAt": "2026-05-13T14:24:26.525228+12:00",
   "packages": [
     {
       "name": "beast3",
@@ -11,53 +11,53 @@
       "error": "",
       "java": {
         "distribution": {
-          "total": 70,
-          "spec": 56,
+          "total": 38,
+          "spec": 38,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "operator": {
+          "total": 15,
+          "spec": 1,
           "mixed": 0,
           "legacy": 0,
           "neutral": 14
         },
-        "operator": {
-          "total": 47,
-          "spec": 1,
-          "mixed": 0,
-          "legacy": 0,
-          "neutral": 46
-        },
         "logger": {
-          "total": 16,
-          "spec": 5,
-          "mixed": 0,
-          "legacy": 0,
-          "neutral": 11
-        },
-        "calcnode": {
-          "total": 45,
-          "spec": 3,
-          "mixed": 0,
-          "legacy": 0,
-          "neutral": 42
-        },
-        "parameter": {
-          "total": 5,
+          "total": 7,
           "spec": 4,
           "mixed": 0,
           "legacy": 0,
-          "neutral": 1
+          "neutral": 3
+        },
+        "calcnode": {
+          "total": 33,
+          "spec": 3,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 30
+        },
+        "parameter": {
+          "total": 4,
+          "spec": 4,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
         },
         "statenode": {
-          "total": 23,
+          "total": 13,
           "spec": 6,
           "mixed": 0,
           "legacy": 0,
-          "neutral": 17
+          "neutral": 7
         },
         "other": {
-          "total": 636,
+          "total": 77,
           "spec": 18,
           "mixed": 0,
           "legacy": 0,
-          "neutral": 618
+          "neutral": 59
         }
       },
       "xml": {
@@ -72,48 +72,12 @@
         "clean": 6
       },
       "inputRule": {
-        "classesWithViolations": 3,
-        "totalViolations": 3
+        "classesWithViolations": 0,
+        "totalViolations": 0
       },
       "inputDeprecated": {
-        "count": 5,
-        "refs": [
-          {
-            "classFqn": "beastfx.app.beauti.PriorInputEditor",
-            "typeStr": "Function",
-            "hit": "Function",
-            "canonicalFqn": "beast.base.core.Function",
-            "replacement": ""
-          },
-          {
-            "classFqn": "beast.base.evolution.branchratemodel.BranchRateModel.Base",
-            "typeStr": "Function",
-            "hit": "Function",
-            "canonicalFqn": "beast.base.core.Function",
-            "replacement": ""
-          },
-          {
-            "classFqn": "beast.base.inference.operator.kernel.Transform.UnivariableTransform",
-            "typeStr": "List<Function>",
-            "hit": "Function",
-            "canonicalFqn": "beast.base.core.Function",
-            "replacement": ""
-          },
-          {
-            "classFqn": "beast.base.inference.operator.kernel.Transform.MultivariableTransform",
-            "typeStr": "List<Function>",
-            "hit": "Function",
-            "canonicalFqn": "beast.base.core.Function",
-            "replacement": ""
-          },
-          {
-            "classFqn": "beast.base.inference.operator.kernel.BactrianIntervalOperator",
-            "typeStr": "RealParameter",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam"
-          }
-        ]
+        "count": 0,
+        "refs": []
       },
       "xmlDeprecated": {
         "count": 693,
