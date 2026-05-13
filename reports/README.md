@@ -7,7 +7,7 @@ for the high-level cross-package status table.
 
 | Package | Stage | Maven Central | Local commit | Pom version |
 |---|---|---|---|---|
-| [beast3](beast3.md) | Maven Central | `2.8.0-beta5` | `d3ad887` | `2.8.0-SNAPSHOT` |
+| [beast3](beast3.md) | Maven Central | `2.8.0-beta5` | `6df8243` | `2.8.0-SNAPSHOT` |
 | [BEASTLabs](BEASTLabs.md) | Maven Central | `2.1.0-beta2` | `8a075b6` | `2.1.0-SNAPSHOT` |
 | [beast-classic](beast-classic.md) | Maven Central | `1.7.0-beta1` | `bff64a7` | `1.7.0-SNAPSHOT` |
 | [CoupledMCMC](CoupledMCMC.md) | Maven Central | `1.3.0-beta1` | `ff80e99` | `1.3.0-beta1` |
@@ -16,6 +16,6 @@ for the high-level cross-package status table.
 | [morph-models](morph-models.md) | Maven Central | `1.3.0-beta3` | `db64781` | `1.3.0-beta3` |
 | [sampled-ancestors](sampled-ancestors.md) | Maven Central | `2.3.0-beta1` | `09bc95c` | `2.3.0-beta1` |
 | [MutableAlignment](MutableAlignment.md) | compile-tested | — | `1101943` | — |
-| [ORC](ORC.md) | compile-tested | ❌ | `c1c5910` | `1.3.0-SNAPSHOT` |
-| [bModelTest](bModelTest.md) | compile-tested | ❌ | `394dca8` | `1.4.0-beta1` |
+| [ORC](ORC.md) | compile-tested | `1.3.1` | `c1c5910` | `1.3.0-SNAPSHOT` |
+| [bModelTest](bModelTest.md) | compile-tested | ❌ | `394dca8` *(dirty)* | `1.4.0-beta1` |
 | [obama](obama.md) | compile-tested | ❌ | `7e14fd7` | `1.2.0-beta1` |

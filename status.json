@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-13T11:45:34.849069+12:00",
+  "generatedAt": "2026-05-13T13:33:14.176091+12:00",
   "packages": [
     {
       "name": "beast3",
@@ -136,7 +136,7 @@
             "file": "/Users/adru001/Git/beast3/beast-fx/src/main/resources/beast.fx/fxtemplates/Standard.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": true,
             "isFqn": true,
             "source": "map"
@@ -217,7 +217,7 @@
             "file": "/Users/adru001/Git/beast3/beast-fx/src/main/resources/beast.fx/fxtemplates/LegacyStandard.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": false,
             "source": "spec"
@@ -388,7 +388,7 @@
             "file": "/Users/adru001/Git/beast3/beast-fx/src/main/resources/beast.fx/fxtemplates/LegacyStandard.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -460,7 +460,7 @@
             "file": "/Users/adru001/Git/beast3/beast-fx/src/main/resources/beast.fx/fxtemplates/ParametricDistributions.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": true,
             "isFqn": true,
             "source": "spec"
@@ -559,7 +559,7 @@
             "file": "/Users/adru001/Git/beast3/release/Mac/output/BEAST.app/Contents/fxtemplates/Standard.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": true,
             "isFqn": true,
             "source": "map"
@@ -640,7 +640,7 @@
             "file": "/Users/adru001/Git/beast3/release/Mac/output/BEAST.app/Contents/fxtemplates/LegacyStandard.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": false,
             "source": "spec"
@@ -811,7 +811,7 @@
             "file": "/Users/adru001/Git/beast3/release/Mac/output/BEAST.app/Contents/fxtemplates/LegacyStandard.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -883,7 +883,7 @@
             "file": "/Users/adru001/Git/beast3/release/Mac/output/BEAST.app/Contents/fxtemplates/ParametricDistributions.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": true,
             "isFqn": true,
             "source": "spec"
@@ -955,7 +955,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/benchmark/II/testHKY1748.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -991,7 +991,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/benchmark/II/testHKY1749.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -1027,7 +1027,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/benchmark/II/testHKY1366.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -1063,7 +1063,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/benchmark/II/testHKY767.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -1099,7 +1099,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/benchmark/II/testHKY1809.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -1135,7 +1135,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/benchmark/II/testHKY501.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -1171,7 +1171,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/benchmark/II/testHKY3475.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -1207,7 +1207,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/benchmark/II/testHKY1510.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -1243,7 +1243,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/benchmark/II/testHKY1044.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -1279,7 +1279,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/benchmark/II/testHKY520.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -1315,7 +1315,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/benchmark/II/testHKY336.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -1351,7 +1351,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/benchmark/II/testHKY755.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -1540,7 +1540,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/testMultipleAlignments_randomTaxaOrder.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -1684,7 +1684,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/testGTR.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -1729,7 +1729,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/testOpSubSchedule.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -1837,7 +1837,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/testSRD06.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -1855,7 +1855,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/testSRD06.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -1909,7 +1909,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/testHKY.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -2044,7 +2044,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/testRestrictedGTR.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -2170,7 +2170,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/testRNA.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -2296,7 +2296,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/parameterised/RSV2.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -2440,7 +2440,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/testSYM.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -2467,7 +2467,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/testStarBeast.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -2674,7 +2674,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/spec/testGTR.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -2701,7 +2701,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/spec/testHKY.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -2818,7 +2818,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/spec/testTN93.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -2872,7 +2872,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/spec/testEBSP.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -3007,7 +3007,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/testClassicRootCalibrationPrior.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -3151,7 +3151,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/testTN93.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -3178,7 +3178,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/testStarBeastFBD.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -3376,7 +3376,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/testTIM.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -3412,7 +3412,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/testConditionalRootCalibrationPrior.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -3502,7 +3502,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/testCalibration.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -3610,7 +3610,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/testTipDates2.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -3763,7 +3763,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/testTVM.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -3898,7 +3898,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/beast2vs1/testStrictClockTipDatesSampling.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -4114,7 +4114,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/beast2vs1/testExponentialGrowth.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -4213,7 +4213,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/beast2vs1/testSRD06CP12_3.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -4249,7 +4249,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/beast2vs1/testSRD06CP12_3.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -4267,7 +4267,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/beast2vs1/testSRD06CP12_3.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -4384,7 +4384,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/beast2vs1/testStrictClock2.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -4474,7 +4474,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/beast2vs1/testUCRelaxedClockLogNormal.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -4690,7 +4690,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/beast2vs1/testCoalescentNoClock.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -4744,7 +4744,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/beast2vs1/testMultiSubstModel.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -4870,7 +4870,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/beast2vs1/testCalibration.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -5032,7 +5032,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/beast2vs1/testCalibrationMono.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -5122,7 +5122,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/beast2vs1/testSiteModelAlpha.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -5185,7 +5185,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/beast2vs1/testStrictClock.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -5248,7 +5248,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/beast2vs1/testStrictClockTipTime.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -5293,7 +5293,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/beast2vs1/testEBSP.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": false,
             "source": "spec"
@@ -5383,7 +5383,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/beast2vs1/testBirthDeathAsYule.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -5455,7 +5455,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/beast2vs1/testRandomLocalClock.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -5707,7 +5707,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/starbeastinit/sbi-01.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": false,
             "source": "spec"
@@ -5716,7 +5716,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/starbeastinit/sbi-01.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": false,
             "source": "spec"
@@ -5761,7 +5761,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/starbeastinit/sbi-02.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": false,
             "source": "spec"
@@ -5770,7 +5770,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/starbeastinit/sbi-02.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": false,
             "source": "spec"
@@ -5815,7 +5815,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/starbeastinit/sbi-03.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": false,
             "source": "spec"
@@ -5824,7 +5824,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/starbeastinit/sbi-03.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": false,
             "source": "spec"
@@ -5878,7 +5878,7 @@
             "file": "/Users/adru001/Git/beast3/beast-base/src/test/resources/beast.base/examples/testEBSP.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -6648,7 +6648,7 @@
             "file": "/Users/adru001/Git/BEASTLabs/examples/testBactrianOperatorSchedule.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -6783,7 +6783,7 @@
             "file": "/Users/adru001/Git/BEASTLabs/examples/testMCMCMC.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -6936,7 +6936,7 @@
             "file": "/Users/adru001/Git/BEASTLabs/examples/testMultiParitionTreeLikelihood.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -7053,7 +7053,7 @@
             "file": "/Users/adru001/Git/BEASTLabs/examples/testAVMN.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -7188,7 +7188,7 @@
             "file": "/Users/adru001/Git/BEASTLabs/examples/independentMCMC.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -7422,7 +7422,7 @@
             "file": "/Users/adru001/Git/BEASTLabs/examples/benchmarking/testMultiParitionTreeLikelihoodRuntime.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -7575,7 +7575,7 @@
             "file": "/Users/adru001/Git/BEASTLabs/examples/benchmarking/testTreeLikelihoodRuntime.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -7719,7 +7719,7 @@
             "file": "/Users/adru001/Git/BEASTLabs/examples/posthocanalysis/testPostHocAnalysis.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -7872,7 +7872,7 @@
             "file": "/Users/adru001/Git/BEASTLabs/examples/testBactrianOperators.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -7899,7 +7899,7 @@
             "file": "/Users/adru001/Git/BEASTLabs/src/main/resources/beast.labs/fxtemplates/SelfTuningMCMC.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": true,
             "isFqn": true,
             "source": "map"
@@ -8237,7 +8237,7 @@
             "file": "/Users/adru001/Git/beast-classic/examples/RacRABV_LogNRRW2.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -8354,7 +8354,7 @@
             "file": "/Users/adru001/Git/beast-classic/examples/testSkyGrid.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -8417,7 +8417,7 @@
             "file": "/Users/adru001/Git/beast-classic/examples/H5N1_HA_discrete2.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -8525,7 +8525,7 @@
             "file": "/Users/adru001/Git/beast-classic/examples/testSkyRide.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -8606,7 +8606,7 @@
             "file": "/Users/adru001/Git/beast-classic/examples/testDiscreteSmall.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -8867,7 +8867,7 @@
             "file": "/Users/adru001/Git/beast-classic/src/main/resources/beast.classic/fxtemplates/StarBeast.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": true,
             "isFqn": false,
             "source": "spec"
@@ -8930,7 +8930,7 @@
             "file": "/Users/adru001/Git/beast-classic/src/main/resources/beast.classic/fxtemplates/StarBeast.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": true,
             "isFqn": true,
             "source": "spec"
@@ -8948,7 +8948,7 @@
             "file": "/Users/adru001/Git/beast-classic/src/main/resources/beast.classic/fxtemplates/StarBeast.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": true,
             "isFqn": true,
             "source": "spec"
@@ -9002,7 +9002,7 @@
             "file": "/Users/adru001/Git/beast-classic/src/main/resources/beast.classic/fxtemplates/StarBeast.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": true,
             "isFqn": true,
             "source": "map"
@@ -9411,7 +9411,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/release/Mac/BEAST/BEAST 2.2.0/templates/Standard.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": false,
             "source": "spec"
@@ -9420,7 +9420,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/release/Mac/BEAST/BEAST 2.2.0/templates/StarBeast.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": false,
             "source": "spec"
@@ -9483,7 +9483,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/release/Mac/BEAST/BEAST 2.2.0/templates/SubstModels.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": true,
             "isFqn": false,
             "source": "spec"
@@ -9492,7 +9492,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/release/Mac/BEAST/BEAST 2.2.0/templates/SubstModels.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": true,
             "isFqn": false,
             "source": "spec"
@@ -9510,7 +9510,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/release/Mac/BEAST/BEAST 2.2.0/templates/SubstModels.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": true,
             "isFqn": false,
             "source": "spec"
@@ -9573,7 +9573,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/release/Linux/BEAST/templates/Standard.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": false,
             "source": "spec"
@@ -9582,7 +9582,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/release/Linux/BEAST/templates/StarBeast.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": false,
             "source": "spec"
@@ -9645,7 +9645,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/release/Linux/BEAST/templates/SubstModels.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": true,
             "isFqn": false,
             "source": "spec"
@@ -9654,7 +9654,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/release/Linux/BEAST/templates/SubstModels.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": true,
             "isFqn": false,
             "source": "spec"
@@ -9672,7 +9672,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/release/Linux/BEAST/templates/SubstModels.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": true,
             "isFqn": false,
             "source": "spec"
@@ -9735,7 +9735,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/_site/release/Mac/BEAST/BEAST 2.2.0/templates/Standard.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": false,
             "source": "spec"
@@ -9744,7 +9744,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/_site/release/Mac/BEAST/BEAST 2.2.0/templates/StarBeast.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": false,
             "source": "spec"
@@ -9807,7 +9807,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/_site/release/Mac/BEAST/BEAST 2.2.0/templates/SubstModels.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": true,
             "isFqn": false,
             "source": "spec"
@@ -9816,7 +9816,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/_site/release/Mac/BEAST/BEAST 2.2.0/templates/SubstModels.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": true,
             "isFqn": false,
             "source": "spec"
@@ -9834,7 +9834,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/_site/release/Mac/BEAST/BEAST 2.2.0/templates/SubstModels.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": true,
             "isFqn": false,
             "source": "spec"
@@ -9897,7 +9897,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/_site/release/Linux/BEAST/templates/Standard.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": false,
             "source": "spec"
@@ -9906,7 +9906,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/_site/release/Linux/BEAST/templates/StarBeast.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": false,
             "source": "spec"
@@ -9969,7 +9969,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/_site/release/Linux/BEAST/templates/SubstModels.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": true,
             "isFqn": false,
             "source": "spec"
@@ -9978,7 +9978,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/_site/release/Linux/BEAST/templates/SubstModels.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": true,
             "isFqn": false,
             "source": "spec"
@@ -9996,7 +9996,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/_site/release/Linux/BEAST/templates/SubstModels.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": true,
             "isFqn": false,
             "source": "spec"
@@ -10032,7 +10032,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/benchmark/II/testHKY1748.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -10068,7 +10068,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/benchmark/II/testHKY1749.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -10104,7 +10104,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/benchmark/II/testHKY1366.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -10140,7 +10140,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/benchmark/II/testHKY767.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -10176,7 +10176,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/benchmark/II/testHKY1809.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -10212,7 +10212,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/benchmark/II/testHKY501.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -10248,7 +10248,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/benchmark/II/testHKY3475.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -10284,7 +10284,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/benchmark/II/testHKY1510.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -10320,7 +10320,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/benchmark/II/testHKY1044.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -10356,7 +10356,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/benchmark/II/testHKY520.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -10392,7 +10392,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/benchmark/II/testHKY336.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -10428,7 +10428,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/benchmark/II/testHKY755.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -10617,7 +10617,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/testMultipleAlignments_randomTaxaOrder.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -10761,7 +10761,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/testGTR.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -10806,7 +10806,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/testOpSubSchedule.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -10914,7 +10914,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/testSRD06.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -10932,7 +10932,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/testSRD06.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -10986,7 +10986,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/testHKY.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -11121,7 +11121,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/testRestrictedGTR.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -11247,7 +11247,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/testRNA.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -11373,7 +11373,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/parameterised/RSV2.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -11517,7 +11517,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/testSYM.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -11544,7 +11544,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/testStarBeast.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -11670,7 +11670,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/testClassicRootCalibrationPrior.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -11814,7 +11814,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/testTN93.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -11841,7 +11841,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/testStarBeastFBD.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -12039,7 +12039,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/testTIM.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -12075,7 +12075,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/testConditionalRootCalibrationPrior.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -12165,7 +12165,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/testCalibration.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -12273,7 +12273,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/testTipDates2.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -12426,7 +12426,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/testTVM.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -12561,7 +12561,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/beast2vs1/testStrictClockTipDatesSampling.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -12777,7 +12777,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/beast2vs1/testExponentialGrowth.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -12876,7 +12876,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/beast2vs1/testSRD06CP12_3.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -12912,7 +12912,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/beast2vs1/testSRD06CP12_3.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -12930,7 +12930,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/beast2vs1/testSRD06CP12_3.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -13047,7 +13047,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/beast2vs1/testStrictClock2.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -13137,7 +13137,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/beast2vs1/testUCRelaxedClockLogNormal.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -13353,7 +13353,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/beast2vs1/testCoalescentNoClock.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -13407,7 +13407,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/beast2vs1/testMultiSubstModel.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -13533,7 +13533,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/beast2vs1/testCalibration.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -13695,7 +13695,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/beast2vs1/testCalibrationMono.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -13785,7 +13785,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/beast2vs1/testSiteModelAlpha.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -13848,7 +13848,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/beast2vs1/testStrictClock.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -13911,7 +13911,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/beast2vs1/testStrictClockTipTime.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -13956,7 +13956,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/beast2vs1/testEBSP.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": false,
             "source": "spec"
@@ -14046,7 +14046,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/beast2vs1/testBirthDeathAsYule.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -14118,7 +14118,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/beast2vs1/testRandomLocalClock.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -14397,7 +14397,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/testSliceHKY.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -14406,7 +14406,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/starbeastinit/sbi-01.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": false,
             "source": "spec"
@@ -14415,7 +14415,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/starbeastinit/sbi-01.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": false,
             "source": "spec"
@@ -14460,7 +14460,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/starbeastinit/sbi-02.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": false,
             "source": "spec"
@@ -14469,7 +14469,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/starbeastinit/sbi-02.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": false,
             "source": "spec"
@@ -14514,7 +14514,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/starbeastinit/sbi-03.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": false,
             "source": "spec"
@@ -14523,7 +14523,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/starbeastinit/sbi-03.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": false,
             "source": "spec"
@@ -14577,7 +14577,7 @@
             "file": "/Users/adru001/Git/Mascot/beast-source/examples/testEBSP.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "spec"
@@ -15126,7 +15126,7 @@
             "file": "/Users/adru001/Git/Mascot/beastfx-source/fxtemplates/Standard.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": true,
             "isFqn": false,
             "source": "spec"
@@ -15297,7 +15297,7 @@
             "file": "/Users/adru001/Git/Mascot/beastfx-source/fxtemplates/Standard.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": true,
             "isFqn": true,
             "source": "map"
@@ -15387,7 +15387,7 @@
             "file": "/Users/adru001/Git/Mascot/beastfx-source/fxtemplates/ParametricDistributions.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": true,
             "isFqn": true,
             "source": "spec"
@@ -15549,7 +15549,7 @@
             "file": "/Users/adru001/Git/Mascot/beastfx-source/fxtemplates/TreePriors.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": true,
             "isFqn": false,
             "source": "spec"
@@ -15558,7 +15558,7 @@
             "file": "/Users/adru001/Git/Mascot/beastfx-source/fxtemplates/TreePriors.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": true,
             "isFqn": false,
             "source": "spec"
@@ -15630,7 +15630,7 @@
             "file": "/Users/adru001/Git/Mascot/beastfx-source/fxtemplates/SubstModels.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": true,
             "isFqn": false,
             "source": "spec"
@@ -16400,7 +16400,7 @@
             "file": "/Users/adru001/Git/morph-models/examples/legacy-2.7/penguins_Mkv.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -16544,7 +16544,7 @@
             "file": "/Users/adru001/Git/morph-models/examples/legacy-2.7/penguins.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -16688,7 +16688,7 @@
             "file": "/Users/adru001/Git/morph-models/examples/legacy-2.7/M3982.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -16936,7 +16936,7 @@
             "file": "/Users/adru001/Git/sampled-ancestors/examples/bears_ranges.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -17053,7 +17053,7 @@
             "file": "/Users/adru001/Git/sampled-ancestors/examples/brachiopods.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -17188,7 +17188,7 @@
             "file": "/Users/adru001/Git/sampled-ancestors/examples/bears.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -17395,8 +17395,8 @@
       "mavenCentral": {
         "groupId": "io.github.jordandouglas",
         "artifactId": "beast-orc",
-        "latest": "",
-        "error": "not published (404)"
+        "latest": "1.3.1",
+        "error": ""
       }
     },
     {
@@ -17474,549 +17474,8 @@
         "totalViolations": 0
       },
       "xmlDeprecated": {
-        "count": 60,
-        "refs": [
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/bModelTest.xml",
-            "hit": "beast.base.evolution.tree.coalescent.RandomTree",
-            "canonicalFqn": "beast.base.evolution.tree.coalescent.RandomTree",
-            "replacement": "beast.base.spec.evolution.tree.coalescent.RandomTree",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/bModelTest.xml",
-            "hit": "beast.base.evolution.speciation.YuleModel",
-            "canonicalFqn": "beast.base.evolution.speciation.YuleModel",
-            "replacement": "beast.base.spec.evolution.speciation.YuleModel",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/bModelTest.xml",
-            "hit": "bmodeltest.evolution.sitemodel.BEASTModelTest",
-            "canonicalFqn": "bmodeltest.evolution.sitemodel.BEASTModelTest",
-            "replacement": "",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/bModelTest.xml",
-            "hit": "beast.base.evolution.branchratemodel.StrictClockModel",
-            "canonicalFqn": "beast.base.evolution.branchratemodel.StrictClockModel",
-            "replacement": "beast.base.spec.evolution.branchratemodel.StrictClockModel",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/bModelTest.xml",
-            "hit": "beast.base.inference.util.RPNcalculator",
-            "canonicalFqn": "beast.base.inference.util.RPNcalculator",
-            "replacement": "beast.base.spec.inference.util.RPNcalculator",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/bModelTest.xml",
-            "hit": "beast.base.inference.util.RPNcalculator",
-            "canonicalFqn": "beast.base.inference.util.RPNcalculator",
-            "replacement": "beast.base.spec.inference.util.RPNcalculator",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/bModelTest.xml",
-            "hit": "beast.base.evolution.TreeWithMetaDataLogger",
-            "canonicalFqn": "beast.base.evolution.TreeWithMetaDataLogger",
-            "replacement": "beast.base.spec.evolution.TreeWithMetaDataLogger",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/bModelTest.xml",
-            "hit": "beast.base.inference.distribution.Uniform",
-            "canonicalFqn": "beast.base.inference.distribution.Uniform",
-            "replacement": "beast.base.spec.inference.distribution.Uniform",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/bModelTest.xml",
-            "hit": "beast.base.inference.distribution.Exponential",
-            "canonicalFqn": "beast.base.inference.distribution.Exponential",
-            "replacement": "beast.base.spec.inference.distribution.Exponential",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/bModelTest.xml",
-            "hit": "beast.base.inference.distribution.LogNormalDistributionModel",
-            "canonicalFqn": "beast.base.inference.distribution.LogNormalDistributionModel",
-            "replacement": "beast.base.spec.inference.distribution.LogNormal",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/bModelTest.xml",
-            "hit": "beast.base.inference.distribution.Normal",
-            "canonicalFqn": "beast.base.inference.distribution.Normal",
-            "replacement": "beast.base.spec.inference.distribution.Normal",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/bModelTest.xml",
-            "hit": "beast.base.inference.distribution.Beta",
-            "canonicalFqn": "beast.base.inference.distribution.Beta",
-            "replacement": "beast.base.spec.inference.distribution.Beta",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/bModelTest.xml",
-            "hit": "beast.base.inference.distribution.Gamma",
-            "canonicalFqn": "beast.base.inference.distribution.Gamma",
-            "replacement": "beast.base.spec.inference.distribution.Gamma",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/bModelTest.xml",
-            "hit": "beast.base.inference.distribution.LaplaceDistribution",
-            "canonicalFqn": "beast.base.inference.distribution.LaplaceDistribution",
-            "replacement": "beast.base.spec.inference.distribution.Laplace",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/bModelTest.xml",
-            "hit": "beast.base.inference.distribution.Prior",
-            "canonicalFqn": "beast.base.inference.distribution.Prior",
-            "replacement": "beast.base.spec.inference.distribution.TensorDistribution",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/bModelTest.xml",
-            "hit": "beast.base.inference.distribution.InverseGamma",
-            "canonicalFqn": "beast.base.inference.distribution.InverseGamma",
-            "replacement": "beast.base.spec.inference.distribution.InverseGamma",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/bModelTest.xml",
-            "hit": "beast.base.inference.distribution.OneOnX",
-            "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/beast2-paper.xml",
-            "hit": "beast.base.evolution.tree.coalescent.RandomTree",
-            "canonicalFqn": "beast.base.evolution.tree.coalescent.RandomTree",
-            "replacement": "beast.base.spec.evolution.tree.coalescent.RandomTree",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/beast2-paper.xml",
-            "hit": "beast.base.evolution.speciation.YuleModel",
-            "canonicalFqn": "beast.base.evolution.speciation.YuleModel",
-            "replacement": "beast.base.spec.evolution.speciation.YuleModel",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/beast2-paper.xml",
-            "hit": "beast.base.inference.distribution.Dirichlet",
-            "canonicalFqn": "beast.base.inference.distribution.Dirichlet",
-            "replacement": "beast.base.spec.inference.distribution.Dirichlet",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/beast2-paper.xml",
-            "hit": "beast.base.evolution.tree.MRCAPrior",
-            "canonicalFqn": "beast.base.evolution.tree.MRCAPrior",
-            "replacement": "beast.base.spec.evolution.tree.MRCAPrior",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/beast2-paper.xml",
-            "hit": "beast.base.evolution.tree.MRCAPrior",
-            "canonicalFqn": "beast.base.evolution.tree.MRCAPrior",
-            "replacement": "beast.base.spec.evolution.tree.MRCAPrior",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/beast2-paper.xml",
-            "hit": "beast.base.evolution.tree.MRCAPrior",
-            "canonicalFqn": "beast.base.evolution.tree.MRCAPrior",
-            "replacement": "beast.base.spec.evolution.tree.MRCAPrior",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/beast2-paper.xml",
-            "hit": "beast.base.evolution.tree.MRCAPrior",
-            "canonicalFqn": "beast.base.evolution.tree.MRCAPrior",
-            "replacement": "beast.base.spec.evolution.tree.MRCAPrior",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/beast2-paper.xml",
-            "hit": "beast.base.evolution.tree.MRCAPrior",
-            "canonicalFqn": "beast.base.evolution.tree.MRCAPrior",
-            "replacement": "beast.base.spec.evolution.tree.MRCAPrior",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/beast2-paper.xml",
-            "hit": "beast.base.evolution.tree.MRCAPrior",
-            "canonicalFqn": "beast.base.evolution.tree.MRCAPrior",
-            "replacement": "beast.base.spec.evolution.tree.MRCAPrior",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/beast2-paper.xml",
-            "hit": "beast.base.evolution.tree.MRCAPrior",
-            "canonicalFqn": "beast.base.evolution.tree.MRCAPrior",
-            "replacement": "beast.base.spec.evolution.tree.MRCAPrior",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/beast2-paper.xml",
-            "hit": "beast.base.evolution.branchratemodel.UCRelaxedClockModel",
-            "canonicalFqn": "beast.base.evolution.branchratemodel.UCRelaxedClockModel",
-            "replacement": "beast.base.spec.evolution.branchratemodel.UCRelaxedClockModel",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/beast2-paper.xml",
-            "hit": "UniformOperator",
-            "canonicalFqn": "beast.base.inference.operator.UniformOperator",
-            "replacement": "beast.base.spec.inference.operator.uniform.IntervalOperator",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/beast2-paper.xml",
-            "hit": "beast.base.evolution.TreeWithMetaDataLogger",
-            "canonicalFqn": "beast.base.evolution.TreeWithMetaDataLogger",
-            "replacement": "beast.base.spec.evolution.TreeWithMetaDataLogger",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/beast2-paper.xml",
-            "hit": "beast.base.inference.distribution.Uniform",
-            "canonicalFqn": "beast.base.inference.distribution.Uniform",
-            "replacement": "beast.base.spec.inference.distribution.Uniform",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/beast2-paper.xml",
-            "hit": "beast.base.inference.distribution.Exponential",
-            "canonicalFqn": "beast.base.inference.distribution.Exponential",
-            "replacement": "beast.base.spec.inference.distribution.Exponential",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/beast2-paper.xml",
-            "hit": "beast.base.inference.distribution.LogNormalDistributionModel",
-            "canonicalFqn": "beast.base.inference.distribution.LogNormalDistributionModel",
-            "replacement": "beast.base.spec.inference.distribution.LogNormal",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/beast2-paper.xml",
-            "hit": "beast.base.inference.distribution.Normal",
-            "canonicalFqn": "beast.base.inference.distribution.Normal",
-            "replacement": "beast.base.spec.inference.distribution.Normal",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/beast2-paper.xml",
-            "hit": "beast.base.inference.distribution.Beta",
-            "canonicalFqn": "beast.base.inference.distribution.Beta",
-            "replacement": "beast.base.spec.inference.distribution.Beta",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/beast2-paper.xml",
-            "hit": "beast.base.inference.distribution.Gamma",
-            "canonicalFqn": "beast.base.inference.distribution.Gamma",
-            "replacement": "beast.base.spec.inference.distribution.Gamma",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/beast2-paper.xml",
-            "hit": "beast.base.inference.distribution.LaplaceDistribution",
-            "canonicalFqn": "beast.base.inference.distribution.LaplaceDistribution",
-            "replacement": "beast.base.spec.inference.distribution.Laplace",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/beast2-paper.xml",
-            "hit": "beast.base.inference.distribution.Prior",
-            "canonicalFqn": "beast.base.inference.distribution.Prior",
-            "replacement": "beast.base.spec.inference.distribution.TensorDistribution",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/beast2-paper.xml",
-            "hit": "beast.base.inference.distribution.InverseGamma",
-            "canonicalFqn": "beast.base.inference.distribution.InverseGamma",
-            "replacement": "beast.base.spec.inference.distribution.InverseGamma",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/examples/beast2-paper.xml",
-            "hit": "beast.base.inference.distribution.OneOnX",
-            "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/doc/tutorial/primates.xml",
-            "hit": "beast.base.evolution.tree.coalescent.RandomTree",
-            "canonicalFqn": "beast.base.evolution.tree.coalescent.RandomTree",
-            "replacement": "beast.base.spec.evolution.tree.coalescent.RandomTree",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/doc/tutorial/primates.xml",
-            "hit": "beast.base.evolution.speciation.YuleModel",
-            "canonicalFqn": "beast.base.evolution.speciation.YuleModel",
-            "replacement": "beast.base.spec.evolution.speciation.YuleModel",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/doc/tutorial/primates.xml",
-            "hit": "bmodeltest.evolution.sitemodel.BEASTModelTest",
-            "canonicalFqn": "bmodeltest.evolution.sitemodel.BEASTModelTest",
-            "replacement": "",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/doc/tutorial/primates.xml",
-            "hit": "beast.base.evolution.branchratemodel.StrictClockModel",
-            "canonicalFqn": "beast.base.evolution.branchratemodel.StrictClockModel",
-            "replacement": "beast.base.spec.evolution.branchratemodel.StrictClockModel",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/doc/tutorial/primates.xml",
-            "hit": "beast.base.inference.util.ESS",
-            "canonicalFqn": "beast.base.inference.util.ESS",
-            "replacement": "beast.base.spec.inference.util.ESS",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/doc/tutorial/primates.xml",
-            "hit": "beast.base.evolution.TreeWithMetaDataLogger",
-            "canonicalFqn": "beast.base.evolution.TreeWithMetaDataLogger",
-            "replacement": "beast.base.spec.evolution.TreeWithMetaDataLogger",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/doc/tutorial/primates.xml",
-            "hit": "beast.base.inference.distribution.Uniform",
-            "canonicalFqn": "beast.base.inference.distribution.Uniform",
-            "replacement": "beast.base.spec.inference.distribution.Uniform",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/doc/tutorial/primates.xml",
-            "hit": "beast.base.inference.distribution.Exponential",
-            "canonicalFqn": "beast.base.inference.distribution.Exponential",
-            "replacement": "beast.base.spec.inference.distribution.Exponential",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/doc/tutorial/primates.xml",
-            "hit": "beast.base.inference.distribution.LogNormalDistributionModel",
-            "canonicalFqn": "beast.base.inference.distribution.LogNormalDistributionModel",
-            "replacement": "beast.base.spec.inference.distribution.LogNormal",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/doc/tutorial/primates.xml",
-            "hit": "beast.base.inference.distribution.Normal",
-            "canonicalFqn": "beast.base.inference.distribution.Normal",
-            "replacement": "beast.base.spec.inference.distribution.Normal",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/doc/tutorial/primates.xml",
-            "hit": "beast.base.inference.distribution.Beta",
-            "canonicalFqn": "beast.base.inference.distribution.Beta",
-            "replacement": "beast.base.spec.inference.distribution.Beta",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/doc/tutorial/primates.xml",
-            "hit": "beast.base.inference.distribution.Gamma",
-            "canonicalFqn": "beast.base.inference.distribution.Gamma",
-            "replacement": "beast.base.spec.inference.distribution.Gamma",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/doc/tutorial/primates.xml",
-            "hit": "beast.base.inference.distribution.LaplaceDistribution",
-            "canonicalFqn": "beast.base.inference.distribution.LaplaceDistribution",
-            "replacement": "beast.base.spec.inference.distribution.Laplace",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/doc/tutorial/primates.xml",
-            "hit": "beast.base.inference.distribution.Prior",
-            "canonicalFqn": "beast.base.inference.distribution.Prior",
-            "replacement": "beast.base.spec.inference.distribution.TensorDistribution",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/doc/tutorial/primates.xml",
-            "hit": "beast.base.inference.distribution.InverseGamma",
-            "canonicalFqn": "beast.base.inference.distribution.InverseGamma",
-            "replacement": "beast.base.spec.inference.distribution.InverseGamma",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/doc/tutorial/primates.xml",
-            "hit": "beast.base.inference.distribution.OneOnX",
-            "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/src/main/resources/bmodeltest/fxtemplates/bModelTest.xml",
-            "hit": "OneOnX",
-            "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
-            "isFxTemplate": true,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/src/main/resources/bmodeltest/fxtemplates/bModelTest.xml",
-            "hit": "beast.base.inference.distribution.Dirichlet",
-            "canonicalFqn": "beast.base.inference.distribution.Dirichlet",
-            "replacement": "beast.base.spec.inference.distribution.Dirichlet",
-            "isFxTemplate": true,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/src/main/resources/bmodeltest/fxtemplates/bModelTest.xml",
-            "hit": "OneOnX",
-            "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
-            "isFxTemplate": true,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/bModelTest/src/main/resources/bmodeltest/fxtemplates/bModelTest.xml",
-            "hit": "beast.base.inference.distribution.Dirichlet",
-            "canonicalFqn": "beast.base.inference.distribution.Dirichlet",
-            "replacement": "beast.base.spec.inference.distribution.Dirichlet",
-            "isFxTemplate": true,
-            "isFqn": true,
-            "source": "spec"
-          }
-        ]
+        "count": 0,
+        "refs": []
       },
       "build": {
         "hasPom": true,
@@ -18241,7 +17700,7 @@
             "file": "/Users/adru001/Git/obama-beast3/examples/testLG4X.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -18358,7 +17817,7 @@
             "file": "/Users/adru001/Git/obama-beast3/examples/testPhyloHMMMap.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -18493,7 +17952,7 @@
             "file": "/Users/adru001/Git/obama-beast3/examples/testC60.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -18628,7 +18087,7 @@
             "file": "/Users/adru001/Git/obama-beast3/examples/testC10.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -18763,7 +18222,7 @@
             "file": "/Users/adru001/Git/obama-beast3/examples/testOBAMA.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -18898,7 +18357,7 @@
             "file": "/Users/adru001/Git/obama-beast3/examples/testC30.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -19015,7 +18474,7 @@
             "file": "/Users/adru001/Git/obama-beast3/examples/testPhyloHMM2.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -19159,7 +18618,7 @@
             "file": "/Users/adru001/Git/obama-beast3/examples/testC20.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -19294,7 +18753,7 @@
             "file": "/Users/adru001/Git/obama-beast3/examples/testC50.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -19411,7 +18870,7 @@
             "file": "/Users/adru001/Git/obama-beast3/examples/testPhyloHMMSparse.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -19537,7 +18996,7 @@
             "file": "/Users/adru001/Git/obama-beast3/examples/testC20Mixed.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -19654,7 +19113,7 @@
             "file": "/Users/adru001/Git/obama-beast3/examples/testPhyloHMM.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -19780,7 +19239,7 @@
             "file": "/Users/adru001/Git/obama-beast3/examples/testLG4.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -19915,7 +19374,7 @@
             "file": "/Users/adru001/Git/obama-beast3/examples/testC40.xml",
             "hit": "beast.base.inference.distribution.OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": false,
             "isFqn": true,
             "source": "map"
@@ -19924,7 +19383,7 @@
             "file": "/Users/adru001/Git/obama-beast3/src/main/resources/obama/fxtemplates/OBAMA.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": true,
             "isFqn": false,
             "source": "spec"
@@ -19951,7 +19410,7 @@
             "file": "/Users/adru001/Git/obama-beast3/src/main/resources/obama/fxtemplates/OBAMA.xml",
             "hit": "OneOnX",
             "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "",
+            "replacement": "beast.base.spec.inference.distribution.LogUniform",
             "isFxTemplate": true,
             "isFqn": false,
             "source": "spec"

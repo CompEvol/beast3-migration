@@ -1,6 +1,6 @@
 # flc — what's left
 
-> **Scanned at:** 2026-05-13T11:45:32.834487  
+> **Scanned at:** 2026-05-13T13:33:12.052236  
 > **Commit:** `a21b797` on `mrcaprior-spec-fqn` — [view on GitHub](https://github.com/4ment/flc/commit/a21b797988485df5394edb6dc35415f9a598299d)  
 > **Pom version:** `1.3.0-beta1`  
 > **Maven Central:** `io.github.4ment:flc:1.3.0-beta1`  
