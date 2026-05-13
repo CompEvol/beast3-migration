@@ -1,6 +1,6 @@
 # feast — what's left
 
-> **Scanned at:** 2026-05-13T15:46:10.131429  
+> **Scanned at:** 2026-05-13T16:04:26.169409  
 > **Commit:** `224b618` on `beast2.8-migration` — [view on GitHub](https://github.com/tgvaughan/feast/commit/224b618715c41e4ed58f5d4dc2c161dab4000099)  
 > **Pom version:** `11.0.0`  
 > **Maven Central:** not published as `io.github.tgvaughan:feast` (not published (404))  

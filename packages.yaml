@@ -66,9 +66,10 @@ packages:
 
   - name: MutableAlignment
     path: ../MutableAlignment
-    github: rbouckaert/MutableAlignment
+    github: alexeid/MutableAlignment
+    maven: io.github.compevol:mutable-alignment
     stage: compile_tested
-    notes: Ant-based (no pom.xml at root).
+    notes: Migration WIP on alexeid fork's `beast3` branch (Maven, JPMS module). Upstream rbouckaert/MutableAlignment is still on the Ant-based BEAST 2.7 layout.
 
   - name: ORC
     path: ../ORC

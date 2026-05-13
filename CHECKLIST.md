@@ -9,7 +9,7 @@ are at the bottom of this page.
 
 <!-- BEGIN AUTO -->
 
-_Last regenerated: 2026-05-13T15:46:10.781322+12:00_
+_Last regenerated: 2026-05-13T16:04:26.811461+12:00_
 
 ## Release & build status
 
@@ -23,7 +23,7 @@ _Last regenerated: 2026-05-13T15:46:10.781322+12:00_
 | [Mascot](https://github.com/CompEvol/Mascot) | Maven Central | [3.1.0-beta1](https://central.sonatype.com/artifact/io.github.compevol/mascot) | 3.1.0-beta1 | ✅ | ✅ | ✅ | 🔴 | 🔴 | 🔴 | 757 |
 | [morph-models](https://github.com/CompEvol/morph-models) | Maven Central | [1.3.0-beta3](https://central.sonatype.com/artifact/io.github.compevol/morph-models) | 1.3.0-beta3 | ✅ | ✅ | ✅ | 🟢 | 🟢 | 🟢 | ✅ |
 | [sampled-ancestors](https://github.com/CompEvol/sampled-ancestors) | Maven Central | [2.3.0-beta1](https://central.sonatype.com/artifact/io.github.compevol/sampled-ancestors) | 2.3.0-beta1 | ✅ | ✅ | ✅ | 🟢 | 🟢 | 🟢 | ✅ |
-| [MutableAlignment](https://github.com/rbouckaert/MutableAlignment) | compile-tested | — | — | ❌ | ❌ | ❌ | — | 🔴 | — | ✅ |
+| [MutableAlignment](https://github.com/alexeid/MutableAlignment) | compile-tested | — | 0.1.0-SNAPSHOT | ✅ | ✅ | ✅ | 🟢 | 🟢 | — | ✅ |
 | [ORC](https://github.com/jordandouglas/ORC) | compile-tested | [1.3.1](https://central.sonatype.com/artifact/io.github.jordandouglas/beast-orc) | 1.3.0-SNAPSHOT | ✅ | ✅ | ❌ | 🟢 | 🟢 | 🟢 | ✅ |
 | [bModelTest](https://github.com/BEAST2-Dev/bModelTest) | compile-tested | — | 1.4.0-beta1 | ✅ | ✅ | ❌ | 🟢 | 🟢 | 🟢 | ✅ |
 | [obama](https://github.com/rbouckaert/obama) | compile-tested | — | 1.2.0-beta1 | ✅ | ✅ | ❌ | 🔴 | 🔴 | 🟡 | 207 |
@@ -44,7 +44,7 @@ Traffic-light columns: 🔴 any legacy lineage / non-migrated content, 🟡 no l
 | Mascot | ✅ 11 | ✅ 6 | 1 / 25 | ✅ 18 | — | ✅ 2 | 1 / 1 / 284 | 0 / 0 / 14 | 12 / 22 |
 | morph-models | — | — | — | ✅ 4 | — | ✅ 1 | 2 / 2 / 2 (+4 legacy) | 1 / 1 / 1 | ✅ |
 | sampled-ancestors | ✅ 6 | ✅ 13 | ✅ 2 | ✅ 5 | — | ✅ 2 | 3 / 3 / 3 | 1 / 1 / 1 | ✅ |
-| MutableAlignment | — | — | — | — | — | — | 0 / 0 / 1 | — | ✅ |
+| MutableAlignment | — | ✅ 1 | ✅ 1 | ✅ 3 | — | ✅ 1 | 1 / 1 / 1 | — | ✅ |
 | ORC | ✅ 1 | ✅ 52 | ✅ 1 | — | — | — | 1 / 1 / 1 | 1 / 1 / 1 | ✅ |
 | bModelTest | ✅ 3 | ✅ 4 | ✅ 3 | ✅ 3 | — | — | 3 / 3 / 3 | 1 / 1 / 1 | ✅ |
 | obama | ✅ 3 | ✅ 2 | ✅ 2 | 11 / 44 | — | — | 0 / 0 / 14 | 0 / 1 / 1 | 8 / 17 |
@@ -69,7 +69,7 @@ Per package, for each kind: `spec / mixed / legacy / neutral · total`.
 | Mascot | 0 / 0 / 0 / 11 · 11 | 0 / 0 / 0 / 6 · 6 | 0 / 0 / 1 / 24 · 25 | 4 / 0 / 0 / 14 · 18 | — | 0 / 0 / 0 / 2 · 2 |
 | morph-models | — | — | — | 4 / 0 / 0 / 0 · 4 | — | 0 / 0 / 0 / 1 · 1 |
 | sampled-ancestors | 2 / 0 / 0 / 4 · 6 | 1 / 0 / 0 / 12 · 13 | 0 / 0 / 0 / 2 · 2 | 0 / 0 / 0 / 5 · 5 | — | 0 / 0 / 0 / 2 · 2 |
-| MutableAlignment | — | — | — | — | — | — |
+| MutableAlignment | — | 0 / 0 / 0 / 1 · 1 | 0 / 0 / 0 / 1 · 1 | 3 / 0 / 0 / 0 · 3 | — | 0 / 0 / 0 / 1 · 1 |
 | ORC | 1 / 0 / 0 / 0 · 1 | 0 / 0 / 0 / 52 · 52 | 0 / 0 / 0 / 1 · 1 | — | — | — |
 | bModelTest | 0 / 0 / 0 / 3 · 3 | 1 / 0 / 0 / 3 · 4 | 2 / 0 / 0 / 1 · 3 | 3 / 0 / 0 / 0 · 3 | — | — |
 | obama | 0 / 0 / 0 / 3 · 3 | 0 / 0 / 0 / 2 · 2 | 0 / 0 / 0 / 2 · 2 | 19 / 0 / 11 / 14 · 44 | — | — |
@@ -77,6 +77,7 @@ Per package, for each kind: `spec / mixed / legacy / neutral · total`.
 
 ## Diagnostics
 
+- **MutableAlignment** — Maven Central: not published (404)
 - **bModelTest** — Maven Central: not published (404)
 - **obama** — Maven Central: not published (404)
 - **feast** — Maven Central: not published (404)

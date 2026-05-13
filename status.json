@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-13T15:46:10.787362+12:00",
+  "generatedAt": "2026-05-13T16:04:26.819086+12:00",
   "packages": [
     {
       "name": "beast3",
@@ -16198,10 +16198,10 @@
     },
     {
       "name": "MutableAlignment",
-      "github": "rbouckaert/MutableAlignment",
-      "maven": "",
+      "github": "alexeid/MutableAlignment",
+      "maven": "io.github.compevol:mutable-alignment",
       "stage": "compile_tested",
-      "notes": "Ant-based (no pom.xml at root).",
+      "notes": "Migration WIP on alexeid fork's `beast3` branch (Maven, JPMS module). Upstream rbouckaert/MutableAlignment is still on the Ant-based BEAST 2.7 layout.",
       "pathExists": true,
       "error": "",
       "java": {
@@ -16213,22 +16213,22 @@
           "neutral": 0
         },
         "operator": {
-          "total": 0,
+          "total": 1,
           "spec": 0,
           "mixed": 0,
           "legacy": 0,
-          "neutral": 0
+          "neutral": 1
         },
         "logger": {
-          "total": 0,
+          "total": 1,
           "spec": 0,
           "mixed": 0,
           "legacy": 0,
-          "neutral": 0
+          "neutral": 1
         },
         "calcnode": {
-          "total": 0,
-          "spec": 0,
+          "total": 3,
+          "spec": 3,
           "mixed": 0,
           "legacy": 0,
           "neutral": 0
@@ -16241,24 +16241,24 @@
           "neutral": 0
         },
         "statenode": {
-          "total": 0,
+          "total": 1,
           "spec": 0,
           "mixed": 0,
           "legacy": 0,
-          "neutral": 0
+          "neutral": 1
         },
         "other": {
-          "total": 0,
+          "total": 5,
           "spec": 0,
           "mixed": 0,
           "legacy": 0,
-          "neutral": 0
+          "neutral": 5
         }
       },
       "xml": {
         "total": 1,
-        "migrated": 0,
-        "v28": 0,
+        "migrated": 1,
+        "v28": 1,
         "legacyDir": 0
       },
       "fxTemplates": {
@@ -16279,19 +16279,19 @@
         "refs": []
       },
       "build": {
-        "hasPom": false,
-        "hasReleaseProfile": false,
-        "hasModuleInfo": false,
-        "hasGithubActions": false,
-        "hasReleaseScript": false,
+        "hasPom": true,
+        "hasReleaseProfile": true,
+        "hasModuleInfo": true,
+        "hasGithubActions": true,
+        "hasReleaseScript": true,
         "hasVersionXml": true,
-        "pomVersion": ""
+        "pomVersion": "0.1.0-SNAPSHOT"
       },
       "mavenCentral": {
-        "groupId": "",
-        "artifactId": "",
+        "groupId": "io.github.compevol",
+        "artifactId": "mutable-alignment",
         "latest": "",
-        "error": ""
+        "error": "not published (404)"
       }
     },
     {
