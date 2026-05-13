@@ -9,7 +9,7 @@ are at the bottom of this page.
 
 <!-- BEGIN AUTO -->
 
-_Last regenerated: 2026-05-13T17:05:14.912476+12:00_
+_Last regenerated: 2026-05-13T17:55:06.085812+12:00_
 
 ## Release & build status
 
@@ -20,16 +20,17 @@ _Last regenerated: 2026-05-13T17:05:14.912476+12:00_
 | [beast-classic](https://github.com/BEAST2-Dev/beast-classic) | Maven Central | [1.7.0-beta1](https://central.sonatype.com/artifact/io.github.beast2-dev/beast-classic) | 1.7.0-SNAPSHOT | ✅ | ✅ | ✅ | 🔴 | 🔴 | 🔴 | 112 |
 | [CoupledMCMC](https://github.com/CompEvol/CoupledMCMC) | Maven Central | [1.3.0-beta1](https://central.sonatype.com/artifact/io.github.compevol/coupled-mcmc) | 1.3.0-beta1 | ✅ | ✅ | ✅ | 🟢 | 🟢 | 🟢 | ✅ |
 | [flc](https://github.com/4ment/flc) | Maven Central | [1.3.0-beta1](https://central.sonatype.com/artifact/io.github.4ment/flc) | 1.3.0-beta1 | ✅ | ✅ | ✅ | 🟢 | 🟢 | — | ✅ |
-| [Mascot](https://github.com/CompEvol/Mascot) | Maven Central | [3.1.0-beta1](https://central.sonatype.com/artifact/io.github.compevol/mascot) | 3.1.0-beta1 | ✅ | ✅ | ✅ | 🔴 | 🔴 | 🔴 | 757 |
+| [Mascot](https://github.com/CompEvol/Mascot) | Maven Central | [3.1.0-beta1](https://central.sonatype.com/artifact/io.github.compevol/mascot) | 3.1.0-beta1 | ✅ | ✅ | ✅ | 🟡 | 🔴 | 🔴 | 28 |
 | [morph-models](https://github.com/CompEvol/morph-models) | Maven Central | [1.3.0-beta3](https://central.sonatype.com/artifact/io.github.compevol/morph-models) | 1.3.0-beta3 | ✅ | ✅ | ✅ | 🟢 | 🟢 | 🟢 | ✅ |
 | [sampled-ancestors](https://github.com/CompEvol/sampled-ancestors) | Maven Central | [2.3.0-beta1](https://central.sonatype.com/artifact/io.github.compevol/sampled-ancestors) | 2.3.0-beta1 | ✅ | ✅ | ✅ | 🟢 | 🟢 | 🟢 | ✅ |
 | [MutableAlignment](https://github.com/alexeid/MutableAlignment) | compile-tested | — | 0.1.0-SNAPSHOT | ✅ | ✅ | ✅ | 🟢 | 🟢 | — | ✅ |
-| [ORC](https://github.com/jordandouglas/ORC) | compile-tested | [1.3.1](https://central.sonatype.com/artifact/io.github.jordandouglas/beast-orc) | 1.3.0-SNAPSHOT | ✅ | ✅ | ❌ | 🟢 | 🟢 | 🟢 | ✅ |
+| [ORC](https://github.com/jordandouglas/ORC) | Maven Central | [1.3.1](https://central.sonatype.com/artifact/io.github.jordandouglas/beast-orc) | 1.3.0-SNAPSHOT | ✅ | ✅ | ❌ | 🟢 | 🟢 | 🟢 | ✅ |
 | [bModelTest](https://github.com/BEAST2-Dev/bModelTest) | compile-tested | — | 1.4.0-beta1 | ✅ | ✅ | ❌ | 🟢 | 🟢 | 🟢 | ✅ |
 | [obama](https://github.com/rbouckaert/obama) | compile-tested | — | 1.2.0-beta1 | ✅ | ✅ | ❌ | 🔴 | 🔴 | 🟡 | 207 |
 | [feast](https://github.com/tgvaughan/feast) | compile-tested | — | 11.0.0 | ✅ | ✅ | ✅ | 🟢 | 🔴 | 🔴 | 9 |
+| [GammaSpikeModel](https://github.com/jordandouglas/GammaSpikeModel) | compile-tested | — | 1.3.0-SNAPSHOT | ✅ | ✅ | ❌ | 🟡 | 🔴 | 🟢 | 262 |
 
-Traffic-light columns: 🔴 any legacy lineage / non-migrated content, 🟡 no legacy but some unnecessarily-concrete Inputs (Code), or stray legacy `parameter.*` declarations / references to `@Deprecated` classes (XML / FxT), 🟢 clean, — = no data.
+Traffic-light columns: 🔴 any legacy lineage / non-migrated content, 🟡 no legacy but some unnecessarily-concrete Inputs (Code), or stray legacy `parameter.*` declarations / references to `@Deprecated` classes (XML / FxT), 🟢 clean, — = artefact type not used by this package (treated as complete).
 **Dep refs** = number of references to `@Deprecated` classes found in this package's XMLs and fxtemplates (either as `spec=` attributes or `<map>` bodies); also degrades the XML / FxT light to 🟡 when non-zero. 0 = ✅. Per-package reports list each hit and the spec replacement.
 
 ## Migration progress (Java + XML)
@@ -41,7 +42,7 @@ Traffic-light columns: 🔴 any legacy lineage / non-migrated content, 🟡 no l
 | beast-classic | ✅ 9 | ✅ 11 | ✅ 3 | 9 / 22 | ✅ 1 | ✅ 2 | 0 / 0 / 10 | 0 / 1 / 5 | 7 / 15 |
 | CoupledMCMC | — | — | ✅ 4 | — | — | — | 1 / 1 / 1 | 1 / 1 / 1 | ✅ |
 | flc | — | — | — | ✅ 10 | — | — | 2 / 2 / 2 | — | ✅ |
-| Mascot | ✅ 11 | ✅ 6 | ✅ 12 | 1 / 30 | — | ✅ 3 | 1 / 1 / 284 | 0 / 0 / 14 | 15 / 29 |
+| Mascot | ✅ 11 | ✅ 6 | ✅ 12 | ✅ 30 | — | ✅ 3 | 1 / 1 / 14 | 0 / 0 / 5 | ✅ |
 | morph-models | — | — | — | ✅ 4 | — | ✅ 1 | 2 / 2 / 2 (+4 legacy) | 1 / 1 / 1 | ✅ |
 | sampled-ancestors | ✅ 6 | ✅ 13 | ✅ 1 | ✅ 6 | — | ✅ 2 | 3 / 3 / 3 | 1 / 1 / 1 | ✅ |
 | MutableAlignment | — | ✅ 1 | ✅ 1 | ✅ 3 | — | ✅ 1 | 1 / 1 / 1 | — | ✅ |
@@ -49,8 +50,9 @@ Traffic-light columns: 🔴 any legacy lineage / non-migrated content, 🟡 no l
 | bModelTest | ✅ 3 | ✅ 4 | ✅ 1 | ✅ 5 | — | — | 3 / 3 / 3 | 1 / 1 / 1 | ✅ |
 | obama | ✅ 3 | ✅ 2 | ✅ 1 | 11 / 45 | — | — | 0 / 0 / 14 | 0 / 1 / 1 | 9 / 18 |
 | feast | ✅ 3 | ✅ 8 | — | ✅ 18 | ✅ 6 | ✅ 5 | 0 / 0 / 9 | 0 / 0 / 1 | ✅ |
+| GammaSpikeModel | ✅ 4 | ✅ 12 | ✅ 3 | ✅ 4 | — | — | 0 / 11 / 17 | 2 / 2 / 2 | 7 / 30 |
 
-Legend: ✅ = clean, ❌ = missing, `legacy / total` = classes still on a legacy base, `—` = no data.
+Legend: ✅ = clean, ❌ = missing, `legacy / total` = classes still on a legacy base, `—` = artefact type not used by this package (treated as complete).
 FxTemplates show `clean / spec / total` — `clean` = uses spec types and no legacy `parameter.RealParameter`-style attrs; `spec` = body references `beast.base.spec.*` at all.
 Input rule shows `classes / violations`: classes with at least one Input declared too concretely / total violating Inputs. Concrete spec params (RealScalarParam, …) belong on Operators (which write the param) and Loggers (which need `getID()`, absent from the pure type interfaces); Distributions/CalcNodes/etc. should declare the interface (RealScalar, RealVector, …). 0 = ✅.
 
@@ -66,7 +68,7 @@ Per package, for each kind: `spec / mixed / legacy / neutral · total`.
 | beast-classic | 0 / 0 / 0 / 9 · 9 | 1 / 0 / 0 / 10 · 11 | 1 / 0 / 0 / 2 · 3 | 4 / 0 / 9 / 9 · 22 | 1 / 0 / 0 / 0 · 1 | 0 / 0 / 0 / 2 · 2 |
 | CoupledMCMC | — | — | 0 / 0 / 0 / 4 · 4 | — | — | — |
 | flc | — | — | — | 8 / 0 / 0 / 2 · 10 | — | — |
-| Mascot | 0 / 0 / 0 / 11 · 11 | 0 / 0 / 0 / 6 · 6 | 0 / 0 / 0 / 12 · 12 | 4 / 0 / 1 / 25 · 30 | — | 0 / 0 / 0 / 3 · 3 |
+| Mascot | 0 / 0 / 0 / 11 · 11 | 0 / 0 / 0 / 6 · 6 | 0 / 0 / 0 / 12 · 12 | 5 / 0 / 0 / 25 · 30 | — | 0 / 0 / 0 / 3 · 3 |
 | morph-models | — | — | — | 4 / 0 / 0 / 0 · 4 | — | 0 / 0 / 0 / 1 · 1 |
 | sampled-ancestors | 2 / 0 / 0 / 4 · 6 | 1 / 0 / 0 / 12 · 13 | 0 / 0 / 0 / 1 · 1 | 0 / 0 / 0 / 6 · 6 | — | 0 / 0 / 0 / 2 · 2 |
 | MutableAlignment | — | 0 / 0 / 0 / 1 · 1 | 0 / 0 / 0 / 1 · 1 | 3 / 0 / 0 / 0 · 3 | — | 0 / 0 / 0 / 1 · 1 |
@@ -74,6 +76,7 @@ Per package, for each kind: `spec / mixed / legacy / neutral · total`.
 | bModelTest | 0 / 0 / 0 / 3 · 3 | 1 / 0 / 0 / 3 · 4 | 0 / 0 / 0 / 1 · 1 | 5 / 0 / 0 / 0 · 5 | — | — |
 | obama | 0 / 0 / 0 / 3 · 3 | 0 / 0 / 0 / 2 · 2 | 0 / 0 / 0 / 1 · 1 | 19 / 0 / 11 / 15 · 45 | — | — |
 | feast | 0 / 0 / 0 / 3 · 3 | 0 / 0 / 0 / 8 · 8 | — | 15 / 0 / 0 / 3 · 18 | 6 / 0 / 0 / 0 · 6 | 0 / 0 / 0 / 5 · 5 |
+| GammaSpikeModel | 3 / 0 / 0 / 1 · 4 | 4 / 0 / 0 / 8 · 12 | 0 / 0 / 0 / 3 · 3 | 4 / 0 / 0 / 0 · 4 | — | — |
 
 ## Diagnostics
 
@@ -81,6 +84,7 @@ Per package, for each kind: `spec / mixed / legacy / neutral · total`.
 - **bModelTest** — Maven Central: not published (404)
 - **obama** — Maven Central: not published (404)
 - **feast** — Maven Central: not published (404)
+- **GammaSpikeModel** — Maven Central: not published (404)
 
 <!-- END AUTO -->
 

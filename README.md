@@ -20,7 +20,7 @@ below) to refresh.
 - [`BACKLOG.md`](BACKLOG.md) — v2.7 packages from CBAN
   (`packages2.7.xml` + `packages-extra-2.7.xml`) that have not yet
   appeared in `packages2.8.xml`. Regenerate with
-  `python3 scripts/gen-backlog.py`.
+  `python3 scripts/gen-backlog.py` (requires Python 3.7+).
 
 ## Running the tool
 

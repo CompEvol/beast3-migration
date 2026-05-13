@@ -105,7 +105,7 @@ public final class ChecklistWriter {
                     .append(" | ").append(depRefsCell(r))
                     .append(" |\n");
         }
-        sb.append("\nTraffic-light columns: 🔴 any legacy lineage / non-migrated content, 🟡 no legacy but some unnecessarily-concrete Inputs (Code), or stray legacy `parameter.*` declarations / references to `@Deprecated` classes (XML / FxT), 🟢 clean, — = no data.\n");
+        sb.append("\nTraffic-light columns: 🔴 any legacy lineage / non-migrated content, 🟡 no legacy but some unnecessarily-concrete Inputs (Code), or stray legacy `parameter.*` declarations / references to `@Deprecated` classes (XML / FxT), 🟢 clean, — = artefact type not used by this package (treated as complete).\n");
         sb.append("**Dep refs** = number of references to `@Deprecated` classes found in this package's XMLs and fxtemplates (either as `spec=` attributes or `<map>` bodies); also degrades the XML / FxT light to 🟡 when non-zero. 0 = ✅. Per-package reports list each hit and the spec replacement.\n\n");
 
         sb.append("## Migration progress (Java + XML)\n\n");
@@ -125,7 +125,7 @@ public final class ChecklistWriter {
                     .append(" |\n");
         }
 
-        sb.append("\nLegend: ✅ = clean, ❌ = missing, `legacy / total` = classes still on a legacy base, `—` = no data.\n");
+        sb.append("\nLegend: ✅ = clean, ❌ = missing, `legacy / total` = classes still on a legacy base, `—` = artefact type not used by this package (treated as complete).\n");
         sb.append("FxTemplates show `clean / spec / total` — `clean` = uses spec types and no legacy `parameter.RealParameter`-style attrs; `spec` = body references `beast.base.spec.*` at all.\n");
         sb.append("Input rule shows `classes / violations`: classes with at least one Input declared too concretely / total violating Inputs. Concrete spec params (RealScalarParam, …) belong on Operators (which write the param) and Loggers (which need `getID()`, absent from the pure type interfaces); Distributions/CalcNodes/etc. should declare the interface (RealScalar, RealVector, …). 0 = ✅.\n\n");
 

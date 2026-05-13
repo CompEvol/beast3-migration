@@ -3,7 +3,7 @@
 Auto-generated from CBAN's `packages2.7.xml`, `packages-extra-2.7.xml`,
 and `packages2.8.xml`. Regenerate with `python3 scripts/gen-backlog.py`.
 
-_Last regenerated: 2026-05-12T08:37:11+12:00_
+_Last regenerated: 2026-05-13T17:39:18+12:00_
 
 ## Summary
 
@@ -110,6 +110,6 @@ These v2.7 packages are not in `packages2.8.xml` and are not currently tracked i
 | gammaspike | 1.2.0 | 1.3.0 |
 | Mascot | 3.0.7 | 3.1.0 |
 | MM | 1.2.1 | 1.3.0 |
-| ORC | 1.2.1 | 1.3.0 |
+| ORC | 1.2.1 | 1.3.1 |
 | ReMASTER | 2.7.4 | 3.0.0 |
 | SA | 2.1.1 | 2.3.0 |

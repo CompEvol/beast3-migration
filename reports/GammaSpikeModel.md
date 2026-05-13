@@ -1,133 +1,163 @@
-# obama — what's left
+# GammaSpikeModel — what's left
 
-> **Scanned at:** 2026-05-13T17:55:05.333394  
-> **Commit:** `7e14fd7` on `beast3-migration` — [view on GitHub](https://github.com/rbouckaert/obama/commit/7e14fd7ffbc792130fe401d1c8859aee7d422667)  
-> **Pom version:** `1.2.0-beta1`  
-> **Maven Central:** not published as `io.github.rbouckaert:obama` (not published (404))  
+> **Scanned at:** 2026-05-13T17:55:05.658682  
+> **Commit:** `13bd1b2` on `main` — [view on GitHub](https://github.com/jordandouglas/GammaSpikeModel/commit/13bd1b200ebc431a0bcaea276b2eaca1508e7730)  
+> **Pom version:** `1.3.0-SNAPSHOT`  
+> **Maven Central:** not published as `io.github.jordandouglas:beast-gammaspike` (not published (404))  
 > **Stage hint:** compile-tested
 
 ## Summary
 
-- **Java classes:** 19 on spec, 0 mixed, 11 legacy of 59 total
-- **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 14 total
-- **BEAUti fxtemplates:** 0 clean / 1 use spec / 1 total
-- **Input rule:** 9 classes hold 18 Input(s) declared too concretely
+- **Java classes:** 12 on spec, 0 mixed, 0 legacy of 31 total
+- **Example XMLs:** 0 on spec / 11 on `version="2.8"` / 17 total
+- **BEAUti fxtemplates:** 2 clean / 2 use spec / 2 total
+- **Input rule:** 7 classes hold 30 Input(s) declared too concretely
 - **Maven Central:** ❌ not published (not published (404))
 
 ## Build & release gaps
 
 - **No `.github/workflows/*.yml`** — add CI to catch regressions on PRs.
-- **No `release.sh` or `release/` directory** — used to assemble the CBAN-style ZIP.
 
 ## Maven Central
 
-Not yet published as `io.github.rbouckaert:obama`. Verify the namespace on central.sonatype.com and run the `release` profile to deploy.
+Not yet published as `io.github.jordandouglas:beast-gammaspike`. Verify the namespace on central.sonatype.com and run the `release` profile to deploy.
 
-## Java classes pending migration
+## Java migration
 
-### CalcNodes — 11 legacy, 0 mixed (of 45 total)
-
-**Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
-
-- `obama.likelihood.MixedTreeLikelihood` — extends `GenericTreeLikelihood`
-- `obama.likelihood.MixtureTreeLikelihood` — extends `TreeLikelihood`
-- `obama.operator.MixedOperator.MyBeagleTreeLikelihood` — extends `BeagleTreeLikelihood`
-- `obama.operator.MixedOperator.MyTreeLikelihood` — extends `TreeLikelihood`
-- `obama.sitemodel.OBAMAModelTestSiteModel` — extends `SiteModel`
-- `obama.substitutionmodel.PHAT` — extends `GeneralSubstitutionModel`
-- `obama.substitutionmodel.ScoreBasedSubstitutionModel` — extends `GeneralSubstitutionModel`
-- `obama.substitutionmodel.mixture.M1` — extends `EmpiricalSubstitutionModel`
-- `obama.substitutionmodel.mixture.M2` — extends `EmpiricalSubstitutionModel`
-- `obama.substitutionmodel.mixture.M3` — extends `EmpiricalSubstitutionModel`
-- `obama.substitutionmodel.mixture.M4` — extends `EmpiricalSubstitutionModel`
+No Java classes flagged as legacy or mixed — all relevant types are on spec or have no parameter involvement. ✅
 
 ## Inputs declared too concretely
 
 > Concrete spec params (`RealScalarParam`, `RealVectorParam`, …) belong on Operators, which need to write the parameter, and on Loggers, which need `getID()` to write column headers (the pure type interfaces deliberately do not extend `BEASTInterface`). Distributions, CalcNodes, and other read-only holders should declare the interface (`RealScalar`, `RealVector`, …) so adapters and transforms can be substituted. Legacy `RealParameter` / `Function` Inputs are violations everywhere.
 
-### Distributions (2)
+### Distributions (3)
 
-- `obama.PhyloHMM`
-    - legacy: `Input<Function>`
+- `gammaspike.distribution.BranchSpikePrior`
     - concrete: `Input<IntVectorParam<? extends NonNegativeInt>>`
-- `obama.PhyloHMMVar`
-    - concrete: `Input<BoolVectorParam>`
-
-### CalcNodes (7)
-
-- `obama.RatesForConservedRegions`
+    - concrete: `Input<RealScalarParam<? extends PositiveReal>>`
+    - concrete: `Input<RealScalarParam<? extends PositiveReal>>`
+    - concrete: `Input<BoolScalarParam>`
+- `gammaspike.distribution.StumpedTreePrior`
+    - concrete: `Input<RealScalarParam<? extends NonNegativeReal>>`
+    - concrete: `Input<RealScalarParam<? extends NonNegativeReal>>`
+    - concrete: `Input<RealScalarParam<? extends NonNegativeReal>>`
+    - concrete: `Input<RealScalarParam<? extends NonNegativeReal>>`
+    - concrete: `Input<RealScalarParam<? extends NonNegativeReal>>`
+    - concrete: `Input<RealScalarParam<? extends NonNegativeReal>>`
     - concrete: `Input<RealScalarParam<? extends UnitInterval>>`
-- `obama.sitemodel.MixedSiteModel`
+    - concrete: `Input<RealScalarParam<? extends UnitInterval>>`
+- `gammaspike.tree.BirthDeathStubSimulator`
+    - concrete: `Input<RealScalarParam<? extends PositiveReal>>`
+    - concrete: `Input<RealScalarParam<UnitInterval>>`
+    - concrete: `Input<IntVectorParam<NonNegativeInt>>`
+
+### CalcNodes (4)
+
+- `gammaspike.clockmodel.PunctuatedRelaxedClockModel`
     - concrete: `Input<IntVectorParam<? extends NonNegativeInt>>`
-    - concrete: `Input<RealVectorParam<? extends PositiveReal>>`
-- `obama.sitemodel.MixtureSiteModel`
+    - concrete: `Input<RealScalarParam<? extends NonNegativeReal>>`
+    - concrete: `Input<BoolScalarParam>`
     - concrete: `Input<RealVectorParam<? extends NonNegativeReal>>`
-    - concrete: `Input<RealVectorParam<? extends PositiveReal>>`
-    - concrete: `Input<RealScalarParam<? extends PositiveReal>>`
-- `obama.sitemodel.OBAMAModelTestSiteModel`
-    - concrete: `Input<IntScalarParam<? extends NonNegativeInt>>`
-    - concrete: `Input<IntScalarParam<? extends NonNegativeInt>>`
-- `obama.substitutionmodel.OBAMAComplexModel`
-    - concrete: `Input<BoolScalarParam>`
-    - concrete: `Input<IntScalarParam<? extends NonNegativeInt>>`
-- `obama.substitutionmodel.OBAMAModel`
-    - concrete: `Input<BoolScalarParam>`
-    - concrete: `Input<IntScalarParam<? extends NonNegativeInt>>`
-- `obama.substitutionmodel.ParameterisedAminoAcidModel`
+    - concrete: `Input<RealVectorParam<? extends NonNegativeReal>>`
+- `gammaspike.clockmodel.SpikeSize`
+    - concrete: `Input<RealVectorParam<NonNegativeReal>>`
+    - concrete: `Input<RealScalarParam<NonNegativeReal>>`
+- `gammaspike.sitemodel.ClockMixtureModel`
+    - concrete: `Input<SimplexParam>`
     - concrete: `Input<RealScalarParam<? extends PositiveReal>>`
     - concrete: `Input<RealScalarParam<? extends PositiveReal>>`
-    - concrete: `Input<RealScalarParam<? extends PositiveReal>>`
-
-## Inputs declaring `@Deprecated` types
-
-> Each entry below is an `Input<T>` field where `T` (or one of its generic parameters) is annotated `@Deprecated` somewhere in the scanned packages. Such Inputs block XML migration: downstream XMLs cannot supply a non-deprecated value to them. Replace the declared type with the suggested spec equivalent (and update the field/local variable types accordingly).
-
-**`obama.PhyloHMM`** (1):
-
-| Input type | Hit | Replacement |
-|---|---|---|
-| `Function` | `Function` → `beast.base.core.Function` | _(no spec equivalent found)_ |
+- `gammaspike.tree.Stubs`
+    - concrete: `Input<IntVectorParam<NonNegativeInt>>`
+    - concrete: `Input<RealVectorParam<UnitInterval>>`
+    - concrete: `Input<IntVectorParam<Int>>`
+    - concrete: `Input<IntVectorParam<NonNegativeInt>>`
+    - concrete: `Input<RealScalarParam<NonNegativeReal>>`
 
 ## Example XMLs pending migration
 
-**Needs `version="2.8"`** (14):
+**Needs `version="2.8"`** (6):
 
-- `examples/testLG4X.xml`
-- `examples/testPhyloHMMMap.xml`
-- `examples/testC60.xml`
-- `examples/testC10.xml`
-- `examples/testOBAMA.xml`
-- `examples/testC30.xml`
-- `examples/testPhyloHMM2.xml`
-- `examples/testC20.xml`
-- `examples/testC50.xml`
-- `examples/testPhyloHMMSparse.xml`
-- `examples/testC20Mixed.xml`
-- `examples/testPhyloHMM.xml`
-- `examples/testLG4.xml`
-- `examples/testC40.xml`
+- `examples/stubs/nrStubs.xml`
+- `examples/stubs/rjStubs.xml`
+- `examples/stubs/stochasticStubs.xml`
+- `examples/cases/aaRS.xml`
+- `examples/cases/cephalopods.xml`
+- `examples/cases/indoeuropean.xml`
 
-## FxTemplates pending migration
+**Uses spec types but still has legacy `parameter.RealParameter`-style declarations** (11):
 
-> Note: BEAUti templates conventionally keep `version='2.0'` (beast3 core does the same). Migration here means the body uses `beast.base.spec.*` types and parameter declarations use `RealScalarParam` etc. rather than `parameter.RealParameter`.
+- `examples/DS/DS11.xml`
+- `examples/DS/DS10.xml`
+- `examples/DS/DS9.xml`
+- `examples/DS/DS8.xml`
+- `examples/DS/DS5.xml`
+- `examples/DS/DS4.xml`
+- `examples/DS/DS6.xml`
+- `examples/DS/DS7.xml`
+- `examples/DS/DS3.xml`
+- `examples/DS/DS2.xml`
+- `examples/DS/DS1.xml`
 
-**Uses spec types but still has legacy `parameter.*` declarations** (1):
+## FxTemplates
 
-- `src/main/resources/obama/fxtemplates/OBAMA.xml`
+All BEAUti fxtemplates use spec types with no legacy `parameter.*` declarations. ✅
 
 ## Deprecated class references in XMLs
 
 > Every entry below points at a class annotated `@Deprecated` in the spec sources. Replace each `spec=`/`<map>` reference with the suggested spec replacement, or drop it entirely if the surrounding `<prior>` wrapper or `<map>` is now unused. Short-name hits (no dots) resolve to deprecated classes whose simple name is unambiguous within the scanned packages.
 
-**`examples/testLG4X.xml`** (15):
+**`examples/stubs/nrStubs.xml`** (11):
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.evolution.speciation.YuleModel` | `beast.base.spec.evolution.speciation.YuleModel` |
-| `spec=` | `beast.base.inference.distribution.Dirichlet` | `beast.base.spec.inference.distribution.Dirichlet` |
-| `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
-| `spec=` | `beast.base.evolution.TreeWithMetaDataLogger` | `beast.base.spec.evolution.TreeWithMetaDataLogger` |
+| `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
+| `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
+| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
+| `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
+| `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
+| `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
+| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
+| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
+| `map=` | `beast.base.inference.distribution.OneOnX` | `beast.base.spec.inference.distribution.LogUniform` |
+| `map=` | `beast.base.inference.distribution.Poisson` | `beast.base.spec.inference.distribution.Poisson` |
+
+**`examples/stubs/rjStubs.xml`** (11):
+
+| Where | Hit | Replacement |
+|---|---|---|
+| `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
+| `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
+| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
+| `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
+| `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
+| `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
+| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
+| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
+| `map=` | `beast.base.inference.distribution.OneOnX` | `beast.base.spec.inference.distribution.LogUniform` |
+| `map=` | `beast.base.inference.distribution.Poisson` | `beast.base.spec.inference.distribution.Poisson` |
+
+**`examples/stubs/stochasticStubs.xml`** (11):
+
+| Where | Hit | Replacement |
+|---|---|---|
+| `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
+| `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
+| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
+| `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
+| `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
+| `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
+| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
+| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
+| `map=` | `beast.base.inference.distribution.OneOnX` | `beast.base.spec.inference.distribution.LogUniform` |
+| `map=` | `beast.base.inference.distribution.Poisson` | `beast.base.spec.inference.distribution.Poisson` |
+
+**`examples/DS/DS11.xml`** (10):
+
+| Where | Hit | Replacement |
+|---|---|---|
 | `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
 | `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
@@ -139,33 +169,10 @@ Not yet published as `io.github.rbouckaert:obama`. Verify the namespace on centr
 | `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
 | `map=` | `beast.base.inference.distribution.OneOnX` | `beast.base.spec.inference.distribution.LogUniform` |
 
-**`examples/testPhyloHMMMap.xml`** (13):
+**`examples/DS/DS10.xml`** (10):
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
-| `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.evolution.speciation.YuleModel` | `beast.base.spec.evolution.speciation.YuleModel` |
-| `spec=` | `beast.base.evolution.TreeWithMetaDataLogger` | `beast.base.spec.evolution.TreeWithMetaDataLogger` |
-| `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
-| `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
-| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
-| `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
-| `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
-| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
-| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
-| `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
-| `map=` | `beast.base.inference.distribution.OneOnX` | `beast.base.spec.inference.distribution.LogUniform` |
-
-**`examples/testC60.xml`** (15):
-
-| Where | Hit | Replacement |
-|---|---|---|
-| `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.evolution.speciation.YuleModel` | `beast.base.spec.evolution.speciation.YuleModel` |
-| `spec=` | `beast.base.inference.distribution.Dirichlet` | `beast.base.spec.inference.distribution.Dirichlet` |
-| `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
-| `spec=` | `beast.base.evolution.TreeWithMetaDataLogger` | `beast.base.spec.evolution.TreeWithMetaDataLogger` |
 | `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
 | `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
@@ -177,15 +184,10 @@ Not yet published as `io.github.rbouckaert:obama`. Verify the namespace on centr
 | `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
 | `map=` | `beast.base.inference.distribution.OneOnX` | `beast.base.spec.inference.distribution.LogUniform` |
 
-**`examples/testC10.xml`** (15):
+**`examples/DS/DS9.xml`** (10):
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.evolution.speciation.YuleModel` | `beast.base.spec.evolution.speciation.YuleModel` |
-| `spec=` | `beast.base.inference.distribution.Dirichlet` | `beast.base.spec.inference.distribution.Dirichlet` |
-| `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
-| `spec=` | `beast.base.evolution.TreeWithMetaDataLogger` | `beast.base.spec.evolution.TreeWithMetaDataLogger` |
 | `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
 | `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
@@ -197,15 +199,10 @@ Not yet published as `io.github.rbouckaert:obama`. Verify the namespace on centr
 | `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
 | `map=` | `beast.base.inference.distribution.OneOnX` | `beast.base.spec.inference.distribution.LogUniform` |
 
-**`examples/testOBAMA.xml`** (15):
+**`examples/DS/DS8.xml`** (10):
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.evolution.speciation.YuleModel` | `beast.base.spec.evolution.speciation.YuleModel` |
-| `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
-| `spec=` | `UniformOperator` → `beast.base.inference.operator.UniformOperator` | `beast.base.spec.inference.operator.uniform.IntervalOperator` |
-| `spec=` | `beast.base.evolution.TreeWithMetaDataLogger` | `beast.base.spec.evolution.TreeWithMetaDataLogger` |
 | `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
 | `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
@@ -217,15 +214,10 @@ Not yet published as `io.github.rbouckaert:obama`. Verify the namespace on centr
 | `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
 | `map=` | `beast.base.inference.distribution.OneOnX` | `beast.base.spec.inference.distribution.LogUniform` |
 
-**`examples/testC30.xml`** (15):
+**`examples/DS/DS5.xml`** (10):
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.evolution.speciation.YuleModel` | `beast.base.spec.evolution.speciation.YuleModel` |
-| `spec=` | `beast.base.inference.distribution.Dirichlet` | `beast.base.spec.inference.distribution.Dirichlet` |
-| `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
-| `spec=` | `beast.base.evolution.TreeWithMetaDataLogger` | `beast.base.spec.evolution.TreeWithMetaDataLogger` |
 | `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
 | `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
@@ -237,33 +229,10 @@ Not yet published as `io.github.rbouckaert:obama`. Verify the namespace on centr
 | `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
 | `map=` | `beast.base.inference.distribution.OneOnX` | `beast.base.spec.inference.distribution.LogUniform` |
 
-**`examples/testPhyloHMM2.xml`** (13):
+**`examples/DS/DS4.xml`** (10):
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
-| `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.evolution.speciation.YuleModel` | `beast.base.spec.evolution.speciation.YuleModel` |
-| `spec=` | `beast.base.evolution.TreeWithMetaDataLogger` | `beast.base.spec.evolution.TreeWithMetaDataLogger` |
-| `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
-| `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
-| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
-| `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
-| `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
-| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
-| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
-| `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
-| `map=` | `beast.base.inference.distribution.OneOnX` | `beast.base.spec.inference.distribution.LogUniform` |
-
-**`examples/testC20.xml`** (16):
-
-| Where | Hit | Replacement |
-|---|---|---|
-| `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.evolution.speciation.YuleModel` | `beast.base.spec.evolution.speciation.YuleModel` |
-| `spec=` | `beast.base.inference.distribution.Dirichlet` | `beast.base.spec.inference.distribution.Dirichlet` |
-| `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
-| `spec=` | `beast.base.evolution.TreeWithMetaDataLogger` | `beast.base.spec.evolution.TreeWithMetaDataLogger` |
 | `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
 | `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
@@ -275,15 +244,10 @@ Not yet published as `io.github.rbouckaert:obama`. Verify the namespace on centr
 | `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
 | `map=` | `beast.base.inference.distribution.OneOnX` | `beast.base.spec.inference.distribution.LogUniform` |
 
-**`examples/testC50.xml`** (15):
+**`examples/DS/DS6.xml`** (10):
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.evolution.speciation.YuleModel` | `beast.base.spec.evolution.speciation.YuleModel` |
-| `spec=` | `beast.base.inference.distribution.Dirichlet` | `beast.base.spec.inference.distribution.Dirichlet` |
-| `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
-| `spec=` | `beast.base.evolution.TreeWithMetaDataLogger` | `beast.base.spec.evolution.TreeWithMetaDataLogger` |
 | `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
 | `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
@@ -295,32 +259,10 @@ Not yet published as `io.github.rbouckaert:obama`. Verify the namespace on centr
 | `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
 | `map=` | `beast.base.inference.distribution.OneOnX` | `beast.base.spec.inference.distribution.LogUniform` |
 
-**`examples/testPhyloHMMSparse.xml`** (13):
+**`examples/DS/DS7.xml`** (10):
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
-| `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.evolution.speciation.YuleModel` | `beast.base.spec.evolution.speciation.YuleModel` |
-| `spec=` | `beast.base.evolution.TreeWithMetaDataLogger` | `beast.base.spec.evolution.TreeWithMetaDataLogger` |
-| `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
-| `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
-| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
-| `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
-| `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
-| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
-| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
-| `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
-| `map=` | `beast.base.inference.distribution.OneOnX` | `beast.base.spec.inference.distribution.LogUniform` |
-
-**`examples/testC20Mixed.xml`** (14):
-
-| Where | Hit | Replacement |
-|---|---|---|
-| `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.evolution.speciation.YuleModel` | `beast.base.spec.evolution.speciation.YuleModel` |
-| `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
-| `spec=` | `beast.base.evolution.TreeWithMetaDataLogger` | `beast.base.spec.evolution.TreeWithMetaDataLogger` |
 | `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
 | `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
@@ -332,32 +274,10 @@ Not yet published as `io.github.rbouckaert:obama`. Verify the namespace on centr
 | `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
 | `map=` | `beast.base.inference.distribution.OneOnX` | `beast.base.spec.inference.distribution.LogUniform` |
 
-**`examples/testPhyloHMM.xml`** (13):
+**`examples/DS/DS3.xml`** (10):
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
-| `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.evolution.speciation.YuleModel` | `beast.base.spec.evolution.speciation.YuleModel` |
-| `spec=` | `beast.base.evolution.TreeWithMetaDataLogger` | `beast.base.spec.evolution.TreeWithMetaDataLogger` |
-| `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
-| `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
-| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
-| `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
-| `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
-| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
-| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
-| `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
-| `map=` | `beast.base.inference.distribution.OneOnX` | `beast.base.spec.inference.distribution.LogUniform` |
-
-**`examples/testLG4.xml`** (14):
-
-| Where | Hit | Replacement |
-|---|---|---|
-| `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.evolution.speciation.YuleModel` | `beast.base.spec.evolution.speciation.YuleModel` |
-| `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
-| `spec=` | `beast.base.evolution.TreeWithMetaDataLogger` | `beast.base.spec.evolution.TreeWithMetaDataLogger` |
 | `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
 | `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
@@ -369,15 +289,10 @@ Not yet published as `io.github.rbouckaert:obama`. Verify the namespace on centr
 | `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
 | `map=` | `beast.base.inference.distribution.OneOnX` | `beast.base.spec.inference.distribution.LogUniform` |
 
-**`examples/testC40.xml`** (15):
+**`examples/DS/DS2.xml`** (10):
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.evolution.speciation.YuleModel` | `beast.base.spec.evolution.speciation.YuleModel` |
-| `spec=` | `beast.base.inference.distribution.Dirichlet` | `beast.base.spec.inference.distribution.Dirichlet` |
-| `spec=` | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
-| `spec=` | `beast.base.evolution.TreeWithMetaDataLogger` | `beast.base.spec.evolution.TreeWithMetaDataLogger` |
 | `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
 | `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
 | `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
@@ -389,11 +304,89 @@ Not yet published as `io.github.rbouckaert:obama`. Verify the namespace on centr
 | `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
 | `map=` | `beast.base.inference.distribution.OneOnX` | `beast.base.spec.inference.distribution.LogUniform` |
 
-**`src/main/resources/obama/fxtemplates/OBAMA.xml`** (6):
+**`examples/DS/DS1.xml`** (10):
 
 | Where | Hit | Replacement |
 |---|---|---|
-| `spec=` | `OneOnX` → `beast.base.inference.distribution.OneOnX` | `beast.base.spec.inference.distribution.LogUniform` |
-| `spec=` | `beast.base.inference.distribution.Dirichlet` | `beast.base.spec.inference.distribution.Dirichlet` |
-| `spec=` | `UniformOperator` → `beast.base.inference.operator.UniformOperator` | `beast.base.spec.inference.operator.uniform.IntervalOperator` |
+| `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
+| `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
+| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
+| `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
+| `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
+| `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
+| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
+| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
+| `map=` | `beast.base.inference.distribution.OneOnX` | `beast.base.spec.inference.distribution.LogUniform` |
+
+**`examples/cases/aaRS.xml`** (28):
+
+| Where | Hit | Replacement |
+|---|---|---|
+| `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
+| `spec=` | `beast.base.evolution.tree.coalescent.ConstantPopulation` | `beast.base.spec.evolution.tree.coalescent.ConstantPopulation` |
+| `spec=` | `beast.base.evolution.tree.MRCAPrior` | `beast.base.spec.evolution.tree.MRCAPrior` |
+| `spec=` | `beast.base.evolution.sitemodel.SiteModel` | `beast.base.spec.evolution.sitemodel.SiteModel` |
+| `spec=` | `EpochFlexOperator` → `beast.base.evolution.operator.EpochFlexOperator` | _(no spec equivalent found)_ |
+| `spec=` | `TreeStretchOperator` → `beast.base.evolution.operator.TreeStretchOperator` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
+| `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
+| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
+| `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
+| `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
+| `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
+| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
+| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
+| `map=` | `beast.base.inference.distribution.OneOnX` | `beast.base.spec.inference.distribution.LogUniform` |
+| `map=` | `beast.base.inference.distribution.Poisson` | `beast.base.spec.inference.distribution.Poisson` |
+| `map=` | `beast.base.inference.distribution.Dirichlet` | `beast.base.spec.inference.distribution.Dirichlet` |
+
+**`examples/cases/cephalopods.xml`** (19):
+
+| Where | Hit | Replacement |
+|---|---|---|
+| `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
+| `spec=` | `beast.base.evolution.tree.coalescent.ConstantPopulation` | `beast.base.spec.evolution.tree.coalescent.ConstantPopulation` |
+| `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
+| `spec=` | `beast.base.evolution.tree.MRCAPrior` | `beast.base.spec.evolution.tree.MRCAPrior` |
+| `spec=` | `EpochFlexOperator` → `beast.base.evolution.operator.EpochFlexOperator` | _(no spec equivalent found)_ |
+| `spec=` | `TreeStretchOperator` → `beast.base.evolution.operator.TreeStretchOperator` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
+| `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
+| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
+| `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
+| `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
+| `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
+| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
+| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
+| `map=` | `beast.base.inference.distribution.OneOnX` | `beast.base.spec.inference.distribution.LogUniform` |
+| `map=` | `beast.base.inference.distribution.Poisson` | `beast.base.spec.inference.distribution.Poisson` |
+| `map=` | `beast.base.inference.distribution.Dirichlet` | `beast.base.spec.inference.distribution.Dirichlet` |
+
+**`examples/cases/indoeuropean.xml`** (72):
+
+| Where | Hit | Replacement |
+|---|---|---|
+| `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
+| `spec=` | `beast.base.evolution.tree.coalescent.ConstantPopulation` | `beast.base.spec.evolution.tree.coalescent.ConstantPopulation` |
+| `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
+| `spec=` | `beast.base.evolution.tree.MRCAPrior` | `beast.base.spec.evolution.tree.MRCAPrior` |
+| `spec=` | `beast.base.evolution.sitemodel.SiteModel` | `beast.base.spec.evolution.sitemodel.SiteModel` |
+| `spec=` | `beast.base.evolution.substitutionmodel.BinaryCovarion` | `beast.base.spec.evolution.substitutionmodel.BinaryCovarion` |
+| `spec=` | `EpochFlexOperator` → `beast.base.evolution.operator.EpochFlexOperator` | _(no spec equivalent found)_ |
+| `spec=` | `TreeStretchOperator` → `beast.base.evolution.operator.TreeStretchOperator` | _(no spec equivalent found)_ |
+| `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
+| `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
+| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
+| `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
+| `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
+| `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
+| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
+| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
+| `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
+| `map=` | `beast.base.inference.distribution.OneOnX` | `beast.base.spec.inference.distribution.LogUniform` |
+| `map=` | `beast.base.inference.distribution.Poisson` | `beast.base.spec.inference.distribution.Poisson` |
+| `map=` | `beast.base.inference.distribution.Dirichlet` | `beast.base.spec.inference.distribution.Dirichlet` |
 

@@ -75,7 +75,7 @@ packages:
     path: ../ORC
     github: jordandouglas/ORC
     maven: io.github.jordandouglas:beast-orc
-    stage: compile_tested
+    stage: maven_central
 
   - name: bModelTest
     path: ../bModelTest
@@ -95,3 +95,9 @@ packages:
     maven: io.github.tgvaughan:feast
     stage: compile_tested
     notes: Tasty additions to BEAST 2. v11.0.0 is the first beast3-targeted release.
+
+  - name: GammaSpikeModel
+    path: ../GammaSpikeModel
+    github: jordandouglas/GammaSpikeModel
+    maven: io.github.jordandouglas:beast-gammaspike
+    stage: compile_tested

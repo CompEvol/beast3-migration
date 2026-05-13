@@ -1,0 +1,180 @@
+\documentclass[aspectratio=169]{beamer}
+\usetheme{metropolis}
+\usepackage[T1]{fontenc}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{tikz}
+
+\definecolor{red}{HTML}{C0392B}
+\definecolor{amber}{HTML}{D4A017}
+\definecolor{green}{HTML}{27AE60}
+\newcommand{\R}{\textcolor{red}{$\bullet$}}
+\newcommand{\A}{\textcolor{amber}{$\bullet$}}
+\newcommand{\G}{\textcolor{green}{$\bullet$}}
+
+\title{BEAST 3 Migration}
+\subtitle{Linter \& dashboard --- state of play}
+\author{Alexei Drummond}
+\date{2026-05-13}
+
+\begin{document}
+
+\maketitle
+
+% -------------------------------------------------------------
+\begin{frame}{Why a migration linter?}
+  \begin{itemize}
+    \item BEAST 3 introduces a \alert{typed spec layer} (\texttt{beast.base.spec.*}) replacing legacy \texttt{Parameter}/\texttt{Prior}/\texttt{ParametricDistribution} bases.
+    \item $\sim$84 community packages on v2.7 --- only \alert{$\sim10$} have moved to v2.8 so far.
+    \item Per-package migration is mechanical but tedious: hundreds of XML \texttt{spec=} attributes, Input declarations, and class bases to update.
+    \item ``Encode migration knowledge in the linter, not in chat.'' --- if a check is mechanical, it should be in a report, not in someone's head.
+    \item Goal: turn migration into \alert{read the report, apply the hints, re-run}.
+  \end{itemize}
+\end{frame}
+
+% -------------------------------------------------------------
+\begin{frame}{What the tool does}
+  A small Java program (\texttt{io.github.beast3.migration}, $\sim$3.2k LOC) that scans sibling checkouts and emits Markdown + JSON.
+  \begin{columns}[T]
+    \begin{column}{0.5\textwidth}
+      \textbf{Inputs}
+      \begin{itemize}
+        \item \texttt{packages.yaml} --- 14 tracked packages
+        \item Each package as a sibling checkout
+        \item Maven Central (latest release probe)
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \textbf{Outputs}
+      \begin{itemize}
+        \item \texttt{CHECKLIST.md} --- cross-package dashboard
+        \item \texttt{reports/<pkg>.md} --- per-package, what's left to migrate
+        \item \texttt{status.json} --- machine-readable
+        \item \texttt{BACKLOG.md} --- CBAN v2.7 packages not yet on v2.8
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \vspace{0.6em}
+  Re-run with \texttt{mvn -q exec:java}.
+\end{frame}
+
+% -------------------------------------------------------------
+\begin{frame}{Scanner pipeline}
+  Five phases over each tracked checkout:
+  \begin{enumerate}
+    \item \textbf{Phase 1.} Per package: scan Java classes, XMLs, fxtemplates, Maven build, git commit, Maven Central version.
+    \item \textbf{Phase 2.} Build a \alert{global @Deprecated FQN registry} across all packages + derive spec replacements and unambiguous short-name aliases.
+    \item \textbf{Phase 3.} Chain-resolve each class against the registry --- decide \texttt{spec / mixed / legacy / neutral}.
+    \item \textbf{Phase 4.} Second XML pass: flag \texttt{spec=} and \texttt{<map>} bodies pointing at deprecated classes, with replacement hints.
+    \item \textbf{Phase 5.} Java \texttt{Input<@Deprecated>} scan --- classes whose Input type blocks XML migration.
+  \end{enumerate}
+\end{frame}
+
+% -------------------------------------------------------------
+\begin{frame}{What the linter checks}
+  \begin{itemize}
+    \item \textbf{Class kind tally} per package: Distributions, Operators, Loggers, CalcNodes, Parameters, StateNodes --- split into spec / mixed / legacy / neutral.
+    \item \textbf{Input rule} (per Kind):
+      \begin{itemize}
+        \item Distributions / CalcNodes / StateNodes / Params $\Rightarrow$ declare \emph{interface} type (\texttt{RealScalar}, \texttt{RealVector}, \ldots).
+        \item Operators \& Loggers $\Rightarrow$ may keep concrete \texttt{RealScalarParam} (need \texttt{getID()} / write access).
+      \end{itemize}
+    \item \textbf{Input<@Deprecated>} --- a class with an Input on any deprecated type is blocking.
+    \item \textbf{XML} --- \texttt{spec / v2.8 / total} per file root; deprecated refs in \texttt{spec=} or \texttt{<map>} bodies.
+    \item \textbf{FxTemplates} --- \texttt{clean / spec / total}; stay on \texttt{version="2.0"} by convention.
+    \item \textbf{Build / release} --- JPMS module, GH release workflow, CI, Maven Central published version.
+  \end{itemize}
+\end{frame}
+
+% -------------------------------------------------------------
+\begin{frame}{Cross-package dashboard (2026-05-13)}
+  \footnotesize
+  \begin{tabular}{lccccc}
+    \toprule
+    Package & Stage & Code & XML & FxT & Dep refs \\
+    \midrule
+    beast3            & Maven Central & \G & \R & \A & 637 \\
+    BEASTLabs         & Maven Central & \R & \R & \R & 173 \\
+    beast-classic     & Maven Central & \R & \R & \R & 112 \\
+    CoupledMCMC       & Maven Central & \G & \G & \G & 0 \\
+    flc               & Maven Central & \G & \G & ---       & 0 \\
+    Mascot            & Maven Central & \A & \R & \R & 28 \\
+    morph-models      & Maven Central & \G & \G & \G & 0 \\
+    sampled-ancestors & Maven Central & \G & \G & \G & 0 \\
+    MutableAlignment  & compile-tested & \G & \G & ---      & 0 \\
+    ORC               & Maven Central & \G & \G & \G & 0 \\
+    bModelTest        & compile-tested & \G & \G & \G & 0 \\
+    obama             & compile-tested & \R & \R & \A & 207 \\
+    feast             & compile-tested & \G & \R & \R & 9 \\
+    GammaSpikeModel   & compile-tested & \A & \R & \G & 262 \\
+    \bottomrule
+  \end{tabular}
+  \vspace{0.4em}
+
+  \scriptsize \R\ legacy / non-migrated~~~\A\ minor (concrete Inputs, stray refs)~~~\G\ clean~~~``---'' = package does not use beastfx (treated as complete)
+\end{frame}
+
+% -------------------------------------------------------------
+\begin{frame}{State of play --- highlights}
+  \begin{itemize}
+    \item \alert{7 of 14} tracked packages are fully green across Code, XML, and FxT: CoupledMCMC, flc, morph-models, sampled-ancestors, MutableAlignment, ORC, bModelTest. flc and MutableAlignment don't use beastfx, so FxT is N/A.
+    \item \alert{beast3 core} is green on Java but still carries 637 deprecated-class references in its example XMLs / fxtemplates --- mechanical edits, but many of them.
+    \item \alert{BEASTLabs, beast-classic} are the remaining Java-side packages: legacy bases and concrete Input declarations.
+    \item \alert{Mascot} Java side is clean apart from two Loggers carrying \texttt{Input<List<Function>>}; 28 deprecated-class references across 14 XMLs and 5 fxtemplates remain --- a small task once those Loggers are sorted.
+    \item \alert{obama, feast, GammaSpikeModel} are the compile-tested-tier packages with work outstanding; obama has 11 legacy CalcNodes and 207 deprecated refs; GammaSpikeModel has 7 classes with Input-rule violations and 262 deprecated refs in XMLs.
+    \item Out of $\sim$84 CBAN v2.7 packages, \alert{10} are on v2.8; another \alert{3} (bModelTest, FLC, OBAMA) are in progress; \alert{69} untracked.
+  \end{itemize}
+\end{frame}
+
+% -------------------------------------------------------------
+\begin{frame}{What's blocking what}
+  Visible failure modes the linter surfaces:
+  \begin{itemize}
+    \item \textbf{Concrete-spec Inputs on Distributions/CalcNodes} --- BEASTLabs (15/29), obama (9/18), beast-classic (7/15), GammaSpikeModel (7/30). Fix: declare the interface type.
+    \item \textbf{Input<@Deprecated>} --- a blocking violation, flagged inline in per-package reports.
+    \item \textbf{\texttt{@Deprecated} references in XMLs} --- the linter flags every \texttt{spec=} attribute and \texttt{<map>} body that names a deprecated class, with the spec replacement hint inline in the per-package report.
+    \item \textbf{Loggable classes} --- treated as a fallback role, so a class isn't tagged a Logger merely by implementing \texttt{Loggable}.
+    \item \textbf{Logger Input rule} --- Loggers may declare \texttt{Input<Function>} (they need \texttt{getID()}, which the bare type interfaces don't provide).
+  \end{itemize}
+\end{frame}
+
+% -------------------------------------------------------------
+\begin{frame}{Workflow today}
+  Each migration session looks like:
+  \begin{enumerate}
+    \item \texttt{mvn -q exec:java} --- regenerate dashboard + reports.
+    \item Open \texttt{reports/<pkg>.md} --- read what's left and the replacement hints.
+    \item Apply edits in the sibling checkout (Java first, then XMLs, then fxtemplates).
+    \item Re-run linter; iterate until the package goes \G\ \G\ \G.
+    \item Validate XMLs via \texttt{mvn exec:exec} on a short-chain run (catches binding bugs the static linter misses).
+    \item Open PR against the package's repo; check open PRs first (linter only sees the working tree).
+  \end{enumerate}
+\end{frame}
+
+% -------------------------------------------------------------
+\begin{frame}{Next 2--4 weeks}
+  \begin{itemize}
+    \item \textbf{Complete the dep-ref work in beast3 core} --- 637 references to resolve in example XMLs / fxtemplates.
+    \item \textbf{BEASTLabs and beast-classic} --- complete the Input-rule corrections so downstream packages can build against them.
+    \item \textbf{Mascot} --- 28 deprecated references across 14 XMLs and 5 fxtemplates; small once the two residual \texttt{Input<List<Function>>} Loggers are dealt with.
+    \item \textbf{Strengthen the linter}: cross-reference the \texttt{@Deprecated} registry against XML \texttt{<map>} bodies; add Input<@Deprecated> as a column on the dashboard.
+    \item \textbf{Triage the 69 untracked v2.7 packages} in BACKLOG.md --- decide which to adopt and which to retire.
+    \item Goal: every tracked package \G\ \G\ \G\ before the first official BEAST 2.8.0 release (mid-June).
+  \end{itemize}
+\end{frame}
+
+% -------------------------------------------------------------
+\begin{frame}{Summary}
+  \begin{itemize}
+    \item The linter is \alert{the single source of truth} for migration state across 13 packages.
+    \item Seven packages are fully green; what's left in the rest is concrete and mechanically tractable.
+    \item Migration knowledge keeps moving from chat $\rightarrow$ linter checks $\rightarrow$ green-light columns.
+    \item Re-run is one Maven command; reports are version-controlled and reviewable.
+  \end{itemize}
+  \vspace{0.6em}
+  \centering
+  \texttt{github.com/CompEvol/beast3-migration} \\
+  \texttt{CHECKLIST.md} ~ ~ \texttt{reports/} ~ ~ \texttt{BACKLOG.md}
+\end{frame}
+
+\end{document}
