@@ -1,6 +1,6 @@
 # obama — what's left
 
-> **Scanned at:** 2026-05-13T13:33:13.522974  
+> **Scanned at:** 2026-05-13T13:44:44.474816  
 > **Commit:** `7e14fd7` on `beast3-migration` — [view on GitHub](https://github.com/rbouckaert/obama/commit/7e14fd7ffbc792130fe401d1c8859aee7d422667)  
 > **Pom version:** `1.2.0-beta1`  
 > **Maven Central:** not published as `io.github.rbouckaert:obama` (not published (404))  
@@ -75,6 +75,16 @@ Not yet published as `io.github.rbouckaert:obama`. Verify the namespace on centr
     - concrete: `Input<RealScalarParam<? extends PositiveReal>>`
     - concrete: `Input<RealScalarParam<? extends PositiveReal>>`
     - concrete: `Input<RealScalarParam<? extends PositiveReal>>`
+
+## Inputs declaring `@Deprecated` types
+
+> Each entry below is an `Input<T>` field where `T` (or one of its generic parameters) is annotated `@Deprecated` somewhere in the scanned packages. Such Inputs block XML migration: downstream XMLs cannot supply a non-deprecated value to them. Replace the declared type with the suggested spec equivalent (and update the field/local variable types accordingly).
+
+**`obama.PhyloHMM`** (1):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `Function` | `Function` → `beast.base.core.Function` | _(no spec equivalent found)_ |
 
 ## Example XMLs pending migration
 

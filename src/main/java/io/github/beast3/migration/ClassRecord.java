@@ -138,6 +138,61 @@ public final class ClassRecord {
         return out;
     }
 
+    /**
+     * Inputs whose declared type references an {@code @Deprecated} class —
+     * either by FQN ({@code Input<beast.base.inference.distribution.ParametricDistribution>})
+     * or by an unambiguously deprecated short name
+     * ({@code Input<ParametricDistribution>}). A class with any such Input
+     * is blocking migration: downstream XMLs cannot supply a non-deprecated
+     * value to it without first migrating this class. This is a separate
+     * concern from the carrier rule above (which is about
+     * RealParameter / Function / Concrete spec params); the two checks may
+     * overlap on the same Input.
+     */
+    public List<InputDeprecatedRef> inputsReferencingDeprecatedTypes(
+            java.util.Set<String> deprecatedFqns,
+            java.util.Map<String, String> deprecatedShortNames,
+            java.util.Map<String, String> specReplacements) {
+        java.util.List<InputDeprecatedRef> out = new java.util.ArrayList<>();
+        for (InputDecl d : inputs) {
+            String hit = findDeprecatedReference(d.typeStr(), deprecatedFqns, deprecatedShortNames);
+            if (hit == null) continue;
+            String canonical = hit.contains(".") ? hit : deprecatedShortNames.get(hit);
+            String replacement = specReplacements.getOrDefault(canonical, "");
+            out.add(new InputDeprecatedRef(fqn(), d, hit, canonical, replacement));
+        }
+        return out;
+    }
+
+    /**
+     * Scan {@code typeStr} for the first identifier that resolves to a
+     * deprecated class. Returns the matching token (an FQN or a short name)
+     * or null.
+     */
+    private static String findDeprecatedReference(
+            String typeStr,
+            java.util.Set<String> deprecatedFqns,
+            java.util.Map<String, String> deprecatedShortNames) {
+        if (typeStr == null || typeStr.isBlank()) return null;
+        // Pass 1: full FQNs (lowercase package + at least one segment ending
+        // in a capitalised simple name).
+        java.util.regex.Matcher fqn = java.util.regex.Pattern
+                .compile("\\b[a-z][a-zA-Z0-9_]*(?:\\.[a-zA-Z_][\\w]*)+\\b")
+                .matcher(typeStr);
+        while (fqn.find()) {
+            String token = fqn.group();
+            if (deprecatedFqns.contains(token)) return token;
+        }
+        // Pass 2: bare capitalised simple names matching the unambiguous map.
+        java.util.regex.Matcher simple = java.util.regex.Pattern
+                .compile("\\b[A-Z][A-Za-z0-9_]+\\b").matcher(typeStr);
+        while (simple.find()) {
+            String token = simple.group();
+            if (deprecatedShortNames.containsKey(token)) return token;
+        }
+        return null;
+    }
+
     static Status toStatus(boolean hasSpec, boolean hasLegacy) {
         if (hasSpec && hasLegacy) return Status.MIXED;
         if (hasSpec) return Status.SPEC;

@@ -1,6 +1,6 @@
 # Mascot — what's left
 
-> **Scanned at:** 2026-05-13T13:33:12.182034  
+> **Scanned at:** 2026-05-13T13:44:43.074378  
 > **Commit:** `b7b7295` on `update-citations-and-readme` — [view on GitHub](https://github.com/CompEvol/Mascot/commit/b7b72958436854fbe07d91bb82fed3d3de2aa91d)  
 > **Pom version:** `3.1.0-beta1`  
 > **Maven Central:** `io.github.compevol:mascot:3.1.0-beta1`  
@@ -70,6 +70,71 @@
 
 - `mascot.glmmodel.CovariateList`
     - concrete: `Input<BoolVectorParam>`
+
+## Inputs declaring `@Deprecated` types
+
+> Each entry below is an `Input<T>` field where `T` (or one of its generic parameters) is annotated `@Deprecated` somewhere in the scanned packages. Such Inputs block XML migration: downstream XMLs cannot supply a non-deprecated value to them. Replace the declared type with the suggested spec equivalent (and update the field/local variable types accordingly).
+
+**`mascot.logger.mappedProbLogger`** (1):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `List<Function>` | `Function` → `beast.base.core.Function` | _(no spec equivalent found)_ |
+
+**`mascot.logger.StructuredTreeLogger`** (1):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `List<Function>` | `Function` → `beast.base.core.Function` | _(no spec equivalent found)_ |
+
+**`mascot.util.LargerThan`** (2):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `Function` | `Function` → `beast.base.core.Function` | _(no spec equivalent found)_ |
+
+**`mascot.distribution.MappedMascot`** (1):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `List<Function>` | `Function` → `beast.base.core.Function` | _(no spec equivalent found)_ |
+
+**`mascot.distribution.MappedMascotWithTipSampling`** (1):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `List<Function>` | `Function` → `beast.base.core.Function` | _(no spec equivalent found)_ |
+
+**`mascot.skyline.LogSmoothingPrior`** (4):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `ParametricDistribution` | `ParametricDistribution` → `beast.base.inference.distribution.ParametricDistribution` | `beast.base.spec.inference.distribution.TensorDistribution` |
+
+**`mascot.skyline.GLMPrior`** (1):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `ParametricDistribution` | `ParametricDistribution` → `beast.base.inference.distribution.ParametricDistribution` | `beast.base.spec.inference.distribution.TensorDistribution` |
+
+**`mascot.skyline.GrowthRateSmoothingPrior`** (4):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `ParametricDistribution` | `ParametricDistribution` → `beast.base.inference.distribution.ParametricDistribution` | `beast.base.spec.inference.distribution.TensorDistribution` |
+
+**`mascot.glmmodel.ErrorSmoothing`** (2):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `Function` | `Function` → `beast.base.core.Function` | _(no spec equivalent found)_ |
+| `ParametricDistribution` | `ParametricDistribution` → `beast.base.inference.distribution.ParametricDistribution` | `beast.base.spec.inference.distribution.TensorDistribution` |
+
+**`mascot.glmmodel.MaxRate`** (1):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `ParametricDistribution` | `ParametricDistribution` → `beast.base.inference.distribution.ParametricDistribution` | `beast.base.spec.inference.distribution.TensorDistribution` |
 
 ## Example XMLs pending migration
 

@@ -202,7 +202,7 @@ public final class ChecklistWriter {
         }
         if (totalClasses == 0) return "—";
         if (totalLegacy + totalMixed > 0) return "🔴";
-        if (r.inputViolations > 0) return "🟡";
+        if (r.inputViolations > 0 || !r.inputDeprecatedRefs.isEmpty()) return "🟡";
         return "🟢";
     }
 

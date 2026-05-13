@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-13T13:33:14.176091+12:00",
+  "generatedAt": "2026-05-13T13:44:45.145160+12:00",
   "packages": [
     {
       "name": "beast3",
@@ -74,6 +74,46 @@
       "inputRule": {
         "classesWithViolations": 3,
         "totalViolations": 3
+      },
+      "inputDeprecated": {
+        "count": 5,
+        "refs": [
+          {
+            "classFqn": "beastfx.app.beauti.PriorInputEditor",
+            "typeStr": "Function",
+            "hit": "Function",
+            "canonicalFqn": "beast.base.core.Function",
+            "replacement": ""
+          },
+          {
+            "classFqn": "beast.base.evolution.branchratemodel.BranchRateModel.Base",
+            "typeStr": "Function",
+            "hit": "Function",
+            "canonicalFqn": "beast.base.core.Function",
+            "replacement": ""
+          },
+          {
+            "classFqn": "beast.base.inference.operator.kernel.Transform.UnivariableTransform",
+            "typeStr": "List<Function>",
+            "hit": "Function",
+            "canonicalFqn": "beast.base.core.Function",
+            "replacement": ""
+          },
+          {
+            "classFqn": "beast.base.inference.operator.kernel.Transform.MultivariableTransform",
+            "typeStr": "List<Function>",
+            "hit": "Function",
+            "canonicalFqn": "beast.base.core.Function",
+            "replacement": ""
+          },
+          {
+            "classFqn": "beast.base.inference.operator.kernel.BactrianIntervalOperator",
+            "typeStr": "RealParameter",
+            "hit": "RealParameter",
+            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
+            "replacement": "beast.base.spec.inference.parameter.RealScalarParam"
+          }
+        ]
       },
       "xmlDeprecated": {
         "count": 693,
@@ -6407,6 +6447,179 @@
         "classesWithViolations": 16,
         "totalViolations": 30
       },
+      "inputDeprecated": {
+        "count": 24,
+        "refs": [
+          {
+            "classFqn": "beastlabs.core.util.LoggableSum",
+            "typeStr": "Function",
+            "hit": "Function",
+            "canonicalFqn": "beast.base.core.Function",
+            "replacement": ""
+          },
+          {
+            "classFqn": "beastlabs.core.util.ParameterConstrainer",
+            "typeStr": "RealParameter",
+            "hit": "RealParameter",
+            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
+            "replacement": "beast.base.spec.inference.parameter.RealScalarParam"
+          },
+          {
+            "classFqn": "beastlabs.core.util.ParameterConstrainer",
+            "typeStr": "RealParameter",
+            "hit": "RealParameter",
+            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
+            "replacement": "beast.base.spec.inference.parameter.RealScalarParam"
+          },
+          {
+            "classFqn": "beastlabs.core.util.ParameterConstrainer",
+            "typeStr": "RealParameter",
+            "hit": "RealParameter",
+            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
+            "replacement": "beast.base.spec.inference.parameter.RealScalarParam"
+          },
+          {
+            "classFqn": "beastlabs.core.util.Slice",
+            "typeStr": "Function",
+            "hit": "Function",
+            "canonicalFqn": "beast.base.core.Function",
+            "replacement": ""
+          },
+          {
+            "classFqn": "beastlabs.core.FilteredValuable",
+            "typeStr": "Function",
+            "hit": "Function",
+            "canonicalFqn": "beast.base.core.Function",
+            "replacement": ""
+          },
+          {
+            "classFqn": "beastlabs.core.parameter.CompoundRealParameter",
+            "typeStr": "List<RealParameter>",
+            "hit": "RealParameter",
+            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
+            "replacement": "beast.base.spec.inference.parameter.RealScalarParam"
+          },
+          {
+            "classFqn": "beastlabs.core.parameter.NormalisedRealParameter",
+            "typeStr": "List<Function>",
+            "hit": "Function",
+            "canonicalFqn": "beast.base.core.Function",
+            "replacement": ""
+          },
+          {
+            "classFqn": "beastlabs.util.Transform.UnivariableTransform",
+            "typeStr": "List<Function>",
+            "hit": "Function",
+            "canonicalFqn": "beast.base.core.Function",
+            "replacement": ""
+          },
+          {
+            "classFqn": "beastlabs.util.Transform.MultivariableTransform",
+            "typeStr": "List<Function>",
+            "hit": "Function",
+            "canonicalFqn": "beast.base.core.Function",
+            "replacement": ""
+          },
+          {
+            "classFqn": "beastlabs.util.Script",
+            "typeStr": "List<beast.base.core.Function>",
+            "hit": "beast.base.core.Function",
+            "canonicalFqn": "beast.base.core.Function",
+            "replacement": ""
+          },
+          {
+            "classFqn": "beastlabs.math.distributions.ExcludablePrior",
+            "typeStr": "BooleanParameter",
+            "hit": "BooleanParameter",
+            "canonicalFqn": "beast.base.inference.parameter.BooleanParameter",
+            "replacement": "beast.base.spec.inference.parameter.BoolScalarParam"
+          },
+          {
+            "classFqn": "beastlabs.math.distributions.BetaRange",
+            "typeStr": "Function",
+            "hit": "Function",
+            "canonicalFqn": "beast.base.core.Function",
+            "replacement": ""
+          },
+          {
+            "classFqn": "beastlabs.math.distributions.BetaRange",
+            "typeStr": "Function",
+            "hit": "Function",
+            "canonicalFqn": "beast.base.core.Function",
+            "replacement": ""
+          },
+          {
+            "classFqn": "beastlabs.math.distributions.BetaRange",
+            "typeStr": "Function",
+            "hit": "Function",
+            "canonicalFqn": "beast.base.core.Function",
+            "replacement": ""
+          },
+          {
+            "classFqn": "beastlabs.math.distributions.BetaRange",
+            "typeStr": "Function",
+            "hit": "Function",
+            "canonicalFqn": "beast.base.core.Function",
+            "replacement": ""
+          },
+          {
+            "classFqn": "beastlabs.math.distributions.ExcludablePriorIndex",
+            "typeStr": "BooleanParameter",
+            "hit": "BooleanParameter",
+            "canonicalFqn": "beast.base.inference.parameter.BooleanParameter",
+            "replacement": "beast.base.spec.inference.parameter.BoolScalarParam"
+          },
+          {
+            "classFqn": "beastlabs.math.distributions.ExcludablePriorIndex",
+            "typeStr": "IntegerParameter",
+            "hit": "IntegerParameter",
+            "canonicalFqn": "beast.base.inference.parameter.IntegerParameter",
+            "replacement": "beast.base.spec.inference.parameter.IntScalarParam"
+          },
+          {
+            "classFqn": "beastlabs.evolution.tree.ConstrainedClusterTree",
+            "typeStr": "RealParameter",
+            "hit": "RealParameter",
+            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
+            "replacement": "beast.base.spec.inference.parameter.RealScalarParam"
+          },
+          {
+            "classFqn": "beastlabs.evolution.operators.UniformOperatorSelective",
+            "typeStr": "Parameter<?>",
+            "hit": "Parameter",
+            "canonicalFqn": "beast.base.inference.parameter.Parameter",
+            "replacement": ""
+          },
+          {
+            "classFqn": "beastlabs.evolution.operators.AttachAndUniformOperator",
+            "typeStr": "Parameter<?>",
+            "hit": "Parameter",
+            "canonicalFqn": "beast.base.inference.parameter.Parameter",
+            "replacement": ""
+          },
+          {
+            "classFqn": "beastlabs.evolution.speciation.RandomLocalYuleModel",
+            "typeStr": "RealParameter",
+            "hit": "RealParameter",
+            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
+            "replacement": "beast.base.spec.inference.parameter.RealScalarParam"
+          },
+          {
+            "classFqn": "beastlabs.evolution.speciation.RandomLocalYuleModel",
+            "typeStr": "BooleanParameter",
+            "hit": "BooleanParameter",
+            "canonicalFqn": "beast.base.inference.parameter.BooleanParameter",
+            "replacement": "beast.base.spec.inference.parameter.BoolScalarParam"
+          },
+          {
+            "classFqn": "beastlabs.evolution.speciation.RandomLocalYuleModel",
+            "typeStr": "RealParameter",
+            "hit": "RealParameter",
+            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
+            "replacement": "beast.base.spec.inference.parameter.RealScalarParam"
+          }
+        ]
+      },
       "xmlDeprecated": {
         "count": 173,
         "refs": [
@@ -8059,6 +8272,10 @@
         "classesWithViolations": 5,
         "totalViolations": 9
       },
+      "inputDeprecated": {
+        "count": 0,
+        "refs": []
+      },
       "xmlDeprecated": {
         "count": 112,
         "refs": [
@@ -9162,6 +9379,10 @@
         "classesWithViolations": 0,
         "totalViolations": 0
       },
+      "inputDeprecated": {
+        "count": 0,
+        "refs": []
+      },
       "xmlDeprecated": {
         "count": 0,
         "refs": []
@@ -9256,6 +9477,10 @@
         "classesWithViolations": 0,
         "totalViolations": 0
       },
+      "inputDeprecated": {
+        "count": 0,
+        "refs": []
+      },
       "xmlDeprecated": {
         "count": 0,
         "refs": []
@@ -9349,6 +9574,137 @@
       "inputRule": {
         "classesWithViolations": 13,
         "totalViolations": 23
+      },
+      "inputDeprecated": {
+        "count": 18,
+        "refs": [
+          {
+            "classFqn": "mascot.logger.mappedProbLogger",
+            "typeStr": "List<Function>",
+            "hit": "Function",
+            "canonicalFqn": "beast.base.core.Function",
+            "replacement": ""
+          },
+          {
+            "classFqn": "mascot.logger.StructuredTreeLogger",
+            "typeStr": "List<Function>",
+            "hit": "Function",
+            "canonicalFqn": "beast.base.core.Function",
+            "replacement": ""
+          },
+          {
+            "classFqn": "mascot.util.LargerThan",
+            "typeStr": "Function",
+            "hit": "Function",
+            "canonicalFqn": "beast.base.core.Function",
+            "replacement": ""
+          },
+          {
+            "classFqn": "mascot.util.LargerThan",
+            "typeStr": "Function",
+            "hit": "Function",
+            "canonicalFqn": "beast.base.core.Function",
+            "replacement": ""
+          },
+          {
+            "classFqn": "mascot.distribution.MappedMascot",
+            "typeStr": "List<Function>",
+            "hit": "Function",
+            "canonicalFqn": "beast.base.core.Function",
+            "replacement": ""
+          },
+          {
+            "classFqn": "mascot.distribution.MappedMascotWithTipSampling",
+            "typeStr": "List<Function>",
+            "hit": "Function",
+            "canonicalFqn": "beast.base.core.Function",
+            "replacement": ""
+          },
+          {
+            "classFqn": "mascot.skyline.LogSmoothingPrior",
+            "typeStr": "ParametricDistribution",
+            "hit": "ParametricDistribution",
+            "canonicalFqn": "beast.base.inference.distribution.ParametricDistribution",
+            "replacement": "beast.base.spec.inference.distribution.TensorDistribution"
+          },
+          {
+            "classFqn": "mascot.skyline.LogSmoothingPrior",
+            "typeStr": "ParametricDistribution",
+            "hit": "ParametricDistribution",
+            "canonicalFqn": "beast.base.inference.distribution.ParametricDistribution",
+            "replacement": "beast.base.spec.inference.distribution.TensorDistribution"
+          },
+          {
+            "classFqn": "mascot.skyline.LogSmoothingPrior",
+            "typeStr": "ParametricDistribution",
+            "hit": "ParametricDistribution",
+            "canonicalFqn": "beast.base.inference.distribution.ParametricDistribution",
+            "replacement": "beast.base.spec.inference.distribution.TensorDistribution"
+          },
+          {
+            "classFqn": "mascot.skyline.LogSmoothingPrior",
+            "typeStr": "ParametricDistribution",
+            "hit": "ParametricDistribution",
+            "canonicalFqn": "beast.base.inference.distribution.ParametricDistribution",
+            "replacement": "beast.base.spec.inference.distribution.TensorDistribution"
+          },
+          {
+            "classFqn": "mascot.skyline.GLMPrior",
+            "typeStr": "ParametricDistribution",
+            "hit": "ParametricDistribution",
+            "canonicalFqn": "beast.base.inference.distribution.ParametricDistribution",
+            "replacement": "beast.base.spec.inference.distribution.TensorDistribution"
+          },
+          {
+            "classFqn": "mascot.skyline.GrowthRateSmoothingPrior",
+            "typeStr": "ParametricDistribution",
+            "hit": "ParametricDistribution",
+            "canonicalFqn": "beast.base.inference.distribution.ParametricDistribution",
+            "replacement": "beast.base.spec.inference.distribution.TensorDistribution"
+          },
+          {
+            "classFqn": "mascot.skyline.GrowthRateSmoothingPrior",
+            "typeStr": "ParametricDistribution",
+            "hit": "ParametricDistribution",
+            "canonicalFqn": "beast.base.inference.distribution.ParametricDistribution",
+            "replacement": "beast.base.spec.inference.distribution.TensorDistribution"
+          },
+          {
+            "classFqn": "mascot.skyline.GrowthRateSmoothingPrior",
+            "typeStr": "ParametricDistribution",
+            "hit": "ParametricDistribution",
+            "canonicalFqn": "beast.base.inference.distribution.ParametricDistribution",
+            "replacement": "beast.base.spec.inference.distribution.TensorDistribution"
+          },
+          {
+            "classFqn": "mascot.skyline.GrowthRateSmoothingPrior",
+            "typeStr": "ParametricDistribution",
+            "hit": "ParametricDistribution",
+            "canonicalFqn": "beast.base.inference.distribution.ParametricDistribution",
+            "replacement": "beast.base.spec.inference.distribution.TensorDistribution"
+          },
+          {
+            "classFqn": "mascot.glmmodel.ErrorSmoothing",
+            "typeStr": "Function",
+            "hit": "Function",
+            "canonicalFqn": "beast.base.core.Function",
+            "replacement": ""
+          },
+          {
+            "classFqn": "mascot.glmmodel.ErrorSmoothing",
+            "typeStr": "ParametricDistribution",
+            "hit": "ParametricDistribution",
+            "canonicalFqn": "beast.base.inference.distribution.ParametricDistribution",
+            "replacement": "beast.base.spec.inference.distribution.TensorDistribution"
+          },
+          {
+            "classFqn": "mascot.glmmodel.MaxRate",
+            "typeStr": "ParametricDistribution",
+            "hit": "ParametricDistribution",
+            "canonicalFqn": "beast.base.inference.distribution.ParametricDistribution",
+            "replacement": "beast.base.spec.inference.distribution.TensorDistribution"
+          }
+        ]
       },
       "xmlDeprecated": {
         "count": 757,
@@ -16258,6 +16614,10 @@
         "classesWithViolations": 0,
         "totalViolations": 0
       },
+      "inputDeprecated": {
+        "count": 0,
+        "refs": []
+      },
       "xmlDeprecated": {
         "count": 50,
         "refs": [
@@ -16803,6 +17163,10 @@
         "classesWithViolations": 0,
         "totalViolations": 0
       },
+      "inputDeprecated": {
+        "count": 0,
+        "refs": []
+      },
       "xmlDeprecated": {
         "count": 43,
         "refs": [
@@ -17285,6 +17649,10 @@
         "classesWithViolations": 0,
         "totalViolations": 0
       },
+      "inputDeprecated": {
+        "count": 0,
+        "refs": []
+      },
       "xmlDeprecated": {
         "count": 0,
         "refs": []
@@ -17378,6 +17746,10 @@
       "inputRule": {
         "classesWithViolations": 0,
         "totalViolations": 0
+      },
+      "inputDeprecated": {
+        "count": 0,
+        "refs": []
       },
       "xmlDeprecated": {
         "count": 0,
@@ -17473,6 +17845,18 @@
         "classesWithViolations": 0,
         "totalViolations": 0
       },
+      "inputDeprecated": {
+        "count": 1,
+        "refs": [
+          {
+            "classFqn": "bmodeltest.math.distributions.ModelSetPrior",
+            "typeStr": "ParametricDistribution",
+            "hit": "ParametricDistribution",
+            "canonicalFqn": "beast.base.inference.distribution.ParametricDistribution",
+            "replacement": "beast.base.spec.inference.distribution.TensorDistribution"
+          }
+        ]
+      },
       "xmlDeprecated": {
         "count": 0,
         "refs": []
@@ -17566,6 +17950,18 @@
       "inputRule": {
         "classesWithViolations": 8,
         "totalViolations": 17
+      },
+      "inputDeprecated": {
+        "count": 1,
+        "refs": [
+          {
+            "classFqn": "obama.PhyloHMM",
+            "typeStr": "Function",
+            "hit": "Function",
+            "canonicalFqn": "beast.base.core.Function",
+            "replacement": ""
+          }
+        ]
       },
       "xmlDeprecated": {
         "count": 207,

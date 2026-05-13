@@ -1,6 +1,6 @@
 # beast3 — what's left
 
-> **Scanned at:** 2026-05-13T13:33:10.445501  
+> **Scanned at:** 2026-05-13T13:44:41.192726  
 > **Commit:** `6df8243` on `oneonx-deprecation-points-at-loguniform` — [view on GitHub](https://github.com/CompEvol/beast3/commit/6df82436c8e13b4061a3477c393a74489ac6b314)  
 > **Pom version:** `2.8.0-SNAPSHOT`  
 > **Maven Central:** `io.github.compevol:beast3:2.8.0-beta5`  
@@ -38,6 +38,40 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 
 - `beastfx.app.beauti.PriorInputEditor`
     - legacy: `Input<Function>`
+
+## Inputs declaring `@Deprecated` types
+
+> Each entry below is an `Input<T>` field where `T` (or one of its generic parameters) is annotated `@Deprecated` somewhere in the scanned packages. Such Inputs block XML migration: downstream XMLs cannot supply a non-deprecated value to them. Replace the declared type with the suggested spec equivalent (and update the field/local variable types accordingly).
+
+**`beastfx.app.beauti.PriorInputEditor`** (1):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `Function` | `Function` → `beast.base.core.Function` | _(no spec equivalent found)_ |
+
+**`beast.base.evolution.branchratemodel.BranchRateModel.Base`** (1):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `Function` | `Function` → `beast.base.core.Function` | _(no spec equivalent found)_ |
+
+**`beast.base.inference.operator.kernel.Transform.UnivariableTransform`** (1):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `List<Function>` | `Function` → `beast.base.core.Function` | _(no spec equivalent found)_ |
+
+**`beast.base.inference.operator.kernel.Transform.MultivariableTransform`** (1):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `List<Function>` | `Function` → `beast.base.core.Function` | _(no spec equivalent found)_ |
+
+**`beast.base.inference.operator.kernel.BactrianIntervalOperator`** (1):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `RealParameter` | `RealParameter` → `beast.base.inference.parameter.RealParameter` | `beast.base.spec.inference.parameter.RealScalarParam` |
 
 ## Example XMLs pending migration
 

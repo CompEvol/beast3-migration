@@ -1,6 +1,6 @@
 # BEASTLabs — what's left
 
-> **Scanned at:** 2026-05-13T13:33:11.473271  
+> **Scanned at:** 2026-05-13T13:44:42.263957  
 > **Commit:** `8a075b6` on `master` — [view on GitHub](https://github.com/BEAST2-Dev/BEASTlabs/commit/8a075b6c58657065f4dab2a426d9f7d45f29c92b)  
 > **Pom version:** `2.1.0-SNAPSHOT`  
 > **Maven Central:** `io.github.beast2-dev:beast-labs:2.1.0-beta2`  
@@ -121,6 +121,108 @@
 
 - `beastlabs.evolution.tree.InitParamFromTree`
     - concrete: `Input<RealVectorParam<? extends Real>>`
+
+## Inputs declaring `@Deprecated` types
+
+> Each entry below is an `Input<T>` field where `T` (or one of its generic parameters) is annotated `@Deprecated` somewhere in the scanned packages. Such Inputs block XML migration: downstream XMLs cannot supply a non-deprecated value to them. Replace the declared type with the suggested spec equivalent (and update the field/local variable types accordingly).
+
+**`beastlabs.core.util.LoggableSum`** (1):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `Function` | `Function` → `beast.base.core.Function` | _(no spec equivalent found)_ |
+
+**`beastlabs.core.util.ParameterConstrainer`** (3):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `RealParameter` | `RealParameter` → `beast.base.inference.parameter.RealParameter` | `beast.base.spec.inference.parameter.RealScalarParam` |
+
+**`beastlabs.core.util.Slice`** (1):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `Function` | `Function` → `beast.base.core.Function` | _(no spec equivalent found)_ |
+
+**`beastlabs.core.FilteredValuable`** (1):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `Function` | `Function` → `beast.base.core.Function` | _(no spec equivalent found)_ |
+
+**`beastlabs.core.parameter.CompoundRealParameter`** (1):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `List<RealParameter>` | `RealParameter` → `beast.base.inference.parameter.RealParameter` | `beast.base.spec.inference.parameter.RealScalarParam` |
+
+**`beastlabs.core.parameter.NormalisedRealParameter`** (1):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `List<Function>` | `Function` → `beast.base.core.Function` | _(no spec equivalent found)_ |
+
+**`beastlabs.util.Transform.UnivariableTransform`** (1):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `List<Function>` | `Function` → `beast.base.core.Function` | _(no spec equivalent found)_ |
+
+**`beastlabs.util.Transform.MultivariableTransform`** (1):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `List<Function>` | `Function` → `beast.base.core.Function` | _(no spec equivalent found)_ |
+
+**`beastlabs.util.Script`** (1):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `List<beast.base.core.Function>` | `beast.base.core.Function` | _(no spec equivalent found)_ |
+
+**`beastlabs.math.distributions.ExcludablePrior`** (1):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `BooleanParameter` | `BooleanParameter` → `beast.base.inference.parameter.BooleanParameter` | `beast.base.spec.inference.parameter.BoolScalarParam` |
+
+**`beastlabs.math.distributions.BetaRange`** (4):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `Function` | `Function` → `beast.base.core.Function` | _(no spec equivalent found)_ |
+
+**`beastlabs.math.distributions.ExcludablePriorIndex`** (2):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `BooleanParameter` | `BooleanParameter` → `beast.base.inference.parameter.BooleanParameter` | `beast.base.spec.inference.parameter.BoolScalarParam` |
+| `IntegerParameter` | `IntegerParameter` → `beast.base.inference.parameter.IntegerParameter` | `beast.base.spec.inference.parameter.IntScalarParam` |
+
+**`beastlabs.evolution.tree.ConstrainedClusterTree`** (1):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `RealParameter` | `RealParameter` → `beast.base.inference.parameter.RealParameter` | `beast.base.spec.inference.parameter.RealScalarParam` |
+
+**`beastlabs.evolution.operators.UniformOperatorSelective`** (1):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `Parameter<?>` | `Parameter` → `beast.base.inference.parameter.Parameter` | _(no spec equivalent found)_ |
+
+**`beastlabs.evolution.operators.AttachAndUniformOperator`** (1):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `Parameter<?>` | `Parameter` → `beast.base.inference.parameter.Parameter` | _(no spec equivalent found)_ |
+
+**`beastlabs.evolution.speciation.RandomLocalYuleModel`** (3):
+
+| Input type | Hit | Replacement |
+|---|---|---|
+| `RealParameter` | `RealParameter` → `beast.base.inference.parameter.RealParameter` | `beast.base.spec.inference.parameter.RealScalarParam` |
+| `BooleanParameter` | `BooleanParameter` → `beast.base.inference.parameter.BooleanParameter` | `beast.base.spec.inference.parameter.BoolScalarParam` |
 
 ## Example XMLs pending migration
 

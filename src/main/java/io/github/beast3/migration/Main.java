@@ -162,6 +162,11 @@ public final class Main {
             JavaScanner.resolveAndTally(target, deprecatedFqns);
             XmlScanner.scanForDeprecatedReferences(
                     target, deprecatedFqns, deprecatedShortNames, specReplacements);
+            for (ClassRecord c : target.classes) {
+                if (c.isDeprecated) continue;
+                target.inputDeprecatedRefs.addAll(c.inputsReferencingDeprecatedTypes(
+                        deprecatedFqns, deprecatedShortNames, specReplacements));
+            }
         }
         Report r = target;
         String text = PackageReportWriter.render(r);
@@ -209,6 +214,17 @@ public final class Main {
             if (r.pathExists) {
                 XmlScanner.scanForDeprecatedReferences(
                         r, deprecatedFqns, deprecatedShortNames, specReplacements);
+            }
+        }
+
+        // Phase 5 — Java Input<@Deprecated> scan: a class whose Input<T>
+        // references a deprecated class is blocking XML migration.
+        for (Report r : reports) {
+            if (!r.pathExists) continue;
+            for (ClassRecord c : r.classes) {
+                if (c.isDeprecated) continue;
+                r.inputDeprecatedRefs.addAll(c.inputsReferencingDeprecatedTypes(
+                        deprecatedFqns, deprecatedShortNames, specReplacements));
             }
         }
         return reports;

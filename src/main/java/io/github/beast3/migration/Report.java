@@ -54,6 +54,7 @@ public final class Report {
     public final List<ClassRecord> classes = new ArrayList<>();
     public final List<XmlRecord> xmls = new ArrayList<>();
     public final List<DeprecatedXmlRef> xmlDeprecatedRefs = new ArrayList<>();
+    public final List<InputDeprecatedRef> inputDeprecatedRefs = new ArrayList<>();
     public int xmlTotal;            // example XMLs only (excludes fxtemplates)
     public int xmlMigrated;         // version="2.8" AND beast.base.spec.* namespace
     public int xmlV28;              // version="2.8" (regardless of namespace)
@@ -134,6 +135,21 @@ public final class Report {
         ir.put("classesWithViolations", classesWithInputViolations);
         ir.put("totalViolations", inputViolations);
         m.put("inputRule", ir);
+
+        Map<String, Object> inputDep = new LinkedHashMap<>();
+        inputDep.put("count", inputDeprecatedRefs.size());
+        List<Map<String, Object>> inputRefs = new ArrayList<>();
+        for (InputDeprecatedRef ref : inputDeprecatedRefs) {
+            Map<String, Object> e = new LinkedHashMap<>();
+            e.put("classFqn", ref.classFqn());
+            e.put("typeStr", ref.decl().typeStr());
+            e.put("hit", ref.hit());
+            e.put("canonicalFqn", ref.canonicalFqn());
+            e.put("replacement", ref.replacement());
+            inputRefs.add(e);
+        }
+        inputDep.put("refs", inputRefs);
+        m.put("inputDeprecated", inputDep);
 
         Map<String, Object> dep = new LinkedHashMap<>();
         dep.put("count", xmlDeprecatedRefs.size());

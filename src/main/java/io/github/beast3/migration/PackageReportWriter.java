@@ -37,6 +37,7 @@ public final class PackageReportWriter {
         renderMavenCentral(sb, r);
         renderJavaPunchList(sb, r);
         renderInputRulePunchList(sb, r);
+        renderInputDeprecatedRefs(sb, r);
         renderXmlPunchList(sb, r);
         renderDeprecatedXmlRefs(sb, r);
 
@@ -354,6 +355,40 @@ public final class PackageReportWriter {
             sb.append("**No `beast.base.spec.*` references in body** (")
                     .append(noSpec.size()).append("):\n\n");
             for (XmlRecord x : noSpec) sb.append("- `").append(x.relPath()).append("`\n");
+            sb.append('\n');
+        }
+    }
+
+    private static void renderInputDeprecatedRefs(StringBuilder sb, Report r) {
+        if (r.inputDeprecatedRefs.isEmpty()) return;
+
+        sb.append("## Inputs declaring `@Deprecated` types\n\n");
+        sb.append("> Each entry below is an `Input<T>` field where `T` (or one of its generic parameters) is annotated `@Deprecated` somewhere in the scanned packages. Such Inputs block XML migration: downstream XMLs cannot supply a non-deprecated value to them. Replace the declared type with the suggested spec equivalent (and update the field/local variable types accordingly).\n\n");
+
+        // Group by declaring class.
+        java.util.Map<String, List<InputDeprecatedRef>> byClass = new java.util.LinkedHashMap<>();
+        for (InputDeprecatedRef ref : r.inputDeprecatedRefs) {
+            byClass.computeIfAbsent(ref.classFqn(), k -> new ArrayList<>()).add(ref);
+        }
+
+        for (var e : byClass.entrySet()) {
+            sb.append("**`").append(e.getKey()).append("`** (")
+                    .append(e.getValue().size()).append("):\n\n");
+            sb.append("| Input type | Hit | Replacement |\n");
+            sb.append("|---|---|---|\n");
+            java.util.Set<String> seen = new java.util.LinkedHashSet<>();
+            for (InputDeprecatedRef ref : e.getValue()) {
+                String key = ref.decl().typeStr() + "\t" + ref.hit() + "\t" + ref.replacement();
+                if (!seen.add(key)) continue;
+                String repl = ref.replacement().isBlank()
+                        ? "_(no spec equivalent found)_"
+                        : "`" + ref.replacement() + "`";
+                String hitCell = ref.hit().equals(ref.canonicalFqn())
+                        ? "`" + ref.hit() + "`"
+                        : "`" + ref.hit() + "` → `" + ref.canonicalFqn() + "`";
+                sb.append("| `").append(ref.decl().typeStr()).append("` | ")
+                        .append(hitCell).append(" | ").append(repl).append(" |\n");
+            }
             sb.append('\n');
         }
     }
