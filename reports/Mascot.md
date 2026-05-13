@@ -1,6 +1,6 @@
 # Mascot — what's left
 
-> **Scanned at:** 2026-05-13T17:55:04.238633  
+> **Scanned at:** 2026-05-13T18:51:15.252835  
 > **Commit:** `201f8b3` on `spec-input-types` — [view on GitHub](https://github.com/CompEvol/Mascot/commit/201f8b3df6dbbe6e29e311f319c6656f9ac8713b)  
 > **Pom version:** `3.1.0-beta1`  
 > **Maven Central:** `io.github.compevol:mascot:3.1.0-beta1`  

@@ -101,3 +101,17 @@ packages:
     github: jordandouglas/GammaSpikeModel
     maven: io.github.jordandouglas:beast-gammaspike
     stage: compile_tested
+
+  - name: BDMM-Prime
+    path: ../BDMM-Prime
+    github: tgvaughan/BDMM-Prime
+    maven: io.github.tgvaughan:bdmm-prime
+    stage: compile_tested
+    notes: Migration WIP on `beast2.8-migration` branch (Maven, v3.0.0).
+
+  - name: remaster
+    path: ../remaster
+    github: tgvaughan/remaster
+    maven: io.github.tgvaughan:remaster
+    stage: compile_tested
+    notes: Migration WIP on `beast2.8-migration` branch (Maven, v3.0.0).

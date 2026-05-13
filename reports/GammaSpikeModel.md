@@ -1,6 +1,6 @@
 # GammaSpikeModel — what's left
 
-> **Scanned at:** 2026-05-13T17:55:05.658682  
+> **Scanned at:** 2026-05-13T18:51:18.673215  
 > **Commit:** `13bd1b2` on `main` — [view on GitHub](https://github.com/jordandouglas/GammaSpikeModel/commit/13bd1b200ebc431a0bcaea276b2eaca1508e7730)  
 > **Pom version:** `1.3.0-SNAPSHOT`  
 > **Maven Central:** not published as `io.github.jordandouglas:beast-gammaspike` (not published (404))  

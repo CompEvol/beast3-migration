@@ -21,3 +21,5 @@ for the high-level cross-package status table.
 | [obama](obama.md) | compile-tested | ❌ | `7e14fd7` | `1.2.0-beta1` |
 | [feast](feast.md) | compile-tested | ❌ | `224b618` | `11.0.0` |
 | [GammaSpikeModel](GammaSpikeModel.md) | compile-tested | ❌ | `13bd1b2` | `1.3.0-SNAPSHOT` |
+| [BDMM-Prime](BDMM-Prime.md) | compile-tested | ❌ | `ee37e1b` | `3.0.0` |
+| [remaster](remaster.md) | compile-tested | ❌ | `896c7b7` | `3.0.0` |
