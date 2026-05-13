@@ -183,6 +183,17 @@ public final class ClassRecord {
             String hit = findDeprecatedReference(d.typeStr(), deprecatedFqns, deprecatedShortNames);
             if (hit == null) continue;
             String canonical = hit.contains(".") ? hit : deprecatedShortNames.get(hit);
+            // Loggers legitimately accept `Function` as the "thing-that-
+            // exposes-array-values" abstraction — that's the role Function
+            // was designed for, and spec has no single-interface replacement
+            // (RealVector / IntVector / BoolVector / RealScalar / … don't
+            // share an API-equivalent ancestor). Exempt only on Kind.LOGGER
+            // (the substantive role), not on every class that mixes in
+            // Loggable — most parameters / calcnodes do that to self-log.
+            if (kind == Kind.LOGGER
+                    && "beast.base.core.Function".equals(canonical)) {
+                continue;
+            }
             String replacement = specReplacements.getOrDefault(canonical, "");
             out.add(new InputDeprecatedRef(fqn(), d, hit, canonical, replacement));
         }

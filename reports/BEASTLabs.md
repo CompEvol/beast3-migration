@@ -1,6 +1,6 @@
 # BEASTLabs — what's left
 
-> **Scanned at:** 2026-05-13T16:18:05.557629  
+> **Scanned at:** 2026-05-13T17:05:12.149951  
 > **Commit:** `8a075b6` on `master` — [view on GitHub](https://github.com/BEAST2-Dev/BEASTlabs/commit/8a075b6c58657065f4dab2a426d9f7d45f29c92b)  
 > **Pom version:** `2.1.0-SNAPSHOT`  
 > **Maven Central:** `io.github.beast2-dev:beast-labs:2.1.0-beta2`  
@@ -115,12 +115,6 @@
 ## Inputs declaring `@Deprecated` types
 
 > Each entry below is an `Input<T>` field where `T` (or one of its generic parameters) is annotated `@Deprecated` somewhere in the scanned packages. Such Inputs block XML migration: downstream XMLs cannot supply a non-deprecated value to them. Replace the declared type with the suggested spec equivalent (and update the field/local variable types accordingly).
-
-**`beastlabs.core.util.LoggableSum`** (1):
-
-| Input type | Hit | Replacement |
-|---|---|---|
-| `Function` | `Function` → `beast.base.core.Function` | _(no spec equivalent found)_ |
 
 **`beastlabs.core.util.ParameterConstrainer`** (3):
 

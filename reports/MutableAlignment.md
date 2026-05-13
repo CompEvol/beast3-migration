@@ -1,6 +1,6 @@
 # MutableAlignment — what's left
 
-> **Scanned at:** 2026-05-13T16:18:07.465471  
+> **Scanned at:** 2026-05-13T17:05:13.766031  
 > **Commit:** `03eaf78` on `beast3` — [view on GitHub](https://github.com/alexeid/MutableAlignment/commit/03eaf78beee3b76d0c1530aaf05c8b617afb3d8b)  
 > **Pom version:** `0.1.0-SNAPSHOT`  
 > **Maven Central:** not published as `io.github.compevol:mutable-alignment` (not published (404))  

@@ -1,6 +1,6 @@
 # beast3 — what's left
 
-> **Scanned at:** 2026-05-13T16:18:04.318977  
+> **Scanned at:** 2026-05-13T17:05:11.055007  
 > **Commit:** `6df8243` on `oneonx-deprecation-points-at-loguniform` — [view on GitHub](https://github.com/CompEvol/beast3/commit/6df82436c8e13b4061a3477c393a74489ac6b314)  
 > **Pom version:** `2.8.0-SNAPSHOT`  
 > **Maven Central:** `io.github.compevol:beast3:2.8.0-beta5`  
