@@ -1,6 +1,6 @@
 # ORC — what's left
 
-> **Scanned at:** 2026-05-13T15:37:35.441713  
+> **Scanned at:** 2026-05-13T15:46:09.656132  
 > **Commit:** `c1c5910` on `clear-deprecated-refs` — [view on GitHub](https://github.com/jordandouglas/ORC/commit/c1c59105dbb50cabb8a6406c22e889852a03f57f)  
 > **Pom version:** `1.3.0-SNAPSHOT`  
 > **Maven Central:** `io.github.jordandouglas:beast-orc:1.3.1`  

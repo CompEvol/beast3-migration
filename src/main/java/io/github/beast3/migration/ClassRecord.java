@@ -141,9 +141,18 @@ public final class ClassRecord {
             switch (d.carrier()) {
                 case LEGACY -> out.add(d);
                 case CONCRETE_SPEC -> {
-                    // StateNodeInitialiser writes to its input state nodes,
-                    // same justification as the Operator exemption.
+                    // Concrete spec params are only barred on model-role
+                    // kinds (Distribution, CalcNode, StateNode, Parameter)
+                    // that are supposed to be read-only holders. Operators
+                    // and Loggers are exempt by design (write / need
+                    // getID()). StateNodeInitialiser is exempt because it
+                    // writes into the state nodes it's handed. Kind.OTHER
+                    // covers utility / configuration / file-iterator
+                    // classes that may legitimately write to their input
+                    // parameters and shouldn't be lumped in with model
+                    // components.
                     if (kind != Kind.OPERATOR && kind != Kind.LOGGER
+                            && kind != Kind.OTHER
                             && !isStateNodeInitialiser) {
                         out.add(d);
                     }

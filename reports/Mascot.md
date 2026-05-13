@@ -1,6 +1,6 @@
 # Mascot — what's left
 
-> **Scanned at:** 2026-05-13T15:37:34.384090  
+> **Scanned at:** 2026-05-13T15:46:08.498290  
 > **Commit:** `b7b7295` on `update-citations-and-readme` — [view on GitHub](https://github.com/CompEvol/Mascot/commit/b7b72958436854fbe07d91bb82fed3d3de2aa91d)  
 > **Pom version:** `3.1.0-beta1`  
 > **Maven Central:** `io.github.compevol:mascot:3.1.0-beta1`  
@@ -11,7 +11,7 @@
 - **Java classes:** 4 on spec, 0 mixed, 1 legacy of 121 total
 - **Example XMLs:** 1 on spec / 1 on `version="2.8"` / 284 total
 - **BEAUti fxtemplates:** 0 clean / 0 use spec / 14 total
-- **Input rule:** 13 classes hold 23 Input(s) declared too concretely
+- **Input rule:** 12 classes hold 22 Input(s) declared too concretely
 - **Maven Central:** 3.1.0-beta1
 
 ## Java classes pending migration
@@ -65,11 +65,6 @@
     - concrete: `Input<RealVectorParam<? extends Real>>`
 - `mascot.parameterdynamics.StructuredSkygrid`
     - concrete: `Input<RealVectorParam<? extends Real>>`
-
-### Other (1)
-
-- `mascot.glmmodel.CovariateList`
-    - concrete: `Input<BoolVectorParam>`
 
 ## Inputs declaring `@Deprecated` types
 

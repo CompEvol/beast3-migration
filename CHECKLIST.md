@@ -9,7 +9,7 @@ are at the bottom of this page.
 
 <!-- BEGIN AUTO -->
 
-_Last regenerated: 2026-05-13T15:37:36.494902+12:00_
+_Last regenerated: 2026-05-13T15:46:10.781322+12:00_
 
 ## Release & build status
 
@@ -27,7 +27,7 @@ _Last regenerated: 2026-05-13T15:37:36.494902+12:00_
 | [ORC](https://github.com/jordandouglas/ORC) | compile-tested | [1.3.1](https://central.sonatype.com/artifact/io.github.jordandouglas/beast-orc) | 1.3.0-SNAPSHOT | ✅ | ✅ | ❌ | 🟢 | 🟢 | 🟢 | ✅ |
 | [bModelTest](https://github.com/BEAST2-Dev/bModelTest) | compile-tested | — | 1.4.0-beta1 | ✅ | ✅ | ❌ | 🟢 | 🟢 | 🟢 | ✅ |
 | [obama](https://github.com/rbouckaert/obama) | compile-tested | — | 1.2.0-beta1 | ✅ | ✅ | ❌ | 🔴 | 🔴 | 🟡 | 207 |
-| [feast](https://github.com/tgvaughan/feast) | compile-tested | — | 11.0.0 | ✅ | ✅ | ✅ | 🟡 | 🔴 | 🔴 | 9 |
+| [feast](https://github.com/tgvaughan/feast) | compile-tested | — | 11.0.0 | ✅ | ✅ | ✅ | 🟢 | 🔴 | 🔴 | 9 |
 
 Traffic-light columns: 🔴 any legacy lineage / non-migrated content, 🟡 no legacy but some unnecessarily-concrete Inputs (Code), or stray legacy `parameter.*` declarations / references to `@Deprecated` classes (XML / FxT), 🟢 clean, — = no data.
 **Dep refs** = number of references to `@Deprecated` classes found in this package's XMLs and fxtemplates (either as `spec=` attributes or `<map>` bodies); also degrades the XML / FxT light to 🟡 when non-zero. 0 = ✅. Per-package reports list each hit and the spec replacement.
@@ -41,14 +41,14 @@ Traffic-light columns: 🔴 any legacy lineage / non-migrated content, 🟡 no l
 | beast-classic | ✅ 9 | ✅ 11 | 4 / 11 | 5 / 14 | ✅ 1 | ✅ 2 | 0 / 0 / 10 | 0 / 1 / 5 | 4 / 8 |
 | CoupledMCMC | — | — | ✅ 4 | — | — | — | 1 / 1 / 1 | 1 / 1 / 1 | ✅ |
 | flc | — | — | — | ✅ 10 | — | — | 2 / 2 / 2 | — | ✅ |
-| Mascot | ✅ 11 | ✅ 6 | 1 / 25 | ✅ 18 | — | ✅ 2 | 1 / 1 / 284 | 0 / 0 / 14 | 13 / 23 |
+| Mascot | ✅ 11 | ✅ 6 | 1 / 25 | ✅ 18 | — | ✅ 2 | 1 / 1 / 284 | 0 / 0 / 14 | 12 / 22 |
 | morph-models | — | — | — | ✅ 4 | — | ✅ 1 | 2 / 2 / 2 (+4 legacy) | 1 / 1 / 1 | ✅ |
 | sampled-ancestors | ✅ 6 | ✅ 13 | ✅ 2 | ✅ 5 | — | ✅ 2 | 3 / 3 / 3 | 1 / 1 / 1 | ✅ |
 | MutableAlignment | — | — | — | — | — | — | 0 / 0 / 1 | — | ✅ |
 | ORC | ✅ 1 | ✅ 52 | ✅ 1 | — | — | — | 1 / 1 / 1 | 1 / 1 / 1 | ✅ |
 | bModelTest | ✅ 3 | ✅ 4 | ✅ 3 | ✅ 3 | — | — | 3 / 3 / 3 | 1 / 1 / 1 | ✅ |
 | obama | ✅ 3 | ✅ 2 | ✅ 2 | 11 / 44 | — | — | 0 / 0 / 14 | 0 / 1 / 1 | 8 / 17 |
-| feast | ✅ 3 | ✅ 8 | ✅ 15 | ✅ 3 | ✅ 6 | ✅ 5 | 0 / 0 / 9 | 0 / 0 / 1 | 1 / 1 |
+| feast | ✅ 3 | ✅ 8 | ✅ 15 | ✅ 3 | ✅ 6 | ✅ 5 | 0 / 0 / 9 | 0 / 0 / 1 | ✅ |
 
 Legend: ✅ = clean, ❌ = missing, `legacy / total` = classes still on a legacy base, `—` = no data.
 FxTemplates show `clean / spec / total` — `clean` = uses spec types and no legacy `parameter.RealParameter`-style attrs; `spec` = body references `beast.base.spec.*` at all.
