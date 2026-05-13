@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-13T16:04:26.819086+12:00",
+  "generatedAt": "2026-05-13T16:18:08.748546+12:00",
   "packages": [
     {
       "name": "beast3",
@@ -25,18 +25,18 @@
           "neutral": 14
         },
         "logger": {
-          "total": 7,
-          "spec": 4,
+          "total": 2,
+          "spec": 0,
           "mixed": 0,
           "legacy": 0,
-          "neutral": 3
+          "neutral": 2
         },
         "calcnode": {
-          "total": 33,
-          "spec": 3,
+          "total": 38,
+          "spec": 7,
           "mixed": 0,
           "legacy": 0,
-          "neutral": 30
+          "neutral": 31
         },
         "parameter": {
           "total": 4,
@@ -5857,18 +5857,18 @@
           "neutral": 21
         },
         "logger": {
-          "total": 11,
+          "total": 5,
           "spec": 0,
           "mixed": 0,
-          "legacy": 1,
-          "neutral": 10
+          "legacy": 0,
+          "neutral": 5
         },
         "calcnode": {
-          "total": 10,
+          "total": 16,
           "spec": 0,
           "mixed": 0,
-          "legacy": 7,
-          "neutral": 3
+          "legacy": 8,
+          "neutral": 8
         },
         "parameter": {
           "total": 2,
@@ -7682,18 +7682,18 @@
           "neutral": 10
         },
         "logger": {
-          "total": 11,
-          "spec": 2,
+          "total": 3,
+          "spec": 1,
           "mixed": 0,
-          "legacy": 4,
-          "neutral": 5
+          "legacy": 0,
+          "neutral": 2
         },
         "calcnode": {
-          "total": 14,
-          "spec": 3,
+          "total": 22,
+          "spec": 4,
           "mixed": 0,
-          "legacy": 5,
-          "neutral": 6
+          "legacy": 9,
+          "neutral": 9
         },
         "parameter": {
           "total": 1,
@@ -7729,8 +7729,8 @@
         "clean": 0
       },
       "inputRule": {
-        "classesWithViolations": 4,
-        "totalViolations": 8
+        "classesWithViolations": 7,
+        "totalViolations": 15
       },
       "inputDeprecated": {
         "count": 0,
@@ -8985,18 +8985,18 @@
           "neutral": 6
         },
         "logger": {
-          "total": 25,
+          "total": 12,
           "spec": 0,
           "mixed": 0,
-          "legacy": 1,
-          "neutral": 24
+          "legacy": 0,
+          "neutral": 12
         },
         "calcnode": {
-          "total": 18,
+          "total": 30,
           "spec": 4,
           "mixed": 0,
-          "legacy": 0,
-          "neutral": 14
+          "legacy": 1,
+          "neutral": 25
         },
         "parameter": {
           "total": 0,
@@ -9006,11 +9006,11 @@
           "neutral": 0
         },
         "statenode": {
-          "total": 2,
+          "total": 3,
           "spec": 0,
           "mixed": 0,
           "legacy": 0,
-          "neutral": 2
+          "neutral": 3
         },
         "other": {
           "total": 59,
@@ -9032,8 +9032,8 @@
         "clean": 0
       },
       "inputRule": {
-        "classesWithViolations": 12,
-        "totalViolations": 22
+        "classesWithViolations": 15,
+        "totalViolations": 29
       },
       "inputDeprecated": {
         "count": 18,
@@ -16122,18 +16122,18 @@
           "neutral": 12
         },
         "logger": {
-          "total": 2,
+          "total": 1,
           "spec": 0,
           "mixed": 0,
           "legacy": 0,
-          "neutral": 2
+          "neutral": 1
         },
         "calcnode": {
-          "total": 5,
+          "total": 6,
           "spec": 0,
           "mixed": 0,
           "legacy": 0,
-          "neutral": 5
+          "neutral": 6
         },
         "parameter": {
           "total": 0,
@@ -16416,15 +16416,15 @@
           "neutral": 3
         },
         "logger": {
-          "total": 3,
-          "spec": 2,
+          "total": 1,
+          "spec": 0,
           "mixed": 0,
           "legacy": 0,
           "neutral": 1
         },
         "calcnode": {
-          "total": 3,
-          "spec": 3,
+          "total": 5,
+          "spec": 5,
           "mixed": 0,
           "legacy": 0,
           "neutral": 0
@@ -16514,18 +16514,18 @@
           "neutral": 2
         },
         "logger": {
-          "total": 2,
+          "total": 1,
           "spec": 0,
           "mixed": 0,
           "legacy": 0,
-          "neutral": 2
+          "neutral": 1
         },
         "calcnode": {
-          "total": 44,
+          "total": 45,
           "spec": 19,
           "mixed": 0,
           "legacy": 11,
-          "neutral": 14
+          "neutral": 15
         },
         "parameter": {
           "total": 0,
@@ -16561,8 +16561,8 @@
         "clean": 0
       },
       "inputRule": {
-        "classesWithViolations": 8,
-        "totalViolations": 17
+        "classesWithViolations": 9,
+        "totalViolations": 18
       },
       "inputDeprecated": {
         "count": 1,
@@ -18484,15 +18484,15 @@
           "neutral": 8
         },
         "logger": {
-          "total": 15,
-          "spec": 15,
+          "total": 0,
+          "spec": 0,
           "mixed": 0,
           "legacy": 0,
           "neutral": 0
         },
         "calcnode": {
-          "total": 3,
-          "spec": 0,
+          "total": 18,
+          "spec": 15,
           "mixed": 0,
           "legacy": 0,
           "neutral": 3

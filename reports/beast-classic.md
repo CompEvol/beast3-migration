@@ -1,6 +1,6 @@
 # beast-classic — what's left
 
-> **Scanned at:** 2026-05-13T16:04:24.210412  
+> **Scanned at:** 2026-05-13T16:18:05.884611  
 > **Commit:** `bff64a7` on `wip-avmn-skyride-skygrid` — [view on GitHub](https://github.com/BEAST2-Dev/beast-classic/commit/bff64a7272d89e251245360c75b74c72fc8dc070)  
 > **Pom version:** `1.7.0-SNAPSHOT`  
 > **Maven Central:** `io.github.beast2-dev:beast-classic:1.7.0-beta1`  
@@ -11,25 +11,20 @@
 - **Java classes:** 7 on spec, 0 mixed, 9 legacy of 97 total
 - **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 10 total
 - **BEAUti fxtemplates:** 0 clean / 1 use spec / 5 total
-- **Input rule:** 4 classes hold 8 Input(s) declared too concretely
+- **Input rule:** 7 classes hold 15 Input(s) declared too concretely
 - **Maven Central:** 1.7.0-beta1
 
 ## Java classes pending migration
 
-### Loggers — 4 legacy, 0 mixed (of 11 total)
+### CalcNodes — 9 legacy, 0 mixed (of 22 total)
 
 **Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
 
 - `beastclassic.continuous.AbstractMultivariateTraitLikelihood` — extends `GenericTreeLikelihood`
 - `beastclassic.continuous.FullyConjugateMultivariateTraitLikelihood` — extends `GenericTreeLikelihood`
 - `beastclassic.continuous.IntegratedMultivariateTraitLikelihood` — extends `GenericTreeLikelihood`
-- `beastclassic.continuous.SampledMultivariateTraitLikelihood` — extends `GenericTreeLikelihood`
-
-### CalcNodes — 5 legacy, 0 mixed (of 14 total)
-
-**Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
-
 - `beastclassic.continuous.MultivariateDiffusionModel` — extends `Base`
+- `beastclassic.continuous.SampledMultivariateTraitLikelihood` — extends `GenericTreeLikelihood`
 - `beastclassic.evolution.substitutionmodel.ContinuousSubstitutionModel` — extends `Base`
 - `beastclassic.evolution.substitutionmodel.FLU` — extends `EmpiricalSubstitutionModel`
 - `beastclassic.evolution.substitutionmodel.GLMBasedSubstModel` — extends `GeneralSubstitutionModel`
@@ -50,10 +45,20 @@
     - concrete: `Input<RealScalarParam<? extends PositiveReal>>`
     - concrete: `Input<RealScalarParam<? extends UnitInterval>>`
 
-### CalcNodes (2)
+### CalcNodes (5)
 
+- `beastclassic.continuous.AbstractMultivariateTraitLikelihood`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+- `beastclassic.continuous.IntegratedMultivariateTraitLikelihood`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
 - `beastclassic.evolution.likelihood.LeafTrait`
     - concrete: `Input<IntVectorParam<? extends Int>>`
+- `beastclassic.evolution.substitutionmodel.GlmModel`
+    - concrete: `Input<RealVectorParam<? extends PositiveReal>>`
+    - concrete: `Input<BoolVectorParam>`
+    - concrete: `Input<RealScalarParam<? extends PositiveReal>>`
+    - concrete: `Input<RealVectorParam<? extends NonNegativeReal>>`
+    - concrete: `Input<RealVectorParam<? extends NonNegativeReal>>`
 - `beastclassic.evolution.substitutionmodel.SVSGeneralSubstitutionModel`
     - concrete: `Input<BoolVectorParam>`
 

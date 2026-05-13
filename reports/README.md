@@ -12,10 +12,10 @@ for the high-level cross-package status table.
 | [beast-classic](beast-classic.md) | Maven Central | `1.7.0-beta1` | `bff64a7` | `1.7.0-SNAPSHOT` |
 | [CoupledMCMC](CoupledMCMC.md) | Maven Central | `1.3.0-beta1` | `ff80e99` | `1.3.0-beta1` |
 | [flc](flc.md) | Maven Central | `1.3.0-beta1` | `a21b797` | `1.3.0-beta1` |
-| [Mascot](Mascot.md) | Maven Central | `3.1.0-beta1` | `b7b7295` | `3.1.0-beta1` |
+| [Mascot](Mascot.md) | Maven Central | `3.1.0-beta1` | `f9d1aca` | `3.1.0-beta1` |
 | [morph-models](morph-models.md) | Maven Central | `1.3.0-beta3` | `dc6057f` | `1.3.0-beta3` |
 | [sampled-ancestors](sampled-ancestors.md) | Maven Central | `2.3.0-beta1` | `7562c78` | `2.3.0-beta1` |
-| [MutableAlignment](MutableAlignment.md) | compile-tested | ❌ | `2a7a16f` *(dirty)* | `0.1.0-SNAPSHOT` |
+| [MutableAlignment](MutableAlignment.md) | compile-tested | ❌ | `03eaf78` | `0.1.0-SNAPSHOT` |
 | [ORC](ORC.md) | compile-tested | `1.3.1` | `c1c5910` | `1.3.0-SNAPSHOT` |
 | [bModelTest](bModelTest.md) | compile-tested | ❌ | `2f45ba7` | `1.4.0-beta1` |
 | [obama](obama.md) | compile-tested | ❌ | `7e14fd7` | `1.2.0-beta1` |

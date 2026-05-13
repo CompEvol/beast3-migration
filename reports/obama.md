@@ -1,6 +1,6 @@
 # obama — what's left
 
-> **Scanned at:** 2026-05-13T16:04:26.023052  
+> **Scanned at:** 2026-05-13T16:18:07.907299  
 > **Commit:** `7e14fd7` on `beast3-migration` — [view on GitHub](https://github.com/rbouckaert/obama/commit/7e14fd7ffbc792130fe401d1c8859aee7d422667)  
 > **Pom version:** `1.2.0-beta1`  
 > **Maven Central:** not published as `io.github.rbouckaert:obama` (not published (404))  
@@ -11,7 +11,7 @@
 - **Java classes:** 19 on spec, 0 mixed, 11 legacy of 59 total
 - **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 14 total
 - **BEAUti fxtemplates:** 0 clean / 1 use spec / 1 total
-- **Input rule:** 8 classes hold 17 Input(s) declared too concretely
+- **Input rule:** 9 classes hold 18 Input(s) declared too concretely
 - **Maven Central:** ❌ not published (not published (404))
 
 ## Build & release gaps
@@ -25,7 +25,7 @@ Not yet published as `io.github.rbouckaert:obama`. Verify the namespace on centr
 
 ## Java classes pending migration
 
-### CalcNodes — 11 legacy, 0 mixed (of 44 total)
+### CalcNodes — 11 legacy, 0 mixed (of 45 total)
 
 **Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
 
@@ -53,8 +53,10 @@ Not yet published as `io.github.rbouckaert:obama`. Verify the namespace on centr
 - `obama.PhyloHMMVar`
     - concrete: `Input<BoolVectorParam>`
 
-### CalcNodes (6)
+### CalcNodes (7)
 
+- `obama.RatesForConservedRegions`
+    - concrete: `Input<RealScalarParam<? extends UnitInterval>>`
 - `obama.sitemodel.MixedSiteModel`
     - concrete: `Input<IntVectorParam<? extends NonNegativeInt>>`
     - concrete: `Input<RealVectorParam<? extends PositiveReal>>`

@@ -980,20 +980,25 @@ public final class JavaScanner {
         Kind k = classifyByFqn(resolvedFqns);
         if (k != null) return k;
         // 2) Fall back to simple-name matching against well-known bases.
+        // Loggable is a mixin (`implements Loggable`) on top of a real base —
+        // most BEAST parameters / calcnodes / statenodes implement it so they
+        // can log themselves. Check it only after every base-class signal so
+        // the substantive role wins (e.g. AncestralStateTreeLikelihood
+        // extends TreeLikelihood implements Loggable should be CALCNODE, not
+        // LOGGER).
         if (anyMatch(simpleTokens, DISTRIBUTION_BASES)) return Kind.DISTRIBUTION;
         if (anyMatch(simpleTokens, OPERATOR_BASES)) return Kind.OPERATOR;
-        if (anyMatch(simpleTokens, LOGGER_INTERFACES)) return Kind.LOGGER;
         if (anyMatch(simpleTokens, PARAM_BASES)) return Kind.PARAMETER;
         if (anyMatch(simpleTokens, CALCNODE_BASES)) return Kind.CALCNODE;
         if (anyMatch(simpleTokens, STATENODE_BASES)) return Kind.STATENODE;
+        if (anyMatch(simpleTokens, LOGGER_INTERFACES)) return Kind.LOGGER;
         return Kind.OTHER;
     }
 
     private static Kind classifyByFqn(Set<String> fqns) {
-        // Logger first (Loggable is an interface; package-prefix would miss it).
-        for (String fqn : fqns) if (LOGGER_FQNS.contains(fqn)) return Kind.LOGGER;
-        // Then well-known calc-node FQNs (these classes themselves rather than
-        // their packages — e.g. CalculationNode lives in beast.base.inference).
+        // Well-known calc-node FQNs first (these classes themselves rather
+        // than their packages — e.g. CalculationNode lives in
+        // beast.base.inference, no package prefix would catch it).
         for (String fqn : fqns) if (CALCNODE_FQNS.contains(fqn)) return Kind.CALCNODE;
         // StateNode FQNs.
         for (String fqn : fqns) if (STATENODE_FQNS.contains(fqn)) return Kind.STATENODE;
@@ -1003,6 +1008,11 @@ public final class JavaScanner {
                 if (fqn.startsWith(e.getKey())) return e.getValue();
             }
         }
+        // Loggable last. It's a mixin (`implements Loggable`) on top of a
+        // real base; most parameters / calcnodes / statenodes implement it
+        // to self-log. Check it only after every base-class signal so the
+        // substantive role wins.
+        for (String fqn : fqns) if (LOGGER_FQNS.contains(fqn)) return Kind.LOGGER;
         return null;
     }
 

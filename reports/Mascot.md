@@ -1,7 +1,7 @@
 # Mascot — what's left
 
-> **Scanned at:** 2026-05-13T16:04:24.617307  
-> **Commit:** `b7b7295` on `update-citations-and-readme` — [view on GitHub](https://github.com/CompEvol/Mascot/commit/b7b72958436854fbe07d91bb82fed3d3de2aa91d)  
+> **Scanned at:** 2026-05-13T16:18:06.430004  
+> **Commit:** `f9d1aca` on `spec-input-types` — [view on GitHub](https://github.com/CompEvol/Mascot/commit/f9d1aca862f4c94a3e174e63fff51c8d7588b800)  
 > **Pom version:** `3.1.0-beta1`  
 > **Maven Central:** `io.github.compevol:mascot:3.1.0-beta1`  
 > **Stage hint:** Maven Central
@@ -11,12 +11,12 @@
 - **Java classes:** 4 on spec, 0 mixed, 1 legacy of 121 total
 - **Example XMLs:** 1 on spec / 1 on `version="2.8"` / 284 total
 - **BEAUti fxtemplates:** 0 clean / 0 use spec / 14 total
-- **Input rule:** 12 classes hold 22 Input(s) declared too concretely
+- **Input rule:** 15 classes hold 29 Input(s) declared too concretely
 - **Maven Central:** 3.1.0-beta1
 
 ## Java classes pending migration
 
-### Loggers — 1 legacy, 0 mixed (of 25 total)
+### CalcNodes — 1 legacy, 0 mixed (of 30 total)
 
 **Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
 
@@ -41,8 +41,16 @@
     - legacy: `Input<Function>`
     - legacy: `Input<Function>`
 
-### CalcNodes (7)
+### CalcNodes (9)
 
+- `mascot.glmmodel.GlmModel`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+    - concrete: `Input<BoolVectorParam>`
+    - concrete: `Input<RealScalarParam<Real>>`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+    - concrete: `Input<RealVectorParam<? extends Real>>`
+- `mascot.logger.mappedProbLogger`
+    - concrete: `Input<BoolVectorParam>`
 - `mascot.parameterdynamics.ConstantNe`
     - concrete: `Input<RealScalarParam<Real>>`
 - `mascot.parameterdynamics.ExponentialNe`
@@ -65,6 +73,11 @@
     - concrete: `Input<RealVectorParam<? extends Real>>`
 - `mascot.parameterdynamics.StructuredSkygrid`
     - concrete: `Input<RealVectorParam<? extends Real>>`
+
+### StateNodes (1)
+
+- `mascot.logger.StructuredTreeLogger`
+    - concrete: `Input<BoolVectorParam>`
 
 ## Inputs declaring `@Deprecated` types
 

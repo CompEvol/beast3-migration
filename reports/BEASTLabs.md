@@ -1,6 +1,6 @@
 # BEASTLabs — what's left
 
-> **Scanned at:** 2026-05-13T16:04:23.960548  
+> **Scanned at:** 2026-05-13T16:18:05.557629  
 > **Commit:** `8a075b6` on `master` — [view on GitHub](https://github.com/BEAST2-Dev/BEASTlabs/commit/8a075b6c58657065f4dab2a426d9f7d45f29c92b)  
 > **Pom version:** `2.1.0-SNAPSHOT`  
 > **Maven Central:** `io.github.beast2-dev:beast-labs:2.1.0-beta2`  
@@ -26,16 +26,11 @@
 - `beastlabs.math.distributions.SingleParamGamma` — extends `ParametricDistribution`
 - `beastlabs.math.distributions.WeibullDistribution` — extends `ParametricDistribution`
 
-### Loggers — 1 legacy, 0 mixed (of 11 total)
+### CalcNodes — 8 legacy, 0 mixed (of 16 total)
 
 **Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
 
 - `beastlabs.evolution.likelihood.AncestralStateLogger` — extends `TreeLikelihood`
-
-### CalcNodes — 7 legacy, 0 mixed (of 10 total)
-
-**Legacy** (extends a legacy base — `ParametricDistribution`, `Prior`, or a `*Parameter` class):
-
 - `beastlabs.evolution.likelihood.TraitedTreeLikelihood` — extends `TreeLikelihood`
 - `beastlabs.evolution.substitutionmodel.CladeSubstitutionModel` — extends `Base`
 - `beastlabs.evolution.substitutionmodel.EmpiricalAAModelFromFile` — extends `EmpiricalSubstitutionModel`
@@ -91,11 +86,14 @@
 - `beastlabs.prevalence.PrevalenceLikelihood`
     - concrete: `Input<IntScalarParam<? extends PositiveInt>>`
 
-### Loggers (4)
+### Loggers (1)
+
+- `beastlabs.core.util.LoggableSum`
+    - legacy: `Input<Function>`
+
+### CalcNodes (4)
 
 - `beastlabs.core.FilteredValuable`
-    - legacy: `Input<Function>`
-- `beastlabs.core.util.LoggableSum`
     - legacy: `Input<Function>`
 - `beastlabs.core.util.ParameterConstrainer`
     - legacy: `Input<RealParameter>`
@@ -103,9 +101,6 @@
     - legacy: `Input<RealParameter>`
 - `beastlabs.core.util.Slice`
     - legacy: `Input<Function>`
-
-### CalcNodes (1)
-
 - `beastlabs.evolution.substitutionmodel.EpochSubstitutionModel`
     - concrete: `Input<RealVectorParam<? extends Real>>`
 
