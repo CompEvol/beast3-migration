@@ -1,5 +1,12 @@
 # b2xmlb3 — Beast2 XML to Beast3 Tools
 
+## Generated Reports
+
+| Report | Description |
+|:---|:---|
+| [deprecated_classes.md](deprecated_classes.md) | All class-level deprecated classes in beast3, mapped to their beast3 replacements |
+| [unmapped_spec_classes.md](unmapped_spec_classes.md) | Spec classes in `*.spec.*` packages not yet referenced as a replacement |
+
 ## Tools
 
 | Script | Description |
