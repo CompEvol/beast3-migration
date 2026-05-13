@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-13T14:39:21.435874+12:00",
+  "generatedAt": "2026-05-13T14:50:59.134880+12:00",
   "packages": [
     {
       "name": "beast3",
@@ -16841,8 +16841,8 @@
       },
       "xml": {
         "total": 3,
-        "migrated": 2,
-        "v28": 2,
+        "migrated": 3,
+        "v28": 3,
         "legacyDir": 0
       },
       "fxTemplates": {
