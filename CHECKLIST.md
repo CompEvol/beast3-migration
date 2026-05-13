@@ -9,7 +9,7 @@ are at the bottom of this page.
 
 <!-- BEGIN AUTO -->
 
-_Last regenerated: 2026-05-13T15:28:36.912052+12:00_
+_Last regenerated: 2026-05-13T15:33:06.880594+12:00_
 
 ## Release & build status
 
@@ -27,6 +27,7 @@ _Last regenerated: 2026-05-13T15:28:36.912052+12:00_
 | [ORC](https://github.com/jordandouglas/ORC) | compile-tested | [1.3.1](https://central.sonatype.com/artifact/io.github.jordandouglas/beast-orc) | 1.3.0-SNAPSHOT | ✅ | ✅ | ❌ | 🟢 | 🟢 | 🟢 | ✅ |
 | [bModelTest](https://github.com/BEAST2-Dev/bModelTest) | compile-tested | — | 1.4.0-beta1 | ✅ | ✅ | ❌ | 🟢 | 🟢 | 🟢 | ✅ |
 | [obama](https://github.com/rbouckaert/obama) | compile-tested | — | 1.2.0-beta1 | ✅ | ✅ | ❌ | 🔴 | 🔴 | 🟡 | 207 |
+| [feast](https://github.com/tgvaughan/feast) | compile-tested | — | 11.0.0 | ✅ | ✅ | ✅ | 🟡 | 🔴 | 🔴 | 9 |
 
 Traffic-light columns: 🔴 any legacy lineage / non-migrated content, 🟡 no legacy but some unnecessarily-concrete Inputs (Code), or stray legacy `parameter.*` declarations / references to `@Deprecated` classes (XML / FxT), 🟢 clean, — = no data.
 **Dep refs** = number of references to `@Deprecated` classes found in this package's XMLs and fxtemplates (either as `spec=` attributes or `<map>` bodies); also degrades the XML / FxT light to 🟡 when non-zero. 0 = ✅. Per-package reports list each hit and the spec replacement.
@@ -47,6 +48,7 @@ Traffic-light columns: 🔴 any legacy lineage / non-migrated content, 🟡 no l
 | ORC | ✅ 1 | ✅ 52 | ✅ 1 | — | — | — | 1 / 1 / 1 | 1 / 1 / 1 | ✅ |
 | bModelTest | ✅ 3 | ✅ 4 | ✅ 3 | ✅ 3 | — | — | 3 / 3 / 3 | 1 / 1 / 1 | ✅ |
 | obama | ✅ 3 | ✅ 2 | ✅ 2 | 11 / 44 | — | — | 0 / 0 / 14 | 0 / 1 / 1 | 8 / 17 |
+| feast | ✅ 3 | ✅ 8 | ✅ 15 | ✅ 3 | ✅ 6 | ✅ 5 | 0 / 0 / 9 | 0 / 0 / 1 | 2 / 2 |
 
 Legend: ✅ = clean, ❌ = missing, `legacy / total` = classes still on a legacy base, `—` = no data.
 FxTemplates show `clean / spec / total` — `clean` = uses spec types and no legacy `parameter.RealParameter`-style attrs; `spec` = body references `beast.base.spec.*` at all.
@@ -71,11 +73,13 @@ Per package, for each kind: `spec / mixed / legacy / neutral · total`.
 | ORC | 1 / 0 / 0 / 0 · 1 | 0 / 0 / 0 / 52 · 52 | 0 / 0 / 0 / 1 · 1 | — | — | — |
 | bModelTest | 0 / 0 / 0 / 3 · 3 | 1 / 0 / 0 / 3 · 4 | 2 / 0 / 0 / 1 · 3 | 3 / 0 / 0 / 0 · 3 | — | — |
 | obama | 0 / 0 / 0 / 3 · 3 | 0 / 0 / 0 / 2 · 2 | 0 / 0 / 0 / 2 · 2 | 19 / 0 / 11 / 14 · 44 | — | — |
+| feast | 0 / 0 / 0 / 3 · 3 | 0 / 0 / 0 / 8 · 8 | 15 / 0 / 0 / 0 · 15 | 0 / 0 / 0 / 3 · 3 | 6 / 0 / 0 / 0 · 6 | 0 / 0 / 0 / 5 · 5 |
 
 ## Diagnostics
 
 - **bModelTest** — Maven Central: not published (404)
 - **obama** — Maven Central: not published (404)
+- **feast** — Maven Central: not published (404)
 
 <!-- END AUTO -->
 

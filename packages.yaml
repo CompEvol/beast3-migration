@@ -87,3 +87,10 @@ packages:
     github: rbouckaert/obama
     maven: io.github.rbouckaert:obama
     stage: compile_tested
+
+  - name: feast
+    path: ../feast
+    github: tgvaughan/feast
+    maven: io.github.tgvaughan:feast
+    stage: compile_tested
+    notes: Tasty additions to BEAST 2. v11.0.0 is the first beast3-targeted release.

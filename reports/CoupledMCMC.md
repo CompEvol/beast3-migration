@@ -1,6 +1,6 @@
 # CoupledMCMC — what's left
 
-> **Scanned at:** 2026-05-13T15:28:34.767777  
+> **Scanned at:** 2026-05-13T15:33:04.446889  
 > **Commit:** `ff80e99` on `bump-readme-maven-version` — [view on GitHub](https://github.com/CompEvol/CoupledMCMC/commit/ff80e99bd258647b725c9bfe41671f2f5e993c99)  
 > **Pom version:** `1.3.0-beta1`  
 > **Maven Central:** `io.github.compevol:coupled-mcmc:1.3.0-beta1`  

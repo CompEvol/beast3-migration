@@ -19,3 +19,4 @@ for the high-level cross-package status table.
 | [ORC](ORC.md) | compile-tested | `1.3.1` | `c1c5910` | `1.3.0-SNAPSHOT` |
 | [bModelTest](bModelTest.md) | compile-tested | ❌ | `2f45ba7` | `1.4.0-beta1` |
 | [obama](obama.md) | compile-tested | ❌ | `7e14fd7` | `1.2.0-beta1` |
+| [feast](feast.md) | compile-tested | ❌ | `224b618` | `11.0.0` |

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-13T15:28:36.918430+12:00",
+  "generatedAt": "2026-05-13T15:33:06.887928+12:00",
   "packages": [
     {
       "name": "beast3",
@@ -18456,6 +18456,186 @@
       "mavenCentral": {
         "groupId": "io.github.rbouckaert",
         "artifactId": "obama",
+        "latest": "",
+        "error": "not published (404)"
+      }
+    },
+    {
+      "name": "feast",
+      "github": "tgvaughan/feast",
+      "maven": "io.github.tgvaughan:feast",
+      "stage": "compile_tested",
+      "notes": "Tasty additions to BEAST 2. v11.0.0 is the first beast3-targeted release.",
+      "pathExists": true,
+      "error": "",
+      "java": {
+        "distribution": {
+          "total": 3,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 3
+        },
+        "operator": {
+          "total": 8,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 8
+        },
+        "logger": {
+          "total": 15,
+          "spec": 15,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "calcnode": {
+          "total": 3,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 3
+        },
+        "parameter": {
+          "total": 6,
+          "spec": 6,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 0
+        },
+        "statenode": {
+          "total": 5,
+          "spec": 0,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 5
+        },
+        "other": {
+          "total": 48,
+          "spec": 1,
+          "mixed": 0,
+          "legacy": 0,
+          "neutral": 47
+        }
+      },
+      "xml": {
+        "total": 9,
+        "migrated": 0,
+        "v28": 0,
+        "legacyDir": 0
+      },
+      "fxTemplates": {
+        "total": 1,
+        "withSpec": 0,
+        "clean": 0
+      },
+      "inputRule": {
+        "classesWithViolations": 2,
+        "totalViolations": 2
+      },
+      "inputDeprecated": {
+        "count": 0,
+        "refs": []
+      },
+      "xmlDeprecated": {
+        "count": 9,
+        "refs": [
+          {
+            "file": "/Users/adru001/Git/feast/examples/DiscreteUniformJump.xml",
+            "hit": "RealParameter",
+            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
+            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
+            "isFxTemplate": false,
+            "isFqn": false,
+            "source": "spec"
+          },
+          {
+            "file": "/Users/adru001/Git/feast/examples/DiscreteUniformJump.xml",
+            "hit": "RealParameter",
+            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
+            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
+            "isFxTemplate": false,
+            "isFqn": false,
+            "source": "spec"
+          },
+          {
+            "file": "/Users/adru001/Git/feast/examples/coalescent.xml",
+            "hit": "RealParameter",
+            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
+            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
+            "isFxTemplate": false,
+            "isFqn": false,
+            "source": "spec"
+          },
+          {
+            "file": "/Users/adru001/Git/feast/examples/coalescent.xml",
+            "hit": "RealParameter",
+            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
+            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
+            "isFxTemplate": false,
+            "isFqn": false,
+            "source": "spec"
+          },
+          {
+            "file": "/Users/adru001/Git/feast/examples/LogFileIteratorTest.xml",
+            "hit": "RealParameter",
+            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
+            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
+            "isFxTemplate": false,
+            "isFqn": false,
+            "source": "spec"
+          },
+          {
+            "file": "/Users/adru001/Git/feast/examples/DensityMapper.xml",
+            "hit": "RealParameter",
+            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
+            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
+            "isFxTemplate": false,
+            "isFqn": false,
+            "source": "spec"
+          },
+          {
+            "file": "/Users/adru001/Git/feast/examples/DensityMapper.xml",
+            "hit": "IntegerParameter",
+            "canonicalFqn": "beast.base.inference.parameter.IntegerParameter",
+            "replacement": "beast.base.spec.inference.parameter.IntScalarParam",
+            "isFxTemplate": false,
+            "isFqn": false,
+            "source": "spec"
+          },
+          {
+            "file": "/Users/adru001/Git/feast/examples/DensityMapper.xml",
+            "hit": "BooleanParameter",
+            "canonicalFqn": "beast.base.inference.parameter.BooleanParameter",
+            "replacement": "beast.base.spec.inference.parameter.BoolScalarParam",
+            "isFxTemplate": false,
+            "isFqn": false,
+            "source": "spec"
+          },
+          {
+            "file": "/Users/adru001/Git/feast/examples/SimulateCoalescentTrees.xml",
+            "hit": "RealParameter",
+            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
+            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
+            "isFxTemplate": false,
+            "isFqn": false,
+            "source": "spec"
+          }
+        ]
+      },
+      "build": {
+        "hasPom": true,
+        "hasReleaseProfile": true,
+        "hasModuleInfo": true,
+        "hasGithubActions": true,
+        "hasReleaseScript": false,
+        "hasVersionXml": true,
+        "pomVersion": "11.0.0"
+      },
+      "mavenCentral": {
+        "groupId": "io.github.tgvaughan",
+        "artifactId": "feast",
         "latest": "",
         "error": "not published (404)"
       }
