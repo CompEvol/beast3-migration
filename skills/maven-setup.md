@@ -11,7 +11,7 @@ anchored at the project root. The skeleton at `../beast-package-skeleton` and be
 
 ---
 
-## 1 — Detect the current build system
+## Detect the current build system
 
 ```bash
 ls pom.xml build.xml *.xml 2>/dev/null
@@ -21,14 +21,14 @@ Identify which path applies:
 
 | Condition | Action |
 |---|---|
-| `pom.xml` with `<maven.compiler.release>25</maven.compiler.release>` | Already on BEAST3 Maven — skip to step 5 |
-| `pom.xml` targeting Java 11/17 | Update existing `pom.xml` — go to step 2 |
-| `build.xml` (Ant) | Full Maven scaffold — go to step 3 |
-| Neither | Full Maven scaffold — go to step 3 |
+| `pom.xml` with `<maven.compiler.release>25</maven.compiler.release>` | Already on BEAST3 Maven — skip to **Generate module-info.java** |
+| `pom.xml` targeting Java 11/17 | Update existing `pom.xml` — go to **Update existing pom.xml** |
+| `build.xml` (Ant) | Full Maven scaffold — go to **Scaffold full Maven directory structure** |
+| Neither | Full Maven scaffold — go to **Scaffold full Maven directory structure** |
 
 ---
 
-## 2 — Update existing `pom.xml` to BEAST3
+## Update existing `pom.xml` to BEAST3
 
 Read the project's existing `pom.xml`. Apply these changes:
 
@@ -39,11 +39,11 @@ Read the project's existing `pom.xml`. Apply these changes:
 3. **Surefire, resources, and assembly plugins**: copy the corresponding plugin configurations
    from `../beast-package-skeleton/pom.xml`.
 
-Then go to step 4 (skip step 3).
+Then go to **Verify Maven dependency resolution** (skip Scaffold).
 
 ---
 
-## 3 — Scaffold full Maven directory structure
+## Scaffold full Maven directory structure
 
 For projects with no `pom.xml` or an Ant build, create the Maven layout from scratch using the
 skeleton as the template.
@@ -92,7 +92,7 @@ derived from the beast3 source tree (`../beast3`):
 
 ---
 
-## 4 — Verify Maven dependency resolution
+## Verify Maven dependency resolution
 
 ```bash
 mvn dependency:resolve -q
@@ -103,7 +103,7 @@ If BEAST3 artifacts are unresolved, ensure beast3 is installed locally — see
 
 ---
 
-## 5 — Generate `src/main/java/module-info.java`
+## Generate `src/main/java/module-info.java`
 
 Apply **`module-info.md`** — it scans sources, generates `src/main/java/module-info.java`,
 and cross-checks `pom.xml` and `version.xml` for consistency.
@@ -117,3 +117,14 @@ and cross-checks `pom.xml` and `version.xml` for consistency.
 - Do not modify files outside the project root.
 - If `groupId`, `artifactId`, or other identity fields cannot be inferred, ask the user before
   writing any files.
+
+---
+
+## Log (controller Step 7 report)
+
+Record the following for the Step 7 report table after this skill completes:
+
+- `pom.xml`: `created` or `updated (Java N → 25)`
+- `Sources moved`: `yes (Ant → Maven)` or `no`
+- `mvn dependency:resolve`: `PASS` or `FAIL — <reason>`
+- `module-info.java`: set by `module-info.md` (applied in the **Generate module-info.java** section)

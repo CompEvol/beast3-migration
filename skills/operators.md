@@ -7,7 +7,7 @@ metadata:
 
 You are migrating BEAST2 operator classes to the BEAST3 spec API. Operators are a special case
 because they are the ONLY class type that must hold **concrete** parameter types in their `Input`
-declarations. Apply all rules below; make minimal, surgical changes only.
+declarations. Apply all rules below.
 
 ---
 
@@ -94,5 +94,13 @@ no change needed unless a compilation error occurs.
   `beast.base.spec.inference.operator.CompoundRealScalarParamHelper` — import if used.
 - **Unknown operator class**: if a class under `beast.base.inference.operator` or
   `beast.base.evolution.operator` is not in the tables above, check the BEAST3 source first. If no
-  spec counterpart exists, leave unchanged and flag with `// TODO: no beast3 spec class found`.
+  spec counterpart exists, leave unchanged and flag with `// TODO: no beast3 spec class found for <ClassName>`.
 - **Wildcard imports**: expand to explicit imports, then apply R1.
+
+---
+
+## Log (Mode 2b — Changes field)
+
+- Classes renamed to `.spec.`: list each by group (inference / uniform / evolution)
+- `Input declarations made concrete: N` — count of Input<interface> → Input<ConcreteParam> changes (Operator concreteness rule)
+- `Warnings — non-deprecated BEAST2 classes migrated: N` — list each class name (or "none")

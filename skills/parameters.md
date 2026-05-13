@@ -6,7 +6,7 @@ metadata:
 ---
 
 You are migrating BEAST2 parameter usage to the BEAST3 typed parameter system. This is the most
-frequent and most nuanced migration. Apply all rules below; make minimal, surgical changes only.
+frequent and most nuanced migration. Apply all rules below.
 
 ---
 
@@ -193,3 +193,11 @@ parameters are typically `PositiveReal`.
 - **`Function` interface**: legacy `beast.base.evolution.tree.Tree` or
   `beast.base.inference.Function` passed as an input — replace with the appropriate interface type
   (`RealScalar`, `RealVector`, etc.) once the domain is clear.
+
+---
+
+## Log (Mode 2b — Changes field)
+
+- Each legacy param type replaced with count: e.g. `RealParameter → RealScalarParam<PositiveReal> (3×)`, `BooleanParameter → BoolScalarParam (1×)`
+- `Input declarations updated: N` — count of Input<legacy> → Input<interface or concrete> changes
+- `Warnings — non-deprecated BEAST2 classes migrated: N` — list each class name (or "none")

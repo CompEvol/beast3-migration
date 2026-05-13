@@ -6,7 +6,7 @@ metadata:
 ---
 
 You are migrating BEAST2 site model and tree likelihood classes to the BEAST3 spec API. Apply all
-rules below; make minimal, surgical changes only.
+rules below.
 
 ---
 
@@ -66,3 +66,11 @@ See `parameters.md` for parameter migration rules.
   only the classes actually used, then apply R2.
 - **Partial migration**: if the file already imports any `beast.base.spec.evolution.*` classes, do
   not duplicate them.
+
+---
+
+## Log (Mode 2b — Changes field)
+
+- Classes renamed to `.spec.`: list each (e.g. `SiteModel, TreeLikelihood → .spec.`)
+- `SiteModel.Base → SiteModel: yes/no`
+- `Warnings — non-deprecated BEAST2 classes migrated: N` — list each class name (or "none")

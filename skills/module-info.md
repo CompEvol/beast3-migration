@@ -104,3 +104,13 @@ in `../beast3/scripts/migration-guide.md`.
 - Transitive `BEASTInterface` implementations through a non-standard base class are not detected — add them manually.
 - Inner class providers (e.g. `MyModel.Inner`) are excluded by design; JPMS cannot register them.
 - The script reads source files, not bytecode — a class that is generated at compile time will not appear.
+
+---
+
+## Log (controller Step 7 report)
+
+Record the script's console output for the Step 7 report:
+
+- `Providers detected: N`
+- `Packages exported: N`
+- `Consistency issues: N resolved / N remaining` — list any that required manual fix

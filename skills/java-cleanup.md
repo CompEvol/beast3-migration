@@ -7,7 +7,6 @@ metadata:
 
 You are applying cross-cutting Java modernisation changes that are required for BEAST3 / Java 17+
 compatibility. These rules apply to any file regardless of which BEAST domain it belongs to.
-Make minimal, surgical changes only.
 
 ---
 
@@ -113,3 +112,11 @@ apply R2.
   requires `Double[]` (check the callee's signature first).
 - Do not change `Double` (singular boxed scalar) fields or locals — only arrays are in scope here.
 - Do not reformat or rename anything beyond what the rules above require.
+
+---
+
+## Log (Mode 2b — Changes field)
+
+- `finalize() removed: N` — count of `finalize()` blocks commented out
+- `Double[] → double[]: N` — count of boxed double array unboxings
+- `Integer[] → int[]: N` — count of boxed integer array unboxings

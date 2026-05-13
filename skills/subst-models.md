@@ -5,8 +5,7 @@ metadata:
   type: skill
 ---
 
-You are migrating BEAST2 substitution model classes to the BEAST3 spec API. Apply all rules below;
-make minimal, surgical changes only.
+You are migrating BEAST2 substitution model classes to the BEAST3 spec API. Apply all rules below.
 
 ---
 
@@ -106,8 +105,17 @@ See `parameters.md` for the full parameter migration rules.
 
 - **Unknown substitution model class**: if a class under `beast.base.evolution.substitutionmodel`
   is not in the table above, check the BEAST3 source before rewriting. If no spec counterpart
-  exists, leave the import unchanged and add `// TODO: no beast3 spec class found`.
+  exists, leave the import unchanged and add `// TODO: no beast3 spec class found for <ClassName>`.
 - **Wildcard imports** (`import beast.base.evolution.substitutionmodel.*`): expand to explicit
   imports for only the classes actually used, then apply R1.
 - **Partial migration**: if the file already imports some `beast.base.spec.evolution.substitutionmodel.*`
   classes, do not re-add them.
+
+---
+
+## Log (Mode 2b — Changes field)
+
+- Classes renamed to `.spec.`: list each (e.g. `HKY, GTR → .spec.`)
+- `SubstitutionModel.Base → Base: yes/no`
+- `Frequencies.frequencies → SimplexParam: yes/no`
+- `Warnings — non-deprecated BEAST2 classes migrated: N` — list each class name (or "none")

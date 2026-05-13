@@ -6,7 +6,7 @@ metadata:
 ---
 
 You are migrating BEAST2 tree topology, coalescent, and speciation model classes to the BEAST3 spec
-API. Apply all rules below; make minimal, surgical changes only.
+API. Apply all rules below.
 
 ---
 
@@ -78,8 +78,18 @@ distribution is also migrated to its BEAST3 spec counterpart when constructing t
 
 - **Unknown class under `beast.base.evolution.speciation` or `beast.base.evolution.tree`**: check
   the BEAST3 source before rewriting. If no spec counterpart exists, leave unchanged and flag with
-  `// TODO: no beast3 spec class found`.
+  `// TODO: no beast3 spec class found for <ClassName>`.
 - **Wildcard imports**: expand to explicit imports for only the classes actually used, then apply
   R1–R3.
 - **Partial migration**: if the file already imports any `beast.base.spec.evolution.tree.*` or
   `beast.base.spec.evolution.speciation.*` classes, do not duplicate them.
+
+---
+
+## Log (Mode 2b — Changes field)
+
+- Classes renamed to `.spec.` by category:
+  - tree: N (list each, e.g. `ClusterTree, MRCAPrior → .spec.`)
+  - coalescent: N (e.g. `RandomTree, ConstantPopulation → .spec.`)
+  - speciation: N (e.g. `YuleModel → .spec.`)
+- `Warnings — non-deprecated BEAST2 classes migrated: N` — list each class name (or "none")

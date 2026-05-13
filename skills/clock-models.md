@@ -6,7 +6,7 @@ metadata:
 ---
 
 You are migrating BEAST2 clock model / branch rate model classes to the BEAST3 spec API. Apply all
-rules below; make minimal, surgical changes only.
+rules below.
 
 ---
 
@@ -19,29 +19,34 @@ Every class in the table below has a confirmed BEAST3 counterpart:
 
 | BEAST2 import | BEAST3 import |
 |---|---|
-| `beast.base.evolution.branchratemodel.BranchRateModel` | `beast.base.spec.evolution.branchratemodel.Base` (see R2) |
 | `beast.base.evolution.branchratemodel.StrictClockModel` | `beast.base.spec.evolution.branchratemodel.StrictClockModel` |
 | `beast.base.evolution.branchratemodel.UCRelaxedClockModel` | `beast.base.spec.evolution.branchratemodel.UCRelaxedClockModel` |
 | `beast.base.evolution.branchratemodel.RandomLocalClockModel` | `beast.base.spec.evolution.branchratemodel.RandomLocalClockModel` |
 
-**Do NOT rename** — no `.spec.` counterpart yet:
-- `beast.base.evolution.branchratemodel.BranchRateModel` when used as the **interface** (not `.Base`)
-  — verify whether the file uses the interface or the abstract class before removing the import.
+`BranchRateModel` is a special case — see R2.
 
-### R2 — `BranchRateModel.Base` inner class → top-level `Base`
+### R2 — `BranchRateModel.Base` inner class → top-level `Base` (special case)
+
+**Apply this rule when both conditions hold:**
+1. `import beast.base.evolution.branchratemodel.BranchRateModel` is present
+2. `BranchRateModel.Base` appears in the code (fields, parameters, return types, or `Input<>`)
+
+**Skip this rule when:**
+- `import beast.base.spec.evolution.branchratemodel.Base` already exists → migration already done
+- `BranchRateModel` is used only as an interface → see Edge Cases
 
 In BEAST3 the abstract base is a top-level class, not an inner class of `BranchRateModel`.
+Replace the import:
 
-Replace:
 ```java
+// BEAST2
 import beast.base.evolution.branchratemodel.BranchRateModel;
-```
-With:
-```java
+
+// BEAST3
 import beast.base.spec.evolution.branchratemodel.Base;
 ```
 
-Replace every type reference `BranchRateModel.Base` in the file with `Base`:
+Then replace every type reference `BranchRateModel.Base` in the file with `Base`:
 - Field declarations
 - Method parameters
 - Return types
@@ -87,6 +92,14 @@ Clock models typically expose rate inputs. When migrating `initByName(...)` call
 - **Custom clock model** that extends `BranchRateModel.Base`: change `extends BranchRateModel.Base`
   to `extends Base` after adding the BEAST3 import.
 - **`BranchRateModel` used only as an interface** (e.g. `Input<BranchRateModel>`): this has no spec
-  twin yet — leave unchanged and flag with `// TODO: verify beast3 BranchRateModel interface`.
-- **Partial migration**: if the file already imports `beast.base.spec.evolution.branchratemodel.Base`,
-  do not re-add it.
+  twin yet — leave unchanged and flag with `// TODO: no beast3 spec class found for BranchRateModel`.
+- **Partial migration**: if `import beast.base.spec.evolution.branchratemodel.Base` is already present,
+  R2 is done — do not re-add the import or re-replace references.
+
+---
+
+## Log (Mode 2b — Changes field)
+
+- Classes renamed to `.spec.`: list each (e.g. `StrictClockModel, UCRelaxedClockModel → .spec.`)
+- `BranchRateModel.Base → Base: yes/no`
+- `Warnings — non-deprecated BEAST2 classes migrated: N` — list each class name (or "none")

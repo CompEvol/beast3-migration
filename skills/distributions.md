@@ -6,7 +6,7 @@ metadata:
 ---
 
 You are migrating BEAST2 parametric distribution / prior classes to the BEAST3 spec API. Apply all
-rules below; make minimal, surgical changes only.
+rules below.
 
 ---
 
@@ -87,8 +87,8 @@ See `parameters.md` for the full parameter migration rules.
 ### R4 — `ParametricDistribution` base class
 
 If a custom class `extends ParametricDistribution`, check whether `ParametricDistribution` has a
-BEAST3 spec twin. If not, flag with `// TODO: ParametricDistribution has no beast3 spec twin` and
-leave unchanged — this is a known migration blocker (reported in the Mascot audit as "legacy base").
+BEAST3 spec twin. If not, leave unchanged and flag with
+`// TODO: no beast3 spec class found for ParametricDistribution`.
 
 ---
 
@@ -98,7 +98,15 @@ leave unchanged — this is a known migration blocker (reported in the Mascot au
   distribution must also be migrated. Migrate the distribution first, then the `Prior`.
 - **Unknown distribution class**: if a class under `beast.base.inference.distribution` is not in the
   table above, check the BEAST3 source before rewriting. If no spec counterpart exists, leave
-  unchanged and flag with `// TODO: no beast3 spec class found`.
+  unchanged and flag with `// TODO: no beast3 spec class found for <ClassName>`.
 - **Wildcard imports**: expand to explicit imports, then apply R1.
 - **Partial migration**: if the file already imports any `beast.base.spec.inference.distribution.*`
   classes, do not duplicate them.
+
+---
+
+## Log (Mode 2b — Changes field)
+
+- Distribution classes renamed to `.spec.`: list each (e.g. `LogNormal, Gamma → .spec.`)
+- `Prior wrapper restructured: yes/no`
+- `Warnings — non-deprecated BEAST2 classes migrated: N` — list each class name (or "none")

@@ -5,100 +5,210 @@ metadata:
   type: skill
 ---
 
-You are the coordinator for migrating an entire BEAST2 package to BEAST3. You work from the
-**project root directory** (the directory containing the package's `pom.xml` or build file).
-Follow the steps below in order. Do not skip steps.
+You are the coordinator for migrating an entire BEAST2 package to BEAST3. Work from the
+**project root directory** (containing `pom.xml` or the build file). All relative paths are
+anchored there. Follow the steps below in order.
 
 ---
 
-## Input
+## Before you begin
 
-The project root directory is either:
-- Supplied by the user as an argument, or
-- The current working directory if no argument is given.
+**First:** check whether `tmp/b3migration/STATUS.md` exists — this determines what has
+already been completed in a previous session and informs all decisions below.
 
-All relative paths below are anchored at the project root.
+### Path B — Resume previous session
+
+If `tmp/b3migration/STATUS.md` **exists** and no specific step was requested: apply
+**`migration-log.md` Mode 1** — find the `in-progress` or first `pending` file, report
+progress to the user, and jump directly to Step 5.
+
+### Path A — User requests a specific step
+
+Use the dependency table below to assess whether the requested step can proceed.
+If `tmp/b3migration/STATUS.md` exists, treat Steps 1–5 as already satisfied.
+For any dependency that is genuinely not yet met, tell the user which steps must run first
+and stop — do not proceed until the user confirms or asks you to run the missing steps.
+
+| Requested step | Depends on | How to verify dependency is satisfied |
+|---|---|---|
+| Step 1 | — | — |
+| Step 2 | Step 1 | `../beast3/` and `../beast-package-skeleton/` both exist |
+| Step 3 | Step 2 | `pom.xml` contains `<maven.compiler.release>25</maven.compiler.release>` |
+| Step 4 | Step 2 | same as Step 3 |
+| Step 5 | Step 2, Step 4 | Step 2 verified above; `tmp/b3migration/STATUS.md` exists with a file queue |
+| Step 6 | Step 5 | all rows in STATUS.md are `done` or `error` (none `pending` or `in-progress`) |
+| Step 7 | Step 5 | same as Step 6 |
+
+### Path C — Fresh start
+
+If `tmp/b3migration/STATUS.md` **does not exist** and no specific step was requested:
+proceed to Step 1.
 
 ---
 
-## Prerequisites
+## Universal rules (apply to every file and every sub-skill)
 
-**Java 25** and **Maven 3.9+** are required. For installation instructions and how to verify both
-are present, see the **Prerequisites** and **Building** sections of `../beast3/README.md`.
+All sub-skills inherit these rules. They are not repeated inside each sub-skill file.
 
-**Git** — required to clone beast3 and beast-package-skeleton.
+### U1 — Move files with `git mv`
+
+When restructuring sources (e.g. Ant → Maven layout), always use `git mv` instead of a plain
+filesystem move so that git history is preserved on the destination file.
+
+```bash
+git mv src/MyClass.java src/main/java/com/example/MyClass.java
+```
+
+### U2 — Core import transformation
+
+The pattern for every class that has a BEAST3 spec twin is:
+
+```
+beast.base.<domain>.<Class>
+         ↓
+beast.base.spec.<domain>.<Class>
+```
+
+Only the path changes — the class name stays the same (except for inner-class promotions noted
+in individual sub-skills, e.g. `SubstitutionModel.Base` → top-level `Base`).
+
+### U3 — Input concreteness rule
+
+Overrides any legacy `Input<>` declaration in every class type:
+
+| Class type | `Input<>` generic | Example |
+|---|---|---|
+| **Operator** (extends `Operator`) | concrete param class | `Input<RealScalarParam<PositiveReal>>` |
+| **Everything else** (Distribution, Logger, CalcNode, Likelihood…) | interface type | `Input<RealScalar>` |
+
+### U4 — Import hygiene
+
+Applies to every `beast.base.*` class reference — Java imports and XML `spec`/`type`/`class`
+attributes. Apply the **first** matching case:
+
+| # | Condition | Action |
+|---|---|---|
+| 1 | `beast.base.spec.*` reference already present | Skip — already migrated |
+| 2 | Spec twin exists + class **is** `@Deprecated` in BEAST2 | Apply U2 — normal migration |
+| 3 | Spec twin exists + class is **not** `@Deprecated` in BEAST2 | Apply U2 + record in Mode 2b log: `Warning — non-deprecated BEAST2 class migrated: <ClassName>` |
+| 4 | No spec twin + class **is** `@Deprecated` | Leave unchanged; add `// TODO: no beast3 spec class found for <ClassName>` |
+| 5 | No spec twin + class is **not** `@Deprecated` (e.g. `Tree`, `Node`, `TreeInterface`) | Leave unchanged; no comment |
+
+**"Spec twin exists"**: class appears in the active sub-skill's import table or in
+`../beast3/scripts/migration-guide.md`.
+
+**Checking `@Deprecated`**: look for `@Deprecated` on the class declaration in
+`../beast-base/src/main/java/`. If unavailable locally, consult `../beast3/scripts/migration-guide.md`.
+
+**Wildcard imports** (`.*`): expand to only the classes actually used, then apply the table above.
+
+### U5 — Minimal, surgical changes only
+
+Do not refactor, rename, reformat, or restructure code beyond what the active rules require.
+One rule, one change. Leave everything else exactly as found.
+
+---
+
+## Domain sub-skills — quick reference
+
+Each sub-skill fires only when its **signal** appears in the file being migrated (Step 5).
+Consult `../beast3/scripts/migration-guide.md` on demand for any class not covered here.
+
+| # | Sub-skill | Signal (grep for this in the file) | Key transformation | Mode 2b log (Changes field) |
+|---|---|---|---|---|
+| 1 | `java-cleanup.md` | `void finalize()` · `Double[` · `Integer[` | Comment out `finalize`; unbox to primitive arrays | `finalize() removed: N` · `Double[]→double[]: N` · `Integer[]→int[]: N` |
+| 2 | `parameters.md` | `import beast.base.inference.parameter.` · `Function` as Input type | `RealParameter`/`IntegerParameter`/`BooleanParameter` → typed params + domain; enforce Input concreteness rule | param replacements with type and count · `Input declarations updated: N` |
+| 3 | `subst-models.md` | `import beast.base.evolution.substitutionmodel.` | → `.spec.` equivalents; `Frequencies.frequencies` arg → `SimplexParam`; `SubstitutionModel.Base` → top-level `Base` | classes renamed (list) · `SubstitutionModel.Base→Base: y/n` · `Frequencies.frequencies→SimplexParam: y/n` |
+| 4 | `clock-models.md` | `import beast.base.evolution.branchratemodel.` | → `.spec.` equivalents; `BranchRateModel.Base` → top-level `Base` | classes renamed (list) · `BranchRateModel.Base→Base: y/n` |
+| 5 | `site-likelihood.md` | `import beast.base.evolution.sitemodel.` · `import beast.base.evolution.likelihood.` | → `.spec.` equivalents | classes renamed (list) · `SiteModel.Base→SiteModel: y/n` |
+| 6 | `tree-coalescent.md` | `import beast.base.evolution.tree.` · `import beast.base.evolution.speciation.` | → `.spec.` equivalents (Tree/Node/TreeParser/TreeInterface are NOT renamed) | classes renamed by category: `tree(N)` · `coalescent(N)` · `speciation(N)` |
+| 7 | `distributions.md` | `import beast.base.inference.distribution.` | → `.spec.` equivalents; `Prior` still exists but distribution can be used directly as prior | classes renamed (list) · `Prior wrapper restructured: y/n` |
+| 8 | `operators.md` | `import beast.base.inference.operator.` · `import beast.base.evolution.operator.` | → `.spec.` equivalents; Operators use **concrete** Input types | classes renamed by group · `Input declarations made concrete: N` |
 
 ---
 
 ## Step 1 — Clone dependencies
 
-Ensure beast3 and beast-package-skeleton are available.
+```bash
+# Only if the directory is missing:
+git clone https://github.com/CompEvol/beast3.git ../beast3
+git clone https://github.com/CompEvol/beast-package-skeleton.git ../beast-package-skeleton
+```
 
-If `../beast3` does not exist, clone it from `https://github.com/CompEvol/beast3.git`.
-If `../beast-package-skeleton` does not exist, clone it from `https://github.com/CompEvol/beast-package-skeleton.git`.
-
-The skeleton is the reference template for the Maven project structure and `pom.xml`.
+The skeleton is the reference template for `pom.xml` and project structure.
+Requires **Java 25**, **Maven 3.9+**, and **Git** — see `../beast3/README.md` for setup.
 
 ---
 
 ## Step 2 — Set up Maven build and module descriptor
 
-Apply **`maven-setup.md`** — it detects the current build system, updates or scaffolds `pom.xml`
-from the skeleton, moves sources if needed, verifies dependency resolution, and creates
-`module-info.java`.
+Apply **`maven-setup.md`** — detects the build system (Ant vs Maven), updates or scaffolds
+`pom.xml` from the skeleton, moves sources if needed, verifies dependency resolution, and
+generates `module-info.java`.
 
----
+Verify the build compiles cleanly before proceeding:
 
-## Step 3 — Identify files to migrate
-
-Find all Java source files that still use BEAST2 (non-spec) imports:
-```bash
-grep -rl "beast\.base\.evolution\." src/main/java src/test/java 2>/dev/null | \
-  grep -v "\.spec\." | sort
-
-grep -rl "beast\.base\.inference\.parameter\." src/main/java src/test/java 2>/dev/null | sort
-
-grep -rl "beast\.base\.inference\.distribution\." src/main/java src/test/java 2>/dev/null | \
-  grep -v "\.spec\." | sort
-```
-
-Collect the union of all matches as the migration queue. If empty, report "no Java migration
-needed" and skip to Step 6.
-
----
-
-## Step 4 — Read the migration guide
-
-Read `../beast3/scripts/migration-guide.md` in full — it is the authoritative reference for
-all API changes. Extract and keep in mind:
-
-- Class mapping tables (Legacy → Spec) for parameters, distributions, substitution models,
-  branch rate models, site models, likelihoods, speciation, and operators
-- Input concreteness rule: Operators → concrete param types; all other classes → interface types
-- Prior architecture change: the distribution IS the prior; no `Prior` wrapper in spec
-- JPMS `module-info.java` requirements
-- `version.xml` embedding requirement
-
----
-
-## Step 5 — Migrate each file
-
-For each file in the migration queue, apply the domain sub-skills in this order:
-
-1. **`java-cleanup.md`** — unbox `Double[]`/`Integer[]`; comment out `finalize()` overrides
-2. **`parameters.md`** — `RealParameter` / `IntegerParameter` / `BooleanParameter` → typed params; Input rule
-3. **`subst-models.md`** — substitution model imports; `Frequencies` + `SimplexParam`; `SubstitutionModel.Base`
-4. **`clock-models.md`** — branch rate model imports; `BranchRateModel.Base` → top-level `Base`
-5. **`site-likelihood.md`** — `SiteModel`, `TreeLikelihood` imports
-6. **`tree-coalescent.md`** — tree, coalescent, speciation imports
-7. **`distributions.md`** — distribution imports; Prior architecture change
-8. **`operators.md`** — operator imports; enforce Operator Input concreteness rule
-
-Skip any sub-skill for which the file has no matching signals. After each file, verify:
 ```bash
 mvn compile -q
 ```
-Fix any errors before moving to the next file.
+
+Fix any errors now. A failing baseline will mask per-file errors in Step 5.
+
+---
+
+## Step 3 — Migrate XML resources
+
+Applies to both main and test resources. No `mvn compile` gate — each skill has its own
+verify grep. Run both sub-skills in order:
+
+1. **`fxtemplates.md`** — `*.xml` / `*.fxml` under `src/main/resources/`: rewrites `spec`,
+   `type`, `class`, and `fx:controller` attribute values to `.spec.` equivalents.
+2. **`example-xmls.md`** — `*.xml` under `src/test/resources/`: rewrites `spec` (and
+   occasionally `type`, `class`) attribute values in BEAST analysis XMLs used by tests.
+
+---
+
+## Step 4 — Identify Java files to migrate
+
+```bash
+grep -rl "beast\.base\.evolution\."           src/main/java src/test/java 2>/dev/null | grep -v "\.spec\." | sort
+grep -rl "beast\.base\.inference\.parameter\." src/main/java src/test/java 2>/dev/null | grep -v "\.spec\." | sort
+grep -rl "beast\.base\.inference\.distribution\." src/main/java src/test/java 2>/dev/null | grep -v "\.spec\." | sort
+grep -rl "beast\.base\.inference\.operator\." src/main/java src/test/java 2>/dev/null | grep -v "\.spec\." | sort
+```
+
+The union of all matches is the **migration queue**.
+
+**If the queue is empty — skip directly to Step 6.**
+
+Apply **`migration-log.md` Mode 1 (fresh start)** to initialise `tmp/b3migration/STATUS.md`
+with every file set to `pending`.
+
+---
+
+## Step 5 — Migrate each Java file
+
+Universal rules **U1–U5 apply to every file** — no signal check needed for them.
+
+If a file contains a class not covered by the sub-skill table, look it up on demand in
+`../beast3/scripts/migration-guide.md` before applying changes.
+
+For each file in the migration queue:
+
+1. Apply **`migration-log.md` Mode 2a**: mark the file `in-progress` in STATUS.md.
+2. Check which sub-skill signals are present (see the table above).
+3. Apply each matching sub-skill in order 1–8. Skip sub-skills whose signal is absent.
+4. Verify compilation:
+
+```bash
+mvn compile -q
+```
+
+5. Apply **`migration-log.md` Mode 2b**: mark `done` or `error`, append to the daily log,
+   and record any TODOs in `tmp/b3migration/TODO.md`.
+
+Fix all compile errors before moving to the next file. If a file cannot be fixed, mark it
+`error` and continue with the next.
 
 ---
 
@@ -108,28 +218,32 @@ Fix any errors before moving to the next file.
 mvn test -q
 ```
 
-Fix only failures caused by the migration. Leave pre-existing test failures untouched and
-note them in the report.
+Fix only failures introduced by the migration. Note pre-existing failures without touching them.
 
 ---
 
 ## Step 7 — Report
 
-Summarise:
-- Whether `pom.xml` was created or updated
-- Whether `module-info.java` was created
-- How many files were in the migration queue
-- Per-file: which sub-skills fired, imports changed, params replaced, `finalize()` removed
-- Any `// TODO` comments left (classes with no known BEAST3 spec twin)
-- Final `mvn test` result (pass / fail with error count)
+Apply **`migration-log.md` Mode 3** to rewrite `tmp/b3migration/REPORT.md` with the final
+summary. Then print a brief summary to the user:
+
+| Item | Detail |
+|---|---|
+| `pom.xml` | Created or updated |
+| `module-info.java` | Created |
+| FxTemplates (`src/main/resources/`) | Files migrated · class references updated · TODOs inserted |
+| Example XMLs (`src/test/resources/`) | Files migrated · class references updated · TODOs inserted |
+| Java migration queue | Total · done · error · pending |
+| By sub-skill | How many Java files each sub-skill touched |
+| TODOs | Contents of `tmp/b3migration/TODO.md` |
+| `mvn test` result | Pass / fail with error count |
 
 ---
 
 ## Guard rails
 
-- Never modify files outside the project root except to clone beast3 or beast-package-skeleton.
-- Never delete source files — only move them when restructuring from Ant to Maven.
-- Do not refactor, rename, or reformat code beyond what the sub-skills require.
-- If a file is already fully migrated, skip it silently.
-- If an error cannot be fixed without touching files outside the migration queue, stop and report
-  which files need to be added to scope.
+- Never modify files outside the project root (cloning deps is the only exception).
+- Never delete `tmp/b3migration/` — the user must delete it manually after migration is complete.
+- Never delete source files — only move them when restructuring Ant → Maven (use `git mv`, see U1).
+- Skip files that are already fully migrated (no BEAST2 non-spec imports remaining).
+- Stop and report if fixing an error requires touching files outside the migration queue.
