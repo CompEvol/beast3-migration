@@ -1,7 +1,7 @@
 # bModelTest — what's left
 
-> **Scanned at:** 2026-05-13T13:44:44.312524  
-> **Commit:** `ecf0aaf` on `beast3-migration` — [view on GitHub](https://github.com/BEAST2-Dev/bModelTest/commit/ecf0aaf87e8ab4a680f9d09c50efcadda9d83839)  
+> **Scanned at:** 2026-05-13T13:53:47.610301  
+> **Commit:** `ecf0aaf` on `beast3-migration` *(dirty working tree)* — [view on GitHub](https://github.com/BEAST2-Dev/bModelTest/commit/ecf0aaf87e8ab4a680f9d09c50efcadda9d83839)  
 > **Pom version:** `1.4.0-beta1`  
 > **Maven Central:** not published as `io.github.beast2-dev:bModelTest` (not published (404))  
 > **Stage hint:** compile-tested
@@ -26,16 +26,6 @@ Not yet published as `io.github.beast2-dev:bModelTest`. Verify the namespace on 
 ## Java migration
 
 No Java classes flagged as legacy or mixed — all relevant types are on spec or have no parameter involvement. ✅
-
-## Inputs declaring `@Deprecated` types
-
-> Each entry below is an `Input<T>` field where `T` (or one of its generic parameters) is annotated `@Deprecated` somewhere in the scanned packages. Such Inputs block XML migration: downstream XMLs cannot supply a non-deprecated value to them. Replace the declared type with the suggested spec equivalent (and update the field/local variable types accordingly).
-
-**`bmodeltest.math.distributions.ModelSetPrior`** (1):
-
-| Input type | Hit | Replacement |
-|---|---|---|
-| `ParametricDistribution` | `ParametricDistribution` → `beast.base.inference.distribution.ParametricDistribution` | `beast.base.spec.inference.distribution.TensorDistribution` |
 
 ## Example XMLs
 

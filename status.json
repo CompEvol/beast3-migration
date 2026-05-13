@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-13T13:44:45.145160+12:00",
+  "generatedAt": "2026-05-13T13:53:48.414115+12:00",
   "packages": [
     {
       "name": "beast3",
@@ -17846,16 +17846,8 @@
         "totalViolations": 0
       },
       "inputDeprecated": {
-        "count": 1,
-        "refs": [
-          {
-            "classFqn": "bmodeltest.math.distributions.ModelSetPrior",
-            "typeStr": "ParametricDistribution",
-            "hit": "ParametricDistribution",
-            "canonicalFqn": "beast.base.inference.distribution.ParametricDistribution",
-            "replacement": "beast.base.spec.inference.distribution.TensorDistribution"
-          }
-        ]
+        "count": 0,
+        "refs": []
       },
       "xmlDeprecated": {
         "count": 0,
