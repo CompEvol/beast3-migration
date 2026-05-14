@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 """
 Reads deprecated_classes.md (output of scan_deprecated.py), then scans beast3
-for all classes in *.spec.* packages and reports those not referenced as a
-replacement in deprecated_classes.md.
+for all classes in *.spec.* packages and produces two reports:
+
+  1. Warnings — FQ names that appear in the Replacement column but do not exist
+     as spec classes in the scanned source (typos, wrong packages, etc.).
+  2. Unmapped spec classes — spec classes with no entry in any Replacement cell.
 
 Excluded packages (type/domain infrastructure, not migration targets):
     beast.base.spec.type
@@ -65,20 +68,25 @@ def _fq_from_replacement(text: str) -> set[str]:
     return {c for c in candidates if '.' in c}
 
 
-def parse_deprecated_md(md_path: Path) -> set[str]:
+def parse_deprecated_md(md_path: Path) -> tuple[set[str], dict[str, list[str]]]:
     """
-    Return the set of fully-qualified class names referenced in the
-    Replacement column of deprecated_classes.md.
+    Parse deprecated_classes.md.
+    Returns:
+        mapped_fq:     set of all FQ names referenced in any Replacement cell
+        fq_to_sources: mapping of each FQ name → list of deprecated simple class names
+                       that reference it (for warning attribution)
     """
     content = md_path.read_text(encoding="utf-8")
-    mapped: set[str] = set()
+    fq_to_sources: dict[str, list[str]] = defaultdict(list)
     # Table rows look like:  | `SimpleClass` | replacement text |
-    for row in re.finditer(r'^\| `\w+` \| (.+?) \|$', content, re.MULTILINE):
-        cell = row.group(1).strip()
+    for row in re.finditer(r'^\| `(\w+)` \| (.+?) \|$', content, re.MULTILINE):
+        dep_class = row.group(1)
+        cell = row.group(2).strip()
         if cell == "_no replacement specified_":
             continue
-        mapped |= _fq_from_replacement(cell)
-    return mapped
+        for fq in _fq_from_replacement(cell):
+            fq_to_sources[fq].append(dep_class)
+    return set(fq_to_sources.keys()), dict(fq_to_sources)
 
 
 # ---------------------------------------------------------------------------
@@ -137,6 +145,7 @@ def scan_spec_classes(module_name: str, src_root: Path) -> list[dict]:
 
 def generate_markdown(
     unmapped: list[dict],
+    dangling: dict[str, list[str]],
     beast3_root: Path,
     deprecated_md: Path,
     total_spec: int,
@@ -157,6 +166,23 @@ def generate_markdown(
         "Ordered by Maven module then Java package.",
         "",
     ]
+
+    if dangling:
+        lines += [
+            "## Warnings: Dangling Replacement References",
+            "",
+            "The following FQ names appear in the Replacement column of"
+            " `deprecated_classes.md` but do not exist as spec classes in"
+            " the scanned source. This usually indicates a typo or stale"
+            " package name in the `@deprecated` Javadoc.",
+            "",
+            "| Referenced (non-existent) FQ Name | Cited by Deprecated Class |",
+            "|:---|:---|",
+        ]
+        for fq in sorted(dangling.keys()):
+            sources = ", ".join(f"`{s}`" for s in sorted(set(dangling[fq])))
+            lines.append(f"| `{fq}` | {sources} |")
+        lines.append("")
 
     by_module: dict[str, dict[str, list]] = defaultdict(lambda: defaultdict(list))
     for entry in unmapped:
@@ -216,7 +242,7 @@ def main() -> None:
         sys.exit(f"ERROR: beast3 root not found: {beast3_root}")
 
     print(f"Parsing {_short(deprecated_md)} ...", file=sys.stderr)
-    mapped_fq = parse_deprecated_md(deprecated_md)
+    mapped_fq, fq_to_sources = parse_deprecated_md(deprecated_md)
     print(f"  → {len(mapped_fq)} referenced spec class names", file=sys.stderr)
 
     all_spec: list[dict] = []
@@ -233,7 +259,16 @@ def main() -> None:
     print(f"Mapped:             {len(all_spec) - len(unmapped)}", file=sys.stderr)
     print(f"Unmapped:           {len(unmapped)}", file=sys.stderr)
 
-    md = generate_markdown(unmapped, beast3_root, deprecated_md, len(all_spec))
+    spec_fq_set = {e["fq"] for e in all_spec}
+    dangling = {
+        fq: sources
+        for fq, sources in fq_to_sources.items()
+        if (".spec." in fq or fq.endswith(".spec")) and fq not in spec_fq_set
+    }
+    if dangling:
+        print(f"Dangling references:  {len(dangling)}", file=sys.stderr)
+
+    md = generate_markdown(unmapped, dangling, beast3_root, deprecated_md, len(all_spec))
     args.output.write_text(md, encoding="utf-8")
     print(f"\nOutput: {_short(args.output.resolve())}", file=sys.stderr)
 

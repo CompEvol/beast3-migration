@@ -2,6 +2,7 @@
 """
 Scans beast3 Java source for class-level @Deprecated annotations and generates
 a Markdown report mapping each deprecated class to its beast3 replacement.
+Both top-level and inner/nested deprecated classes are detected.
 
 Usage:
     python scan_deprecated.py [--beast3-root PATH] [--output PATH]
@@ -90,50 +91,80 @@ def extract_replacement(pre_class: str) -> str:
     return replacement
 
 
-def is_class_deprecated(content: str, class_name: str) -> tuple[bool, str]:
+_CLASS_KW = re.compile(
+    r'(?:public\s+|protected\s+|private\s+)?'
+    r'(?:(?:abstract|final|sealed|non-sealed|strictfp)\s+)*'
+    r'(?:class|interface|enum|@\s*interface)\s+(\w+)',
+)
+
+
+def find_all_deprecated_classes(content: str) -> list[tuple[str, str]]:
     """
-    Returns (is_deprecated, replacement_hint).
-    Only considers class-level @Deprecated (not methods or fields).
+    Find every class-level @Deprecated declaration in the file — both top-level
+    and inner/nested classes.  Returns list of (simple_class_name, replacement).
+
+    Strategy: scan forward from each @Deprecated in the comment-stripped source.
+    Skip whitespace and sibling annotations; if a class/interface/enum keyword
+    follows with no intervening } or ; (which would indicate a method/field body),
+    the @Deprecated belongs to that class declaration.
+
+    Position mapping: both strippers preserve line counts, so the line number of
+    a match in `stripped` equals the line number in `content`. We use that to
+    recover the exact character position in `content` for extract_replacement.
     """
-    # Find the class/interface/enum/annotation declaration for this class name.
-    # We look for it outside of braces by requiring minimal leading whitespace.
-    class_decl_re = re.compile(
-        r'^[ \t]*(?:public\s+|protected\s+)?'
-        r'(?:(?:abstract|final|sealed|non-sealed|strictfp)\s+)*'
-        r'(?:class|interface|enum|@\s*interface)\s+' + re.escape(class_name) + r'\b',
-        re.MULTILINE,
-    )
+    stripped = _strip_strings(content)       # removes ) inside string args
+    stripped = _strip_line_comments(stripped)
+    stripped = _strip_block_comments(stripped)
 
-    m = class_decl_re.search(content)
-    if not m:
-        return False, ""
+    # Pre-compute line start positions in content for stripped→content mapping.
+    content_line_starts: list[int] = [0]
+    for line in content.splitlines(keepends=True):
+        content_line_starts.append(content_line_starts[-1] + len(line))
 
-    pre_class = content[:m.start()]
+    seen: set[str] = set()
+    results: list[tuple[str, str]] = []
 
-    # Strip string literals and comments to find bare @Deprecated annotations
-    pre_stripped = _strip_strings(pre_class)
-    pre_stripped = _strip_line_comments(pre_stripped)
-    pre_stripped = _strip_block_comments(pre_stripped)
+    for dep_m in re.finditer(r'@Deprecated\b', stripped):
+        # Look ahead up to 400 chars for the class declaration
+        lookahead = stripped[dep_m.end():dep_m.end() + 400]
 
-    dep_matches = list(re.finditer(r'@Deprecated\b', pre_stripped))
-    if not dep_matches:
-        return False, ""
+        # Strip leading whitespace and sibling annotations to reach the
+        # class/interface/enum keyword
+        remaining = lookahead.lstrip()
+        while True:
+            ann = re.match(r'^@[\w.]+(?:\s*\([^)]*\))?\s*', remaining)
+            if ann:
+                remaining = remaining[ann.end():].lstrip()
+            else:
+                break
 
-    last_dep_pos = dep_matches[-1].start()
+        cls_m = _CLASS_KW.match(remaining)
+        if not cls_m:
+            continue
 
-    # Validate: between the last @Deprecated and the class declaration there
-    # must be no statement terminators or closing braces (which would indicate
-    # we are inside a method/field body rather than at the class level).
-    between_raw = pre_stripped[last_dep_pos + len('@Deprecated'):]
-    # Remove annotations (e.g. @Description("..."), @SuppressWarnings)
-    between_clean = re.sub(r'@[\w.]+(?:\s*\([^)]*\))?', '', between_raw)
-    between_clean = between_clean.strip()
+        # The text consumed between @Deprecated and the class keyword must not
+        # contain } or ; — those indicate we're inside a method/field body.
+        between = lookahead[: len(lookahead) - len(remaining)]
+        if re.search(r'[};]', between):
+            continue
 
-    if re.search(r'[};]', between_clean):
-        return False, ""
+        class_name = cls_m.group(1)
+        if class_name in seen:
+            continue
+        seen.add(class_name)
 
-    replacement = extract_replacement(pre_class[max(0, last_dep_pos - 2000):])
-    return True, replacement
+        # Map stripped position → content position via line number.
+        dep_line = stripped[: dep_m.start()].count('\n')
+        line_start = content_line_starts[dep_line] if dep_line < len(content_line_starts) else 0
+        line_end = content_line_starts[dep_line + 1] if dep_line + 1 < len(content_line_starts) else len(content)
+        col = content[line_start:line_end].find('@Deprecated')
+        dep_content_pos = line_start + col if col >= 0 else line_start
+
+        pre_dep = content[max(0, dep_content_pos - 2000): dep_content_pos]
+        replacement = extract_replacement(pre_dep)
+        results.append((class_name, replacement))
+
+    return results
 
 
 # ---------------------------------------------------------------------------
@@ -157,10 +188,8 @@ def scan_module(module_name: str, src_root: Path) -> list[dict]:
             continue
 
         package = extract_package(content)
-        class_name = java_file.stem
 
-        deprecated, replacement = is_class_deprecated(content, class_name)
-        if deprecated:
+        for class_name, replacement in find_all_deprecated_classes(content):
             results.append(
                 {
                     "module": module_name,

@@ -63,9 +63,8 @@ subdivided by Java package. Each package section contains a table:
 | **Deprecated Class** | Simple class name (backtick-formatted) |
 | **Replacement** | Text from the `@deprecated` Javadoc tag, with `{@link X}` rendered as `` `X` ``; _no replacement specified_ if the tag is absent |
 
-Classes are detected only when `@Deprecated` annotates the top-level
-class/interface/enum declaration itself — method- and field-level deprecations
-are excluded.
+Both top-level and inner/nested class declarations are detected — method- and
+field-level deprecations are excluded.
 
 ### Example
 
@@ -127,22 +126,28 @@ Run from any directory — the script resolves all paths itself.
 
 ### Output
 
-`unmapped_spec_classes.md` — same module/package structure as
-`deprecated_classes.md`. Each package section lists spec classes with no
-matching entry in any Replacement cell:
+`unmapped_spec_classes.md` — contains two sections:
+
+**Warnings: Dangling Replacement References** (if any) — appears first. Lists
+FQ names that appear in the Replacement column of `deprecated_classes.md` but
+do not exist as spec classes in the scanned source. Each row cites which
+deprecated class(es) reference the bad name. Common causes:
+
+- Typo in the `@deprecated` Javadoc (e.g. `subsitutionmodel` vs `substitutionmodel`)
+- Wrong package in the replacement hint (e.g. `spec.inference.operator` vs `spec.evolution.operator`)
+- Deprecated inner class whose enclosing file has a different name — rare, but
+  if the inner class's `@deprecated` Javadoc contains a typo the reference
+  will still appear here
+
+**Unmapped spec classes** — same module/package structure as `deprecated_classes.md`.
+Each package section lists spec classes with no matching entry in any Replacement cell:
 
 | Column | Content |
 |:---|:---|
 | **Class** | Simple class name |
 | **Full Qualified Name** | `package.ClassName` |
 
-The header reports total spec classes found, how many are mapped, and how many
-are unmapped.
-
-> **Note:** mismatches can arise from typos in `@deprecated` Javadoc comments
-> in beast3 (e.g. `subsitutionmodel` instead of `substitutionmodel`). The
-> script reports these faithfully — fix the source Javadoc and re-run both
-> scripts to resolve them.
+The header reports total spec classes scanned, how many are mapped, and how many are unmapped.
 
 ### Example
 

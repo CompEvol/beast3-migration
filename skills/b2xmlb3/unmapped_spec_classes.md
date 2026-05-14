@@ -2,12 +2,26 @@
 
 Scanned from: `~/WorkSpace/beast3`  
 Reference:    `~/WorkSpace/beast3-migration/skills/b2xmlb3/deprecated_classes.md`  
-Spec classes scanned: **120** — mapped: **59**, unmapped: **61**
+Spec classes scanned: **120** — mapped: **87**, unmapped: **33**
 
 Classes in `*.spec.*` packages with no entry in the Replacement column of `deprecated_classes.md`.
 Ordered by Maven module then Java package.
 
-## `beast-base` (58 classes)
+## Warnings: Dangling Replacement References
+
+The following FQ names appear in the Replacement column of `deprecated_classes.md` but do not exist as spec classes in the scanned source. This usually indicates a typo or stale package name in the `@deprecated` Javadoc.
+
+| Referenced (non-existent) FQ Name | Cited by Deprecated Class |
+|:---|:---|
+| `beast.base.spec.type.BoolScalar` | `Function` |
+| `beast.base.spec.type.BoolVector` | `Function` |
+| `beast.base.spec.type.IntScalar` | `Function` |
+| `beast.base.spec.type.IntVector` | `Function` |
+| `beast.base.spec.type.RealScalar` | `Function` |
+| `beast.base.spec.type.RealVector` | `Function` |
+| `beast.base.spec.type.Tensor` | `Parameter` |
+
+## `beast-base` (30 classes)
 
 ### `beast.base.spec`
 
@@ -22,46 +36,25 @@ Ordered by Maven module then Java package.
 |:---|:---|
 | `IntSum` | `beast.base.spec.evolution.IntSum` |
 
-### `beast.base.spec.evolution.branchratemodel`
-
-| Class | Full Qualified Name |
-|:---|:---|
-| `Base` | `beast.base.spec.evolution.branchratemodel.Base` |
-
 ### `beast.base.spec.evolution.operator`
 
 | Class | Full Qualified Name |
 |:---|:---|
-| `AdaptableOperatorSampler` | `beast.base.spec.evolution.operator.AdaptableOperatorSampler` |
 | `AdaptableVarianceMultivariateNormalOperator` | `beast.base.spec.evolution.operator.AdaptableVarianceMultivariateNormalOperator` |
-| `IntervalScaleOperator` | `beast.base.spec.evolution.operator.IntervalScaleOperator` |
-| `UpDownOperator` | `beast.base.spec.evolution.operator.UpDownOperator` |
+
+### `beast.base.spec.evolution.sitemodel`
+
+| Class | Full Qualified Name |
+|:---|:---|
+| `SiteModel` | `beast.base.spec.evolution.sitemodel.SiteModel` |
 
 ### `beast.base.spec.evolution.substitutionmodel`
 
 | Class | Full Qualified Name |
 |:---|:---|
-| `Base` | `beast.base.spec.evolution.substitutionmodel.Base` |
 | `BasicComplexSubstitutionModel` | `beast.base.spec.evolution.substitutionmodel.BasicComplexSubstitutionModel` |
 | `BasicGeneralSubstitutionModel` | `beast.base.spec.evolution.substitutionmodel.BasicGeneralSubstitutionModel` |
-| `BinaryCovarion` | `beast.base.spec.evolution.substitutionmodel.BinaryCovarion` |
-| `Blosum62` | `beast.base.spec.evolution.substitutionmodel.Blosum62` |
-| `CPREV` | `beast.base.spec.evolution.substitutionmodel.CPREV` |
-| `ComplexSubstitutionModel` | `beast.base.spec.evolution.substitutionmodel.ComplexSubstitutionModel` |
-| `Dayhoff` | `beast.base.spec.evolution.substitutionmodel.Dayhoff` |
-| `EmpiricalSubstitutionModel` | `beast.base.spec.evolution.substitutionmodel.EmpiricalSubstitutionModel` |
-| `GTR` | `beast.base.spec.evolution.substitutionmodel.GTR` |
-| `GeneralSubstitutionModel` | `beast.base.spec.evolution.substitutionmodel.GeneralSubstitutionModel` |
-| `HKY` | `beast.base.spec.evolution.substitutionmodel.HKY` |
-| `JTT` | `beast.base.spec.evolution.substitutionmodel.JTT` |
-| `JukesCantor` | `beast.base.spec.evolution.substitutionmodel.JukesCantor` |
-| `MTREV` | `beast.base.spec.evolution.substitutionmodel.MTREV` |
-| `MutationDeathModel` | `beast.base.spec.evolution.substitutionmodel.MutationDeathModel` |
-| `SYM` | `beast.base.spec.evolution.substitutionmodel.SYM` |
-| `TIM` | `beast.base.spec.evolution.substitutionmodel.TIM` |
-| `TN93` | `beast.base.spec.evolution.substitutionmodel.TN93` |
-| `TVM` | `beast.base.spec.evolution.substitutionmodel.TVM` |
-| `WAG` | `beast.base.spec.evolution.substitutionmodel.WAG` |
+| `Frequencies` | `beast.base.spec.evolution.substitutionmodel.Frequencies` |
 
 ### `beast.base.spec.evolution.tree`
 
@@ -93,25 +86,13 @@ Ordered by Maven module then Java package.
 | `CompoundRealScalarParamHelper` | `beast.base.spec.inference.operator.CompoundRealScalarParamHelper` |
 | `Transform` | `beast.base.spec.inference.operator.Transform` |
 
-### `beast.base.spec.inference.operator.uniform`
-
-| Class | Full Qualified Name |
-|:---|:---|
-| `IntUniformOperator` | `beast.base.spec.inference.operator.uniform.IntUniformOperator` |
-
 ### `beast.base.spec.inference.parameter`
 
 | Class | Full Qualified Name |
 |:---|:---|
-| `BoolScalarParam` | `beast.base.spec.inference.parameter.BoolScalarParam` |
-| `BoolVectorParam` | `beast.base.spec.inference.parameter.BoolVectorParam` |
-| `IntScalarParam` | `beast.base.spec.inference.parameter.IntScalarParam` |
 | `IntSimplexParam` | `beast.base.spec.inference.parameter.IntSimplexParam` |
-| `IntVectorParam` | `beast.base.spec.inference.parameter.IntVectorParam` |
 | `KeyVectorParam` | `beast.base.spec.inference.parameter.KeyVectorParam` |
 | `ParameterUtils` | `beast.base.spec.inference.parameter.ParameterUtils` |
-| `RealScalarParam` | `beast.base.spec.inference.parameter.RealScalarParam` |
-| `RealVectorParam` | `beast.base.spec.inference.parameter.RealVectorParam` |
 | `SimplexParam` | `beast.base.spec.inference.parameter.SimplexParam` |
 | `VectorElement` | `beast.base.spec.inference.parameter.VectorElement` |
 

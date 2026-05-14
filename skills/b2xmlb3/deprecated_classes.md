@@ -13,14 +13,14 @@ _no replacement specified_ means the tag was absent.
 
 | Deprecated Class | Replacement |
 |:---|:---|
-| `Function` | use any of the strong typed classes instead, such as beast.base.spec.type.RealScalar/RealVector beast.base.spec.type.IntScalar/IntVector beast.base.spec.type.BoolScalar/BoolVector with their appropriate domains, e.g. RealScalar<PositiveReal> for positive real scalar function values |
+| `Function` | use any of the strong typed classes instead, such as `beast.base.spec.type.RealScalar` / `beast.base.spec.type.RealVector`, `beast.base.spec.type.IntScalar` / `beast.base.spec.type.IntVector`, `beast.base.spec.type.BoolScalar` / `beast.base.spec.type.BoolVector` with their appropriate domains |
 
 ### `beast.base.evolution`
 
 | Deprecated Class | Replacement |
 |:---|:---|
-| `Sum` | use beast.base.spec.evolution.Sum instead |
-| `TreeWithMetaDataLogger` | use beast.base.spec.evolution.TreeWithMetaDataLogger instead |
+| `Sum` | use `beast.base.spec.evolution.Sum` instead |
+| `TreeWithMetaDataLogger` | use `beast.base.spec.evolution.TreeWithMetaDataLogger` instead |
 
 ### `beast.base.evolution.alignment`
 
@@ -32,39 +32,34 @@ _no replacement specified_ means the tag was absent.
 
 | Deprecated Class | Replacement |
 |:---|:---|
-| `RandomLocalClockModel` | use beast.base.spec.evolution.branchratemodel.RandomLocalClockModel instead |
-| `StrictClockModel` | use beast.base.spec.evolution.branchratemodel.StrictClockModel instead |
-| `UCRelaxedClockModel` | use beast.base.spec.evolution.branchratemodel.UCRelaxedClockModel instead |
+| `Base` | replaced by `beast.base.spec.evolution.branchratemodel.Base` |
+| `RandomLocalClockModel` | use `beast.base.spec.evolution.branchratemodel.RandomLocalClockModel` instead |
+| `StrictClockModel` | use `beast.base.spec.evolution.branchratemodel.StrictClockModel` instead |
+| `UCRelaxedClockModel` | use `beast.base.spec.evolution.branchratemodel.UCRelaxedClockModel` instead |
 
 ### `beast.base.evolution.likelihood`
 
 | Deprecated Class | Replacement |
 |:---|:---|
-| `BeagleTreeLikelihood` | use beast.base.spec.evolution.likelihood.BeagleTreeLikelihood instead |
-| `GenericTreeLikelihood` | use beast.base.spec.evolution.likelihood.GenericTreeLikelihood instead |
-| `ThreadedTreeLikelihood` | use beast.base.spec.evolution.likelihood.ThreadedTreeLikelihood instead |
-| `TreeLikelihood` | use beast.base.spec.evolution.likelihood.TreeLikelihood instead |
+| `BeagleTreeLikelihood` | use `beast.base.spec.evolution.likelihood.BeagleTreeLikelihood` instead |
+| `GenericTreeLikelihood` | use `beast.base.spec.evolution.likelihood.GenericTreeLikelihood` instead |
+| `ThreadedTreeLikelihood` | use `beast.base.spec.evolution.likelihood.ThreadedTreeLikelihood` instead |
+| `TreeLikelihood` | use `beast.base.spec.evolution.likelihood.TreeLikelihood` instead |
 
 ### `beast.base.evolution.operator`
 
 | Deprecated Class | Replacement |
 |:---|:---|
-| `AdaptableOperatorSampler` | _no replacement specified_ |
-| `EpochFlexOperator` | _no replacement specified_ |
+| `AdaptableOperatorSampler` | use `beast.base.spec.evolution.operator.AdaptableOperatorSampler` instead |
+| `EpochFlexOperator` | use `beast.base.spec.evolution.operator.IntervalScaleOperator` instead |
 | `ScaleOperator` | replaced by `beast.base.spec.inference.operator.ScaleOperator`, and `beast.base.spec.evolution.operator.ScaleTreeOperator` |
-| `TreeStretchOperator` | _no replacement specified_ |
+| `TreeStretchOperator` | use `beast.base.spec.evolution.operator.IntervalScaleOperator` instead |
 
 ### `beast.base.evolution.operator.kernel`
 
 | Deprecated Class | Replacement |
 |:---|:---|
 | `BactrianScaleOperator` | replaced by `beast.base.spec.inference.operator.ScaleOperator`, and `beast.base.spec.evolution.operator.ScaleTreeOperator` |
-
-### `beast.base.evolution.sitemodel`
-
-| Deprecated Class | Replacement |
-|:---|:---|
-| `SiteModel` | from BEAST v3.0.0 Use beast.base.spec.evolution.sitemodel.SiteModel instead |
 
 ### `beast.base.evolution.speciation`
 
@@ -88,25 +83,26 @@ _no replacement specified_ means the tag was absent.
 
 | Deprecated Class | Replacement |
 |:---|:---|
-| `BinaryCovarion` | use beast.base.spec.evolution.subsitutionmodel.BinaryCovarion instead |
-| `Blosum62` | use beast.base.spec.evolution.subsitutionmodel.Blosum62 instead |
-| `CPREV` | use beast.base.spec.evolution.subsitutionmodel.CPREV instead |
-| `ComplexSubstitutionModel` | use beast.base.spec.evolution.subsitutionmodel.ComplexSubstitutionModel instead |
-| `Dayhoff` | use beast.base.spec.evolution.subsitutionmodel.Dayhoff instead |
-| `EmpiricalSubstitutionModel` | use beast.base.spec.evolution.subsitutionmodel.EmpiricalSubstitutionModel instead |
-| `Frequencies` | from BEAST v3.0.0 use beast.base.spec.evolution.substitutionmodel.Frequencies instead |
-| `GTR` | use beast.base.spec.evolution.subsitutionmodel.GTR instead |
-| `GeneralSubstitutionModel` | use beast.base.spec.evolution.subsitutionmodel.GeneralSubstitutionModel instead |
-| `HKY` | use beast.base.spec.evolution.subsitutionmodel.HKY instead |
-| `JTT` | use beast.base.spec.evolution.subsitutionmodel.JTT instead |
-| `JukesCantor` | use beast.base.spec.evolution.subsitutionmodel.JukesCantor instead |
-| `MTREV` | use beast.base.spec.evolution.subsitutionmodel.MTREV instead |
-| `MutationDeathModel` | use beast.base.spec.evolution.subsitutionmodel.MutationDeathModel instead |
-| `SYM` | use beast.base.spec.evolution.subsitutionmodel.SYM instead |
-| `TIM` | use beast.base.spec.evolution.subsitutionmodel.TIM instead |
-| `TN93` | use beast.base.spec.evolution.subsitutionmodel.TN93 instead |
-| `TVM` | use beast.base.spec.evolution.subsitutionmodel.TVM instead |
-| `WAG` | use beast.base.spec.evolution.subsitutionmodel.WAG instead |
+| `Base` | use `beast.base.spec.evolution.substitutionmodel.Base` instead |
+| `BinaryCovarion` | use `beast.base.spec.evolution.substitutionmodel.BinaryCovarion` instead |
+| `Blosum62` | use `beast.base.spec.evolution.substitutionmodel.Blosum62` instead |
+| `CPREV` | use `beast.base.spec.evolution.substitutionmodel.CPREV` instead |
+| `ComplexSubstitutionModel` | use `beast.base.spec.evolution.substitutionmodel.ComplexSubstitutionModel` instead |
+| `Dayhoff` | use `beast.base.spec.evolution.substitutionmodel.Dayhoff` instead |
+| `EmpiricalSubstitutionModel` | use `beast.base.spec.evolution.substitutionmodel.EmpiricalSubstitutionModel` instead |
+| `GTR` | use `beast.base.spec.evolution.substitutionmodel.GTR` instead |
+| `GeneralSubstitutionModel` | use `beast.base.spec.evolution.substitutionmodel.GeneralSubstitutionModel` instead |
+| `HKY` | use `beast.base.spec.evolution.substitutionmodel.HKY` instead |
+| `JTT` | use `beast.base.spec.evolution.substitutionmodel.JTT` instead |
+| `JukesCantor` | use `beast.base.spec.evolution.substitutionmodel.JukesCantor` instead |
+| `MTREV` | use `beast.base.spec.evolution.substitutionmodel.MTREV` instead |
+| `MutationDeathModel` | use `beast.base.spec.evolution.substitutionmodel.MutationDeathModel` instead |
+| `NucleotideBase` | since no class uses this -- copy code if you really need this |
+| `SYM` | use `beast.base.spec.evolution.substitutionmodel.SYM` instead |
+| `TIM` | use `beast.base.spec.evolution.substitutionmodel.TIM` instead |
+| `TN93` | use `beast.base.spec.evolution.substitutionmodel.TN93` instead |
+| `TVM` | use `beast.base.spec.evolution.substitutionmodel.TVM` instead |
+| `WAG` | use `beast.base.spec.evolution.substitutionmodel.WAG` instead |
 
 ### `beast.base.evolution.tree`
 
@@ -138,9 +134,9 @@ _no replacement specified_ means the tag was absent.
 | `Gamma` | replaced by `beast.base.spec.inference.distribution.Gamma` and `beast.base.spec.inference.distribution.GammaMean` |
 | `InverseGamma` | replaced by `beast.base.spec.inference.distribution.InverseGamma` |
 | `LaplaceDistribution` | replaced by `beast.base.spec.inference.distribution.Laplace` |
-| `LogNormal` | _no replacement specified_ |
+| `LogNormal` | replaced by `beast.base.spec.inference.distribution.LogNormal` |
 | `LogNormalDistributionModel` | replaced by `beast.base.spec.inference.distribution.LogNormal` |
-| `MarkovChainDistribution` | use beast.base.spec.inference.distribution.MarkovChainDistribution instead |
+| `MarkovChainDistribution` | use `beast.base.spec.inference.distribution.MarkovChainDistribution` instead |
 | `Normal` | replaced by `beast.base.spec.inference.distribution.Normal` |
 | `OneOnX` | use `beast.base.spec.inference.distribution.LogUniform` instead — it has density proportional to 1/x on a bounded support [lower, upper] (lower > 0), which makes it a proper, normalisable replacement for this improper 1/x prior. Set {@code lower}/{@code upper} to the range of plausible values for the quantity being prior'd (e.g. clock rates, population sizes). |
 | `ParametricDistribution` | replaced by `beast.base.spec.inference.distribution.TensorDistribution` |
@@ -152,33 +148,32 @@ _no replacement specified_ means the tag was absent.
 
 | Deprecated Class | Replacement |
 |:---|:---|
-| `BitFlipOperator` | Use beast.base.spec.inference.operator.BitFlipOperator instead. |
-| `DeltaExchangeOperator` | Use beast.base.spec.inference.operator.DeltaExchangeOperator instead. |
-| `IntRandomWalkOperator` | Use beast.base.spec.inference.operator.IntRandomWalkOperator instead. |
-| `IntUniformOperator` | IntUniformOperator is deprecated. Use UniformOperator instead. |
-| `RealRandomWalkOperator` | Use beast.base.spec.inference.operator.RealRandomWalkOperator instead. |
-| `SwapOperator` | Use beast.base.spec.inference.operator.SwapOperator instead. |
-| `UniformOperator` | replaced by `IntUniformOperator`, `beast.base.spec.inference.operator.uniform.IntervalOperator` |
-| `UpDownOperator` | Use beast.base.spec.inference.operator.UpDownOperator instead. |
+| `BitFlipOperator` | Use `beast.base.spec.inference.operator.BitFlipOperator` instead. |
+| `DeltaExchangeOperator` | Use `beast.base.spec.inference.operator.DeltaExchangeOperator` instead. |
+| `IntRandomWalkOperator` | Use `beast.base.spec.inference.operator.IntRandomWalkOperator` instead. |
+| `IntUniformOperator` | IntUniformOperator is deprecated. Use `beast.base.spec.inference.operator.uniform.IntUniformOperator` instead. |
+| `RealRandomWalkOperator` | Use `beast.base.spec.inference.operator.RealRandomWalkOperator` instead. |
+| `SwapOperator` | Use `beast.base.spec.inference.operator.SwapOperator` instead. |
+| `UniformOperator` | replaced by `beast.base.spec.inference.operator.uniform.IntUniformOperator`, `beast.base.spec.inference.operator.uniform.IntervalOperator` |
+| `UpDownOperator` | Use `beast.base.spec.evolution.operator.UpDownOperator` instead. |
 
 ### `beast.base.inference.operator.kernel`
 
 | Deprecated Class | Replacement |
 |:---|:---|
-| `BactrianDeltaExchangeOperator` | from BEAST v3.0.0 use strong typed `RealDeltaExchangeOperator`, `IntDeltaExchangeOperator` |
 | `BactrianIntervalOperator` | replaced by `beast.base.spec.inference.operator.uniform.IntervalOperator`. |
-| `BactrianRandomWalkOperator` | Use beast.base.spec.inference.operator.RealRandomWalkOperator instead. |
-| `BactrianUpDownOperator` | Use beast.base.spec.inference.operator.UpDownOperator instead. |
+| `BactrianRandomWalkOperator` | Use `beast.base.spec.inference.operator.RealRandomWalkOperator` instead. |
+| `BactrianUpDownOperator` | Use `beast.base.spec.evolution.operator.UpDownOperator` instead. |
 
 ### `beast.base.inference.parameter`
 
 | Deprecated Class | Replacement |
 |:---|:---|
-| `BooleanParameter` | use `BoolScalarParam` |
+| `BooleanParameter` | use `beast.base.spec.inference.parameter.BoolScalarParam` or `beast.base.spec.inference.parameter.BoolVectorParam` |
 | `CompoundRealParameter` | replaced by `beast.base.spec.inference.parameter.CompoundRealScalarParam` or `beast.base.spec.inference.parameter.CompoundIntScalarParam`. It should be enough, but if not, the new compound could be added as requested. |
-| `IntegerParameter` | use `IntScalarParam` or `IntVectorParam` |
-| `Parameter` | use `RealScalarParam` or `RealVectorParam` |
-| `RealParameter` | use `RealScalarParam` or `RealVectorParam` |
+| `IntegerParameter` | use `beast.base.spec.inference.parameter.IntScalarParam` or `beast.base.spec.inference.parameter.IntVectorParam` |
+| `Parameter` | use `beast.base.spec.type.Tensor` if read only, alternatively use `RealScalarParam` or `RealVectorParam` having setters. |
+| `RealParameter` | use `beast.base.spec.inference.parameter.RealScalarParam` or `beast.base.spec.inference.parameter.RealVectorParam` |
 
 ### `beast.base.inference.util`
 
