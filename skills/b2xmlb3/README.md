@@ -13,6 +13,14 @@
 |:---|:---|
 | `scan_deprecated.py` | Scans beast3 Java source for class-level `@Deprecated` annotations and produces a mapping to their beast3 replacements |
 | `unmapped_spec.py` | Reads `deprecated_classes.md` and finds spec classes in `*.spec.*` packages not yet referenced as a replacement |
+| `xml_converter.py` | Converts BEAST 2.7 XML files to BEAST 2.8/3 format using `deprecated_classes.md` as the class mapping |
+
+Support modules used by `xml_converter.py`:
+
+| Module | Description |
+|:---|:---|
+| `mapping_reader.py` | Parses `deprecated_classes.md` into a `{simple_name → [FQ spec replacements]}` dict |
+| `param_converter.py` | Parameter conversion rules (RealParameter, IntegerParameter, BooleanParameter → typed BEAST3 param classes) |
 
 ---
 
@@ -164,3 +172,86 @@ python3 skills/b2xmlb3/unmapped_spec.py \
 ```
 
 Progress and summary counts are printed to stderr.
+
+---
+
+## 3. `xml_converter.py`
+
+Converts BEAST 2.7 (or earlier) XML files to BEAST 2.8/3 format using
+`deprecated_classes.md` as the class mapping. Each input file is written to a
+new file (original is not modified).
+
+Transforms applied per file:
+
+- **`spec=` attributes** — deprecated simple, partial, or FQ class names are
+  replaced with the first `*.spec.*` FQ name from `deprecated_classes.md`.
+- **Bare `<parameter>` elements** — elements with no `spec=` attribute are
+  treated as `RealParameter` (BEAST convention) and converted to the
+  appropriate typed class.
+- **Parameter class conversion** — `RealParameter`, `IntegerParameter`, and
+  `BooleanParameter` are replaced with the BEAST3 typed equivalents based on
+  value shape (scalar vs vector) and bounds (`lower`/`upper`):
+  - `lower="0"` → `NonNegativeReal`; `lower="0" upper="1"` → `UnitInterval`; no bounds → `Real`
+  - Single value → `RealScalarParam`; multiple space-separated values → `RealVectorParam`
+  - `IntegerParameter` → `IntScalarParam` or `IntVectorParam`
+  - `BooleanParameter` → `BoolScalarParam` or `BoolVectorParam`
+- **`version` attribute** — updated to `2.8`.
+- **`namespace` attribute** — spec packages for all converted classes are
+  appended (original packages retained for any unconverted classes).
+- **XML comments** — preserved in the output (requires Python 3.8+).
+
+> **Note on ambiguous simple names**: if two deprecated classes share the same
+> simple name (e.g. a `Uniform` distribution and a `Uniform` tree operator),
+> the converter applies the first mapping found in `deprecated_classes.md`.
+> Review the conversion report and correct any mismatches manually.
+
+### Requirements
+
+Python 3.9+ (stdlib only, no dependencies).  
+`deprecated_classes.md` must exist — run `scan_deprecated.py` first.
+
+### Usage
+
+```bash
+python3 xml_converter.py INPUT [INPUT ...] [-o OUTPUT_DIR] [--deprecated-md PATH] [--suffix SUFFIX]
+```
+
+Run from any directory — all paths are resolved automatically.
+
+| Option | Default | Description |
+|:---|:---|:---|
+| `INPUT` | _(required)_ | One or more BEAST XML files to convert |
+| `-o` / `--output-dir` | Same directory as each input file | Directory to write converted files |
+| `--deprecated-md` | `deprecated_classes.md` (next to the script) | Mapping file from `scan_deprecated.py` |
+| `--suffix` | `_b3` | Suffix inserted before `.xml` in each output filename |
+
+### Input
+
+One or more BEAST 2.7 (or earlier) XML files.
+
+### Output
+
+For each input `foo.xml`, a converted `foo_b3.xml` is written (or `foo<suffix>.xml`
+if `--suffix` is set). The original file is not modified.
+
+A conversion report is printed to stdout listing:
+- Input / output file paths
+- Version change
+- Each `spec=` substitution applied, with the parameter note (e.g. `RealScalarParam<NonNegativeReal>`)
+
+### Example
+
+```bash
+# Convert a single file (writes testHKY_b3.xml next to the input)
+python3 skills/b2xmlb3/xml_converter.py /path/to/beast2/testHKY.xml
+
+# Convert all XMLs in a directory to a separate output folder
+python3 skills/b2xmlb3/xml_converter.py /path/to/beast2/*.xml -o /path/to/beast3/
+
+# Custom mapping file and suffix
+python3 skills/b2xmlb3/xml_converter.py foo.xml \
+    --deprecated-md /tmp/deprecated_classes.md \
+    --suffix _converted
+```
+
+Progress (mapping load) is printed to stderr; the per-file conversion report goes to stdout.
