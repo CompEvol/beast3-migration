@@ -1,6 +1,6 @@
 ---
 name: beast3-migration-controller
-description: Coordinator skill — sets up dependencies, creates or validates Maven project structure from beast-package-skeleton, then migrates all Java source files in the project root to BEAST3, verifying compilation after each file
+description: Coordinator skill — sets up dependencies, creates or validates Maven project structure from beast-package-skeleton, migrates all Java source files to BEAST3, then converts XML resources, verifying compilation after each phase
 metadata:
   type: skill
 ---
@@ -19,13 +19,14 @@ already been completed in a previous session and informs all decisions below.
 ### Path B — Resume previous session
 
 If `tmp/b3migration/STATUS.md` **exists** and no specific step was requested: apply
-**`migration-log.md` Mode 1** — find the `in-progress` or first `pending` file, report
-progress to the user, and jump directly to Step 5.
+**`migration-log.md` Mode 1** — find the `in-progress` or first `pending` file and jump
+directly to Step 3. If Mode 1 finds no pending or in-progress files (all rows `done`),
+report completion to the user and proceed to Step 4.
 
 ### Path A — User requests a specific step
 
 Use the dependency table below to assess whether the requested step can proceed.
-If `tmp/b3migration/STATUS.md` exists, treat Steps 1–5 as already satisfied.
+If `tmp/b3migration/STATUS.md` exists, treat Steps 1–3 as already satisfied.
 For any dependency that is genuinely not yet met, tell the user which steps must run first
 and stop — do not proceed until the user confirms or asks you to run the missing steps.
 
@@ -33,12 +34,11 @@ and stop — do not proceed until the user confirms or asks you to run the missi
 |---|---|---|
 | Step 1 | — | — |
 | Step 2 | Step 1 | `../beast3/` and `../beast-package-skeleton/` both exist |
-| Step 3 | Step 2 | `tmp/b3migration/STATUS.md` exists |
-| Step 4 | Step 2 | `tmp/b3migration/STATUS.md` exists |
-| Step 5 | Step 2, Step 4 | Step 2 verified above; `tmp/b3migration/STATUS.md` exists with a file queue |
-| Step 6 | Step 5 | all rows in STATUS.md are `done` or `error` (none `pending` or `in-progress`) |
-| Step 7 | Step 5 | same as Step 6 |
-| Step 8 | Step 2 | `../beast3/.github/workflows/ci-publish.yml` exists |
+| Step 3 | Step 2 | `mvn compile -q` passes |
+| Step 4 | Step 3 | STATUS.md all rows `done` (no errors), or `mvn clean compile` passes; `./reports/<package.name>.md` exists |
+| Step 5 | Step 3 | STATUS.md all rows `done` (no errors), or `mvn clean compile` passes; `./reports/<package.name>.md` exists |
+| Step 6 | Step 4, Step 5 | Steps 4 and 5 complete, or skipped if no XMLs pending |
+| Step 7 | Step 2 | `../beast3/.github/workflows/ci-publish.yml` exists |
 
 ### Path C — Fresh start
 
@@ -108,23 +108,30 @@ attributes. Apply the **first** matching case:
 Do not refactor, rename, reformat, or restructure code beyond what the active rules require.
 One rule, one change. Leave everything else exactly as found.
 
+### U6 — Suggest skill improvements
+
+During migration, if you encounter a pattern, class mapping, edge case, or conversion rule
+that is missing or incorrect in a skill file, suggest updating the relevant skill to the
+user before continuing. Do not silently apply a workaround — surface the gap so the skill
+stays accurate for future migrations.
+
 ---
 
 ## Domain sub-skills — quick reference
 
-Each sub-skill fires only when its **signal** appears in the file being migrated (Step 5).
+Each sub-skill fires only when its **signal** appears in the file being migrated (Step 3).
 Consult `../beast3/scripts/migration-guide.md` on demand for any class not covered here.
 
 | # | Sub-skill | Signal (grep for this in the file) | Key transformation | Mode 2b log (Changes field) |
 |---|---|---|---|---|
-| 1 | `java-cleanup.md` | `void finalize()` · `Double[` · `Integer[` | Comment out `finalize`; unbox to primitive arrays | `finalize() removed: N` · `Double[]→double[]: N` · `Integer[]→int[]: N` |
-| 2 | `parameters.md` | `import beast.base.inference.parameter.` · `Function` as Input type | `RealParameter`/`IntegerParameter`/`BooleanParameter` → typed params + domain; enforce Input concreteness rule | param replacements with type and count · `Input declarations updated: N` |
-| 3 | `subst-models.md` | `import beast.base.evolution.substitutionmodel.` | → `.spec.` equivalents; `Frequencies.frequencies` arg → `SimplexParam`; `SubstitutionModel.Base` → top-level `Base` | classes renamed (list) · `SubstitutionModel.Base→Base: y/n` · `Frequencies.frequencies→SimplexParam: y/n` |
-| 4 | `clock-models.md` | `import beast.base.evolution.branchratemodel.` | → `.spec.` equivalents; `BranchRateModel.Base` → top-level `Base` | classes renamed (list) · `BranchRateModel.Base→Base: y/n` |
-| 5 | `site-likelihood.md` | `import beast.base.evolution.sitemodel.` · `import beast.base.evolution.likelihood.` | → `.spec.` equivalents | classes renamed (list) · `SiteModel.Base→SiteModel: y/n` |
-| 6 | `tree-coalescent.md` | `import beast.base.evolution.tree.` · `import beast.base.evolution.speciation.` | → `.spec.` equivalents (Tree/Node/TreeParser/TreeInterface are NOT renamed) | classes renamed by category: `tree(N)` · `coalescent(N)` · `speciation(N)` |
-| 7 | `distributions.md` | `import beast.base.inference.distribution.` | → `.spec.` equivalents; `Prior` still exists but distribution can be used directly as prior | classes renamed (list) · `Prior wrapper restructured: y/n` |
-| 8 | `operators.md` | `import beast.base.inference.operator.` · `import beast.base.evolution.operator.` | → `.spec.` equivalents; Operators use **concrete** Input types | classes renamed by group · `Input declarations made concrete: N` |
+| 1 | `java-migration/java-cleanup.md` | `void finalize()` · `Double[` · `Integer[` | Comment out `finalize`; unbox to primitive arrays | `finalize() removed: N` · `Double[]→double[]: N` · `Integer[]→int[]: N` |
+| 2 | `java-migration/parameters.md` | `import beast.base.inference.parameter.` · `Function` as Input type | `RealParameter`/`IntegerParameter`/`BooleanParameter` → typed params + domain; enforce Input concreteness rule | param replacements with type and count · `Input declarations updated: N` |
+| 3 | `java-migration/subst-models.md` | `import beast.base.evolution.substitutionmodel.` | → `.spec.` equivalents; `Frequencies.frequencies` arg → `SimplexParam`; `SubstitutionModel.Base` → top-level `Base` | classes renamed (list) · `SubstitutionModel.Base→Base: y/n` · `Frequencies.frequencies→SimplexParam: y/n` |
+| 4 | `java-migration/clock-models.md` | `import beast.base.evolution.branchratemodel.` | → `.spec.` equivalents; `BranchRateModel.Base` → top-level `Base` | classes renamed (list) · `BranchRateModel.Base→Base: y/n` |
+| 5 | `java-migration/site-likelihood.md` | `import beast.base.evolution.sitemodel.` · `import beast.base.evolution.likelihood.` | → `.spec.` equivalents | classes renamed (list) · `SiteModel.Base→SiteModel: y/n` |
+| 6 | `java-migration/tree-coalescent.md` | `import beast.base.evolution.tree.` · `import beast.base.evolution.speciation.` | → `.spec.` equivalents (Tree/Node/TreeParser/TreeInterface are NOT renamed) | classes renamed by category: `tree(N)` · `coalescent(N)` · `speciation(N)` |
+| 7 | `java-migration/distributions.md` | `import beast.base.inference.distribution.` | → `.spec.` equivalents; `Prior` is **removed** in BEAST3 — replace `Prior` wrapper with the inner distribution directly | classes renamed (list) · `Prior wrapper removed: y/n` |
+| 8 | `java-migration/operators.md` | `import beast.base.inference.operator.` · `import beast.base.evolution.operator.` | → `.spec.` equivalents; `ScaleOperator` split: `parameter=` → spec inference, `tree=` → `ScaleTreeOperator`; `Exchange`/`WilsonBalding`/`SubtreeSlide` unchanged; Operators use **concrete** Input types | classes renamed by group · `Input declarations made concrete: N` |
 
 ---
 
@@ -143,7 +150,9 @@ Requires **Java 25**, **Maven 3.9+**, and **Git** — see `../beast3/README.md` 
 
 ## Step 2 — Set up Maven build
 
-Apply **`maven-setup.md`** to produce a working single-module BEAST3 Maven build.
+Apply **`maven-setup.md`** to produce a working single-module BEAST3 Maven build. This
+includes moving **all** Java sources and XML resources (FxTemplate XMLs, example analysis
+XMLs, FXML, data files) into the Maven directory layout before any migration work begins.
 
 ### 2b — Verify the build compiles cleanly
 
@@ -151,41 +160,29 @@ Apply **`maven-setup.md`** to produce a working single-module BEAST3 Maven build
 mvn compile -q
 ```
 
-Fix any errors now. A failing baseline will mask per-file errors in Step 5.
+Fix any errors now. A failing baseline will mask per-file errors in Step 3.
 
 ---
 
-## Step 3 — Migrate XML resources
+## Step 3 — Identify and migrate Java files
 
-Applies to both main and test resources. No `mvn compile` gate — each skill has its own
-verify grep. Run both sub-skills in order:
-
-1. **`fxtemplates.md`** — `*.xml` / `*.fxml` under **`src/main/resources/`**: rewrites `spec`,
-   `type`, `class`, and `fx:controller` attribute values to `.spec.` equivalents.
-2. **`example-xmls.md`** — `*.xml` under **`src/test/resources/`**: rewrites `spec` (and
-   occasionally `type`, `class`) attribute values in BEAST analysis XMLs used by tests.
-
----
-
-## Step 4 — Identify Java files to migrate
+### 3a — Build the migration queue
 
 ```bash
-grep -rl "beast\.base\.evolution\."            src/main/java src/test/java 2>/dev/null | grep -v "\.spec\." | sort
-grep -rl "beast\.base\.inference\.parameter\."  src/main/java src/test/java 2>/dev/null | grep -v "\.spec\." | sort
+grep -rl "beast\.base\.evolution\."              src/main/java src/test/java 2>/dev/null | grep -v "\.spec\." | sort
+grep -rl "beast\.base\.inference\.parameter\."   src/main/java src/test/java 2>/dev/null | grep -v "\.spec\." | sort
 grep -rl "beast\.base\.inference\.distribution\." src/main/java src/test/java 2>/dev/null | grep -v "\.spec\." | sort
-grep -rl "beast\.base\.inference\.operator\."   src/main/java src/test/java 2>/dev/null | grep -v "\.spec\." | sort
+grep -rl "beast\.base\.inference\.operator\."    src/main/java src/test/java 2>/dev/null | grep -v "\.spec\." | sort
 ```
 
 The union of all matches is the **migration queue**.
 
-**If the queue is empty — skip directly to Step 6.**
+**If the queue is empty — skip directly to Step 4.**
 
 Apply **`migration-log.md` Mode 1 (fresh start)** to initialise `tmp/b3migration/STATUS.md`
 with every file set to `pending`.
 
----
-
-## Step 5 — Migrate each Java file
+### 3b — Migrate each file
 
 Universal rules **U1–U5 apply to every file** — no signal check needed for them.
 
@@ -211,17 +208,81 @@ Fix all compile errors before moving to the next file. If a file cannot be fixed
 
 ---
 
-## Step 6 — Compile and test
+## XML classification rule
+
+Apply this rule whenever deciding whether an XML file is a BEAUti template or an example
+analysis — in the linter report, in grep output, or anywhere a file path appears:
+
+| Condition | Classification | Handled by |
+|---|---|---|
+| Path contains `fxtemplates` **or** module name ends in `-fx` | **BEAUti template** — GUI only, not runnable by BEAST main | Step 4 (`xml-migration/fxtemplates.md`) |
+| Neither condition matches | **Example analysis** — runnable by BEAST main | Step 5 (`xml-migration/example-xmls.md`) |
+
+The linter's **"FxTemplates pending migration"** and **"Example XMLs pending migration"**
+sections are already pre-classified — no rule needed for those. Apply the rule only when
+filtering **"Deprecated class references in XMLs"** entries, whose paths may be mixed.
+
+---
+
+## Step 4 — Convert FxTemplates
+
+**Compile prerequisite** — skip the compile check if `tmp/b3migration/STATUS.md` exists and
+all rows are `done` with no `error` rows (Step 3's per-file `mvn compile -q` gate already
+guarantees a clean build at that point). If any rows are `error`, fix those Java files and
+confirm `mvn clean compile` passes before continuing. Otherwise run:
+
+```bash
+mvn clean compile
+```
+
+> ⚠️ **Always re-read the linter report from disk before starting Step 4 or Step 5.**
+> Do not use any earlier read of this file from the current session.
+> Java migration (Step 3) may have resolved classes that were previously flagged, and the
+> report may have been regenerated since it was last seen. The file on disk is the only
+> authoritative source of what XML work remains.
+>
+> ```
+> ./reports/<package.name>.md
+> ```
+
+Apply **`xml-migration/fxtemplates.md`** to migrate class references in BEAUti template XMLs and FXML
+files under `src/main/resources/`. Use the XML classification rule above to identify
+template files in the linter report.
+
+Steps 4 and 5 may be run individually but both require the compile prerequisite above.
+
+---
+
+## Step 5 — Convert example XMLs
+
+**Compile prerequisite** — skip the compile check if `tmp/b3migration/STATUS.md` exists and
+all rows are `done` with no `error` rows. If any rows are `error`, fix those Java files and
+confirm `mvn clean compile` passes before continuing. Otherwise run:
+
+```bash
+mvn clean compile
+```
+
+> ⚠️ **Always re-read the linter report from disk before starting this step** — see the
+> note at the top of Step 4. Do not rely on an earlier read from the current session.
+
+Apply **`xml-migration/example-xmls.md`** to migrate class references in example analysis XMLs under
+`src/test/resources/`. Use the XML classification rule above to identify example files in
+the linter report.
+
+Steps 4 and 5 may be run individually but both require the compile prerequisite above.
+
+---
+
+## Step 6 — Report
+
+Run the full test suite as a final end-to-end validation before generating the report:
 
 ```bash
 mvn test -q
 ```
 
 Fix only failures introduced by the migration. Note pre-existing failures without touching them.
-
----
-
-## Step 7 — Report
 
 Apply **`migration-log.md` Mode 3** to rewrite `tmp/b3migration/REPORT.md` with the final
 summary. Then print a brief summary to the user:
@@ -231,17 +292,17 @@ summary. Then print a brief summary to the user:
 | `pom.xml` | Created or updated |
 | `version.xml` | Updated or no changes |
 | `module-info.java` | Created |
-| FxTemplates (`src/main/resources/`) | Files migrated · class references updated · TODOs inserted |
-| Example XMLs (`src/test/resources/`) | Files migrated · class references updated · TODOs inserted |
 | Java migration queue | Total · done · error · pending |
 | By sub-skill | How many Java files each sub-skill touched |
+| FxTemplates (`src/main/resources/`) | Files migrated · class references updated · complex conversions · TODOs inserted |
+| Example XMLs (`src/test/resources/`) | Files migrated · `version="2.8"` applied · class references updated · complex conversions · TODOs inserted |
 | TODOs | Contents of `tmp/b3migration/TODO.md` |
 | `mvn test` result | Pass / fail with error count |
 | GitHub workflow | `copied and adapted (branch: <branch>)` or `copied (branch: master, no changes)` |
 
 ---
 
-## Step 8 — Copy GitHub Actions workflow
+## Step 7 — Copy GitHub Actions workflow
 
 **Detect the project's default branch:**
 

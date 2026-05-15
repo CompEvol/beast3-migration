@@ -48,9 +48,10 @@ if tmp/b3migration/STATUS.md does NOT exist → Fresh start
 if tmp/b3migration/STATUS.md EXISTS → Resume (controller Path B)
     Read STATUS.md.
     if any row is `in-progress` → resume that file first (it was interrupted)
-    else → resume from the first `pending` row
+    else if any row is `pending` → resume from the first `pending` row
+    else (all rows `done`) → report "Step 3 complete. X files done." and proceed to controller Step 4.
     Report to user: "Resuming. X done, Y pending, Z errors."
-    Jump to controller Step 5 (skip Steps 1–4).
+    Jump to controller Step 3 (skip Steps 1–2).
 ```
 
 ### STATUS.md format
