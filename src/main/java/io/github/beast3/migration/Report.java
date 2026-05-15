@@ -59,6 +59,9 @@ public final class Report {
     public int xmlMigrated;         // version="2.8" AND beast.base.spec.* namespace
     public int xmlV28;              // version="2.8" (regardless of namespace)
     public int xmlLegacyDir;        // count of XMLs explicitly under examples/legacy*
+    public int xmlSkippedExcludeDir;// count skipped via packages.yaml `xmlExcludeDirs`
+    public int xmlSkippedUntracked; // count skipped because not tracked by git
+    public boolean xmlGitFilterApplied; // true iff the git-tracked filter ran
 
     public int fxTotal;             // BEAUti fxtemplates
     public int fxWithSpec;          // fxtemplates whose body references beast.base.spec.*
@@ -123,6 +126,9 @@ public final class Report {
         xml.put("migrated", xmlMigrated);
         xml.put("v28", xmlV28);
         xml.put("legacyDir", xmlLegacyDir);
+        xml.put("skippedExcludeDir", xmlSkippedExcludeDir);
+        xml.put("skippedUntracked", xmlSkippedUntracked);
+        xml.put("gitFilterApplied", xmlGitFilterApplied);
         m.put("xml", xml);
 
         Map<String, Object> fx = new LinkedHashMap<>();

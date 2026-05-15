@@ -1,6 +1,6 @@
 # beast3 — what's left
 
-> **Scanned at:** 2026-05-13T18:51:10.011081  
+> **Scanned at:** 2026-05-15T12:13:07.357457  
 > **Commit:** `6df8243` on `oneonx-deprecation-points-at-loguniform` — [view on GitHub](https://github.com/CompEvol/beast3/commit/6df82436c8e13b4061a3477c393a74489ac6b314)  
 > **Pom version:** `2.8.0-SNAPSHOT`  
 > **Maven Central:** `io.github.compevol:beast3:2.8.0-beta5`  
@@ -11,8 +11,9 @@
 ## Summary
 
 - **Java classes:** 74 on spec, 0 mixed, 0 legacy of 187 total
-- **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 157 total (+2 under legacy/)
-- **BEAUti fxtemplates:** 6 clean / 10 use spec / 10 total
+- **Example XMLs:** 0 on spec / 0 on `version="2.8"` / 157 total (+1 under legacy/)
+    - skipped: 7 untracked by git
+- **BEAUti fxtemplates:** 3 clean / 5 use spec / 5 total
 - **Input rule:** all Inputs use the right carrier ✅
 - **Maven Central:** 2.8.0-beta5
 
@@ -186,12 +187,10 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 
 > Note: BEAUti templates conventionally keep `version='2.0'` (beast3 core does the same). Migration here means the body uses `beast.base.spec.*` types and parameter declarations use `RealScalarParam` etc. rather than `parameter.RealParameter`.
 
-**Uses spec types but still has legacy `parameter.*` declarations** (4):
+**Uses spec types but still has legacy `parameter.*` declarations** (2):
 
 - `beast-fx/src/main/resources/beast.fx/fxtemplates/Standard.xml`
 - `beast-fx/src/main/resources/beast.fx/fxtemplates/ParametricDistributions.xml`
-- `release/Mac/output/BEAST.app/Contents/fxtemplates/Standard.xml`
-- `release/Mac/output/BEAST.app/Contents/fxtemplates/ParametricDistributions.xml`
 
 ## Deprecated class references in XMLs
 
@@ -222,38 +221,6 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 | `spec=` | `beast.base.inference.distribution.Dirichlet` | `beast.base.spec.inference.distribution.Dirichlet` |
 
 **`beast-fx/src/main/resources/beast.fx/fxtemplates/TreePriors.xml`** (3):
-
-| Where | Hit | Replacement |
-|---|---|---|
-| `spec=` | `BactrianScaleOperator` → `beast.base.evolution.operator.kernel.BactrianScaleOperator` | `beast.base.spec.inference.operator.ScaleOperator` |
-| `spec=` | `beast.base.evolution.operator.kernel.BactrianScaleOperator` | `beast.base.spec.inference.operator.ScaleOperator` |
-| `spec=` | `beast.base.spec.inference.distribution.Prior` | `beast.base.spec.inference.distribution.Normal` |
-
-**`release/Mac/output/BEAST.app/Contents/fxtemplates/Standard.xml`** (14):
-
-| Where | Hit | Replacement |
-|---|---|---|
-| `spec=` | `beast.base.evolution.tree.coalescent.RandomTree` | `beast.base.spec.evolution.tree.coalescent.RandomTree` |
-| `spec=` | `beast.base.evolution.tree.ClusterTree` | `beast.base.spec.evolution.tree.ClusterTree` |
-| `map=` | `beast.base.inference.distribution.Uniform` | `beast.base.spec.inference.distribution.Uniform` |
-| `map=` | `beast.base.inference.distribution.Normal` | `beast.base.spec.inference.distribution.Normal` |
-| `map=` | `beast.base.inference.distribution.OneOnX` | `beast.base.spec.inference.distribution.LogUniform` |
-| `map=` | `beast.base.inference.distribution.LogNormalDistributionModel` | `beast.base.spec.inference.distribution.LogNormal` |
-| `map=` | `beast.base.inference.distribution.Exponential` | `beast.base.spec.inference.distribution.Exponential` |
-| `map=` | `beast.base.inference.distribution.Gamma` | `beast.base.spec.inference.distribution.Gamma` |
-| `map=` | `beast.base.inference.distribution.Beta` | `beast.base.spec.inference.distribution.Beta` |
-| `map=` | `beast.base.inference.distribution.LaplaceDistribution` | `beast.base.spec.inference.distribution.Laplace` |
-| `map=` | `beast.base.inference.distribution.InverseGamma` | `beast.base.spec.inference.distribution.InverseGamma` |
-| `map=` | `beast.base.inference.distribution.Prior` | `beast.base.spec.inference.distribution.TensorDistribution` |
-
-**`release/Mac/output/BEAST.app/Contents/fxtemplates/ParametricDistributions.xml`** (2):
-
-| Where | Hit | Replacement |
-|---|---|---|
-| `spec=` | `beast.base.inference.distribution.OneOnX` | `beast.base.spec.inference.distribution.LogUniform` |
-| `spec=` | `beast.base.inference.distribution.Dirichlet` | `beast.base.spec.inference.distribution.Dirichlet` |
-
-**`release/Mac/output/BEAST.app/Contents/fxtemplates/TreePriors.xml`** (3):
 
 | Where | Hit | Replacement |
 |---|---|---|

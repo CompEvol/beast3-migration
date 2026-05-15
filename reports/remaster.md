@@ -1,6 +1,6 @@
 # remaster — what's left
 
-> **Scanned at:** 2026-05-13T18:51:19.432839  
+> **Scanned at:** 2026-05-15T12:13:15.991084  
 > **Commit:** `896c7b7` on `beast2.8-migration` — [view on GitHub](https://github.com/tgvaughan/remaster/commit/896c7b7077843f2fae66460e06bbfe14cce0498b)  
 > **Pom version:** `3.0.0`  
 > **Maven Central:** not published as `io.github.tgvaughan:remaster` (not published (404))  

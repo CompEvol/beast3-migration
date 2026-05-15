@@ -9,13 +9,13 @@ are at the bottom of this page.
 
 <!-- BEGIN AUTO -->
 
-_Last regenerated: 2026-05-13T18:51:20.139196+12:00_
+_Last regenerated: 2026-05-15T12:13:16.575206+12:00_
 
 ## Release & build status
 
 | Package | Stage | Maven Central | Pom version | JPMS | Release | CI | Code | XML | FxT | Dep refs |
 |---|---|---|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| [beast3](https://github.com/CompEvol/beast3) | Maven Central | [2.8.0-beta5](https://central.sonatype.com/artifact/io.github.compevol/beast3) | 2.8.0-SNAPSHOT | ✅ | ✅ | ✅ | 🟢 | 🔴 | 🟡 | 637 |
+| [beast3](https://github.com/CompEvol/beast3) | Maven Central | [2.8.0-beta5](https://central.sonatype.com/artifact/io.github.compevol/beast3) | 2.8.0-SNAPSHOT | ✅ | ✅ | ✅ | 🟢 | 🔴 | 🟡 | 618 |
 | [BEASTLabs](https://github.com/BEAST2-Dev/BEASTlabs) | Maven Central | [2.1.0-beta2](https://central.sonatype.com/artifact/io.github.beast2-dev/beast-labs) | 2.1.0-SNAPSHOT | ✅ | ✅ | ✅ | 🔴 | 🔴 | 🔴 | 173 |
 | [beast-classic](https://github.com/BEAST2-Dev/beast-classic) | Maven Central | [1.7.0-beta1](https://central.sonatype.com/artifact/io.github.beast2-dev/beast-classic) | 1.7.0-SNAPSHOT | ✅ | ✅ | ✅ | 🔴 | 🔴 | 🔴 | 112 |
 | [CoupledMCMC](https://github.com/CompEvol/CoupledMCMC) | Maven Central | [1.3.0-beta1](https://central.sonatype.com/artifact/io.github.compevol/coupled-mcmc) | 1.3.0-beta1 | ✅ | ✅ | ✅ | 🟢 | 🟢 | 🟢 | ✅ |
@@ -29,7 +29,7 @@ _Last regenerated: 2026-05-13T18:51:20.139196+12:00_
 | [obama](https://github.com/rbouckaert/obama) | compile-tested | — | 1.2.0-beta1 | ✅ | ✅ | ❌ | 🔴 | 🔴 | 🟡 | 207 |
 | [feast](https://github.com/tgvaughan/feast) | compile-tested | — | 11.0.0 | ✅ | ✅ | ✅ | 🟢 | 🔴 | 🔴 | 9 |
 | [GammaSpikeModel](https://github.com/jordandouglas/GammaSpikeModel) | compile-tested | — | 1.3.0-SNAPSHOT | ✅ | ✅ | ❌ | 🟡 | 🔴 | 🟢 | 262 |
-| [BDMM-Prime](https://github.com/tgvaughan/BDMM-Prime) | compile-tested | — | 3.0.0 | ✅ | ✅ | ✅ | 🟢 | 🔴 | 🟢 | 194 |
+| [BDMM-Prime](https://github.com/tgvaughan/BDMM-Prime) | compile-tested | — | 3.0.0 | ✅ | ✅ | ✅ | 🟢 | — | 🟢 | ✅ |
 | [remaster](https://github.com/tgvaughan/remaster) | compile-tested | — | 3.0.0 | ✅ | ✅ | ✅ | 🟢 | 🔴 | — | 10 |
 
 Traffic-light columns: 🔴 any legacy lineage / non-migrated content, 🟡 no legacy but some unnecessarily-concrete Inputs (Code), or stray legacy `parameter.*` declarations / references to `@Deprecated` classes (XML / FxT), 🟢 clean, — = artefact type not used by this package (treated as complete).
@@ -39,12 +39,12 @@ Traffic-light columns: 🔴 any legacy lineage / non-migrated content, 🟡 no l
 
 | Package | Distrs | Ops | Loggers | CalcNodes | Params | StateNodes | XMLs | FxTemplates | Input rule |
 |---|---|---|---|---|---|---|---|---|---|
-| beast3 | ✅ 38 | ✅ 15 | ✅ 2 | ✅ 38 | ✅ 4 | ✅ 13 | 0 / 0 / 157 (+2 legacy) | 6 / 10 / 10 | ✅ |
+| beast3 | ✅ 38 | ✅ 15 | ✅ 2 | ✅ 38 | ✅ 4 | ✅ 13 | 0 / 0 / 157 (+1 legacy) | 3 / 5 / 5 | ✅ |
 | BEASTLabs | 5 / 22 | ✅ 21 | ✅ 5 | 8 / 16 | 2 / 2 | ✅ 8 | 0 / 0 / 20 | 0 / 0 / 3 | 15 / 29 |
 | beast-classic | ✅ 9 | ✅ 11 | ✅ 3 | 9 / 22 | ✅ 1 | ✅ 2 | 0 / 0 / 10 | 0 / 1 / 5 | 7 / 15 |
 | CoupledMCMC | — | — | ✅ 4 | — | — | — | 1 / 1 / 1 | 1 / 1 / 1 | ✅ |
 | flc | — | — | — | ✅ 10 | — | — | 2 / 2 / 2 | — | ✅ |
-| Mascot | ✅ 11 | ✅ 6 | ✅ 12 | ✅ 30 | — | ✅ 3 | 1 / 1 / 14 | 0 / 0 / 5 | ✅ |
+| Mascot | ✅ 11 | ✅ 6 | ✅ 12 | ✅ 30 | — | ✅ 3 | 1 / 1 / 4 | 0 / 0 / 5 | ✅ |
 | morph-models | — | — | — | ✅ 4 | — | ✅ 1 | 2 / 2 / 2 (+4 legacy) | 1 / 1 / 1 | ✅ |
 | sampled-ancestors | ✅ 6 | ✅ 13 | ✅ 1 | ✅ 6 | — | ✅ 2 | 3 / 3 / 3 | 1 / 1 / 1 | ✅ |
 | MutableAlignment | — | ✅ 1 | ✅ 1 | ✅ 3 | — | ✅ 1 | 1 / 1 / 1 | — | ✅ |
@@ -53,7 +53,7 @@ Traffic-light columns: 🔴 any legacy lineage / non-migrated content, 🟡 no l
 | obama | ✅ 3 | ✅ 2 | ✅ 1 | 11 / 45 | — | — | 0 / 0 / 14 | 0 / 1 / 1 | 9 / 18 |
 | feast | ✅ 3 | ✅ 8 | — | ✅ 18 | ✅ 6 | ✅ 5 | 0 / 0 / 9 | 0 / 0 / 1 | ✅ |
 | GammaSpikeModel | ✅ 4 | ✅ 12 | ✅ 3 | ✅ 4 | — | — | 0 / 11 / 17 | 2 / 2 / 2 | 7 / 30 |
-| BDMM-Prime | ✅ 7 | ✅ 7 | ✅ 3 | ✅ 24 | — | ✅ 3 | 0 / 0 / 27 | 2 / 2 / 2 | ✅ |
+| BDMM-Prime | ✅ 7 | ✅ 7 | ✅ 3 | ✅ 24 | — | ✅ 3 | — | 2 / 2 / 2 | ✅ |
 | remaster | — | — | ✅ 2 | ✅ 5 | — | ✅ 2 | 4 / 7 / 25 | — | ✅ |
 
 Legend: ✅ = clean, ❌ = missing, `legacy / total` = classes still on a legacy base, `—` = artefact type not used by this package (treated as complete).

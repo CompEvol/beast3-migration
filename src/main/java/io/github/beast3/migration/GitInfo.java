@@ -3,6 +3,8 @@ package io.github.beast3.migration;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -31,6 +33,43 @@ public record GitInfo(String shortSha, String fullSha, String branch, boolean di
             return new GitInfo(shortSha, fullSha, branch, dirty);
         } catch (Exception e) {
             return MISSING;
+        }
+    }
+
+    /**
+     * Returns the set of git-tracked files in {@code repo} as absolute paths,
+     * or {@code null} if the directory isn't a git working tree, {@code git}
+     * isn't on PATH, or the command fails. Caller treats {@code null} as
+     * "no filter" — keep every file the walker found.
+     */
+    public static Set<Path> trackedFiles(Path repo) {
+        if (!Files.isDirectory(repo.resolve(".git")) && !Files.isRegularFile(repo.resolve(".git"))) {
+            return null;
+        }
+        try {
+            ProcessBuilder pb = new ProcessBuilder("git", "ls-files", "-z")
+                    .directory(repo.toFile()).redirectErrorStream(false);
+            Process p = pb.start();
+            byte[] out = p.getInputStream().readAllBytes();
+            if (!p.waitFor(15, TimeUnit.SECONDS)) {
+                p.destroyForcibly();
+                return null;
+            }
+            if (p.exitValue() != 0) return null;
+            Set<Path> tracked = new HashSet<>();
+            int start = 0;
+            for (int i = 0; i < out.length; i++) {
+                if (out[i] == 0) {
+                    if (i > start) {
+                        String rel = new String(out, start, i - start);
+                        tracked.add(repo.resolve(rel).normalize().toAbsolutePath());
+                    }
+                    start = i + 1;
+                }
+            }
+            return tracked;
+        } catch (Exception e) {
+            return null;
         }
     }
 

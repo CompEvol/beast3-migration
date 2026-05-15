@@ -3,6 +3,9 @@ package io.github.beast3.migration;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -42,12 +45,30 @@ public final class XmlScanner {
     private XmlScanner() {}
 
     public static void scan(Path pkgRoot, Report report) {
-        // Walk the whole package once; filter out build/IDE noise.
+        // Per-package opt-out: directory names listed in packages.yaml.
+        List<String> excludeDirs = report.entry.xmlExcludeDirs().stream()
+                .map(s -> s.toLowerCase(Locale.ROOT)).toList();
+        // Optional git-tracked filter: skips stray run output, IDE caches,
+        // and anything else not committed. Null when the package isn't a
+        // git working tree or `git ls-files` failed — fall back to "no filter".
+        Set<Path> tracked = GitInfo.trackedFiles(pkgRoot);
+        report.xmlGitFilterApplied = (tracked != null);
+
         try (Stream<Path> stream = Files.walk(pkgRoot)) {
             stream.filter(Files::isRegularFile)
                     .filter(p -> p.getFileName().toString().toLowerCase().endsWith(".xml"))
                     .filter(XmlScanner::isInteresting)
-                    .forEach(p -> classify(pkgRoot, pkgRoot, p, report));
+                    .forEach(p -> {
+                        if (isExcludedDir(pkgRoot, p, excludeDirs)) {
+                            report.xmlSkippedExcludeDir++;
+                            return;
+                        }
+                        if (tracked != null && !tracked.contains(p.toAbsolutePath().normalize())) {
+                            report.xmlSkippedUntracked++;
+                            return;
+                        }
+                        classify(pkgRoot, pkgRoot, p, report);
+                    });
         } catch (IOException e) {
             // ignore
         }
@@ -65,6 +86,15 @@ public final class XmlScanner {
         // gets the <beast> root check downstream.
         String fn = p.getFileName().toString();
         return !fn.equals("pom.xml") && !fn.equals("version.xml");
+    }
+
+    private static boolean isExcludedDir(Path root, Path file, List<String> excludeDirs) {
+        if (excludeDirs.isEmpty()) return false;
+        Path rel = root.relativize(file);
+        for (Path part : rel) {
+            if (excludeDirs.contains(part.toString().toLowerCase(Locale.ROOT))) return true;
+        }
+        return false;
     }
 
     private static boolean isLegacyDir(Path root, Path file) {

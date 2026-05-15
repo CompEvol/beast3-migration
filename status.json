@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-13T18:51:20.145234+12:00",
+  "generatedAt": "2026-05-15T12:13:16.585704+12:00",
   "packages": [
     {
       "name": "beast3",
@@ -64,12 +64,15 @@
         "total": 157,
         "migrated": 0,
         "v28": 0,
-        "legacyDir": 2
+        "legacyDir": 1,
+        "skippedExcludeDir": 0,
+        "skippedUntracked": 7,
+        "gitFilterApplied": true
       },
       "fxTemplates": {
-        "total": 10,
-        "withSpec": 10,
-        "clean": 6
+        "total": 5,
+        "withSpec": 5,
+        "clean": 3
       },
       "inputRule": {
         "classesWithViolations": 0,
@@ -80,7 +83,7 @@
         "refs": []
       },
       "xmlDeprecated": {
-        "count": 637,
+        "count": 618,
         "refs": [
           {
             "file": "/Users/adru001/Git/beast3/beast-fx/src/main/resources/beast.fx/fxtemplates/Standard.xml",
@@ -246,177 +249,6 @@
           },
           {
             "file": "/Users/adru001/Git/beast3/beast-fx/src/main/resources/beast.fx/fxtemplates/TreePriors.xml",
-            "hit": "beast.base.spec.inference.distribution.Prior",
-            "canonicalFqn": "beast.base.spec.inference.distribution.Prior",
-            "replacement": "beast.base.spec.inference.distribution.Normal",
-            "isFxTemplate": true,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/beast3/release/Mac/output/BEAST.app/Contents/fxtemplates/Standard.xml",
-            "hit": "beast.base.evolution.tree.coalescent.RandomTree",
-            "canonicalFqn": "beast.base.evolution.tree.coalescent.RandomTree",
-            "replacement": "beast.base.spec.evolution.tree.coalescent.RandomTree",
-            "isFxTemplate": true,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/beast3/release/Mac/output/BEAST.app/Contents/fxtemplates/Standard.xml",
-            "hit": "beast.base.evolution.tree.coalescent.RandomTree",
-            "canonicalFqn": "beast.base.evolution.tree.coalescent.RandomTree",
-            "replacement": "beast.base.spec.evolution.tree.coalescent.RandomTree",
-            "isFxTemplate": true,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/beast3/release/Mac/output/BEAST.app/Contents/fxtemplates/Standard.xml",
-            "hit": "beast.base.evolution.tree.coalescent.RandomTree",
-            "canonicalFqn": "beast.base.evolution.tree.coalescent.RandomTree",
-            "replacement": "beast.base.spec.evolution.tree.coalescent.RandomTree",
-            "isFxTemplate": true,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/beast3/release/Mac/output/BEAST.app/Contents/fxtemplates/Standard.xml",
-            "hit": "beast.base.evolution.tree.ClusterTree",
-            "canonicalFqn": "beast.base.evolution.tree.ClusterTree",
-            "replacement": "beast.base.spec.evolution.tree.ClusterTree",
-            "isFxTemplate": true,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/beast3/release/Mac/output/BEAST.app/Contents/fxtemplates/Standard.xml",
-            "hit": "beast.base.inference.distribution.Uniform",
-            "canonicalFqn": "beast.base.inference.distribution.Uniform",
-            "replacement": "beast.base.spec.inference.distribution.Uniform",
-            "isFxTemplate": true,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/beast3/release/Mac/output/BEAST.app/Contents/fxtemplates/Standard.xml",
-            "hit": "beast.base.inference.distribution.Normal",
-            "canonicalFqn": "beast.base.inference.distribution.Normal",
-            "replacement": "beast.base.spec.inference.distribution.Normal",
-            "isFxTemplate": true,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/beast3/release/Mac/output/BEAST.app/Contents/fxtemplates/Standard.xml",
-            "hit": "beast.base.inference.distribution.OneOnX",
-            "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "beast.base.spec.inference.distribution.LogUniform",
-            "isFxTemplate": true,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/beast3/release/Mac/output/BEAST.app/Contents/fxtemplates/Standard.xml",
-            "hit": "beast.base.inference.distribution.LogNormalDistributionModel",
-            "canonicalFqn": "beast.base.inference.distribution.LogNormalDistributionModel",
-            "replacement": "beast.base.spec.inference.distribution.LogNormal",
-            "isFxTemplate": true,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/beast3/release/Mac/output/BEAST.app/Contents/fxtemplates/Standard.xml",
-            "hit": "beast.base.inference.distribution.Exponential",
-            "canonicalFqn": "beast.base.inference.distribution.Exponential",
-            "replacement": "beast.base.spec.inference.distribution.Exponential",
-            "isFxTemplate": true,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/beast3/release/Mac/output/BEAST.app/Contents/fxtemplates/Standard.xml",
-            "hit": "beast.base.inference.distribution.Gamma",
-            "canonicalFqn": "beast.base.inference.distribution.Gamma",
-            "replacement": "beast.base.spec.inference.distribution.Gamma",
-            "isFxTemplate": true,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/beast3/release/Mac/output/BEAST.app/Contents/fxtemplates/Standard.xml",
-            "hit": "beast.base.inference.distribution.Beta",
-            "canonicalFqn": "beast.base.inference.distribution.Beta",
-            "replacement": "beast.base.spec.inference.distribution.Beta",
-            "isFxTemplate": true,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/beast3/release/Mac/output/BEAST.app/Contents/fxtemplates/Standard.xml",
-            "hit": "beast.base.inference.distribution.LaplaceDistribution",
-            "canonicalFqn": "beast.base.inference.distribution.LaplaceDistribution",
-            "replacement": "beast.base.spec.inference.distribution.Laplace",
-            "isFxTemplate": true,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/beast3/release/Mac/output/BEAST.app/Contents/fxtemplates/Standard.xml",
-            "hit": "beast.base.inference.distribution.InverseGamma",
-            "canonicalFqn": "beast.base.inference.distribution.InverseGamma",
-            "replacement": "beast.base.spec.inference.distribution.InverseGamma",
-            "isFxTemplate": true,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/beast3/release/Mac/output/BEAST.app/Contents/fxtemplates/Standard.xml",
-            "hit": "beast.base.inference.distribution.Prior",
-            "canonicalFqn": "beast.base.inference.distribution.Prior",
-            "replacement": "beast.base.spec.inference.distribution.TensorDistribution",
-            "isFxTemplate": true,
-            "isFqn": true,
-            "source": "map"
-          },
-          {
-            "file": "/Users/adru001/Git/beast3/release/Mac/output/BEAST.app/Contents/fxtemplates/ParametricDistributions.xml",
-            "hit": "beast.base.inference.distribution.OneOnX",
-            "canonicalFqn": "beast.base.inference.distribution.OneOnX",
-            "replacement": "beast.base.spec.inference.distribution.LogUniform",
-            "isFxTemplate": true,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/beast3/release/Mac/output/BEAST.app/Contents/fxtemplates/ParametricDistributions.xml",
-            "hit": "beast.base.inference.distribution.Dirichlet",
-            "canonicalFqn": "beast.base.inference.distribution.Dirichlet",
-            "replacement": "beast.base.spec.inference.distribution.Dirichlet",
-            "isFxTemplate": true,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/beast3/release/Mac/output/BEAST.app/Contents/fxtemplates/TreePriors.xml",
-            "hit": "BactrianScaleOperator",
-            "canonicalFqn": "beast.base.evolution.operator.kernel.BactrianScaleOperator",
-            "replacement": "beast.base.spec.inference.operator.ScaleOperator",
-            "isFxTemplate": true,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/beast3/release/Mac/output/BEAST.app/Contents/fxtemplates/TreePriors.xml",
-            "hit": "beast.base.evolution.operator.kernel.BactrianScaleOperator",
-            "canonicalFqn": "beast.base.evolution.operator.kernel.BactrianScaleOperator",
-            "replacement": "beast.base.spec.inference.operator.ScaleOperator",
-            "isFxTemplate": true,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/beast3/release/Mac/output/BEAST.app/Contents/fxtemplates/TreePriors.xml",
             "hit": "beast.base.spec.inference.distribution.Prior",
             "canonicalFqn": "beast.base.spec.inference.distribution.Prior",
             "replacement": "beast.base.spec.inference.distribution.Normal",
@@ -5896,7 +5728,10 @@
         "total": 20,
         "migrated": 0,
         "v28": 0,
-        "legacyDir": 0
+        "legacyDir": 0,
+        "skippedExcludeDir": 0,
+        "skippedUntracked": 0,
+        "gitFilterApplied": true
       },
       "fxTemplates": {
         "total": 3,
@@ -7714,7 +7549,10 @@
         "total": 10,
         "migrated": 0,
         "v28": 0,
-        "legacyDir": 0
+        "legacyDir": 0,
+        "skippedExcludeDir": 0,
+        "skippedUntracked": 0,
+        "gitFilterApplied": true
       },
       "fxTemplates": {
         "total": 5,
@@ -8821,7 +8659,10 @@
         "total": 1,
         "migrated": 1,
         "v28": 1,
-        "legacyDir": 0
+        "legacyDir": 0,
+        "skippedExcludeDir": 0,
+        "skippedUntracked": 0,
+        "gitFilterApplied": true
       },
       "fxTemplates": {
         "total": 1,
@@ -8919,7 +8760,10 @@
         "total": 2,
         "migrated": 2,
         "v28": 2,
-        "legacyDir": 0
+        "legacyDir": 0,
+        "skippedExcludeDir": 0,
+        "skippedUntracked": 0,
+        "gitFilterApplied": true
       },
       "fxTemplates": {
         "total": 0,
@@ -9014,10 +8858,13 @@
         }
       },
       "xml": {
-        "total": 14,
+        "total": 4,
         "migrated": 1,
         "v28": 1,
-        "legacyDir": 0
+        "legacyDir": 0,
+        "skippedExcludeDir": 0,
+        "skippedUntracked": 10,
+        "gitFilterApplied": true
       },
       "fxTemplates": {
         "total": 5,
@@ -9383,7 +9230,10 @@
         "total": 2,
         "migrated": 2,
         "v28": 2,
-        "legacyDir": 4
+        "legacyDir": 4,
+        "skippedExcludeDir": 0,
+        "skippedUntracked": 0,
+        "gitFilterApplied": true
       },
       "fxTemplates": {
         "total": 1,
@@ -9481,7 +9331,10 @@
         "total": 3,
         "migrated": 3,
         "v28": 3,
-        "legacyDir": 0
+        "legacyDir": 0,
+        "skippedExcludeDir": 0,
+        "skippedUntracked": 0,
+        "gitFilterApplied": true
       },
       "fxTemplates": {
         "total": 1,
@@ -9579,7 +9432,10 @@
         "total": 1,
         "migrated": 1,
         "v28": 1,
-        "legacyDir": 0
+        "legacyDir": 0,
+        "skippedExcludeDir": 0,
+        "skippedUntracked": 0,
+        "gitFilterApplied": true
       },
       "fxTemplates": {
         "total": 0,
@@ -9677,7 +9533,10 @@
         "total": 1,
         "migrated": 1,
         "v28": 1,
-        "legacyDir": 0
+        "legacyDir": 0,
+        "skippedExcludeDir": 0,
+        "skippedUntracked": 0,
+        "gitFilterApplied": true
       },
       "fxTemplates": {
         "total": 1,
@@ -9775,7 +9634,10 @@
         "total": 3,
         "migrated": 3,
         "v28": 3,
-        "legacyDir": 0
+        "legacyDir": 0,
+        "skippedExcludeDir": 0,
+        "skippedUntracked": 0,
+        "gitFilterApplied": true
       },
       "fxTemplates": {
         "total": 1,
@@ -9873,7 +9735,10 @@
         "total": 14,
         "migrated": 0,
         "v28": 0,
-        "legacyDir": 0
+        "legacyDir": 0,
+        "skippedExcludeDir": 0,
+        "skippedUntracked": 0,
+        "gitFilterApplied": true
       },
       "fxTemplates": {
         "total": 1,
@@ -11843,7 +11708,10 @@
         "total": 9,
         "migrated": 0,
         "v28": 0,
-        "legacyDir": 0
+        "legacyDir": 0,
+        "skippedExcludeDir": 0,
+        "skippedUntracked": 0,
+        "gitFilterApplied": true
       },
       "fxTemplates": {
         "total": 1,
@@ -12023,7 +11891,10 @@
         "total": 17,
         "migrated": 0,
         "v28": 11,
-        "legacyDir": 0
+        "legacyDir": 0,
+        "skippedExcludeDir": 0,
+        "skippedUntracked": 0,
+        "gitFilterApplied": true
       },
       "fxTemplates": {
         "total": 2,
@@ -14477,10 +14348,13 @@
         }
       },
       "xml": {
-        "total": 27,
+        "total": 0,
         "migrated": 0,
         "v28": 0,
-        "legacyDir": 0
+        "legacyDir": 0,
+        "skippedExcludeDir": 27,
+        "skippedUntracked": 0,
+        "gitFilterApplied": true
       },
       "fxTemplates": {
         "total": 2,
@@ -14496,1755 +14370,8 @@
         "refs": []
       },
       "xmlDeprecated": {
-        "count": 194,
-        "refs": [
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping/typesOnly_mapping.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping/typesOnly_mapping.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping/typesOnly_mapping.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping/typesOnly_mapping.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping/typesOnly_mapping.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping/typesOnly_mapping.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping/typesOnly_mapping.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping/typesOnly_MCMC.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping/typesOnly_MCMC.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping/typesOnly_MCMC.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping/typesOnly_MCMC.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping/typesOnly_MCMC.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping/typesOnly_MCMC.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping/typesOnly_MCMC.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_rateshifts/mapper.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_rateshifts/mapper.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_rateshifts/mapper.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_rateshifts/mapper.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_rateshifts/mapper.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_rateshifts/mapper.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_rateshifts/mapper.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_rateshifts/mapper.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_rateshifts/mapper.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_rateshifts/mapper.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_rateshifts/mapper.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_rateshifts/simulator.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_rateshifts/simulator.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_rateshifts/simulator.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_rateshifts/simulator.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_rateshifts/simulator.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_rateshifts/simulator.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_rateshifts/simulator.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_rateshifts/simulator.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_rateshifts/simulator.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_rateshifts/simulator.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_rateshifts/simulator.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/operators/scaleAllTest.xml",
-            "hit": "beast.base.evolution.operator.ScaleOperator",
-            "canonicalFqn": "beast.base.evolution.operator.ScaleOperator",
-            "replacement": "beast.base.spec.inference.operator.ScaleOperator",
-            "isFxTemplate": false,
-            "isFqn": true,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_unknown_types/mapper.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_unknown_types/mapper.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_unknown_types/mapper.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_unknown_types/mapper.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_unknown_types/mapper.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_unknown_types/mapper.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_unknown_types/mapper.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_unknown_types/mapper.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_unknown_types/simulator.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_unknown_types/simulator.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_unknown_types/simulator.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_unknown_types/simulator.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_unknown_types/simulator.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_unknown_types/simulator.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_unknown_types/simulator.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/mapping_unknown_types/simulator.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/smoothing_priors/SkyGrid.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/smoothing_priors/SkyGrid.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/smoothing_priors/SkyGrid.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/smoothing_priors/SkyGrid.xml",
-            "hit": "LogNormalDistributionModel",
-            "canonicalFqn": "beast.base.inference.distribution.LogNormalDistributionModel",
-            "replacement": "beast.base.spec.inference.distribution.LogNormal",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/smoothing_priors/SkyGrid.xml",
-            "hit": "LogNormalDistributionModel",
-            "canonicalFqn": "beast.base.inference.distribution.LogNormalDistributionModel",
-            "replacement": "beast.base.spec.inference.distribution.LogNormal",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/smoothing_priors/OUSkyGrid.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/smoothing_priors/OUSkyGrid.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/smoothing_priors/OUSkyGrid.xml",
-            "hit": "LogNormalDistributionModel",
-            "canonicalFqn": "beast.base.inference.distribution.LogNormalDistributionModel",
-            "replacement": "beast.base.spec.inference.distribution.LogNormal",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/tip_date_sampling/simulate.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/tip_date_sampling/simulate.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/tip_date_sampling/simulate.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/tip_date_sampling/simulate.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/tip_date_sampling/simulate.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/tip_date_sampling/simulate.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/tip_date_sampling/simulate.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/tip_date_sampling/infer_tip_dates.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/tip_date_sampling/infer_tip_dates.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/tip_date_sampling/infer_tip_dates.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/tip_date_sampling/infer_tip_dates.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/tip_date_sampling/infer_tip_dates.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/tip_date_sampling/infer_tip_dates.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/single_tree_traj_inference.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/single_tree_traj_inference.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/single_tree_traj_inference.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/single_tree_traj_inference.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/single_tree_traj_inference.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/single_tree_traj_inference.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/single_tree_traj_inference.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/tree_prior_estimates.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/tree_prior_estimates.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/tree_prior_estimates.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/tree_prior_estimates.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/tree_prior_estimates.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/tree_prior_estimates.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/tree_prior_estimates.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type_SA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type_SA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type_SA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type_SA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type_SA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type_SA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type_SA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type_SA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type_SA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type_rho.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type_rho.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type_rho.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type_rho.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type_rho.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type_rho.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type_rho.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type_rho.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type_rho.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type_rho.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type_rho.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type_rho.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type_rho.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type_rho.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type_rho.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type_rho.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type_rho.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_and_tree_simulator_1type_rho.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type_SA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type_SA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type_SA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type_SA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type_SA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type_SA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/traj_inference_1type_SA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/epiinf_test.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/epiinf_test.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/epiinf_test.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/single_type/epiinf_test.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_inference_2types_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_inference_2types_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_inference_2types_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_inference_2types_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_inference_2types_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_inference_2types_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_inference_2types_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_inference_2types_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_inference_2types_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_and_tree_simulator_2types.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_and_tree_simulator_2types.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_and_tree_simulator_2types.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_and_tree_simulator_2types.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_and_tree_simulator_2types.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_and_tree_simulator_2types.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_and_tree_simulator_2types.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_and_tree_simulator_2types.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_and_tree_simulator_2types_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_and_tree_simulator_2types_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_and_tree_simulator_2types_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_and_tree_simulator_2types_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_and_tree_simulator_2types_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_and_tree_simulator_2types_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_and_tree_simulator_2types_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_and_tree_simulator_2types_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_and_tree_simulator_2types_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_and_tree_simulator_2types_rhoSA.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_inference_2types.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_inference_2types.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_inference_2types.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_inference_2types.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_inference_2types.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_inference_2types.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          },
-          {
-            "file": "/Users/adru001/Git/BDMM-Prime/validation/trajectories/multi_type/traj_inference_2types.xml",
-            "hit": "RealParameter",
-            "canonicalFqn": "beast.base.inference.parameter.RealParameter",
-            "replacement": "beast.base.spec.inference.parameter.RealScalarParam",
-            "isFxTemplate": false,
-            "isFqn": false,
-            "source": "spec"
-          }
-        ]
+        "count": 0,
+        "refs": []
       },
       "build": {
         "hasPom": true,
@@ -16325,7 +14452,10 @@
         "total": 25,
         "migrated": 4,
         "v28": 7,
-        "legacyDir": 0
+        "legacyDir": 0,
+        "skippedExcludeDir": 0,
+        "skippedUntracked": 0,
+        "gitFilterApplied": true
       },
       "fxTemplates": {
         "total": 0,

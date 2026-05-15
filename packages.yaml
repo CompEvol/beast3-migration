@@ -12,6 +12,13 @@
 #                punch lists) restrict to classes in `.spec.` packages and
 #                ignore the legacy classes still in place. Leave unset (default
 #                false) for packages still being assessed end-to-end.
+#   xmlExcludeDirs: optional list of directory names (case-insensitive). XMLs
+#                with any matching path component are excluded from the XML /
+#                fxtemplate scan. Use for development/validation directories
+#                whose XMLs aren't part of the assembled package. The scan also
+#                independently skips XMLs not tracked by git when the package
+#                is a git working tree, so stray run output doesn't need an
+#                explicit exclude.
 
 packages:
   - name: beast3
@@ -108,6 +115,7 @@ packages:
     maven: io.github.tgvaughan:bdmm-prime
     stage: compile_tested
     notes: Migration WIP on `beast2.8-migration` branch (Maven, v3.0.0).
+    xmlExcludeDirs: [validation]   # development XMLs, not part of the assembled package (issue #2)
 
   - name: remaster
     path: ../remaster

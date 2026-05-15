@@ -122,6 +122,17 @@ public final class PackageReportWriter {
                 .append(r.xmlTotal).append(" total");
         if (r.xmlLegacyDir > 0) sb.append(" (+").append(r.xmlLegacyDir).append(" under legacy/)");
         sb.append('\n');
+        if (r.xmlSkippedExcludeDir > 0 || r.xmlSkippedUntracked > 0) {
+            List<String> notes = new ArrayList<>();
+            if (r.xmlSkippedExcludeDir > 0) {
+                notes.add(r.xmlSkippedExcludeDir + " under `xmlExcludeDirs` ("
+                        + String.join(", ", r.entry.xmlExcludeDirs()) + ")");
+            }
+            if (r.xmlSkippedUntracked > 0) {
+                notes.add(r.xmlSkippedUntracked + " untracked by git");
+            }
+            sb.append("    - skipped: ").append(String.join("; ", notes)).append('\n');
+        }
         if (r.fxTotal > 0) {
             sb.append("- **BEAUti fxtemplates:** ").append(r.fxClean).append(" clean / ")
                     .append(r.fxWithSpec).append(" use spec / ")

@@ -1,6 +1,6 @@
 # Mascot — what's left
 
-> **Scanned at:** 2026-05-13T18:51:15.252835  
+> **Scanned at:** 2026-05-15T12:13:11.247973  
 > **Commit:** `201f8b3` on `spec-input-types` — [view on GitHub](https://github.com/CompEvol/Mascot/commit/201f8b3df6dbbe6e29e311f319c6656f9ac8713b)  
 > **Pom version:** `3.1.0-beta1`  
 > **Maven Central:** `io.github.compevol:mascot:3.1.0-beta1`  
@@ -9,7 +9,8 @@
 ## Summary
 
 - **Java classes:** 5 on spec, 0 mixed, 0 legacy of 121 total
-- **Example XMLs:** 1 on spec / 1 on `version="2.8"` / 14 total
+- **Example XMLs:** 1 on spec / 1 on `version="2.8"` / 4 total
+    - skipped: 10 untracked by git
 - **BEAUti fxtemplates:** 0 clean / 0 use spec / 5 total
 - **Input rule:** all Inputs use the right carrier ✅
 - **Maven Central:** 3.1.0-beta1
@@ -36,21 +37,11 @@ No Java classes flagged as legacy or mixed — all relevant types are on spec or
 
 ## Example XMLs pending migration
 
-**Needs `version="2.8"`** (13):
+**Needs `version="2.8"`** (3):
 
-- `MASCOT6_glmcontinuous_asia_1201_a0.xml`
-- `golden/asian-4regions-a0/MASCOT6_glmcontinuous_asia_1201_a0.xml`
-- `golden/asian-4regions-a0-888/MASCOT6_glmcontinuous_asia_1201_a0.xml`
-- `MASCOT6_glm_mig_ind_Ne_a0.xml`
-- `MASCOT6_glm_mig_ind_Ne.xml`
 - `examples/GLM.xml`
-- `examples/h9n2_mascot_869_weight_change_maxR_10.xml`
 - `examples/ConstantBSSVS.xml`
 - `examples/Skyline.xml`
-- `MASCOT6_glm_pop_unim2.xml`
-- `MASCOT6_glm_mig_ind_Ne_anarrow.xml`
-- `runs/upper-migration-10/MASCOT6_glm_mig_ind_Ne.xml`
-- `runs/upper-migration-0.1/MASCOT6_glm_mig_ind_Ne.xml`
 
 ## FxTemplates pending migration
 
