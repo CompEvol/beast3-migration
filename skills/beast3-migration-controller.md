@@ -33,8 +33,8 @@ and stop — do not proceed until the user confirms or asks you to run the missi
 |---|---|---|
 | Step 1 | — | — |
 | Step 2 | Step 1 | `../beast3/` and `../beast-package-skeleton/` both exist |
-| Step 3 | Step 2 | `tmp/b3migration/STATUS.md` contains `module-layout: single` or `module-layout: multi` |
-| Step 4 | Step 2 | same as Step 3 |
+| Step 3 | Step 2 | `tmp/b3migration/STATUS.md` exists |
+| Step 4 | Step 2 | `tmp/b3migration/STATUS.md` exists |
 | Step 5 | Step 2, Step 4 | Step 2 verified above; `tmp/b3migration/STATUS.md` exists with a file queue |
 | Step 6 | Step 5 | all rows in STATUS.md are `done` or `error` (none `pending` or `in-progress`) |
 | Step 7 | Step 5 | same as Step 6 |
@@ -141,44 +141,14 @@ Requires **Java 25**, **Maven 3.9+**, and **Git** — see `../beast3/README.md` 
 
 ---
 
-## Step 2 — Detect module structure and set up Maven build
+## Step 2 — Set up Maven build
 
-### 2a — Detect single vs multi-module layout
-
-Scan all Java sources for JavaFX imports:
-
-```bash
-grep -rl "import javafx\." src/ 2>/dev/null | grep "\.java$" | sort
-```
-
-| Result | Decision | Action |
-|---|---|---|
-| One or more `.java` files import `javafx.*` | **Multi-module** | Apply **`maven-setup-multimodule.md`** |
-| No JavaFX imports found | **Single-module** | Apply **`maven-setup.md`** |
-
-Record the decision in `tmp/b3migration/STATUS.md` (create the file now if Step 4 has not done so yet):
-
-```
-module-layout: single   # or: multi
-```
-
-This key is read by Steps 3, 4, and 5 to resolve the correct source and resource directories.
-
-**Multi-module directory conventions** (referenced in later steps):
-
-| Placeholder | Single-module path | Multi-module path |
-|---|---|---|
-| `{BASE_SRC}` | `src/main/java` | `<artifactId>-base/src/main/java` |
-| `{BASE_TEST}` | `src/test/java` | `<artifactId>-base/src/test/java` |
-| `{FX_SRC}` | _(n/a)_ | `<artifactId>-fx/src/main/java` |
-| `{BASE_RES}` | `src/main/resources` | `<artifactId>-base/src/main/resources` |
-| `{FX_RES}` | `src/main/resources` | `<artifactId>-fx/src/main/resources` |
-| `{BASE_TEST_RES}` | `src/test/resources` | `<artifactId>-base/src/test/resources` |
+Apply **`maven-setup.md`** to produce a working single-module BEAST3 Maven build.
 
 ### 2b — Verify the build compiles cleanly
 
 ```bash
-mvn compile -q   # builds all modules for multi-module projects
+mvn compile -q
 ```
 
 Fix any errors now. A failing baseline will mask per-file errors in Step 5.
@@ -188,33 +158,22 @@ Fix any errors now. A failing baseline will mask per-file errors in Step 5.
 ## Step 3 — Migrate XML resources
 
 Applies to both main and test resources. No `mvn compile` gate — each skill has its own
-verify grep. Use the directory placeholders established in Step 2a. Run both sub-skills in order:
+verify grep. Run both sub-skills in order:
 
-1. **`fxtemplates.md`** — `*.xml` / `*.fxml` under **`{FX_RES}/`**: rewrites `spec`,
+1. **`fxtemplates.md`** — `*.xml` / `*.fxml` under **`src/main/resources/`**: rewrites `spec`,
    `type`, `class`, and `fx:controller` attribute values to `.spec.` equivalents.
-2. **`example-xmls.md`** — `*.xml` under **`{BASE_TEST_RES}/`**: rewrites `spec` (and
+2. **`example-xmls.md`** — `*.xml` under **`src/test/resources/`**: rewrites `spec` (and
    occasionally `type`, `class`) attribute values in BEAST analysis XMLs used by tests.
 
 ---
 
 ## Step 4 — Identify Java files to migrate
 
-Use the directory placeholders from Step 2a. For a **single-module** project:
-
 ```bash
 grep -rl "beast\.base\.evolution\."            src/main/java src/test/java 2>/dev/null | grep -v "\.spec\." | sort
 grep -rl "beast\.base\.inference\.parameter\."  src/main/java src/test/java 2>/dev/null | grep -v "\.spec\." | sort
 grep -rl "beast\.base\.inference\.distribution\." src/main/java src/test/java 2>/dev/null | grep -v "\.spec\." | sort
 grep -rl "beast\.base\.inference\.operator\."   src/main/java src/test/java 2>/dev/null | grep -v "\.spec\." | sort
-```
-
-For a **multi-module** project, expand across all child-module source trees:
-
-```bash
-grep -rl "beast\.base\.evolution\."            {BASE_SRC} {BASE_TEST} {FX_SRC} 2>/dev/null | grep -v "\.spec\." | sort
-grep -rl "beast\.base\.inference\.parameter\."  {BASE_SRC} {BASE_TEST} {FX_SRC} 2>/dev/null | grep -v "\.spec\." | sort
-grep -rl "beast\.base\.inference\.distribution\." {BASE_SRC} {BASE_TEST} {FX_SRC} 2>/dev/null | grep -v "\.spec\." | sort
-grep -rl "beast\.base\.inference\.operator\."   {BASE_SRC} {BASE_TEST} {FX_SRC} 2>/dev/null | grep -v "\.spec\." | sort
 ```
 
 The union of all matches is the **migration queue**.
@@ -270,6 +229,7 @@ summary. Then print a brief summary to the user:
 | Item | Detail |
 |---|---|
 | `pom.xml` | Created or updated |
+| `version.xml` | Updated or no changes |
 | `module-info.java` | Created |
 | FxTemplates (`src/main/resources/`) | Files migrated · class references updated · TODOs inserted |
 | Example XMLs (`src/test/resources/`) | Files migrated · class references updated · TODOs inserted |

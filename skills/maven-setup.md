@@ -9,6 +9,20 @@ Given a BEAST2 package project root, produce a working BEAST3 Maven build. Prere
 
 ---
 
+## Determine project identity
+
+Infer from existing `pom.xml`, `version.xml`, or source files. Ask before writing any files if any field is unclear.
+
+| Field | Example |
+|---|---|
+| `groupId` | `io.github.compevol` |
+| `artifactId` | `beast-mypackage` |
+| `version` | `1.0.0-SNAPSHOT` |
+| `beast.pkg.name` | display name from `version.xml` |
+| GitHub org/repo | used in SCM and distribution URLs |
+
+---
+
 ## Detect build system
 
 ```bash
@@ -79,6 +93,20 @@ If BEAST3 artifacts are unresolved, install them locally — see `../beast3/READ
 
 ---
 
+## Update `version.xml`
+
+Only version numbers may change:
+1. `version` attribute on `<package>` — match `pom.xml` version.
+2. `atleast` attributes on `<depends>` — match BEAST3 dep versions in `pom.xml`.
+
+Do not restructure, reorder, add, or remove any elements. Log any structural suggestions to `tmp/b3migration/TODO.md`:
+
+```markdown
+| version.xml | <classname or element> | <suggestion> |
+```
+
+---
+
 ## Generate `src/main/java/module-info.java`
 
 Apply **`module-info.md`**.
@@ -99,4 +127,5 @@ Apply **`module-info.md`**.
 - `pom.xml`: `created` or `updated (Java N → 25)`
 - `Sources moved`: `yes (Ant → Maven)` or `no`
 - `mvn dependency:resolve`: `PASS` or `FAIL — <reason>`
+- `version.xml`: `updated` or `no changes`
 - `module-info.java`: set by `module-info.md`
