@@ -28,6 +28,7 @@ Requires: lxml  (pip install lxml)
 Python  : 3.9+
 """
 
+import re
 import sys
 import argparse
 from pathlib import Path
@@ -70,11 +71,50 @@ def convert(
     xslt_doc = etree.parse(str(xsl_path))
     result = etree.XSLT(xslt_doc)(tree)
 
+    raw = etree.tostring(result, pretty_print=True,
+                         xml_declaration=True, encoding='UTF-8')
     with output_path.open('wb') as f:
-        f.write(etree.tostring(result, pretty_print=True,
-                               xml_declaration=True, encoding='UTF-8'))
+        f.write(_postprocess(raw))
 
     return changes
+
+
+def _postprocess(xml_bytes: bytes) -> bytes:
+    """
+    Clean up two XSLT serialisation artefacts:
+
+    1. Blank-line clutter after <map> removal — XSLT strips the element but
+       leaves its surrounding whitespace text nodes, producing alternating
+       blank and whitespace-only lines. Collapse runs of 3+ such lines to one.
+
+    2. <beast> header readability — lxml serialises all attributes on a single
+       line, making the namespace string unreadable at ~400 chars.  Reformat
+       so each attribute starts on its own line, aligned under '<beast '.
+    """
+    text = xml_bytes.decode('utf-8')
+
+    # ── 1. Collapse blank-line runs ──────────────────────────────────────────
+    # Match two or more consecutive lines that are blank or whitespace-only,
+    # and reduce them to a single blank line.
+    text = re.sub(r'\n[ \t]*\n([ \t]*\n)+', '\n\n', text)
+
+    # ── 2. Reformat <beast ...> opening tag ──────────────────────────────────
+    def _fmt(m: re.Match) -> str:
+        raw = m.group(0)
+        # Extract name="value" pairs in source order.
+        attrs = re.findall(r'([\w:.-]+)="([^"]*)"', raw)
+        if not attrs:
+            return raw
+        # First attribute sits on the same line as '<beast '.
+        indent = ' ' * len('<beast ')   # 7 spaces — aligns subsequent attrs
+        lines = [f'<beast {attrs[0][0]}="{attrs[0][1]}"']
+        for name, value in attrs[1:]:
+            lines.append(f'{indent}{name}="{value}"')
+        return '\n'.join(lines) + '>'
+
+    text = re.sub(r'<beast\b[^>]*>', _fmt, text, count=1, flags=re.DOTALL)
+
+    return text.encode('utf-8')
 
 
 # ---------------------------------------------------------------------------

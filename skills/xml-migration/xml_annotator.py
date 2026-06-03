@@ -143,6 +143,8 @@ def prepass(tree: etree._ElementTree, dep_map: dict[str, str],
     # Elements already consumed as children of a oneonx_* Prior (replaced wholesale
     # by the XSLT — processing them again would produce spurious rename changes).
     skip_elements: set[int] = set()
+    # TODO class names already reported this file — suppress duplicates.
+    seen_todos: set[str] = set()
 
     if not fxtemplate:
         root.set('_b3version', '2.8')
@@ -224,7 +226,12 @@ def prepass(tree: etree._ElementTree, dep_map: dict[str, str],
             continue
 
         # --- Simple spec=/type=/class= rename ---
-        changes.extend(_annotate_simple_rename(elem, dep_map))
+        for change in _annotate_simple_rename(elem, dep_map):
+            if change.kind == ChangeKind.TODO:
+                if change.description in seen_todos:
+                    continue
+                seen_todos.add(change.description)
+            changes.append(change)
 
     return changes
 

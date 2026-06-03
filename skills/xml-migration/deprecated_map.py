@@ -18,9 +18,15 @@ DO_NOT_RENAME: frozenset[str] = frozenset({
     "Tree", "Node", "TreeInterface", "TreeParser",
     "SiteModelInterface", "SubstitutionModel", "BranchRateModel",
     "Exchange", "WilsonBalding",
-    # TreeStatLogger has a @Deprecated annotation but no replacement and no spec
-    # twin; both B2→B3 reference files use the legacy path unchanged.
-    "TreeStatLogger",
+    # Not class-level deprecated; no spec twin; used unchanged in B3.
+    "TreeStatLogger",       # both B2/B3 reference files use legacy path unchanged
+    "TreeIntervals",        # not deprecated; no spec twin
+    "TraitSet",             # only method-level @Deprecated, not class-level
+    "TaxonSet",             # only method-level @Deprecated, not class-level
+    "Taxon",                # @Deprecated is commented out
+    "Nucleotide",           # not deprecated; no spec twin; used as dataType value
+    # B3 replacement classes — must not be re-processed if encountered in output.
+    "BactrianSubtreeSlide", # B3 replacement for SubtreeSlide; lives in kernel package
 })
 
 # Operators whose split is handled structurally by the XSLT (no annotation needed).
