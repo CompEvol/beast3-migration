@@ -128,9 +128,12 @@ def find_all_deprecated_classes(content: str) -> list[tuple[str, str]]:
         # Look ahead up to 400 chars for the class declaration
         lookahead = stripped[dep_m.end():dep_m.end() + 400]
 
-        # Strip leading whitespace and sibling annotations to reach the
-        # class/interface/enum keyword
+        # Skip @Deprecated's own argument list, e.g. (forRemoval = true),
+        # then strip sibling annotations to reach the class/interface/enum keyword.
         remaining = lookahead.lstrip()
+        paren_m = re.match(r'^\([^)]*\)\s*', remaining)
+        if paren_m:
+            remaining = remaining[paren_m.end():]
         while True:
             ann = re.match(r'^@[\w.]+(?:\s*\([^)]*\))?\s*', remaining)
             if ann:

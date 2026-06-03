@@ -39,9 +39,15 @@ split into two spec classes depending on what it operates on:
 
 Update the Java import to match the chosen replacement. For XML `spec=` attribute changes, see `xml-migration/example-xmls.md`.
 
+**`SubtreeSlide` — deprecated, non-spec replacement:**
+
+`beast.base.evolution.operator.SubtreeSlide` is `@Deprecated`. Its replacement is
+`beast.base.evolution.operator.kernel.BactrianSubtreeSlide` (not in the spec package).
+Update the import and class reference accordingly.
+
 **No spec equivalent — do not convert:**
 
-`Exchange` · `WilsonBalding` · `SubtreeSlide` · `Uniform` (tree operator)
+`Exchange` · `WilsonBalding` · `Uniform` (tree operator)
 
 Leave these unchanged in both Java and XML. They have no `beast.base.spec` counterpart.
 Note: in XML, `Uniform` is ambiguous with the spec distribution — see `xml-migration/example-xmls.md` for the required full class path.
@@ -100,7 +106,9 @@ no change needed unless a compilation error occurs.
 For `spec=` attribute changes in example XMLs and FxTemplates, see **`xml-migration/example-xmls.md`** (Step 3 operator patterns) and **`xml-migration/fxtemplates.md`** (Step 3). Key XML-specific rules covered there:
 - `ScaleOperator` split: `parameter=` → spec inference; `tree=` → `ScaleTreeOperator`
 - `Uniform` tree operator: must use full path `beast.base.evolution.operator.Uniform`
-- `Exchange`, `WilsonBalding`, `SubtreeSlide`: leave unchanged
+- `Exchange`, `WilsonBalding`: leave unchanged (no spec equivalent)
+- `SubtreeSlide`: rename to `beast.base.evolution.operator.kernel.BactrianSubtreeSlide`
+  (the XML converter handles this automatically via `deprecated_classes.md`)
 
 ---
 

@@ -131,7 +131,7 @@ Consult `../beast3/scripts/migration-guide.md` on demand for any class not cover
 | 5 | `java-migration/site-likelihood.md` | `import beast.base.evolution.sitemodel.` · `import beast.base.evolution.likelihood.` | → `.spec.` equivalents | classes renamed (list) · `SiteModel.Base→SiteModel: y/n` |
 | 6 | `java-migration/tree-coalescent.md` | `import beast.base.evolution.tree.` · `import beast.base.evolution.speciation.` | → `.spec.` equivalents (Tree/Node/TreeParser/TreeInterface are NOT renamed) | classes renamed by category: `tree(N)` · `coalescent(N)` · `speciation(N)` |
 | 7 | `java-migration/distributions.md` | `import beast.base.inference.distribution.` | → `.spec.` equivalents; `Prior` is **removed** in BEAST3 — replace `Prior` wrapper with the inner distribution directly | classes renamed (list) · `Prior wrapper removed: y/n` |
-| 8 | `java-migration/operators.md` | `import beast.base.inference.operator.` · `import beast.base.evolution.operator.` | → `.spec.` equivalents; `ScaleOperator` split: `parameter=` → spec inference, `tree=` → `ScaleTreeOperator`; `Exchange`/`WilsonBalding`/`SubtreeSlide` unchanged; Operators use **concrete** Input types | classes renamed by group · `Input declarations made concrete: N` |
+| 8 | `java-migration/operators.md` | `import beast.base.inference.operator.` · `import beast.base.evolution.operator.` | → `.spec.` equivalents; `ScaleOperator` split: `parameter=` → spec inference, `tree=` → `ScaleTreeOperator`; `Exchange`/`WilsonBalding` unchanged; `SubtreeSlide` → `BactrianSubtreeSlide`; Operators use **concrete** Input types | classes renamed by group · `Input declarations made concrete: N` |
 
 ---
 
@@ -215,8 +215,8 @@ analysis — in the linter report, in grep output, or anywhere a file path appea
 
 | Condition | Classification | Handled by |
 |---|---|---|
-| Path contains `fxtemplates` **or** module name ends in `-fx` | **BEAUti template** — GUI only, not runnable by BEAST main | Step 4 (`xml-migration/fxtemplates.md`) |
-| Neither condition matches | **Example analysis** — runnable by BEAST main | Step 5 (`xml-migration/example-xmls.md`) |
+| Path contains `fxtemplates` **or** module name ends in `-fx` | **BEAUti template** — GUI only, not runnable by BEAST main | Step 4 — script with `--fxtemplate` |
+| Neither condition matches | **Example analysis** — runnable by BEAST main | Step 5 — script without `--fxtemplate` |
 
 The linter's **"FxTemplates pending migration"** and **"Example XMLs pending migration"**
 sections are already pre-classified — no rule needed for those. Apply the rule only when
@@ -235,19 +235,20 @@ confirm `mvn clean compile` passes before continuing. Otherwise run:
 mvn clean compile
 ```
 
-> ⚠️ **Always re-read the linter report from disk before starting Step 4 or Step 5.**
-> Do not use any earlier read of this file from the current session.
-> Java migration (Step 3) may have resolved classes that were previously flagged, and the
-> report may have been regenerated since it was last seen. The file on disk is the only
-> authoritative source of what XML work remains.
->
-> ```
-> ./reports/<package.name>.md
-> ```
+Run the converter on all BEAUti template XMLs and FXML files under `src/main/resources/`:
 
-Apply **`xml-migration/fxtemplates.md`** to migrate class references in BEAUti template XMLs and FXML
-files under `src/main/resources/`. Use the XML classification rule above to identify
-template files in the linter report.
+```bash
+find src/main/resources -name "*.xml" -o -name "*.fxml" | sort | \
+    xargs python skills/xml-migration/convert_b2_to_b3.py \
+    --fxtemplate --report >> tmp/b3migration/log/$(date +%Y-%m-%d).md
+```
+
+Review the appended report for any **TODOs** (classes with no spec twin) — these need manual follow-up. See `xml-migration/XML-MIGRATION-STRATEGY.md` for the full rule reference.
+
+Verify no unmigrated `beast.base.` references remain:
+```bash
+grep -rn "beast\.base\." src/main/resources/ --include="*.xml" --include="*.fxml" | grep -v "\.spec\."
+```
 
 Steps 4 and 5 may be run individually but both require the compile prerequisite above.
 
@@ -263,12 +264,20 @@ confirm `mvn clean compile` passes before continuing. Otherwise run:
 mvn clean compile
 ```
 
-> ⚠️ **Always re-read the linter report from disk before starting this step** — see the
-> note at the top of Step 4. Do not rely on an earlier read from the current session.
+Run the converter on all example analysis XMLs under `src/test/resources/`:
 
-Apply **`xml-migration/example-xmls.md`** to migrate class references in example analysis XMLs under
-`src/test/resources/`. Use the XML classification rule above to identify example files in
-the linter report.
+```bash
+find src/test/resources -name "*.xml" | sort | \
+    xargs python skills/xml-migration/convert_b2_to_b3.py \
+    --report >> tmp/b3migration/log/$(date +%Y-%m-%d).md
+```
+
+Review the appended report for any **TODOs** — these need manual follow-up. See `xml-migration/XML-MIGRATION-STRATEGY.md` for the full rule reference.
+
+Verify no unmigrated `beast.base.` references remain:
+```bash
+grep -rn "beast\.base\." src/test/resources/ --include="*.xml" | grep -v "\.spec\."
+```
 
 Steps 4 and 5 may be run individually but both require the compile prerequisite above.
 

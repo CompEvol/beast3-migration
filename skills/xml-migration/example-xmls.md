@@ -66,7 +66,8 @@ for the exact XML patterns and examples:
 | `hky.kappa` prior — `OneOnX` | `OneOnX` inner distr on `hky.kappa` | See `OneOnX` prior patterns below |
 | Vector prior → `IID` | Vector-valued `x=` on a `Prior` whose inner distr is scalar | `java-migration/distributions.md` |
 | Operator rename | `*.spec.*operator.*` class | `java-migration/operators.md` |
-| Operator — no spec twin | `Exchange`, `WilsonBalding`, `SubtreeSlide` | Leave unchanged — no spec equivalent |
+| Operator — no spec twin | `Exchange`, `WilsonBalding` | Leave unchanged — no spec equivalent |
+| `SubtreeSlide` | deprecated — replace with `beast.base.evolution.operator.kernel.BactrianSubtreeSlide` | handled automatically by the XML converter |
 | `ScaleOperator` split | `parameter=` vs `tree=` attribute present | See patterns below |
 | `Uniform` tree operator | `tree=` attribute present | Use full path — see patterns below |
 
@@ -240,7 +241,7 @@ Any hit not in the "do not rename" list is an error — fix it. Remaining issues
 surface as `mvn test` failures in Step 7.
 
 **Do not rename** (not deprecated, or no spec twin):
-`Tree`, `Node`, `TreeInterface`, `TreeParser`, `SiteModelInterface`, `SubstitutionModel`, `BranchRateModel`, `Exchange`, `WilsonBalding`, `SubtreeSlide`
+`Tree`, `Node`, `TreeInterface`, `TreeParser`, `SiteModelInterface`, `SubstitutionModel`, `BranchRateModel`, `Exchange`, `WilsonBalding`
 
 ---
 

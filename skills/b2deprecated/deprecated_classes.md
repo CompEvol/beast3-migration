@@ -1,13 +1,13 @@
 # Deprecated Classes in Beast3
 
 Scanned from: `~/WorkSpace/beast3`  
-Total deprecated classes found: **96**
+Total deprecated classes found: **100**
 
 Entries are ordered by Maven module then Java package.
 The **Replacement** column is extracted from the `@deprecated` Javadoc tag;
 _no replacement specified_ means the tag was absent.
 
-## `beast-base` (95 classes)
+## `beast-base` (99 classes)
 
 ### `beast.base.core`
 
@@ -53,6 +53,7 @@ _no replacement specified_ means the tag was absent.
 | `AdaptableOperatorSampler` | use `beast.base.spec.evolution.operator.AdaptableOperatorSampler` instead |
 | `EpochFlexOperator` | use `beast.base.spec.evolution.operator.IntervalScaleOperator` instead |
 | `ScaleOperator` | replaced by `beast.base.spec.inference.operator.ScaleOperator`, and `beast.base.spec.evolution.operator.ScaleTreeOperator` |
+| `SubtreeSlide` | replaced by `beast.base.evolution.operator.kernel.BactrianSubtreeSlide` |
 | `TreeStretchOperator` | use `beast.base.spec.evolution.operator.IntervalScaleOperator` instead |
 
 ### `beast.base.evolution.operator.kernel`
@@ -60,6 +61,12 @@ _no replacement specified_ means the tag was absent.
 | Deprecated Class | Replacement |
 |:---|:---|
 | `BactrianScaleOperator` | replaced by `beast.base.spec.inference.operator.ScaleOperator`, and `beast.base.spec.evolution.operator.ScaleTreeOperator` |
+
+### `beast.base.evolution.sitemodel`
+
+| Deprecated Class | Replacement |
+|:---|:---|
+| `SiteModel` | from BEAST v3.0.0 Use `beast.base.spec.evolution.sitemodel.SiteModel` instead |
 
 ### `beast.base.evolution.speciation`
 
@@ -90,6 +97,7 @@ _no replacement specified_ means the tag was absent.
 | `ComplexSubstitutionModel` | use `beast.base.spec.evolution.substitutionmodel.ComplexSubstitutionModel` instead |
 | `Dayhoff` | use `beast.base.spec.evolution.substitutionmodel.Dayhoff` instead |
 | `EmpiricalSubstitutionModel` | use `beast.base.spec.evolution.substitutionmodel.EmpiricalSubstitutionModel` instead |
+| `Frequencies` | from BEAST v3.0.0 use `beast.base.spec.evolution.substitutionmodel.Frequencies` instead |
 | `GTR` | use `beast.base.spec.evolution.substitutionmodel.GTR` instead |
 | `GeneralSubstitutionModel` | use `beast.base.spec.evolution.substitutionmodel.GeneralSubstitutionModel` instead |
 | `HKY` | use `beast.base.spec.evolution.substitutionmodel.HKY` instead |
@@ -161,6 +169,7 @@ _no replacement specified_ means the tag was absent.
 
 | Deprecated Class | Replacement |
 |:---|:---|
+| `BactrianDeltaExchangeOperator` | from BEAST v3.0.0 use `beast.base.spec.inference.operator.DeltaExchangeOperator` |
 | `BactrianIntervalOperator` | replaced by `beast.base.spec.inference.operator.uniform.IntervalOperator`. |
 | `BactrianRandomWalkOperator` | Use `beast.base.spec.inference.operator.RealRandomWalkOperator` instead. |
 | `BactrianUpDownOperator` | Use `beast.base.spec.evolution.operator.UpDownOperator` instead. |

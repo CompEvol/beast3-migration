@@ -15,3 +15,8 @@ target/
 
 # scripts/gen-backlog.py CBAN cache
 .cache/
+
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
