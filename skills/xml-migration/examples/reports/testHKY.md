@@ -4,7 +4,7 @@
 - Total changes   : 20
 - ⚠ Warnings      : 6  (semantic replacements — review required)
 
-### skills/xml-migration/examples/testHKY.xml  (12 renames, ⚠ 6 warnings)
+### examples/testHKY.xml  (12 renames, ⚠ 6 warnings)
 
     1. [info]    version: 2.0 → 2.8
     2. [info]    namespace: updated (deprecated classes use full FQNs; no spec packages in namespace)

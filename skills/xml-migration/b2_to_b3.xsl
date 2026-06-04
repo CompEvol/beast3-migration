@@ -61,10 +61,9 @@
          _b3domain = domain class name  (e.g. PositiveReal)
          _b3fqn    = full qualified name if needed
        ═══════════════════════════════════════════════════════════════════ -->
-  <!-- Matches: any element with _b3spec+_b3domain (parameter conversion) -->
-  <xsl:template match="*[@_b3spec and @_b3domain]">
+  <!-- T2: scalar/vector parameters — drop lower=/upper=/dimension=, add domain= -->
+  <xsl:template match="*[@_b3spec and @_b3domain and @_b3domain!='simplex']">
     <xsl:element name="{local-name()}">
-      <!-- Copy id, value, name and any non-beast2-param attrs, drop lower/upper/dimension -->
       <xsl:apply-templates select="@*[not(name()='spec')
                                    and not(name()='lower')
                                    and not(name()='upper')
@@ -72,6 +71,18 @@
                                    and not(starts-with(name(),'_b3'))]"/>
       <xsl:attribute name="spec"><xsl:value-of select="@_b3spec"/></xsl:attribute>
       <xsl:attribute name="domain"><xsl:value-of select="@_b3domain"/></xsl:attribute>
+      <xsl:apply-templates select="node()"/>
+    </xsl:element>
+  </xsl:template>
+
+  <!-- T2s: SimplexParam — keep dimension= (required for expansion), drop lower=/upper=, no domain= -->
+  <xsl:template match="*[@_b3spec and @_b3domain='simplex']">
+    <xsl:element name="{local-name()}">
+      <xsl:apply-templates select="@*[not(name()='spec')
+                                   and not(name()='lower')
+                                   and not(name()='upper')
+                                   and not(starts-with(name(),'_b3'))]"/>
+      <xsl:attribute name="spec"><xsl:value-of select="@_b3spec"/></xsl:attribute>
       <xsl:apply-templates select="node()"/>
     </xsl:element>
   </xsl:template>
@@ -85,11 +96,17 @@
          oneonx_kappa→ replace with LogNormal(M=1,S=0.5) for hky.kappa
        ═══════════════════════════════════════════════════════════════════ -->
 
-  <!-- T3a: flatten Prior → inline inner distribution -->
-  <xsl:template match="distribution[@_b3prior_type='flatten']">
-    <xsl:variable name="inner" select="*[local-name()='distr' or local-name()='distribution'][1]"/>
+  <!-- T3a: flatten Prior → inline inner distribution.
+       Matches any element tag (distribution OR prior — BEAUti uses <prior> as
+       a <map>-based alias for beast.base.inference.distribution.Prior).
+       $inner selector covers three BEAST2 authoring styles:
+         <distr spec="..."/>          — tag is 'distr'
+         <distribution spec="..."/>   — tag is 'distribution'
+         <LogNormal name="distr" ."/> — tag is class short name, name attr is 'distr'
+       x= is converted to param= (BEAST3 distribution API uses param=). -->
+  <xsl:template match="*[@_b3prior_type='flatten']">
+    <xsl:variable name="inner" select="(*[local-name()='distr' or local-name()='distribution'] | *[@name='distr'])[1]"/>
     <distribution>
-      <!-- keep id from Prior, get spec from inner distr -->
       <xsl:if test="@id">
         <xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute>
       </xsl:if>
@@ -102,37 +119,41 @@
           <xsl:attribute name="spec"><xsl:value-of select="$inner/@spec"/></xsl:attribute>
         </xsl:otherwise>
       </xsl:choose>
-      <!-- x= or param= from the Prior -->
+      <!-- x= → param= (BEAST3 API); keep param= if already present -->
       <xsl:if test="@x">
-        <xsl:attribute name="x"><xsl:value-of select="@x"/></xsl:attribute>
+        <xsl:attribute name="param"><xsl:value-of select="@x"/></xsl:attribute>
       </xsl:if>
       <xsl:if test="@param">
         <xsl:attribute name="param"><xsl:value-of select="@param"/></xsl:attribute>
       </xsl:if>
-      <!-- Copy inner distribution's attributes (excluding spec, _b3*) -->
-      <xsl:apply-templates select="$inner/@*[not(name()='spec') and not(starts-with(name(),'_b3'))]"/>
+      <!-- Copy inner distribution's attributes (excluding spec, name, _b3*) -->
+      <xsl:apply-templates select="$inner/@*[not(name()='spec') and not(name()='name') and not(starts-with(name(),'_b3'))]"/>
       <!-- Copy inner distribution's children -->
       <xsl:apply-templates select="$inner/node()"/>
     </distribution>
   </xsl:template>
 
-  <!-- T3b: IID — vector prior -->
-  <xsl:template match="distribution[@_b3prior_type='iid']">
-    <xsl:variable name="inner" select="*[local-name()='distr' or local-name()='distribution'][1]"/>
+  <!-- T3b: IID — vector prior. Same element-tag and $inner fixes as T3a. -->
+  <xsl:template match="*[@_b3prior_type='iid']">
+    <xsl:variable name="inner" select="(*[local-name()='distr' or local-name()='distribution'] | *[@name='distr'])[1]"/>
     <distribution>
       <xsl:if test="@id">
         <xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute>
       </xsl:if>
       <xsl:attribute name="spec">beast.base.spec.inference.distribution.IID</xsl:attribute>
+      <!-- x= → param= (BEAST3 API) -->
       <xsl:if test="@x">
-        <xsl:attribute name="x"><xsl:value-of select="@x"/></xsl:attribute>
+        <xsl:attribute name="param"><xsl:value-of select="@x"/></xsl:attribute>
+      </xsl:if>
+      <xsl:if test="@param">
+        <xsl:attribute name="param"><xsl:value-of select="@param"/></xsl:attribute>
       </xsl:if>
       <xsl:apply-templates select="$inner"/>
     </distribution>
   </xsl:template>
 
   <!-- T3c: OneOnX on popSize → LogNormal(M=3,S=2.5) -->
-  <xsl:template match="distribution[@_b3prior_type='oneonx_pop']">
+  <xsl:template match="*[@_b3prior_type='oneonx_pop']">
     <distribution>
       <xsl:if test="@id"><xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute></xsl:if>
       <xsl:attribute name="spec">beast.base.spec.inference.distribution.LogNormal</xsl:attribute>
@@ -143,7 +164,7 @@
   </xsl:template>
 
   <!-- T3d: OneOnX on hky.kappa → LogNormal(M=1,S=0.5) -->
-  <xsl:template match="distribution[@_b3prior_type='oneonx_kappa']">
+  <xsl:template match="*[@_b3prior_type='oneonx_kappa']">
     <distribution>
       <xsl:if test="@id"><xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute></xsl:if>
       <xsl:attribute name="spec">beast.base.spec.inference.distribution.LogNormal</xsl:attribute>
@@ -154,7 +175,7 @@
   </xsl:template>
 
   <!-- T3e: OneOnX with unknown parameter → LogNormal with conservative defaults -->
-  <xsl:template match="distribution[@_b3prior_type='oneonx_generic']">
+  <xsl:template match="*[@_b3prior_type='oneonx_generic']">
     <distribution>
       <xsl:if test="@id"><xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute></xsl:if>
       <xsl:attribute name="spec">beast.base.spec.inference.distribution.LogNormal</xsl:attribute>

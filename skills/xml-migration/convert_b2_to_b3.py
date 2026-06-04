@@ -164,6 +164,16 @@ def main():
             print(f'SKIP: {inp} not found', file=sys.stderr)
             continue
 
+        # Reject files that already carry the _b3 suffix — they are BEAST3
+        # outputs and must not be fed back into the converter.
+        if inp.stem.endswith('_b3'):
+            print(
+                f'SKIP: {inp} already has a _b3 suffix and looks like a '
+                f'BEAST3 output file. Pass the original BEAST2 source instead.',
+                file=sys.stderr,
+            )
+            continue
+
         out = args.out or inp.with_name(inp.stem + '_b3' + inp.suffix)
 
         # --- Overwrite guard ---

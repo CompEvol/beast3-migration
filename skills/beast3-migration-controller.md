@@ -239,7 +239,7 @@ Run the converter on all BEAUti template XMLs and FXML files under `src/main/res
 
 ```bash
 find src/main/resources -name "*.xml" -o -name "*.fxml" | sort | \
-    xargs python skills/xml-migration/convert_b2_to_b3.py \
+    xargs python3 skills/xml-migration/convert_b2_to_b3.py \
     --fxtemplate --report >> tmp/b3migration/log/$(date +%Y-%m-%d).md
 ```
 
@@ -268,7 +268,7 @@ Run the converter on all example analysis XMLs under `src/test/resources/`:
 
 ```bash
 find src/test/resources -name "*.xml" | sort | \
-    xargs python skills/xml-migration/convert_b2_to_b3.py \
+    xargs python3 skills/xml-migration/convert_b2_to_b3.py \
     --report >> tmp/b3migration/log/$(date +%Y-%m-%d).md
 ```
 

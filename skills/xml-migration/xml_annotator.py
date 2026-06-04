@@ -95,8 +95,15 @@ def _prior_type(elem: etree._Element) -> Optional[str]:
       'oneonx_kappa'   — OneOnX prior on kappa  → LogNormal(M=1, S=0.5)
       'oneonx_generic' — OneOnX on unknown param → LogNormal(M=1, S=1.0) + TODO
     Returns None if the element is not a Prior.
+
+    Recognises two BEAST2 authoring styles:
+      spec="Prior"  — explicit spec attribute
+      <prior .../>  — element tag used as class alias via <map name="prior">
     """
     spec = elem.get('spec', '') or ''
+    # BEAUti writes <prior x="..."> with no spec= — the tag itself is the alias.
+    if not spec and isinstance(elem.tag, str) and elem.tag == 'prior':
+        spec = 'Prior'
     if spec.split('.')[-1] != 'Prior' and spec not in _PRIOR_CLASSES:
         return None
 
@@ -160,6 +167,26 @@ def prepass(tree: etree._ElementTree, dep_map: dict[str, str],
         spec_val = elem.get('spec', '') or ''
         spec_simple = spec_val.split('.')[-1]
 
+        # --- chainLength on <run spec="MCMC"> ---
+        # Convert plain integers to the parameterised form $(chainLength=N) so the
+        # value can be overridden on the command line without editing the XML.
+        # Idempotent: already-converted values (starting with "$(") are left alone.
+        chain_len = elem.get('chainLength')
+        if chain_len is not None and not chain_len.startswith('$('):
+            if elem.tag == 'run' or 'MCMC' in spec_val:
+                new_cl = f'$(chainLength={chain_len})'
+                elem.set('chainLength', new_cl)
+                changes.append(Change(
+                    ChangeKind.INFO,
+                    f'chainLength: "{chain_len}" → "{new_cl}"',
+                ))
+
+        # --- logEvery on <logger> elements ---
+        # Parameterise so the logging frequency can be overridden at the command
+        # line (e.g. -D logEvery=100) independently of the default in the XML.
+        # BEAST3 only allows one $(logEvery=N) default declaration per variable:
+        # the first logger defines the default; subsequent ones reference $(logEvery).
+        # Idempotent: already-converted values are left alone.
         # Bare <parameter> with no spec= is a legacy RealParameter.
         bare = elem.tag == 'parameter' and not spec_val and elem.get('value') is not None
         if bare:
@@ -168,20 +195,35 @@ def prepass(tree: etree._ElementTree, dep_map: dict[str, str],
         # --- Parameter migration ---
         if spec_simple in _PARAM_BASE_TYPES:
             shape = _infer_shape(elem)
-            domain = _infer_domain(elem)
             b3spec = _param_spec(spec_simple, shape)
             elem.set('_b3spec', b3spec)
-            elem.set('_b3domain', domain)
             qualifier = ' (bare tag)' if bare else ''
-            # Report attributes dropped by XSLT T2 so nothing is silently lost.
-            dropped = [f'{a}="{elem.get(a)}"'
-                       for a in ('lower', 'upper', 'dimension')
-                       if elem.get(a) is not None]
-            drop_note = f'  dropped: {", ".join(dropped)}' if dropped else ''
-            changes.append(Change(
-                ChangeKind.RENAME,
-                f'spec= "{spec_simple}"{qualifier} → "{b3spec}"  domain="{domain}"{drop_note}',
-            ))
+
+            if shape == 'simplex':
+                # SimplexParam has no domain= input; dimension= must be kept so
+                # BEAST3 knows how many elements the simplex has (e.g. dimension="4"
+                # with value="0.25" expands to [0.25, 0.25, 0.25, 0.25]).
+                # Use sentinel '_b3domain=simplex' so XSLT T2s handles this path.
+                elem.set('_b3domain', 'simplex')
+                dropped = [f'{a}="{elem.get(a)}"'
+                           for a in ('lower', 'upper') if elem.get(a) is not None]
+                drop_note = f'  dropped: {", ".join(dropped)}' if dropped else ''
+                changes.append(Change(
+                    ChangeKind.RENAME,
+                    f'spec= "{spec_simple}"{qualifier} → "{b3spec}"{drop_note}',
+                ))
+            else:
+                domain = _infer_domain(elem)
+                elem.set('_b3domain', domain)
+                # Report attributes dropped by XSLT T2 so nothing is silently lost.
+                dropped = [f'{a}="{elem.get(a)}"'
+                           for a in ('lower', 'upper', 'dimension')
+                           if elem.get(a) is not None]
+                drop_note = f'  dropped: {", ".join(dropped)}' if dropped else ''
+                changes.append(Change(
+                    ChangeKind.RENAME,
+                    f'spec= "{spec_simple}"{qualifier} → "{b3spec}"  domain="{domain}"{drop_note}',
+                ))
             continue
 
         # --- Prior classification ---
@@ -193,6 +235,7 @@ def prepass(tree: etree._ElementTree, dep_map: dict[str, str],
         if ptype is not None:
             elem.set('_b3prior_type', ptype)
             _annotate_inner_distr(elem, dep_map)
+            changes.extend(_fix_uniform_infinite_bounds(elem))
             # oneonx_* priors replace all children wholesale via the XSLT template;
             # mark children so the main loop skips them and avoids spurious renames.
             if ptype.startswith('oneonx'):
@@ -215,6 +258,35 @@ def prepass(tree: etree._ElementTree, dep_map: dict[str, str],
                     '  (class split — evolution mode)',
                 ))
             continue
+
+        # --- Standalone OneOnX: reuse the oneonx_generic → LogNormal path ---
+        # OneOnX inside a Prior is already handled above (_prior_type detects it
+        # and marks the child in skip_elements).  Any OneOnX that reaches here
+        # is standalone — stamp it as oneonx_generic so T3e in the XSLT converts
+        # it to LogNormal(M=1, S=1) instead of dep_map's LogUniform mapping.
+        if spec_simple == 'OneOnX':
+            elem.set('_b3prior_type', 'oneonx_generic')
+            continue
+
+        # --- UniformOperator: ambiguous split — warn, then fall through to rename ---
+        # dep_map picks IntUniformOperator (first FQN); IntervalOperator is the
+        # alternative for real-valued parameters.
+        if spec_simple == 'UniformOperator':
+            changes.append(Change(
+                ChangeKind.WARNING,
+                'spec= "UniformOperator" → "IntUniformOperator" assumed; '
+                'use "beast.base.spec.inference.operator.uniform.IntervalOperator" '
+                'instead if the target is a real-valued parameter',
+            ))
+
+        # --- Parameter: abstract type — warn, then fall through to rename ---
+        # dep_map picks beast.base.spec.type.Tensor (read-only use).
+        elif spec_simple == 'Parameter':
+            changes.append(Change(
+                ChangeKind.WARNING,
+                'spec= "Parameter" → "beast.base.spec.type.Tensor" assumed (read-only); '
+                'use RealScalarParam/RealVectorParam if the parameter is mutable',
+            ))
 
         # --- Uniform tree operator: XSLT T4c uses full legacy path ---
         if spec_simple == 'Uniform' and elem.get('tree') is not None:
@@ -298,6 +370,14 @@ def _prior_change(ptype: str, elem: etree._Element) -> Change:
         return Change(ChangeKind.WARNING, _PRIOR_IID_MSG)
     # oneonx_* variants
     m, s = _ONEONX_LOGNORMAL.get(ptype, ('1.0', '1.0'))
+    # Standalone OneOnX (element itself is OneOnX, not a Prior wrapper).
+    spec = (elem.get('spec', '') or '').split('.')[-1]
+    if spec == 'OneOnX':
+        return Change(
+            ChangeKind.WARNING,
+            f'spec= "OneOnX" standalone → "LogNormal"  M={m}  S={s}'
+            '  — set param= to the target parameter; review M/S defaults',
+        )
     x_ref = elem.get('x', '') or ''
     suffix = '  — review M/S defaults' if ptype == 'oneonx_generic' else ''
     return Change(
@@ -306,12 +386,50 @@ def _prior_change(ptype: str, elem: etree._Element) -> Change:
     )
 
 
+_INFINITE_BOUNDS: frozenset[str] = frozenset({'Infinity', '+Infinity', 'Inf', '+Inf'})
+_NEG_INFINITE_BOUNDS: frozenset[str] = frozenset({'-Infinity', '-Inf'})
+
+
+def _fix_uniform_infinite_bounds(prior_elem: etree._Element) -> list[Change]:
+    """
+    Replace infinite lower/upper bounds on a Uniform inner distribution.
+
+    BEAST3's Uniform distribution (backed by Apache Commons Statistics) requires
+    finite bounds — Infinity is rejected at initAndValidate time.  Replace with a
+    large finite sentinel and emit a WARNING so the user can review the value.
+    """
+    inner = _find_inner_distr(prior_elem)
+    if inner is None:
+        return []
+    inner_spec = (inner.get('spec', '') or inner.tag or '').split('.')[-1]
+    if inner_spec != 'Uniform':
+        return []
+    changes: list[Change] = []
+    for attr, infinities, replacement in (
+        ('upper', _INFINITE_BOUNDS,     '1.0E6'),
+        ('lower', _NEG_INFINITE_BOUNDS, '-1.0E6'),
+    ):
+        val = inner.get(attr, '')
+        if val in infinities:
+            inner.set(attr, replacement)
+            changes.append(Change(
+                ChangeKind.WARNING,
+                f'Uniform prior {attr}="{val}" → "{replacement}" — '
+                'BEAST3 requires finite bounds; review and adjust this value',
+            ))
+    return changes
+
+
 def _annotate_inner_distr(prior_elem: etree._Element, dep_map: dict[str, str]):
     """Stamp _b3spec on non-OneOnX inner distribution children of a Prior."""
     for child in prior_elem:
         if not isinstance(child.tag, str):
             continue
         child_spec = child.get('spec', '') or ''
+        # BEAUti writes <LogNormal name="distr" .../> — no spec= attribute;
+        # the element tag is the class short name (resolved via <map> in BEAST2).
+        if not child_spec:
+            child_spec = child.tag
         if child_spec.split('.')[-1] in _ONEONX_CLASSES:
             continue
         new_spec = resolve_spec(child_spec, dep_map)

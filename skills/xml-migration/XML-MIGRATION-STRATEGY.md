@@ -24,7 +24,7 @@ Do not hand-edit XML files. Run the script; review its output.
 
 **Example XMLs (controller Step 5):**
 ```bash
-python skills/xml-migration/convert_b2_to_b3.py \
+python3 skills/xml-migration/convert_b2_to_b3.py \
     src/test/resources/path/to/file.xml \
     --out src/test/resources/path/to/file.xml \
     --report
@@ -32,7 +32,7 @@ python skills/xml-migration/convert_b2_to_b3.py \
 
 **FxTemplates / BEAUti templates (controller Step 4):**
 ```bash
-python skills/xml-migration/convert_b2_to_b3.py \
+python3 skills/xml-migration/convert_b2_to_b3.py \
     src/main/resources/path/to/template.xml \
     --out src/main/resources/path/to/template.xml \
     --fxtemplate \
@@ -45,7 +45,7 @@ python skills/xml-migration/convert_b2_to_b3.py \
 
 A per-file Markdown report is always saved to `<input-dir>/reports/<stem>.md`.
 
-**Batch:** `find src/test/resources -name "*.xml" | xargs python skills/xml-migration/convert_b2_to_b3.py --report`
+**Batch:** `find src/test/resources -name "*.xml" | xargs python3 skills/xml-migration/convert_b2_to_b3.py --report`
 
 ## Namespace Strategy
 
@@ -102,28 +102,84 @@ Filter 1 covers the identity path; Filter 2 covers explicit `apply-templates` in
 Sets `version="2.8"`. Replaces `namespace=` with the legacy/core package list (no spec packages).
 Skipped in `--fxtemplate` mode.
 
-### T2 — `<parameter>` (including bare tags with no `spec=`)
+### T2 — `<parameter>` scalar/vector (including bare tags with no `spec=`)
 `xml_annotator._infer_shape` / `_infer_domain` decide; XSLT applies. Output uses full FQN for spec=.
 
 Shape from `value=` token count:
 - 1 token → `scalar`; >1 → `vector`; id contains `freq` or parent is `frequencies` → `simplex`
 
-Domain from `lower=` / `upper=`:
+Domain from `lower=` / `upper=` (scalar/vector only):
 - `lower≥0`, no upper → `PositiveReal`; `lower≥0 upper≤1` → `UnitInterval`; else → `Real`
 
 Output drops `lower=`, `upper=`, `dimension=` (absorbed into `domain=`). Reported as `dropped:` in the rename entry.
 
-### T3 — `<distribution spec="*Prior">` (five variants)
+### T2s — `<parameter>` simplex (`SimplexParam`)
+Separate XSLT template matched by `_b3domain='simplex'` sentinel (not a BEAST3 class name).
+`SimplexParam` has no `domain=` input — it is self-constraining. `dimension=` is **kept**
+(required so BEAST3 knows how many elements to expand, e.g. `value="0.25"` + `dimension="4"`
+→ `[0.25, 0.25, 0.25, 0.25]`). Only `lower=` and `upper=` are dropped.
+
+### T3 — Prior distributions (five variants)
+
 `xml_annotator._prior_type` sets `_b3prior_type`; `collect_prior_changes()` records after
 `annotate_vector_priors()` runs to capture any `flatten`→`iid` upgrade.
 
+**Two BEAST2 authoring styles are both recognised:**
+
+| Style | Example |
+|---|---|
+| `spec=` attribute | `<distribution spec="Prior" x="@kappa">` |
+| Element tag (BEAUti) | `<prior name="distribution" x="@kappa">` — resolved via `<map name="prior">` |
+
+**Three inner-distribution styles inside a Prior are all recognised:**
+
+| Style | Example |
+|---|---|
+| `<distr spec="..."/>` | `<distr spec="beast.base.inference.distribution.LogNormal" .../>` |
+| `<distribution spec="..."/>` | `<distribution spec="LogNormal" .../>` |
+| Tag-as-class (BEAUti) | `<LogNormal name="distr" .../>` — tag is the class short name, no `spec=` |
+
+`_annotate_inner_distr()` resolves tag-as-class names via dep_map exactly like `spec=` values.
+
+**`x=` → `param=` conversion:** BEAST2 Prior uses `x=` to reference the parameter; BEAST3
+distributions use `param=`. T3a and T3b convert `x=` → `param=` in their output (consistent
+with T3c/d/e which already did this).
+
+**T3 variants:**
+
 | `_b3prior_type` | Condition | Output spec= |
 |---|---|---|
-| `flatten` | scalar inner `<distr>` | inner distribution inlined; Prior wrapper dropped |
-| `iid` | vector `x=` param | `beast.base.spec.inference.distribution.IID` |
-| `oneonx_pop` | `OneOnX` + `x=` references `popSize` | `beast.base.spec.inference.distribution.LogNormal` M=3 S=2.5 |
-| `oneonx_kappa` | `OneOnX` + `x=` references `kappa` | `beast.base.spec.inference.distribution.LogNormal` M=1 S=0.5 |
-| `oneonx_generic` | `OneOnX` + unknown param | `beast.base.spec.inference.distribution.LogNormal` M=1 S=1 + WARNING |
+| `flatten` | scalar inner distr | inner distribution inlined; Prior wrapper dropped; `x=` → `param=` |
+| `iid` | vector `x=` param | `beast.base.spec.inference.distribution.IID`; `x=` → `param=` |
+| `oneonx_pop` | `OneOnX` inner + `x=` references `popSize` | `beast.base.spec.inference.distribution.LogNormal` M=3 S=2.5 |
+| `oneonx_kappa` | `OneOnX` inner + `x=` references `kappa` | `beast.base.spec.inference.distribution.LogNormal` M=1 S=0.5 |
+| `oneonx_generic` | `OneOnX` inner + unknown param, **or standalone `OneOnX` element** | `beast.base.spec.inference.distribution.LogNormal` M=1 S=1 + WARNING |
+
+**Standalone `OneOnX`** (not inside a Prior wrapper): stamped as `oneonx_generic` so XSLT T3e
+converts it to LogNormal(M=1, S=1). dep_map's `LogUniform` mapping is bypassed. A WARNING is
+emitted asking the user to verify M/S and set `param=`.
+
+All T3 templates match `*[@_b3prior_type='...']` (any element tag, not just `distribution`) so
+they fire on both `<distribution>` and `<prior>` element styles.
+
+### T3f — `chainLength` parameterisation
+Applied by `xml_annotator.prepass()` as a direct attribute mutation — no XSLT annotation needed.
+
+**`chainLength` on `<run spec="MCMC">`:** plain integer → `$(chainLength=N)`.
+Idempotent (already-parameterised values skipped). Reported as `[info]`.
+
+**Test command:**
+```bash
+mvn -pl beast-fx exec:exec \
+    -Dbeast.args="-overwrite -D chainLength=100 $HOME/path/to/file_b3.xml" \
+    > /tmp/beast3_test_output.txt 2>&1
+```
+- `-overwrite` — prevents BEAST blocking on an interactive `Y/N` prompt when log files exist
+- `-D chainLength=100` — short chain for a quick smoke test
+- `$HOME` not `~` inside the quoted string — `~` is only expanded at word boundaries, not inside quotes
+
+**Checking results:** use `check_beast_run.py OUTPUT_FILE` (in this directory). Prints only the
+"Total calculation time" line on pass, or a compact error block on fail.
 
 ### T4 — Operators
 - `ScaleOperator`/`BactrianScaleOperator` + `parameter=` → `beast.base.spec.inference.operator.ScaleOperator`
@@ -149,8 +205,15 @@ All `<map name="...">` elements are stripped. These are B2 short-name aliases; B
 | In `DO_NOT_RENAME` | No change (see list below) |
 | Short name in `dep_map` | → full B3 FQN from `dep_map` (may or may not be a spec path) |
 | Short name not in `dep_map` | No change — resolves via namespace |
-| Full FQN with simple name in `dep_map` | → full B3 FQN from `dep_map` |
+| Full FQN with exact key in `dep_map` | → full B3 FQN from `dep_map` (precise — avoids simple-name collision) |
+| Full FQN without exact key, but simple name in `dep_map` | → full B3 FQN from `dep_map` (fallback) |
 | Full FQN not in `dep_map` | No change; added to `[todo]` report |
+
+**dep_map keys:** `parse_deprecated_md()` stores each entry under **two** keys — the simple class
+name (e.g. `"Base"`) and the full deprecated FQN reconstructed from the `### package` section
+heading (e.g. `"beast.base.evolution.branchratemodel.Base"`). The FQN key is looked up first
+for full-FQN inputs, preventing simple-name collisions such as `branchratemodel.Base` vs
+`substitutionmodel.Base` both mapping to the same dep_map slot.
 
 **`DO_NOT_RENAME`**: `Tree`, `Node`, `TreeInterface`, `TreeParser`, `SiteModelInterface`,
 `SubstitutionModel`, `BranchRateModel`, `Exchange`, `WilsonBalding`, `TreeStatLogger`
@@ -169,24 +232,32 @@ The converter always saves `<input-dir>/reports/<stem>.md`. Use `--report` to al
 | WARNING | `[warn] ⚠` | semantic replacement — review required |
 | TODO | `[todo] ✗` | no spec twin found — manual action required |
 
-Warnings are emitted for: Prior structural changes, ScaleOperator split,
-Uniform tree operator legacy path, TreeLikelihood (ThreadedTreeLikelihood suggestion),
-OneOnX→LogNormal generic defaults.
+Warnings are emitted for: Prior structural changes (`flatten`, `iid`, `oneonx_*`),
+ScaleOperator split, Uniform tree operator legacy path,
+TreeLikelihood (ThreadedTreeLikelihood suggestion),
+standalone OneOnX→LogNormal (review M/S and set `param=`),
+`UniformOperator` ambiguous split (IntUniformOperator assumed; may need IntervalOperator),
+`Parameter` abstract type mapped to Tensor (may need RealScalarParam/RealVectorParam),
+`Uniform` prior with `upper="Infinity"` or `lower="-Infinity"` replaced with `±1.0E6`
+(BEAST3's `Uniform` backed by Apache Commons Statistics requires finite bounds).
 
 ## Limits
 
 Not yet handled; requires manual fix or future XSLT extension:
-- `CompoundRealParameter` → `CompoundRealScalarParam`
-- FxTemplate `fx:controller` attribute (GUI layer class moves)
+- `FxTemplate` `fx:controller` attribute (GUI layer class moves)
 - Classes absent from `deprecated_classes.md` (appear as `[todo]` in report)
 - Structural changes specific to a package's custom classes
+- `SpeciesTreeLogger` / `StarBeastStartState` — no B3 FQN replacement; short-name references
+  pass through unchanged with no report entry (full-FQN references emit `[todo]`)
 
 ## Example Files Layout
 
 ```
 skills/xml-migration/examples/
-├── testHKY.xml          ← B2 input — run the converter on this
-├── testHKY_b3.xml       ← expected B3 output — diff against converter output
+├── testHKY.xml          ← B2 input (spec= style priors)
+├── testHKY_b3.xml       ← converted B3 output
+├── testGTR.xml          ← B2 input (BEAUti style: <prior> tags, tag-as-class inner distrs)
+├── testGTR_b3.xml       ← converted B3 output
 ├── reports/             ← auto-generated per-run reports (converter writes here)
 └── reference/
     └── testHKY_beauti3.xml  ← BEAUti3 output — comparison only, NEVER convert

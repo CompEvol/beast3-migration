@@ -61,7 +61,7 @@ for the exact XML patterns and examples:
 |---|---|---|
 | Parameter type + domain | `RealScalarParam`, `RealVectorParam`, `SimplexParam`, `IntScalarParam`, `IntVectorParam`, `BoolScalarParam`, `BoolVectorParam` | `java-migration/parameters.md` |
 | Distribution rename only | `*.spec.inference.distribution.*` class — same name as deprecated | Apply U2 directly |
-| `Prior` → direct distribution | Element is `<distribution spec="Prior">` wrapping an inner `<distr .../>` | `java-migration/distributions.md` |
+| `Prior` → direct distribution | `<distribution spec="Prior">` or `<prior>` element wrapping an inner distr | `java-migration/distributions.md` |
 | `popSize` prior — `OneOnX` | `OneOnX` inner distr on `popSize` | See `OneOnX` prior patterns below |
 | `hky.kappa` prior — `OneOnX` | `OneOnX` inner distr on `hky.kappa` | See `OneOnX` prior patterns below |
 | Vector prior → `IID` | Vector-valued `x=` on a `Prior` whose inner distr is scalar | `java-migration/distributions.md` |
@@ -123,31 +123,47 @@ attributes and the **shape** from the number of space-separated values in `value
 
 ### XML patterns for `Prior` → distribution and vector prior → `IID`
 
-**Prior → direct distribution** (scalar parameter, single distribution):
+BEAST2 XMLs use two authoring styles for Prior distributions. The converter handles both.
+
+**Style A — explicit `spec=` attribute** (hand-written or older BEAUti):
 
 ```xml
-<!-- BEAST2 -->
 <distribution id="kappaprior" spec="beast.base.inference.distribution.Prior" x="@kappa">
     <distr spec="beast.base.inference.distribution.LogNormal" M="1.0" S="1.25"/>
 </distribution>
+```
 
-<!-- BEAST3: inline the distribution directly (preferred) -->
+**Style B — `<prior>` element tag** (BEAUti-generated, resolved via `<map name="prior">`):
+
+```xml
+<prior id="kappaprior" name="distribution" x="@kappa">
+    <LogNormal name="distr" M="1.0" S="1.25"/>
+</prior>
+```
+
+In Style B the inner distribution also uses a tag-as-class name (`<LogNormal>`) instead of
+`spec=`. The converter resolves both from the dep_map automatically.
+
+Both styles produce the same BEAST3 output. Note `x=` becomes `param=`:
+
+```xml
+<!-- BEAST3 output for both styles above -->
 <distribution id="kappaprior"
     spec="beast.base.spec.inference.distribution.LogNormal"
-    x="@kappa" M="1.0" S="1.25"/>
+    param="@kappa" M="1.0" S="1.25"/>
 ```
 
 **Vector prior → `IID`** (vector parameter, scalar inner distribution applied independently):
 
 ```xml
-<!-- BEAST2 -->
+<!-- BEAST2 (either style) -->
 <distribution id="ratesPrior" spec="beast.base.inference.distribution.Prior" x="@clockRates">
     <distr spec="beast.base.inference.distribution.Gamma" alpha="0.5" beta="2.0"/>
 </distribution>
 
 <!-- BEAST3 -->
 <distribution id="ratesPrior"
-    spec="beast.base.spec.inference.distribution.IID" x="@clockRates">
+    spec="beast.base.spec.inference.distribution.IID" param="@clockRates">
     <distr spec="beast.base.spec.inference.distribution.Gamma" alpha="0.5" beta="2.0"/>
 </distribution>
 ```
