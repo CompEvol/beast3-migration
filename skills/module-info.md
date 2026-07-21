@@ -34,7 +34,7 @@ See `../beast3/beast-base/src/main/java/module-info.java` for a real-world examp
 | Either version contains `alpha`, `beta`, or `rc` | `version.xml` should only carry formal releases |
 | Class in `version.xml` `<service>` block not detected by scan | Verify class exists; add manually to `module-info.java`. Do not remove from `version.xml`. |
 | Detected class missing from `version.xml` | Do not add to `version.xml`. Log to `tmp/b3migration/TODO.md`. |
-| `pom.xml` beast-base dep version ≠ `version.xml` `atleast` attribute | Update `atleast` in `version.xml` to match pom version |
+| `pom.xml` beast-base dep version ≠ `version.xml` `atleast` attribute | Update `atleast` in `version.xml` to match the pom version's `major.minor.patch` only — strip any pre-release qualifier (`-beta6`, `-alpha1`, `-rc1`, `-SNAPSHOT`), per the alpha/beta/rc rule above. E.g. pom `beast.version=2.8.0-beta6` → `atleast='2.8.0'`. |
 
 ---
 

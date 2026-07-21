@@ -133,6 +133,7 @@ Consult `../beast3/scripts/migration-guide.md` on demand for any class not cover
 | 6 | `java-migration/tree-coalescent.md` | `import beast.base.evolution.tree.` · `import beast.base.evolution.speciation.` | → `.spec.` equivalents (Tree/Node/TreeParser/TreeInterface are NOT renamed) | classes renamed by category: `tree(N)` · `coalescent(N)` · `speciation(N)` |
 | 7 | `java-migration/distributions.md` | `import beast.base.inference.distribution.` | → `.spec.` equivalents; `Prior` is **removed** in BEAST3 — replace `Prior` wrapper with the inner distribution directly | classes renamed (list) · `Prior wrapper removed: y/n` |
 | 8 | `java-migration/operators.md` | `import beast.base.inference.operator.` · `import beast.base.evolution.operator.` | → `.spec.` equivalents; `ScaleOperator` split: `parameter=` → spec inference, `tree=` → `ScaleTreeOperator`; `Exchange`/`WilsonBalding` unchanged; `SubtreeSlide` → `BactrianSubtreeSlide`; Operators use **concrete** Input types | classes renamed by group · `Input declarations made concrete: N` |
+| 9 | `java-migration/commons-math.md` | `import org.apache.commons.math.distribution.` · `import org.apache.commons.math.MathException` | `XxxDistribution`/`XxxDistributionImpl` → `XxxDistribution.of(...)`; drop checked `MathException`; add `requires org.apache.commons.statistics.distribution` to module-info.java | classes migrated (list) · `MathException removed: y/n` |
 
 ---
 
@@ -174,9 +175,13 @@ grep -rl "beast\.base\.evolution\."              src/main/java src/test/java 2>/
 grep -rl "beast\.base\.inference\.parameter\."   src/main/java src/test/java 2>/dev/null | grep -v "\.spec\." | sort
 grep -rl "beast\.base\.inference\.distribution\." src/main/java src/test/java 2>/dev/null | grep -v "\.spec\." | sort
 grep -rl "beast\.base\.inference\.operator\."    src/main/java src/test/java 2>/dev/null | grep -v "\.spec\." | sort
+grep -rl "org\.apache\.commons\.math\."          src/main/java src/test/java 2>/dev/null | sort
 ```
 
-The union of all matches is the **migration queue**.
+The union of all matches is the **migration queue**. The last line catches files whose *only*
+non-BEAST3-compatible reference is a legacy `org.apache.commons.math.*` import (sub-skill 9) —
+these files commonly have no `beast.base.*` reference at all (e.g. a class that only wraps a
+`BetaDistribution` for path sampling), so they would otherwise never enter the queue.
 
 **If the queue is empty — skip directly to Step 4.**
 
@@ -194,7 +199,7 @@ For each file in the migration queue:
 
 1. Apply **`migration-log.md` Mode 2a**: mark the file `in-progress` in STATUS.md.
 2. Check which sub-skill signals are present (see the table above).
-3. Apply each matching sub-skill in order 1–8. Skip sub-skills whose signal is absent.
+3. Apply each matching sub-skill in order 1–9. Skip sub-skills whose signal is absent.
 4. Verify compilation:
 
 ```bash
