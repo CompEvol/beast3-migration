@@ -35,10 +35,11 @@ and stop — do not proceed until the user confirms or asks you to run the missi
 | Step 1 | — | — |
 | Step 2 | Step 1 | `../beast3/` and `../beast-package-skeleton/` both exist |
 | Step 3 | Step 2 | `mvn compile -q` passes |
-| Step 4 | Step 3 | STATUS.md all rows `done` (no errors), or `mvn clean compile` passes; `./reports/<package.name>.md` exists |
-| Step 5 | Step 3 | STATUS.md all rows `done` (no errors), or `mvn clean compile` passes; `./reports/<package.name>.md` exists |
-| Step 6 | Step 4, Step 5 | Steps 4 and 5 complete, or skipped if no XMLs pending |
-| Step 7 | Step 2 | `../beast3/.github/workflows/ci-publish.yml` exists |
+| Step 4 | Step 3 | No independent gate — applied when classifying XML file paths ahead of Steps 5–6 |
+| Step 5 | Step 4 | STATUS.md all rows `done` (no errors), or `mvn clean compile` passes |
+| Step 6 | Step 4 | STATUS.md all rows `done` (no errors), or `mvn clean compile` passes |
+| Step 7 | Step 5, Step 6 | Steps 5 and 6 complete, or skipped if no XMLs pending |
+| Step 8 | Step 2 | `../beast3/.github/workflows/ci-publish.yml` exists |
 
 ### Path C — Fresh start
 
@@ -208,23 +209,26 @@ Fix all compile errors before moving to the next file. If a file cannot be fixed
 
 ---
 
-## XML classification rule
+## Step 4 — XML classification rule
 
 Apply this rule whenever deciding whether an XML file is a BEAUti template or an example
-analysis — in the linter report, in grep output, or anywhere a file path appears:
+analysis — in grep output, in a `convert_b2_to_b3.py` per-file report, or anywhere a file path
+appears:
 
 | Condition | Classification | Handled by |
 |---|---|---|
-| Path contains `fxtemplates` **or** module name ends in `-fx` | **BEAUti template** — GUI only, not runnable by BEAST main | Step 4 — script with `--fxtemplate` |
-| Neither condition matches | **Example analysis** — runnable by BEAST main | Step 5 — script without `--fxtemplate` |
+| Path contains `fxtemplates` **or** module name ends in `-fx` | **BEAUti template** — GUI only, not runnable by BEAST main | Step 5 — script with `--fxtemplate` |
+| Neither condition matches | **Example analysis** — runnable by BEAST main | Step 6 — script without `--fxtemplate` |
 
-The linter's **"FxTemplates pending migration"** and **"Example XMLs pending migration"**
-sections are already pre-classified — no rule needed for those. Apply the rule only when
-filtering **"Deprecated class references in XMLs"** entries, whose paths may be mixed.
+Steps 5 and 6 already scope their `find` commands to `src/main/resources/` (FxTemplates) and
+`src/test/resources/` (example XMLs) respectively, so classification is usually implicit in
+which step you're running. Apply the rule explicitly when a path appears out of that context —
+e.g. a mixed grep result spanning both directories, or a file whose location doesn't match its
+module's convention.
 
 ---
 
-## Step 4 — Convert FxTemplates
+## Step 5 — Convert FxTemplates
 
 **Compile prerequisite** — skip the compile check if `tmp/b3migration/STATUS.md` exists and
 all rows are `done` with no `error` rows (Step 3's per-file `mvn compile -q` gate already
@@ -250,11 +254,11 @@ Verify no unmigrated `beast.base.` references remain:
 grep -rn "beast\.base\." src/main/resources/ --include="*.xml" --include="*.fxml" | grep -v "\.spec\."
 ```
 
-Steps 4 and 5 may be run individually but both require the compile prerequisite above.
+Steps 5 and 6 may be run individually but both require the compile prerequisite above.
 
 ---
 
-## Step 5 — Convert example XMLs
+## Step 6 — Convert example XMLs
 
 **Compile prerequisite** — skip the compile check if `tmp/b3migration/STATUS.md` exists and
 all rows are `done` with no `error` rows. If any rows are `error`, fix those Java files and
@@ -279,11 +283,24 @@ Verify no unmigrated `beast.base.` references remain:
 grep -rn "beast\.base\." src/test/resources/ --include="*.xml" | grep -v "\.spec\."
 ```
 
-Steps 4 and 5 may be run individually but both require the compile prerequisite above.
+Validate each converted XML with BEAST3:
+```bash
+BEAST_ROOT_DIR=~/WorkSpace/beast3
+for xml in $(find src/test/resources -name "*_b3.xml" | sort); do
+    $BEAST_ROOT_DIR/bin/beast -validate "$xml" \
+        > /tmp/beast3_validate_output.txt 2>&1
+    python3 skills/xml-migration/check_beast_run.py /tmp/beast3_validate_output.txt \
+        && echo "OK: $xml" || echo "FAIL: $xml"
+done
+```
+
+Pass criterion: every file prints `PASS: Done!`. Fix any failures before continuing.
+
+Steps 5 and 6 may be run individually but both require the compile prerequisite above.
 
 ---
 
-## Step 6 — Report
+## Step 7 — Report
 
 Run the full test suite as a final end-to-end validation before generating the report:
 
@@ -311,7 +328,7 @@ summary. Then print a brief summary to the user:
 
 ---
 
-## Step 7 — Copy GitHub Actions workflow
+## Step 8 — Copy GitHub Actions workflow
 
 **Detect the project's default branch:**
 

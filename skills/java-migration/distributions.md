@@ -22,7 +22,8 @@ Confirmed spec counterparts:
 **`Prior` is removed in BEAST3** — do not import or instantiate `Prior`; the class does not exist
 in the spec hierarchy. In Java, replace any `Prior.initByName("distr", dist, "x", param)` call
 or `extends Prior` with a direct spec distribution that takes a `param` input. For XML
-`<distribution spec="Prior">` conversion, see `xml-migration/example-xmls.md`.
+`<distribution spec="Prior">` conversion, see `xml-migration/XML-MIGRATION-STRATEGY.md` (T3) —
+applied automatically by `convert_b2_to_b3.py`.
 
 ### R2 — Distribution Input declarations follow the non-Operator rule
 
@@ -91,10 +92,11 @@ BEAST3 spec twin. If not, leave unchanged and flag with
 
 ## XML migration
 
-For `spec=` attribute changes in example XMLs and FxTemplates, see **`xml-migration/example-xmls.md`** (Step 3) and **`xml-migration/fxtemplates.md`** (Step 3). Key XML-specific rules covered there:
-- `Prior` + inner distribution → direct spec distribution with `param=`
-- Inner distribution has no spec twin → TODO XML comment, leave block commented out
-- Vector parameter with scalar distribution → `IID` wrapper
+For `spec=` attribute changes in example XMLs and FxTemplates, see **`xml-migration/XML-MIGRATION-STRATEGY.md`** (T3 — Prior distribution variants). The converter (`convert_b2_to_b3.py`) applies these automatically; do not hand-edit XML. Key rules covered there:
+- `Prior` + inner distribution → direct spec distribution with `param=` (T3a)
+- Vector parameter with scalar distribution → `IID` wrapper (T3b)
+- `OneOnX` inner distribution has no spec twin → replaced with `LogNormal` (T3c–e), flagged `[warn]` in the per-file report
+- Any other inner distribution with no spec twin → left unresolved, flagged `[todo]` in the per-file report only (no inline XML marker — see Limits)
 
 ---
 

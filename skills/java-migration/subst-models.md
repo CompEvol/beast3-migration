@@ -92,7 +92,7 @@ See `java-migration/parameters.md` for the full parameter migration rules.
 
 ## XML migration
 
-For `spec=` attribute changes in example XMLs and FxTemplates, see **`xml-migration/example-xmls.md`** (Step 3) and **`xml-migration/fxtemplates.md`** (Step 3).
+For `spec=` attribute changes in example XMLs and FxTemplates, see **`xml-migration/XML-MIGRATION-STRATEGY.md`** (T5 — simple `.spec.` rename). The converter (`convert_b2_to_b3.py`) applies these automatically; do not hand-edit XML.
 
 ---
 

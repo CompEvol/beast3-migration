@@ -1,113 +1,103 @@
 ---
 name: test-b3-xml
-description: Smoke-test a converted BEAST3 XML file by running it through `mvn exec` in ~/WorkSpace/beast3. Checks chainLength format, executes with a short chainLength=100 override, and confirms successful completion via the "Total calculation time" line. Always restores the working directory.
+description: Validate or run a converted BEAST3 XML file. Covers beast -validate for structural checks and $BEAST_ROOT_DIR/bin/beast for full MCMC runs that produce log/tree files.
 metadata:
   type: skill
 ---
 
-Verify that a `*_b3.xml` file produced by the xml-migration converter actually runs in
-BEAST3. Use after conversion to catch class-not-found, missing-input, and format errors
-before committing. Always uses `~` for home-dir paths — never expand to an absolute path.
+Verify that a `*_b3.xml` file produced by the xml-migration converter is accepted by BEAST3.
+Use after conversion to catch class-not-found, missing-input, and format errors before committing.
 
----
-
-## Step 1 — Verify chainLength format
-
-The `<run>` element must use the parameterised form so the chain length can be overridden
-on the command line. A plain integer (`chainLength="5000000"`) will not accept the `-D`
-override and is a sign the file has not been converted yet.
-
-```python
-python3 - PATH_TO_B3_XML <<'EOF'
-import re, sys
-from lxml import etree
-root = etree.parse(sys.argv[1]).getroot()
-run = next((e for e in root.iter()
-            if e.tag == 'run' or 'MCMC' in (e.get('spec') or '')), None)
-if run is None:
-    sys.exit("FAIL: no <run> element found")
-cl = run.get('chainLength', '')
-if not re.match(r'^\$\(chainLength=', cl):
-    sys.exit(f'FAIL: chainLength="{cl}" — run convert_b2_to_b3.py on the source XML first')
-print(f"OK: {cl}")
-EOF
+Set this once before running any command:
+```bash
+BEAST_ROOT_DIR=~/WorkSpace/beast3
 ```
 
-Stop here if the check fails — the converter will fix it automatically.
+## Which tool to use
+
+| Goal | Tool |
+|---|---|
+| Check XML is structurally valid and all classes resolve | `beast -validate` + `check_beast_run.py` — fast, no output files produced |
+| Produce log/tree files for downstream statistical analysis or numerical validation | `$BEAST_ROOT_DIR/bin/beast` (full MCMC run) |
+
+**Default to `beast -validate`.** Only run a full MCMC chain when log or tree file output is explicitly needed.
 
 ---
 
-## Step 2 — Save the current directory and switch to beast3
+## Validation — `beast -validate`
+
+### Step 1 — Run `-validate`
 
 ```bash
-PREV_DIR=$(pwd)
-cd ~/WorkSpace/beast3
+$BEAST_ROOT_DIR/bin/beast -validate /abs/path/to/file_b3.xml \
+    > /tmp/beast3_validate_output.txt 2>&1
 ```
 
----
-
-## Step 3 — Run via Maven exec with a short chain
-
-Use `chainLength=100` for a quick smoke test. Redirect all output to a file — do **not**
-pipe to `tail`, because errors appear in the middle of the output, not the end.
-
-```bash
-mvn -pl beast-fx exec:exec \
-    -Dbeast.args="-overwrite -D chainLength=100 $HOME/path/to/file_b3.xml" \
-    > /tmp/beast3_test_output.txt 2>&1
-```
-
-Use `$HOME` (not `~`) inside `-Dbeast.args` — the shell expands `~` only at word boundaries,
-not inside quoted strings, so `~` would be passed literally to BEAST and cause a file-not-found
-error. `$HOME` expands correctly inside double quotes.
+Use an absolute path (or `$HOME/...`) — `~` is not expanded inside quoted strings.
 
 **Example:**
 
 ```bash
-mvn -pl beast-fx exec:exec \
-    -Dbeast.args="-overwrite -D chainLength=100 $HOME/WorkSpace/beast3-migration/skills/xml-migration/examples/testGTR_b3.xml" \
-    > /tmp/beast3_test_output.txt 2>&1
+$BEAST_ROOT_DIR/bin/beast -validate \
+    $HOME/WorkSpace/beast3-migration/skills/xml-migration/examples/testGTR_b3.xml \
+    > /tmp/beast3_validate_output.txt 2>&1
 ```
 
----
+### Step 2 — Check result
 
-## Step 4 — Check result and report concisely
-
-On success, prints only the single "Total calculation time" line.
-On failure, skips stack-trace noise and prints only the compact BEAST error block
-(root exception + "Error detected about here" XML context), capped at 30 lines.
+Pass criterion: last non-empty output line contains `"Done!"`.
+On failure, prints only the compact BEAST error block (root exception + "Error detected about here" context), capped at 30 lines.
 
 ```bash
 python3 ~/WorkSpace/beast3-migration/skills/xml-migration/check_beast_run.py \
-    /tmp/beast3_test_output.txt
+    /tmp/beast3_validate_output.txt
 ```
 
 ---
 
-## Step 5 — Return to previous directory
+## Full MCMC run — produces log/tree files
 
-Always run this regardless of pass or fail:
+**Prerequisite:** build BEAST3 once before first use:
+```bash
+cd $BEAST_ROOT_DIR && mvn clean install -DskipTests
+```
+
+### Option 1 — `bin/beast` (recommended)
+
+Works from any directory. Use absolute paths.
 
 ```bash
-cd "$PREV_DIR"
+$BEAST_ROOT_DIR/bin/beast /abs/path/to/file_b3.xml
+```
+
+Add `-overwrite` to skip the interactive `Y/N` prompt when log files already exist:
+```bash
+$BEAST_ROOT_DIR/bin/beast -overwrite /abs/path/to/file_b3.xml
+```
+
+### Option 2 — `mvn exec:exec` (fallback — only if Option 1 not working)
+
+Must be run from inside `$BEAST_ROOT_DIR`. File paths in `-Dbeast.args` are relative to the project root.
+
+```bash
+cd $BEAST_ROOT_DIR
+mvn -pl beast-fx exec:exec -Dbeast.args="-overwrite /abs/path/to/file_b3.xml"
 ```
 
 ---
 
 ## Interpreting failures
 
-| Symptom in output | Likely cause | Fix |
+| Symptom | Likely cause | Fix |
 |---|---|---|
 | `ClassNotFoundException` or `ClassCastException` | Class FQN wrong in converted XML | Re-check converter output; look for `[todo]` items in the report |
 | `Input 'param' not found` or similar | `x=` attribute not converted to `param=` | Re-run converter; check T3a/T3b output |
-| `chainLength` flag ignored / run too long | XML still has plain integer format | Step 1 failed — run converter first |
-| Command never finishes — stuck waiting | Log file already exists; BEAST waiting for `Y/N/A` prompt | Add `-overwrite` to beast.args (already in the template above) |
-| Run produces many output lines | `logEvery` is smaller than `chainLength` | Expected for short test runs — loggers use their original `logEvery` from the XML |
-| Maven `exec:exec` fails immediately | BEAST3 not compiled | Run `mvn compile -q` in `~/WorkSpace/beast3` first |
-| `No such file or directory` for the XML | `~` used inside quoted string | Use `$HOME` inside `-Dbeast.args` — `~` is not expanded inside quotes |
+| `No such file or directory` for the XML | `~` used inside a quoted string | Use `$HOME` or an absolute path |
+| No `Done!` and no structured error | BEAST crashed before printing error | Check full `/tmp/beast3_validate_output.txt` for raw Java output |
+| Run blocks waiting for `Y/N` prompt | Log files already exist | Add `-overwrite` |
 
 ## Notes
 
-- `-overwrite` tells BEAST to overwrite existing log files without prompting. Without it the run blocks waiting for keyboard input.
-- `-D chainLength=100` only works when the XML uses `$(chainLength=...)` format — ensured by the converter (Step 1).
-- `/tmp/beast3_test_output.txt` is overwritten each run; rename it if you need to compare multiple runs.
+- `-validate` checks XML structure and class wiring without running an MCMC chain — much faster.
+- `/tmp/beast3_validate_output.txt` is overwritten each run; rename it if you need to compare multiple runs.
+- `bin/beast` is the headless launcher (no JavaFX). Use `bin/beast-fx` if the GUI is needed.

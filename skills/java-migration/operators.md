@@ -37,7 +37,7 @@ split into two spec classes depending on what it operates on:
 | `parameter=` attribute — scales a `Scalable` parameter | `beast.base.spec.inference.operator.ScaleOperator` |
 | `tree=` attribute — scales a tree | `beast.base.spec.evolution.operator.ScaleTreeOperator` |
 
-Update the Java import to match the chosen replacement. For XML `spec=` attribute changes, see `xml-migration/example-xmls.md`.
+Update the Java import to match the chosen replacement. For XML `spec=` attribute changes, see `xml-migration/XML-MIGRATION-STRATEGY.md` (T4a/T4b) — applied automatically by `convert_b2_to_b3.py`.
 
 **`SubtreeSlide` — deprecated, non-spec replacement:**
 
@@ -50,7 +50,8 @@ Update the import and class reference accordingly.
 `Exchange` · `WilsonBalding` · `Uniform` (tree operator)
 
 Leave these unchanged in both Java and XML. They have no `beast.base.spec` counterpart.
-Note: in XML, `Uniform` is ambiguous with the spec distribution — see `xml-migration/example-xmls.md` for the required full class path.
+Note: in XML, `Uniform` is ambiguous with the spec distribution — `convert_b2_to_b3.py` resolves
+this automatically (T4c); see `xml-migration/XML-MIGRATION-STRATEGY.md` for the required full class path.
 
 ### R2 — Operator Input concreteness rule (critical)
 
@@ -103,12 +104,11 @@ no change needed unless a compilation error occurs.
 
 ## XML migration
 
-For `spec=` attribute changes in example XMLs and FxTemplates, see **`xml-migration/example-xmls.md`** (Step 3 operator patterns) and **`xml-migration/fxtemplates.md`** (Step 3). Key XML-specific rules covered there:
-- `ScaleOperator` split: `parameter=` → spec inference; `tree=` → `ScaleTreeOperator`
-- `Uniform` tree operator: must use full path `beast.base.evolution.operator.Uniform`
-- `Exchange`, `WilsonBalding`: leave unchanged (no spec equivalent)
-- `SubtreeSlide`: rename to `beast.base.evolution.operator.kernel.BactrianSubtreeSlide`
-  (the XML converter handles this automatically via `deprecated_classes.md`)
+For `spec=` attribute changes in example XMLs and FxTemplates, see **`xml-migration/XML-MIGRATION-STRATEGY.md`** (T4 — operator transforms). The converter (`convert_b2_to_b3.py`) applies these automatically; do not hand-edit XML. Key rules covered there:
+- `ScaleOperator` split: `parameter=` → spec inference (T4a); `tree=` → `ScaleTreeOperator` (T4b)
+- `Uniform` tree operator: must use full path `beast.base.evolution.operator.Uniform` (T4c)
+- `Exchange`, `WilsonBalding`: leave unchanged (no spec equivalent — in `DO_NOT_RENAME`)
+- `SubtreeSlide`: renamed to `beast.base.evolution.operator.kernel.BactrianSubtreeSlide` automatically (T4d), dropping the legacy `gaussian` attribute
 
 ---
 

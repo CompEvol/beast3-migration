@@ -57,7 +57,7 @@ mkdir -p src/main/java src/main/resources src/test/java src/assembly
 mkdir -p src/test/resources/<groupId.with.dots>/examples
 ```
 
-**Move Java sources** from legacy root (`src/` or `java/`) to `src/main/java/` and `src/test/java/`, preserving package subdirectory paths.
+**Move Java sources** from legacy root (`src/` or `java/`) to `src/main/java/` and `src/test/java/`, preserving package subdirectory paths. Use `git mv` (see controller **U1**) so git history is preserved on the destination file — applies to this move and the non-Java move below.
 
 **Move non-Java files:**
 

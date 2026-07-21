@@ -198,7 +198,7 @@ parameters are typically `PositiveReal`.
 
 ## XML migration
 
-For `spec=`, `domain=`, and `value=` attribute changes in example XMLs and FxTemplates, see **`xml-migration/example-xmls.md`** (Step 3 parameter patterns) and **`xml-migration/fxtemplates.md`** (Step 3).
+For `spec=`, `domain=`, and `value=` attribute changes in example XMLs and FxTemplates, see **`xml-migration/XML-MIGRATION-STRATEGY.md`** (T2 — parameter shape/domain rules). The converter (`convert_b2_to_b3.py`) applies these automatically; do not hand-edit XML.
 
 ---
 

@@ -61,16 +61,40 @@
          _b3domain = domain class name  (e.g. PositiveReal)
          _b3fqn    = full qualified name if needed
        ═══════════════════════════════════════════════════════════════════ -->
-  <!-- T2: scalar/vector parameters — drop lower=/upper=/dimension=, add domain= -->
-  <xsl:template match="*[@_b3spec and @_b3domain and @_b3domain!='simplex']">
+  <!-- T2: scalar/vector parameters — drop lower=/upper=/minordimension=, add domain=.
+       dimension= is kept for vector types (_b3spec contains 'Vector') and integer
+       simplex (_b3spec contains 'Simplex', e.g. IntSimplexParam).
+       Boolean params (BoolScalarParam/BoolVectorParam) are handled by T2b. -->
+  <xsl:template match="*[@_b3spec and @_b3domain
+                          and @_b3domain!='simplex'
+                          and @_b3domain!='boolean']">
     <xsl:element name="{local-name()}">
       <xsl:apply-templates select="@*[not(name()='spec')
                                    and not(name()='lower')
                                    and not(name()='upper')
-                                   and not(name()='dimension')
+                                   and not(name()='minordimension')
+                                   and not(name()='dimension'
+                                           and not(contains(../@_b3spec,'Vector')
+                                                   or contains(../@_b3spec,'Simplex')))
                                    and not(starts-with(name(),'_b3'))]"/>
       <xsl:attribute name="spec"><xsl:value-of select="@_b3spec"/></xsl:attribute>
       <xsl:attribute name="domain"><xsl:value-of select="@_b3domain"/></xsl:attribute>
+      <xsl:apply-templates select="node()"/>
+    </xsl:element>
+  </xsl:template>
+
+  <!-- T2b: BoolScalarParam / BoolVectorParam — no domain= input.
+       dimension= is kept for BoolVectorParam (_b3spec contains 'Vector'). -->
+  <xsl:template match="*[@_b3spec and @_b3domain='boolean']">
+    <xsl:element name="{local-name()}">
+      <xsl:apply-templates select="@*[not(name()='spec')
+                                   and not(name()='lower')
+                                   and not(name()='upper')
+                                   and not(name()='minordimension')
+                                   and not(name()='dimension'
+                                           and not(contains(../@_b3spec,'Vector')))
+                                   and not(starts-with(name(),'_b3'))]"/>
+      <xsl:attribute name="spec"><xsl:value-of select="@_b3spec"/></xsl:attribute>
       <xsl:apply-templates select="node()"/>
     </xsl:element>
   </xsl:template>
@@ -264,6 +288,14 @@
   <xsl:template match="@class[parent::*/@_b3class]">
     <xsl:attribute name="class"><xsl:value-of select="../@_b3class"/></xsl:attribute>
   </xsl:template>
+
+  <!-- T4e — DeltaExchangeOperator: intparameter= → ivparameter=
+       In BEAST3, IntSimplexParam is referenced via ivparameter= (not intparameter=).
+       Also drop integer="true" which has no equivalent BEAST3 input. -->
+  <xsl:template match="@intparameter[contains(../@spec,'DeltaExchangeOperator')]">
+    <xsl:attribute name="ivparameter"><xsl:value-of select="."/></xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@integer[contains(../@spec,'DeltaExchangeOperator')]"/>
 
   <!-- ═══════════════════════════════════════════════════════════════════
        T6 — Identity transform (base case)

@@ -15,9 +15,9 @@ user deletes it manually after migration is complete.
 
 | Mode | Called by controller | Action |
 |---|---|---|
-| **Mode 1 — Session start** | Path B or Step 4 | Check STATUS.md; resume or initialise |
-| **Mode 2a — Pre-file** | Step 5, before migrating each file | Mark file `in-progress` in STATUS.md |
-| **Mode 2b — Post-file** | Step 5, after `mvn compile -q` resolves | Mark `done`/`error`; append log entry; record TODOs |
+| **Mode 1 — Session start** | Path B or Step 3 | Check STATUS.md; resume or initialise |
+| **Mode 2a — Pre-file** | Step 3, before migrating each file | Mark file `in-progress` in STATUS.md |
+| **Mode 2b — Post-file** | Step 3, after `mvn compile -q` resolves | Mark `done`/`error`; append log entry; record TODOs |
 | **Mode 3 — Session end** | Step 7, once after all files processed | Rewrite REPORT.md |
 
 ---
@@ -42,7 +42,7 @@ tmp/b3migration/
 ```
 if tmp/b3migration/STATUS.md does NOT exist → Fresh start
     mkdir -p tmp/b3migration/log
-    Write STATUS.md (see format below) with the queue built by controller Step 4, all files set to `pending`.
+    Write STATUS.md (see format below) with the queue built by controller Step 3, all files set to `pending`.
     Write TODO.md with header row only.
 
 if tmp/b3migration/STATUS.md EXISTS → Resume (controller Path B)

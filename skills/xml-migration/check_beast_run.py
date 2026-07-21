@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 """
-check_beast_run.py — Analyse a captured BEAST3 run output file.
+check_beast_run.py — Analyse captured output from `beast -validate`.
 
 Usage:
-    python3 check_beast_run.py OUTPUT_FILE
+    BEAST_ROOT_DIR=~/WorkSpace/beast3
+    $BEAST_ROOT_DIR/bin/beast -validate /path/to/file_b3.xml \
+        > /tmp/beast3_validate_output.txt 2>&1
+    python3 check_beast_run.py /tmp/beast3_validate_output.txt
 
-Exit 0 (PASS): prints the "Total calculation time" line.
+Exit 0 (PASS): last non-empty output line contains "Done!".
 Exit 1 (FAIL): prints root exception + compact BEAST error block (≤30 lines);
                skips Java stack-trace noise.
 """
@@ -20,11 +23,11 @@ def main():
 
     lines = open(sys.argv[1]).read().splitlines()
 
-    # 1. Success: print only the completion line
-    for line in lines:
-        if re.search(r'total\s*calculation\s*time', line, re.IGNORECASE):
-            print(f'PASS: {line.strip()}')
-            sys.exit(0)
+    # 1. Success: last non-empty line contains "Done!"
+    non_empty = [l for l in lines if l.strip()]
+    if non_empty and 'Done!' in non_empty[-1]:
+        print(f'PASS: {non_empty[-1].strip()}')
+        sys.exit(0)
 
     # 2. Failure: extract compact error context, skip stack-trace noise
     print('FAIL — error context:')

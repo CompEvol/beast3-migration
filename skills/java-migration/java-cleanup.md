@@ -119,7 +119,7 @@ apply R2.
 
 The rules in this file are Java-only. XML files do not contain `Double[]`/`Integer[]` declarations
 or `finalize()` overrides — no XML-level changes are needed for `java-cleanup.md` rules.
-For XML class-reference migration see **`xml-migration/example-xmls.md`** and **`xml-migration/fxtemplates.md`**.
+For XML class-reference migration see **`xml-migration/XML-MIGRATION-STRATEGY.md`**.
 
 ---
 

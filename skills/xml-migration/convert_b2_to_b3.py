@@ -40,7 +40,7 @@ except ImportError:
 
 from deprecated_map import parse_deprecated_md
 from reporter import Change, ChangeKind, save_report, print_report
-from xml_annotator import prepass, annotate_vector_priors, collect_prior_changes
+from xml_annotator import prepass, annotate_vector_priors, collect_prior_changes, annotate_int_simplex_params
 
 
 def convert(
@@ -58,11 +58,15 @@ def convert(
     """
     parser = etree.XMLParser(remove_blank_text=False, remove_comments=False)
     tree = etree.parse(str(input_path), parser)
+    root = tree.getroot()
+
+    # Build id_map before prepass so annotate_int_simplex_params can stamp
+    # _b3int_simplex on IntegerParameter elements referenced by DeltaExchangeOperator.
+    id_map = {e.get('id'): e for e in root.iter() if e.get('id')}
+    annotate_int_simplex_params(root, id_map)
 
     changes = prepass(tree, dep_map, fxtemplate)
 
-    root = tree.getroot()
-    id_map = {e.get('id'): e for e in root.iter() if e.get('id')}
     annotate_vector_priors(root, id_map)
     # Collect Prior changes after vector-prior upgrade so the report reflects
     # the final _b3prior_type (flatten may have been upgraded to iid).

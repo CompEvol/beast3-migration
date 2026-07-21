@@ -22,7 +22,7 @@ Do not hand-edit XML files. Run the script; review its output.
 
 ## Commands
 
-**Example XMLs (controller Step 5):**
+**Example XMLs (controller Step 6):**
 ```bash
 python3 skills/xml-migration/convert_b2_to_b3.py \
     src/test/resources/path/to/file.xml \
@@ -30,7 +30,7 @@ python3 skills/xml-migration/convert_b2_to_b3.py \
     --report
 ```
 
-**FxTemplates / BEAUti templates (controller Step 4):**
+**FxTemplates / BEAUti templates (controller Step 5):**
 ```bash
 python3 skills/xml-migration/convert_b2_to_b3.py \
     src/main/resources/path/to/template.xml \
@@ -105,13 +105,80 @@ Skipped in `--fxtemplate` mode.
 ### T2 — `<parameter>` scalar/vector (including bare tags with no `spec=`)
 `xml_annotator._infer_shape` / `_infer_domain` decide; XSLT applies. Output uses full FQN for spec=.
 
-Shape from `value=` token count:
-- 1 token → `scalar`; >1 → `vector`; id contains `freq` or parent is `frequencies` → `simplex`
+#### Real parameters (`RealParameter`, `parameter.RealParameter`)
 
-Domain from `lower=` / `upper=` (scalar/vector only):
-- `lower≥0`, no upper → `PositiveReal`; `lower≥0 upper≤1` → `UnitInterval`; else → `Real`
+**Shape** — determined by `dimension=` first, then `value=` token count:
 
-Output drops `lower=`, `upper=`, `dimension=` (absorbed into `domain=`). Reported as `dropped:` in the rename entry.
+| Condition | Shape | Output class |
+|---|---|---|
+| `id` contains `freq`, or parent is `frequencies` | simplex | `SimplexParam` — see T2s |
+| `dimension > 1` **or** `value=` has >1 token | vector | `RealVectorParam` |
+| otherwise | scalar | `RealScalarParam` |
+
+**Domain** from `lower=` / `upper=`:
+
+| `lower` / `upper` | Domain |
+|---|---|
+| `lower≥0`, no upper | `PositiveReal` |
+| `lower≥0`, `upper≤1` | `UnitInterval` |
+| anything else | `Real` |
+
+**Attribute handling:**
+- `lower=` and `upper=` are **dropped** (absorbed into `domain=`).
+- `dimension=` is **kept** when shape is `vector` (BEAST3 needs it when `value=` holds only 1 token
+  acting as a fill value, e.g. `value="380.0" dimension="5"` → five values of 380.0).
+- `dimension=` is **dropped** when shape is `scalar`.
+
+#### Integer parameters (`IntegerParameter`, `parameter.IntegerParameter`)
+
+**Shape** — same rule as Real:
+
+| Condition | Shape | Output class |
+|---|---|---|
+| `dimension > 1` **or** `value=` has >1 token, used as integer simplex | integer simplex | `IntSimplexParam` |
+| `dimension > 1` **or** `value=` has >1 token, general use | vector | `IntVectorParam` |
+| otherwise | scalar | `IntScalarParam` |
+
+**When to use `IntSimplexParam` vs `IntVectorParam`:**
+Use `IntSimplexParam` when the integer vector is used as `groupSizes` in `BayesianSkyline` or as a
+partition vector whose elements sum to a fixed total. In all other cases use `IntVectorParam`.
+The `DeltaExchangeOperator` that acts on `IntSimplexParam` must use the `ivparameter` attribute,
+not `intparameter`.
+
+**Domain** from `lower=` on the original element:
+
+| `lower` | Domain |
+|---|---|
+| `lower≥1` | `PositiveInt` |
+| `lower=0` | `NonNegativeInt` |
+| no bounds | `NonNegativeInt` (safest default for category indices) |
+
+`dimension=` is **kept** when shape is vector or integer-simplex; `lower=` and `upper=` are **dropped**.
+
+#### Boolean parameters (`BooleanParameter`, `parameter.BooleanParameter`)
+
+Boolean parameters **never have a `domain=` attribute** in BEAST3.
+
+| Condition | Output class |
+|---|---|
+| `dimension > 1` or `value=` has >1 token | `BoolVectorParam` |
+| otherwise | `BoolScalarParam` |
+
+`dimension=` is **kept** when shape is vector; `lower=` and `upper=` are **dropped**.
+
+**Examples:**
+
+```xml
+<!-- BEAST2: scalar boolean -->
+<parameter spec="BooleanParameter" id="flag" value="false"/>
+<!-- BEAST3 -->
+<parameter spec="beast.base.spec.inference.parameter.BoolScalarParam" id="flag" value="false"/>
+
+<!-- BEAST2: vector boolean (bitflip / indicator case) -->
+<parameter spec="BooleanParameter" id="indicators" dimension="5" value="false"/>
+<!-- BEAST3 -->
+<parameter spec="beast.base.spec.inference.parameter.BoolVectorParam" id="indicators" dimension="5" value="false"/>
+```
 
 ### T2s — `<parameter>` simplex (`SimplexParam`)
 Separate XSLT template matched by `_b3domain='simplex'` sentinel (not a BEAST3 class name).
@@ -161,25 +228,6 @@ emitted asking the user to verify M/S and set `param=`.
 
 All T3 templates match `*[@_b3prior_type='...']` (any element tag, not just `distribution`) so
 they fire on both `<distribution>` and `<prior>` element styles.
-
-### T3f — `chainLength` parameterisation
-Applied by `xml_annotator.prepass()` as a direct attribute mutation — no XSLT annotation needed.
-
-**`chainLength` on `<run spec="MCMC">`:** plain integer → `$(chainLength=N)`.
-Idempotent (already-parameterised values skipped). Reported as `[info]`.
-
-**Test command:**
-```bash
-mvn -pl beast-fx exec:exec \
-    -Dbeast.args="-overwrite -D chainLength=100 $HOME/path/to/file_b3.xml" \
-    > /tmp/beast3_test_output.txt 2>&1
-```
-- `-overwrite` — prevents BEAST blocking on an interactive `Y/N` prompt when log files exist
-- `-D chainLength=100` — short chain for a quick smoke test
-- `$HOME` not `~` inside the quoted string — `~` is only expanded at word boundaries, not inside quotes
-
-**Checking results:** use `check_beast_run.py OUTPUT_FILE` (in this directory). Prints only the
-"Total calculation time" line on pass, or a compact error block on fail.
 
 ### T4 — Operators
 - `ScaleOperator`/`BactrianScaleOperator` + `parameter=` → `beast.base.spec.inference.operator.ScaleOperator`
@@ -241,11 +289,37 @@ standalone OneOnX→LogNormal (review M/S and set `param=`),
 `Uniform` prior with `upper="Infinity"` or `lower="-Infinity"` replaced with `±1.0E6`
 (BEAST3's `Uniform` backed by Apache Commons Statistics requires finite bounds).
 
+## Background knowledge (do not apply automatically)
+
+### `chainLength` parameterisation
+
+BEAST3 supports a command-line variable syntax for `chainLength`:
+
+```xml
+<run spec="MCMC" chainLength="$(chainLength=10000000)">
+```
+
+The `$(chainLength=N)` form allows the chain length to be overridden at runtime via
+`-D chainLength=<value>` without editing the XML. `N` is the default value used when no
+override is given on the command line.
+
+Do **not** apply this transformation during XML migration unless the user explicitly asks for it.
+Leave `chainLength="N"` as a plain integer in all converted XMLs.
+
+---
+
 ## Limits
 
 Not yet handled; requires manual fix or future XSLT extension:
-- `FxTemplate` `fx:controller` attribute (GUI layer class moves)
-- Classes absent from `deprecated_classes.md` (appear as `[todo]` in report)
+- `FxTemplate` `fx:controller` attribute (GUI layer class moves) — not scanned or rewritten by
+  `xml_annotator.py`. When reviewing a converted FxTemplate, manually check `fx:controller="..."`
+  values and update only if the referenced controller class itself moved package.
+- Classes absent from `deprecated_classes.md` (appear as `[todo]` in the per-file report only —
+  the converted XML carries **no inline marker** at the offending element; `b2_to_b3.xsl` has no
+  `<xsl:comment>` template. Always check `<input-dir>/reports/<stem>.md` after each conversion
+  run rather than relying on the XML being self-documenting. A future XSLT extension could insert
+  `<!-- TODO: no beast3 spec class found for <ClassName> -->` directly before the offending
+  element for in-XML visibility.)
 - Structural changes specific to a package's custom classes
 - `SpeciesTreeLogger` / `StarBeastStartState` — no B3 FQN replacement; short-name references
   pass through unchanged with no report entry (full-FQN references emit `[todo]`)
@@ -269,7 +343,7 @@ Do not run the converter on them — they are already B3 format and the output w
 
 ## Controller Integration
 
-- **Step 4** (FxTemplates): `--fxtemplate` on `src/main/resources/` XMLs
-- **Step 5** (Example XMLs): no flag on `src/test/resources/` XMLs
+- **Step 5** (FxTemplates): `--fxtemplate` on `src/main/resources/` XMLs; verify with grep only — FxTemplates are BEAUti GUI templates and are not validated with `beast -validate`
+- **Step 6** (Example XMLs): no flag on `src/test/resources/` XMLs; verify with grep, then validate each `*_b3.xml` with `$BEAST_ROOT_DIR/bin/beast -validate` (see controller Step 6 for the full loop)
 - Append `--report` output to `tmp/b3migration/log/YYYY-MM-DD.md`
-- Verify: `grep -rn "beast\.base\." src/test/resources/ --include="*.xml" | grep -v "\.spec\."`
+- Grep verify: `grep -rn "beast\.base\." src/test/resources/ --include="*.xml" | grep -v "\.spec\."`

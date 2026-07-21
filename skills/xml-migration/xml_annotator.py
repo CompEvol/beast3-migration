@@ -29,7 +29,7 @@ _PARAM_SPEC_MAP: dict[str, dict[str, str]] = {
                          'simplex': _PARAM_PKG + 'SimplexParam'},
     'IntegerParameter': {'scalar': _PARAM_PKG + 'IntScalarParam',
                          'vector': _PARAM_PKG + 'IntVectorParam',
-                         'simplex': _PARAM_PKG + 'IntScalarParam'},
+                         'simplex': _PARAM_PKG + 'IntSimplexParam'},
     'BooleanParameter': {'scalar': _PARAM_PKG + 'BoolScalarParam',
                          'vector': _PARAM_PKG + 'BoolVectorParam',
                          'simplex': _PARAM_PKG + 'BoolScalarParam'},
@@ -37,7 +37,7 @@ _PARAM_SPEC_MAP: dict[str, dict[str, str]] = {
 
 
 def _infer_domain(elem: etree._Element) -> str:
-    """Map lower=/upper= attributes to a BEAST3 domain class name."""
+    """Map lower=/upper= attributes to a BEAST3 real domain class name."""
     lower = elem.get('lower', '').strip()
     upper = elem.get('upper', '').strip()
     try:
@@ -52,8 +52,20 @@ def _infer_domain(elem: etree._Element) -> str:
     return 'Real'
 
 
+def _infer_int_domain(elem: etree._Element) -> str:
+    """Map lower= to a BEAST3 integer domain class name."""
+    lower = elem.get('lower', '').strip()
+    try:
+        lo = float(lower) if lower else None
+    except ValueError:
+        return 'NonNegativeInt'
+    if lo is not None and lo >= 1:
+        return 'PositiveInt'
+    return 'NonNegativeInt'
+
+
 def _infer_shape(elem: etree._Element) -> str:
-    """Return 'scalar', 'vector', or 'simplex' from value= token count and context."""
+    """Return 'scalar', 'vector', or 'simplex' from dimension= / value= token count and context."""
     value = elem.get('value', '').strip()
     tokens = value.split() if value else []
 
@@ -63,6 +75,15 @@ def _infer_shape(elem: etree._Element) -> str:
     parent_tag = parent.tag if (parent is not None and isinstance(parent.tag, str)) else ''
     if 'freq' in eid or parent_tag.lower() == 'frequencies':
         return 'simplex'
+
+    # A fill value like value="0.0" with dimension="5" means five elements.
+    # Check dimension first so single-token fill values are not misclassified as scalar.
+    dimension = elem.get('dimension', '').strip()
+    try:
+        if dimension and int(dimension) > 1:
+            return 'vector'
+    except ValueError:
+        pass
 
     return 'scalar' if len(tokens) <= 1 else 'vector'
 
@@ -167,20 +188,6 @@ def prepass(tree: etree._ElementTree, dep_map: dict[str, str],
         spec_val = elem.get('spec', '') or ''
         spec_simple = spec_val.split('.')[-1]
 
-        # --- chainLength on <run spec="MCMC"> ---
-        # Convert plain integers to the parameterised form $(chainLength=N) so the
-        # value can be overridden on the command line without editing the XML.
-        # Idempotent: already-converted values (starting with "$(") are left alone.
-        chain_len = elem.get('chainLength')
-        if chain_len is not None and not chain_len.startswith('$('):
-            if elem.tag == 'run' or 'MCMC' in spec_val:
-                new_cl = f'$(chainLength={chain_len})'
-                elem.set('chainLength', new_cl)
-                changes.append(Change(
-                    ChangeKind.INFO,
-                    f'chainLength: "{chain_len}" → "{new_cl}"',
-                ))
-
         # --- logEvery on <logger> elements ---
         # Parameterise so the logging frequency can be overridden at the command
         # line (e.g. -D logEvery=100) independently of the default in the XML.
@@ -195,15 +202,20 @@ def prepass(tree: etree._ElementTree, dep_map: dict[str, str],
         # --- Parameter migration ---
         if spec_simple in _PARAM_BASE_TYPES:
             shape = _infer_shape(elem)
+
+            # IntegerParameter referenced by DeltaExchangeOperator via intparameter=
+            # must become IntSimplexParam.  annotate_int_simplex_params() stamps
+            # _b3int_simplex='1' before prepass runs.
+            if spec_simple == 'IntegerParameter' and elem.get('_b3int_simplex') == '1':
+                shape = 'simplex'
+
             b3spec = _param_spec(spec_simple, shape)
             elem.set('_b3spec', b3spec)
             qualifier = ' (bare tag)' if bare else ''
 
-            if shape == 'simplex':
-                # SimplexParam has no domain= input; dimension= must be kept so
-                # BEAST3 knows how many elements the simplex has (e.g. dimension="4"
-                # with value="0.25" expands to [0.25, 0.25, 0.25, 0.25]).
-                # Use sentinel '_b3domain=simplex' so XSLT T2s handles this path.
+            if shape == 'simplex' and spec_simple != 'IntegerParameter':
+                # Real-valued SimplexParam: no domain= input; T2s handles it.
+                # dimension= is kept so BEAST3 can expand a single fill value.
                 elem.set('_b3domain', 'simplex')
                 dropped = [f'{a}="{elem.get(a)}"'
                            for a in ('lower', 'upper') if elem.get(a) is not None]
@@ -212,13 +224,27 @@ def prepass(tree: etree._ElementTree, dep_map: dict[str, str],
                     ChangeKind.RENAME,
                     f'spec= "{spec_simple}"{qualifier} → "{b3spec}"{drop_note}',
                 ))
-            else:
-                domain = _infer_domain(elem)
-                elem.set('_b3domain', domain)
-                # Report attributes dropped by XSLT T2 so nothing is silently lost.
+            elif spec_simple == 'BooleanParameter':
+                # BoolScalarParam/BoolVectorParam have no domain= input.
+                # Sentinel 'boolean' routes to XSLT T2b which omits domain=.
+                elem.set('_b3domain', 'boolean')
                 dropped = [f'{a}="{elem.get(a)}"'
-                           for a in ('lower', 'upper', 'dimension')
-                           if elem.get(a) is not None]
+                           for a in ('lower', 'upper') if elem.get(a) is not None]
+                drop_note = f'  dropped: {", ".join(dropped)}' if dropped else ''
+                changes.append(Change(
+                    ChangeKind.RENAME,
+                    f'spec= "{spec_simple}"{qualifier} → "{b3spec}"{drop_note}',
+                ))
+            else:
+                # RealParameter → PositiveReal/UnitInterval/Real domain.
+                # IntegerParameter (scalar/vector/simplex) → PositiveInt/NonNegativeInt domain.
+                if spec_simple == 'IntegerParameter':
+                    domain = _infer_int_domain(elem)
+                else:
+                    domain = _infer_domain(elem)
+                elem.set('_b3domain', domain)
+                dropped = [f'{a}="{elem.get(a)}"'
+                           for a in ('lower', 'upper') if elem.get(a) is not None]
                 drop_note = f'  dropped: {", ".join(dropped)}' if dropped else ''
                 changes.append(Change(
                     ChangeKind.RENAME,
@@ -306,6 +332,23 @@ def prepass(tree: etree._ElementTree, dep_map: dict[str, str],
             changes.append(change)
 
     return changes
+
+
+def annotate_int_simplex_params(root: etree._Element, id_map: dict[str, etree._Element]) -> None:
+    """
+    Stamp _b3int_simplex='1' on IntegerParameter elements that supply groupSizes to
+    a DeltaExchangeOperator via intparameter=.  Must be called BEFORE prepass() so the
+    annotation is visible when prepass decides the shape (→ IntSimplexParam).
+    """
+    for elem in root.iter():
+        if not isinstance(elem.tag, str):
+            continue
+        spec = elem.get('spec', '') or ''
+        if 'DeltaExchangeOperator' not in spec:
+            continue
+        ref = elem.get('intparameter', '').lstrip('@')
+        if ref and ref in id_map:
+            id_map[ref].set('_b3int_simplex', '1')
 
 
 def annotate_vector_priors(root: etree._Element, id_map: dict[str, etree._Element]):
