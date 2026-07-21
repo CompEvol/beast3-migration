@@ -9,7 +9,7 @@ are at the bottom of this page.
 
 <!-- BEGIN AUTO -->
 
-_Last regenerated: 2026-07-21T16:02:08.207735+02:00_
+_Last regenerated: 2026-07-21T16:30:34.397365+02:00_
 
 ## Release & build status
 
@@ -31,7 +31,7 @@ _Last regenerated: 2026-07-21T16:02:08.207735+02:00_
 | [GammaSpikeModel](https://github.com/jordandouglas/GammaSpikeModel) | compile-tested | — | 1.3.0-SNAPSHOT | ✅ | ✅ | ❌ | 🟡 | 🔴 | 🟢 | 262 |
 | [BDMM-Prime](https://github.com/tgvaughan/BDMM-Prime) | compile-tested | — | 3.0.0 | ✅ | ✅ | ✅ | 🟢 | — | 🟢 | ✅ |
 | [remaster](https://github.com/tgvaughan/remaster) | compile-tested | — | 3.0.0 | ✅ | ✅ | ✅ | 🟢 | 🔴 | — | 10 |
-| [contacTrees](https://github.com/NicoNeureiter/contacTrees) | Maven Central | [2.0.0](https://central.sonatype.com/artifact/io.github.niconeureiter/contactrees) | 2.0.0 | ✅ | ✅ | ✅ | 🟢 | 🟡 | 🟡 | 27 |
+| [contacTrees](https://github.com/NicoNeureiter/contacTrees) | Maven Central | [2.0.0](https://central.sonatype.com/artifact/io.github.niconeureiter/contactrees) | 2.0.0 | ✅ | ✅ | ✅ | 🟢 | 🟢 | 🟢 | ✅ |
 
 Traffic-light columns: 🔴 any legacy lineage / non-migrated content, 🟡 no legacy but some unnecessarily-concrete Inputs (Code), or stray legacy `parameter.*` declarations / references to `@Deprecated` classes (XML / FxT), 🟢 clean, — = artefact type not used by this package (treated as complete).
 **Dep refs** = number of references to `@Deprecated` classes found in this package's XMLs and fxtemplates (either as `spec=` attributes or `<map>` bodies); also degrades the XML / FxT light to 🟡 when non-zero. 0 = ✅. Per-package reports list each hit and the spec replacement.
