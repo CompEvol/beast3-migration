@@ -71,13 +71,17 @@ mkdir -p src/test/resources/<groupId.with.dots>/examples
 
 | File type | Destination | Path |
 |---|---|---|
-| BEAUti FxTemplate XMLs | `src/main/resources/` | `<groupId.with.dots>/fxtemplates/` |
+| BEAUti FxTemplate XMLs | `src/main/resources/` | `<module-name-with-dots>/fxtemplates/` |
 | FXML, icons, CSS | `src/main/resources/` | mirrors calling class's package path |
 | Grammar files (ANTLR `.g4`) | `src/main/resources/` | mirrors generated parser's package |
 | Any `getClass().getResource(...)` file (main code) | `src/main/resources/` | mirrors calling class's package path |
-| Example BEAST XMLs | `src/test/resources/` | `<groupId.with.dots>/examples/` |
-| Data files (NEXUS, FASTA, JSON, trees, logs) | `src/test/resources/` | `<groupId.with.dots>/examples/<type>/` |
-| Test scripts (R, shell) | `src/test/resources/` | `<groupId.with.dots>/examples/` |
+| Example BEAST XMLs | `src/test/resources/` | `<top-level main package>/examples/` |
+| Data files (NEXUS, FASTA, JSON, trees, logs) | `src/test/resources/` | `<top-level main package>/examples/<type>/` |
+| Test scripts (R, shell) | `src/test/resources/` | `<top-level main package>/examples/` |
+
+`<module-name-with-dots>` is the JPMS module name (dotted `artifactId`, matching `module-info.md` — e.g. `model.selection`, `beast.labs`, `morph.models`, `sampled.ancestors`), **not** the groupId. Verified against all four reference examples' `src/main/resources/` — every one uses its dotted module name as the top-level folder for fxtemplates.
+
+`<top-level main package>` (for `src/test/resources/`) has no single fixed convention across real packages — `model-selection` uses the plain undotted package name (`modelselection`), `sampled-ancestors` uses a short code (`sa`), `morph-models` uses no prefix at all (`examples/` directly). Default to the plain package name (matches `src/main/java/<package>`) unless the project already has its own test-resources convention to preserve.
 
 If unsure, check which class loads the file: test-only → `src/test/resources/`; main code → `src/main/resources/`.
 
