@@ -112,12 +112,35 @@ def read_pom(pom_path: Path) -> dict:
         v = resolve(dep.findtext("m:version", "", _POM_NS))
         deps[f"{g}:{a}"] = v
 
+    parent = root.find("m:parent", _POM_NS)
+    parent_artifact_id = (
+        parent.findtext("m:artifactId", "", _POM_NS) if parent is not None else ""
+    )
+    artifact_id = _pom_text(root, "artifactId")
+    # Own groupId falls back to the parent's when inherited (common for
+    # reactor submodules, which often omit <groupId> entirely).
+    group_id = _pom_text(root, "groupId") or (
+        parent.findtext("m:groupId", "", _POM_NS) if parent is not None else ""
+    )
+
     return {
-        "groupId":     _pom_text(root, "groupId"),
-        "artifactId":  _pom_text(root, "artifactId"),
-        "version":     resolve(_pom_text(root, "version")),
-        "module_name": _pom_text(root, "groupId"),   # JPMS module = groupId
-        "deps":        deps,
+        "groupId":            group_id,
+        "artifactId":         artifact_id,
+        "parent_artifactId":  parent_artifact_id,
+        "version":            resolve(_pom_text(root, "version")),
+        # JPMS module name = artifactId with hyphens as dots. This matches
+        # every standalone package checked (beast-labs -> beast.labs,
+        # beast-base -> beast.base, beast-fx -> beast.fx, beast-pkgmgmt ->
+        # beast.pkgmgmt) even though those all have a <parent> too — so
+        # "has a parent" alone does not mean "derive from parent artifactId".
+        # It is NOT reliable for a multi-module reactor that intentionally
+        # shares one public module name across submodules (e.g. csm-base and
+        # csm-fx are both under the reactor artifactId "codonsubstmodels",
+        # not their own "csm-base"/"csm-fx") -- that is a package-specific
+        # choice, not something derivable from pom.xml alone. main() prints
+        # a warning when a <parent> is present so this gets a manual check.
+        "module_name":        artifact_id.replace("-", "."),
+        "deps":               deps,
     }
 
 
@@ -263,7 +286,16 @@ def main() -> None:
         sys.exit(f"ERROR: {pom_path} not found — run maven-setup first")
     pom = read_pom(pom_path)
     module_name = pom["module_name"]
-    print(f"  Module name (groupId): {module_name}")
+    print(f"  Module name (from artifactId '{pom['artifactId']}'): {module_name}")
+    if pom["parent_artifactId"]:
+        print(
+            f"  NOTE: pom.xml has <parent> artifactId='{pom['parent_artifactId']}'. "
+            "In a multi-module reactor, the JPMS module name is sometimes shared "
+            "across submodules (e.g. codonsubstmodels / codonsubstmodels.fx) "
+            "rather than derived from this module's own artifactId — verify "
+            "against a sibling module-info.java or version.xml <package name> "
+            "before trusting the default above."
+        )
 
     # 3. Write module-info.java
     content = generate_module_info(module_name, packages, providers)

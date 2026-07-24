@@ -91,6 +91,16 @@ The release version is derived from the tag name, never hand-edited in `pom.xml`
 This requires the `release` Maven profile (javadoc + gpg-sign + central-publishing-maven-plugin)
 to already exist in `pom.xml` — `maven-setup.md` / the skeleton `pom.xml` provides it.
 
+**Check `org.sonatype.central:central-publishing-maven-plugin`'s version in that profile is
+`0.11.0` or higher.** Version `0.6.0` — still present in `../beast-package-skeleton/pom.xml` and
+`../BEASTLabs/pom.xml` as of this writing — crashes with `UnrecognizedPropertyException:
+Unrecognized field "warnings"` when Sonatype Central's response includes a field the old plugin
+doesn't know about; the deploy still uploads successfully before the crash, so the failure only
+shows up as a false-negative red CI run (beast3 issue
+[CompEvol/beast3#117](https://github.com/CompEvol/beast3/issues/117), fixed upstream in beast3's
+own `pom.xml` by bumping to `0.11.0`). Bump the version in the package's `pom.xml` if it's copied
+in at `0.6.0` — don't just copy the skeleton/BEASTLabs value verbatim for this one plugin.
+
 ### Secrets required (GitHub Actions)
 
 Store these as **org-level** secrets (e.g. on `BEAST2-Dev`) so every repo can share them —
@@ -240,10 +250,13 @@ transitive BEAST/JavaFX jars under `lib/`.
 - Don't hand-edit the release version in `pom.xml` — the workflow sets it from the tag.
 - Keep `beast.pkg.name` / `beast.pkg.version` (`pom.xml`) and `name` / `version`
   (`version.xml`) in sync; the ZIP filename and CBAN entry are both derived from the former.
+- `central-publishing-maven-plugin` in the `release` profile must be `>= 0.11.0`, never the
+  skeleton/BEASTLabs default of `0.6.0` — see CompEvol/beast3#117 above.
 
 ## Log (controller Step 8 report)
 
 - `ci-publish.yml`: `copied verbatim (master)` or `copied and adapted (default branch: main)`
 - `beast-package.xml`: `copied` or `updated (excludes added: <list>)`
+- `central-publishing-maven-plugin` version: `>= 0.11.0 (OK)` or `bumped from 0.6.0 (CompEvol/beast3#117)`
 - `mvn clean package -Dmaven.test.skip=true`: `PASS` or `FAIL — <reason>`
 - ZIP contents: confirmed clean, or list of unexpected entries removed

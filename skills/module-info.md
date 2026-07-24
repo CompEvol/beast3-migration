@@ -18,7 +18,8 @@ python ../beast3-migration/skills/scripts/gen_module_info.py .
 **A — Scan sources** (`src/main/java/`, excluding `module-info.java`): detects concrete top-level classes that are BEAST providers if they carry `@Description(...)`, extend a known BEAST base class (`BEASTObject`, `CalculationNode`, `Distribution`, `Operator`, `Logger`, `DataType*`, `SubstitutionModel*`, etc.), or directly `implement BEASTInterface`. Abstract classes, interfaces, annotations, and inner classes are excluded.
 
 **B — Write `module-info.java`** at `src/main/java/module-info.java`:
-- `open module <groupId>` (from `pom.xml`)
+- `open module <name>` — `<name>` is `pom.xml`'s own `artifactId` with hyphens converted to dots (e.g. `beast-labs` → `beast.labs`, `beast-base` → `beast.base`). **Not** the groupId (groupIds here are reverse-DNS like `io.github.compevol` and are never the module name).
+  - **Exception — multi-module Maven reactor** (`pom.xml` has a `<parent>`): the shared/public module name is sometimes the *parent's* artifactId instead, with `.fx` appended for the FX/GUI companion submodule (e.g. `codonsubstmodels` / `codonsubstmodels.fx`, from parent artifactId `codonsubstmodels`, even though the submodules' own artifactIds are `csm-base`/`csm-fx`). This can't be derived mechanically — the script prints a warning when `<parent>` is present; verify against a sibling module's `module-info.java` or `version.xml`'s `<package name>` before trusting the artifactId-based default.
 - `requires beast.pkgmgmt` and `requires beast.base`
 - `exports` for every package under `src/main/java/` — must cover all packages, not a subset
 - if any providers were detected: `provides beast.base.core.BEASTInterface with` all detected providers

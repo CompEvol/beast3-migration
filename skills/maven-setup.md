@@ -16,10 +16,12 @@ Infer from existing `pom.xml`, `version.xml`, or source files. Ask before writin
 | Field | Example |
 |---|---|
 | `groupId` | `io.github.compevol` |
-| `artifactId` | `beast-mypackage` |
+| `artifactId` | `mypackage` |
 | `version` | `1.0.0-SNAPSHOT` |
 | `beast.pkg.name` | display name from `version.xml` |
 | GitHub org/repo | used in SCM and distribution URLs |
+
+`artifactId` should keep the project's existing/original name (from its current `pom.xml` or repo name) — do **not** add a `beast-` prefix by default. Most real BEAST3 packages have no such prefix (`codonsubstmodels`, `sampled-ancestors`, `mascot`, `morph-models`, ...); a few chose one themselves (`beast-labs`, `beast-classic`) but that's their own naming choice, not a convention to apply elsewhere. This also feeds the module name in `module-info.md` (artifactId, hyphens → dots), so an invented prefix here would leak into the JPMS module name too.
 
 ---
 
@@ -77,7 +79,7 @@ If unsure, check which class loads the file: test-only → `src/test/resources/`
 
 | Source | Destination | Customise |
 |---|---|---|
-| `../beast-package-skeleton/pom.xml` | `pom.xml` | groupId, artifactId, version, pkg name, GitHub URLs |
+| `../beast-package-skeleton/pom.xml` | `pom.xml` | groupId, artifactId, version, pkg name, GitHub URLs — also bump `central-publishing-maven-plugin` to `>= 0.11.0` if the skeleton still has `0.6.0` (see `beast3-release-packaging.md` → CompEvol/beast3#117) |
 | `../beast-package-skeleton/src/assembly/beast-package.xml` | `src/assembly/beast-package.xml` | none |
 | `../beast-package-skeleton/version.xml` | `version.xml` | version numbers only; log other suggestions to `tmp/b3migration/TODO.md` |
 
