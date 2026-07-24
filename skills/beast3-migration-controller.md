@@ -329,17 +329,11 @@ summary. Then print a brief summary to the user:
 | Example XMLs (`src/test/resources/`) | Files migrated · `version="2.8"` applied · class references updated · complex conversions · TODOs inserted |
 | TODOs | Contents of `tmp/b3migration/TODO.md` |
 | `mvn test` result | Pass / fail with error count |
-| GitHub workflow | `copied and adapted (branch: <branch>)` or `copied (branch: master, no changes)` |
+| GitHub workflow | `copied verbatim (master)` or `copied and adapted (default branch: main)` |
 
 ---
 
 ## Step 8 — Copy GitHub Actions workflow
-
-**Detect the project's default branch:**
-
-```bash
-git rev-parse --abbrev-ref HEAD
-```
 
 **Create the workflow directory if missing and copy the workflow:**
 
@@ -348,14 +342,23 @@ mkdir -p .github/workflows
 cp ../beast3/.github/workflows/ci-publish.yml .github/workflows/ci-publish.yml
 ```
 
-**Adapt branch references** — if the detected branch is not `master`, replace every occurrence:
+Copy it verbatim — do **not** substitute in the branch currently checked out while migrating
+(e.g. `beast3`). The `branches: [ master ]` / `pull_request: branches: [ master ]` triggers
+match the PR's or push's *target* branch, not the migration branch you're working from, so
+the workflow is already inert on that branch's own pushes and already fires correctly for
+PRs opened from it; once merged it runs on `master` permanently.
+
+**Adapt branch references** only if the repo's actual default branch is `main` rather than
+`master` — a fixed fact about the repo, unrelated to whatever branch is checked out now
+(check `git remote show origin | sed -n '/HEAD branch/s/.*: //p'` if unknown). If so, replace
+every occurrence:
 
 | Original | Replacement |
 |---|---|
-| `branches: [ master ]` | `branches: [ <branch> ]` |
-| `refs/heads/master` | `refs/heads/<branch>` |
+| `branches: [ master ]` | `branches: [ main ]` |
+| `refs/heads/master` | `refs/heads/main` |
 
-If the branch is already `master`, no substitution is needed.
+If the default branch is already `master`, no substitution is needed.
 
 ---
 

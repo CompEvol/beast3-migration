@@ -150,17 +150,29 @@ def read_version_xml(version_path: Path) -> dict:
 # ---------------------------------------------------------------------------
 
 def generate_module_info(module_name: str, packages: list[str], providers: list[str]) -> str:
-    exports  = "\n".join(f"    exports {p};" for p in packages)
-    provides = ",\n        ".join(providers)
+    exports = "\n".join(f"    exports {p};" for p in packages)
+
+    # No "uses beast.base.core.BEASTInterface;" here: BEASTClassLoader
+    # discovers providers by reading module-info "provides" declarations
+    # directly (reflection over ModuleDescriptor), not via
+    # java.util.ServiceLoader.load(). "uses" is only required on a module
+    # that itself calls ServiceLoader.load() — see "Why no uses clause"
+    # in module-info.md.
+    service_block = ""
+    if providers:
+        provides = ",\n        ".join(providers)
+        service_block = (
+            f"\n    provides beast.base.core.BEASTInterface with\n"
+            f"        {provides};\n"
+        )
+
     return (
         f"open module {module_name} {{\n"
         f"    requires beast.pkgmgmt;\n"
         f"    requires beast.base;\n"
         f"\n"
         f"{exports}\n"
-        f"\n"
-        f"    provides beast.base.core.BEASTInterface with\n"
-        f"        {provides};\n"
+        f"{service_block}"
         f"}}\n"
     )
 
