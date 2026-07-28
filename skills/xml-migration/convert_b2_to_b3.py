@@ -8,7 +8,7 @@ Usage:
 Options:
     --out PATH          Output file path (single-input mode only)
     --overwrite         Replace an existing *_b3.xml output file
-    --fxtemplate        BEAUti/FxTemplate mode: skip version="2.8" and namespace rewrite
+    --fxtemplate        BEAUti/FxTemplate mode: bump version="2.8" but skip the namespace rewrite
     --report            Also print the Markdown report to stdout
     --deprecated PATH   Path to deprecated_classes.md  (default: auto-located)
     --xsl PATH          Path to b2_to_b3.xsl           (default: alongside this script)
@@ -56,7 +56,13 @@ def convert(
     Returns a list of Change objects for the report.
     Raises on any parse or transform error.
     """
-    parser = etree.XMLParser(remove_blank_text=False, remove_comments=False)
+    # strip_cdata=False: lxml's default (True) silently converts CDATA sections
+    # to plain text nodes at parse time, before the XSLT ever runs — this is why
+    # a FxTemplate's <subtemplate><![CDATA[...]]></subtemplate> (the embedded
+    # runnable-analysis fragment) came out as escaped text (&lt;...&gt;) instead
+    # of round-tripping as CDATA. Preserving CDATA-ness here is the other half
+    # of the fix — see cdata-section-elements in b2_to_b3.xsl's <xsl:output>.
+    parser = etree.XMLParser(remove_blank_text=False, remove_comments=False, strip_cdata=False)
     tree = etree.parse(str(input_path), parser)
     root = tree.getroot()
 

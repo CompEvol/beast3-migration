@@ -66,7 +66,10 @@ def _infer_int_domain(elem: etree._Element) -> str:
 
 def _infer_shape(elem: etree._Element) -> str:
     """Return 'scalar', 'vector', or 'simplex' from dimension= / value= token count and context."""
-    value = elem.get('value', '').strip()
+    value = elem.get('value')
+    if value is None:
+        value = elem.text or ''
+    value = value.strip()
     tokens = value.split() if value else []
 
     # Heuristic: id contains 'freq' or the parent tag is 'frequencies' → simplex
@@ -174,9 +177,18 @@ def prepass(tree: etree._ElementTree, dep_map: dict[str, str],
     # TODO class names already reported this file — suppress duplicates.
     seen_todos: set[str] = set()
 
-    if not fxtemplate:
-        root.set('_b3version', '2.8')
-        changes.append(Change(ChangeKind.INFO, 'version: 2.0 → 2.8'))
+    # version="2.8" is always required by BEAST3 — including FxTemplates, whose
+    # own <run>/<subtemplate> fragments are parsed by the same version-gated
+    # XMLParser once BEAUti merges them into a document. Only the namespace
+    # rewrite (full FQNs replacing spec packages) is fxtemplate-specific: it
+    # only makes sense for runnable example XMLs, so it's skipped here.
+    orig_version = root.get('version', '?')
+    root.set('_b3version', '2.8')
+    if fxtemplate:
+        root.set('_b3fxtemplate', '1')
+        changes.append(Change(ChangeKind.INFO, f'version: {orig_version} → 2.8 (namespace left unchanged — FxTemplate)'))
+    else:
+        changes.append(Change(ChangeKind.INFO, f'version: {orig_version} → 2.8'))
         changes.append(Change(ChangeKind.INFO, 'namespace: updated (deprecated classes use full FQNs; no spec packages in namespace)'))
 
     for elem in root.iter():
@@ -194,8 +206,13 @@ def prepass(tree: etree._ElementTree, dep_map: dict[str, str],
         # BEAST3 only allows one $(logEvery=N) default declaration per variable:
         # the first logger defines the default; subsequent ones reference $(logEvery).
         # Idempotent: already-converted values are left alone.
-        # Bare <parameter> with no spec= is a legacy RealParameter.
-        bare = elem.tag == 'parameter' and not spec_val and elem.get('value') is not None
+        # Bare <parameter> with no spec= is a legacy RealParameter. BEAST2 allows
+        # the value to be given either as a value= attribute or as element text
+        # content (e.g. <parameter name="popSize">1.0</parameter>) — both forms
+        # must be recognised, or the parameter silently passes through unmigrated.
+        bare = (elem.tag == 'parameter' and not spec_val
+                and (elem.get('value') is not None
+                     or (elem.text is not None and elem.text.strip() != '')))
         if bare:
             spec_simple = 'RealParameter'
 

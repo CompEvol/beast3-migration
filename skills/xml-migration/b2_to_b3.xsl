@@ -22,18 +22,26 @@
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-  <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
+  <!-- cdata-section-elements: serialise <subtemplate> text content back into
+       <![CDATA[...]]> instead of entity-escaped text. FxTemplate <subtemplate>
+       elements hold an embedded runnable-analysis XML fragment as CDATA; without
+       this, the identity-copied text still round-trips to the same string once
+       re-parsed (CDATA and escaped text are equivalent in the XML data model),
+       but is unreadable and undiffable as one long escaped line. -->
+  <xsl:output method="xml" encoding="UTF-8" indent="yes" cdata-section-elements="subtemplate"/>
 
   <!-- ═══════════════════════════════════════════════════════════════════
        T1 — Root <beast> element
-       Sets version="2.8" and replaces the namespace list with spec packages.
-       The fxtemplate flag in the Python script skips this template by
-       not setting the _b3version annotation on the root element.
+       Always sets version="2.8" (BEAST3 requires it, including FxTemplates).
+       Namespace is replaced with the legacy/core package list only for
+       runnable example XMLs; FxTemplates (_b3fxtemplate set) keep their
+       original, broader namespace (e.g. beastfx.app.beauti) unchanged.
        ═══════════════════════════════════════════════════════════════════ -->
   <!-- T7 — Strip <map name="..."> elements (B2 short-name aliases; replaced by FQNs) -->
   <xsl:template match="map"/>
 
-  <xsl:template match="/beast[@_b3version]">
+  <!-- Example XML: version="2.8" + namespace rewritten to the legacy/core list -->
+  <xsl:template match="/beast[@_b3version and not(@_b3fxtemplate)]">
     <beast version="2.8">
       <!--
         Namespace contains only legacy/core packages that resolve non-deprecated
@@ -41,12 +49,22 @@
         All deprecated/renamed classes use full spec FQNs — no spec packages needed.
       -->
       <xsl:attribute name="namespace">beast.core:beast.core.util:beast.evolution.alignment:beast.evolution.nuc:beast.evolution.operators:beast.evolution.sitemodel:beast.evolution.substitutionmodel:beast.evolution.tree.coalescent:beast.base.core:beast.base.evolution.alignment:beast.base.evolution.likelihood:beast.base.evolution.operator:beast.base.evolution.sitemodel:beast.base.evolution.substitutionmodel:beast.base.evolution.tree:beast.base.evolution.tree.coalescent:beast.base.inference:beast.base.inference.operator:beast.base.inference.util:beast.pkgmgmt</xsl:attribute>
-      <xsl:apply-templates select="@*[name()!='version' and name()!='namespace' and name()!='_b3version']"/>
+      <xsl:apply-templates select="@*[name()!='version' and name()!='namespace' and not(starts-with(name(),'_b3'))]"/>
       <xsl:apply-templates select="node()"/>
     </beast>
   </xsl:template>
 
-  <!-- Root element without _b3version (fxtemplate mode): copy attrs except internals -->
+  <!-- FxTemplate: version="2.8" only — namespace kept exactly as authored -->
+  <xsl:template match="/beast[@_b3version and @_b3fxtemplate]">
+    <beast version="2.8">
+      <xsl:apply-templates select="@*[name()!='version' and not(starts-with(name(),'_b3'))]"/>
+      <xsl:apply-templates select="node()"/>
+    </beast>
+  </xsl:template>
+
+  <!-- Defensive fallback: root element without _b3version (should not occur —
+       prepass() always stamps it — kept in case the XSLT is ever invoked
+       without the Python pre-pass). -->
   <xsl:template match="/beast[not(@_b3version)]">
     <beast>
       <xsl:apply-templates select="@*[not(starts-with(name(),'_b3'))]"/>

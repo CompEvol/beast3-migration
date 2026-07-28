@@ -39,7 +39,11 @@ python3 skills/xml-migration/convert_b2_to_b3.py \
     --report
 ```
 
-`--fxtemplate` skips the `version="2.8"` and namespace rewrite (BEAUti templates keep `version='2.0'`).
+`--fxtemplate` still bumps `version="2.8"` (BEAST3 requires it on every document, including
+FxTemplates — their `<run>`/`<subtemplate>` fragments are parsed by the same version-gated
+`XMLParser` once BEAUti merges them into a document) but skips the namespace rewrite: FxTemplates
+keep their original, broader namespace (e.g. `beastfx.app.beauti`) unchanged, since the
+legacy/core-only namespace list is specific to runnable example XMLs.
 
 `--overwrite` replaces an existing `*_b3.xml` output; without it the file is skipped.
 
@@ -72,7 +76,8 @@ BEAST3 rejects unknown attributes.
 
 | Attribute | Set by | Read by XSLT | Meaning |
 |---|---|---|---|
-| `_b3version` | `prepass()` on `<beast>` root | T1 | Present → rewrite `version` and `namespace`; absent in `--fxtemplate` mode |
+| `_b3version` | `prepass()` on `<beast>` root | T1 | Always present → rewrite `version="2.8"` |
+| `_b3fxtemplate` | `prepass()` on `<beast>` root, only when `--fxtemplate` | T1 | Present → skip the namespace rewrite (version is still bumped) |
 | `_b3spec` | `prepass()` on any element | T2, T5 | Full FQN to write into `spec=` |
 | `_b3domain` | `prepass()` on parameter elements | T2 | Domain class: `PositiveReal`, `UnitInterval`, or `Real` |
 | `_b3prior_type` | `prepass()` + `annotate_vector_priors()` | T3a–e | Prior variant: `flatten`, `iid`, `oneonx_pop`, `oneonx_kappa`, `oneonx_generic` |
@@ -99,8 +104,47 @@ Filter 1 covers the identity path; Filter 2 covers explicit `apply-templates` in
 ## Transformation Rules
 
 ### T1 — `<beast>` root
-Sets `version="2.8"`. Replaces `namespace=` with the legacy/core package list (no spec packages).
-Skipped in `--fxtemplate` mode.
+Sets `version="2.8"` — always, including `--fxtemplate` mode (BEAST3 requires it on every
+document; a FxTemplate's `<run>`/`<subtemplate>` fragments are parsed by the same version-gated
+`XMLParser` once BEAUti merges them into a document). Replaces `namespace=` with the legacy/core
+package list (no spec packages) for runnable example XMLs only; `--fxtemplate` mode leaves
+`namespace=` exactly as authored, since FxTemplates need their own broader package list (e.g.
+`beastfx.app.beauti`, `beastfx.app.inputeditor`).
+
+### T1b — `<subtemplate>` CDATA round-tripping (FxTemplate)
+
+A BEAUti FxTemplate's `<subtemplate>` element holds the embedded runnable-analysis XML fragment
+as `<![CDATA[...]]>` text, e.g.:
+
+```xml
+<subtemplate id="Nested Sampling" class="nestedsampling.gss.NS" ...>
+<![CDATA[
+    <run spec="nestedsampling.gss.NS" id="NS" ...>
+        <state storeEvery='5000' id='state'>
+        </state>
+        ...
+]]>
+</subtemplate>
+```
+
+This must round-trip as CDATA, not as entity-escaped text (`&lt;run spec=...&gt;` etc.) — both
+forms parse to the identical text-node string once BEAUti re-parses the fragment, so it isn't a
+*correctness* bug, but escaped output is unreadable, undiffable, and wrong to write by any tool
+whose job is to produce editable BEAST XML. Two independent settings are required together, or the
+CDATA silently degrades to escaped text with no error:
+
+1. **Parser**: `etree.XMLParser(..., strip_cdata=False)` in `convert()` (`convert_b2_to_b3.py`).
+   lxml's default is `strip_cdata=True`, which converts CDATA sections into ordinary text nodes
+   *at parse time* — before the XSLT ever runs — permanently discarding the CDATA distinction.
+2. **XSLT output**: `<xsl:output ... cdata-section-elements="subtemplate"/>` in `b2_to_b3.xsl`.
+   Without this, even a CDATA-preserved text node serialises as escaped text on output — the
+   serializer only wraps an element's text content in `<![CDATA[...]]>` when that element's name
+   is explicitly listed here.
+
+**Still a limit** (unrelated to the above — see Limits section): this only fixes *serialization*.
+The content *inside* the CDATA fragment is opaque text to `xml_annotator.py` — no class inside it
+gets renamed. A deprecated class referenced only inside `<subtemplate>` CDATA (e.g. `spec='ESS'`)
+still needs a manual, hand-applied rename after conversion; the per-file report will not flag it.
 
 ### T2 — `<parameter>` scalar/vector (including bare tags with no `spec=`)
 `xml_annotator._infer_shape` / `_infer_domain` decide; XSLT applies. Output uses full FQN for spec=.
@@ -311,6 +355,11 @@ Leave `chainLength="N"` as a plain integer in all converted XMLs.
 ## Limits
 
 Not yet handled; requires manual fix or future XSLT extension:
+- `FxTemplate` `<subtemplate>` **CDATA content** — the embedded runnable-analysis fragment (see
+  T1b above) now round-trips correctly as CDATA, but its *content* is still opaque text to
+  `xml_annotator.py`: no `spec=`/tag-as-class rename, parameter typing, or Prior flattening is
+  applied inside it. Always manually diff the pre- and post-conversion CDATA block for deprecated
+  short names (e.g. `ESS`, `HKY`) and fix by hand; the per-file report has no visibility into it.
 - `FxTemplate` `fx:controller` attribute (GUI layer class moves) — not scanned or rewritten by
   `xml_annotator.py`. When reviewing a converted FxTemplate, manually check `fx:controller="..."`
   values and update only if the referenced controller class itself moved package.
