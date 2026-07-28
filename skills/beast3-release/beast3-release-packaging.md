@@ -120,7 +120,9 @@ Generate Sonatype tokens at https://central.sonatype.com/account.
 ## Part 2 — `src/assembly/beast-package.xml`
 
 Copy `../BEASTLabs/src/assembly/beast-package.xml` as the starting point, then adapt the
-`groupId:artifactId` include and the resource paths listed below. Structure:
+`groupId:artifactId` include and the resource path listed below. **Note:** as of this writing,
+`../BEASTLabs`'s copy still includes a top-level `fxtemplates/` `<fileSet>` — that pattern is
+superseded (see below); don't carry it over. Structure:
 
 ```xml
 <assembly xmlns="http://maven.apache.org/ASSEMBLY/2.2.0" ...>
@@ -152,11 +154,7 @@ Copy `../BEASTLabs/src/assembly/beast-package.xml` as the starting point, then a
     </dependencySets>
 
     <fileSets>
-        <!-- fxtemplates/ -->
-        <fileSet>
-            <directory>${project.basedir}/src/main/resources/<pkg.path>/fxtemplates</directory>
-            <outputDirectory>/fxtemplates</outputDirectory>
-        </fileSet>
+        <!-- fxtemplates/ inside jar now -->
         <!-- examples/ -->
         <fileSet>
             <directory>${project.basedir}/src/test/resources/<pkg.path>/examples</directory>
@@ -165,6 +163,13 @@ Copy `../BEASTLabs/src/assembly/beast-package.xml` as the starting point, then a
     </fileSets>
 </assembly>
 ```
+
+**No separate `fxtemplates/` fileSet.** `src/main/resources/<pkg.path>/fxtemplates/*.xml` is
+already compiled into `target/classes` and therefore into the module JAR (`lib/<artifactId>-
+<version>.jar`) by the normal Maven resources step — BEAST/BEAUti discovers FxTemplates by
+scanning `.xml` resources on the module path, so the JAR copy is sufficient. A duplicate copy at
+the ZIP root under `/fxtemplates` (the old pattern, still present in `../BEASTLabs` as of this
+writing) is redundant packaging, not a functional requirement — drop it and rely on the JAR.
 
 ### Key rules
 
@@ -197,6 +202,58 @@ Copy `../BEASTLabs/src/assembly/beast-package.xml` as the starting point, then a
   `${project.basedir}/src/test/resources/<pkg.path>/examples` (Maven-standard test
   resources, e.g. model-selection). Use whichever already holds the example XMLs — don't
   move them just to match BEASTLabs.
+
+### Excluding `legacy/`/`reports/` from the module JAR (maven-resources-plugin)
+
+Since fxtemplates ship inside the module JAR now (no ZIP-root `fxtemplates/` fileSet — see
+above), a `legacy/` or `reports/` subfolder left under
+`src/main/resources/<pkg.path>/fxtemplates/` is no longer just a stray file — the normal
+`maven-resources-plugin` `default-resources` copy puts it straight into `target/classes`, and
+from there into the release JAR. BEAST/BEAUti scans every `.xml` resource on the module path for
+`<subtemplate id="...">` entries, so a pre-migration backup with the same `id` as the current
+template produces a **"Duplicate id"** error at BEAUti startup (see `nested-sampling`'s
+`fxtemplates/reports/legacy/NS.xml` for a real instance of this).
+
+Check `git status`/`find` for `legacy/` or `reports/` directories under both
+`src/main/resources` and `src/test/resources` before wiring the assembly, and add whichever of
+the two blocks below actually apply — most projects only have one or the other (e.g.
+`nested-sampling` had `legacy`/`reports` under `fxtemplates/` in `src/main/resources`;
+`model-selection` had them under `examples/` in `src/test/resources` instead). Place directly
+under `<build>`, before `<plugins>`:
+
+```xml
+<build>
+    <resources>
+        <resource>
+            <directory>src/main/resources</directory>
+            <excludes>
+                <exclude>**/legacy/**</exclude>
+                <exclude>**/reports/**</exclude>
+            </excludes>
+        </resource>
+    </resources>
+    <testResources>
+        <testResource>
+            <directory>src/test/resources</directory>
+            <excludes>
+                <exclude>**/legacy/**</exclude>
+                <exclude>**/reports/**</exclude>
+            </excludes>
+        </testResource>
+    </testResources>
+
+    <plugins>
+        ...
+```
+
+`<testResources>` is lower-stakes (test resources aren't part of the release JAR), but keep it
+symmetric with `<resources>` anyway — `target/test-classes` is still on the test classpath, and
+some projects load examples/templates from there during tests.
+
+This is a distinct mechanism from the `<excludes>` inside the assembly's `examples/` `<fileSet>`
+(above) — that one only controls what lands in the release ZIP; this one controls what lands in
+`target/classes`/`target/test-classes` and therefore the JAR itself. Both are usually needed
+together.
 
 ### Wiring into `pom.xml`
 
@@ -232,11 +289,16 @@ The skeleton `pom.xml` already includes this (verify it's present, don't duplica
 ```bash
 mvn clean package -Dmaven.test.skip=true
 unzip -l target/${beast.pkg.name}.v${beast.pkg.version}.zip
+unzip -l target/<artifactId>-<version>.jar | grep fxtemplates
 ```
 
-Confirm the listing contains exactly: `version.xml`, `lib/<artifactId>-<version>.jar`,
-`fxtemplates/*.xml`, and `examples/*.xml` — no `legacy/`, no untracked `reports/`, no
-transitive BEAST/JavaFX jars under `lib/`.
+Confirm the ZIP listing contains exactly: `version.xml`, `lib/<artifactId>-<version>.jar`, and
+`examples/*.xml` — no top-level `fxtemplates/` folder (it ships inside the JAR instead), no
+`legacy/`, no untracked `reports/`, no transitive BEAST/JavaFX jars under `lib/`.
+
+Confirm the JAR listing contains `<pkg.path>/fxtemplates/*.xml` with no `legacy/`/`reports/`
+entries alongside it — those would mean the `<resources>`/`<testResources>` excludes above are
+missing or misconfigured.
 
 ---
 
@@ -252,11 +314,19 @@ transitive BEAST/JavaFX jars under `lib/`.
   (`version.xml`) in sync; the ZIP filename and CBAN entry are both derived from the former.
 - `central-publishing-maven-plugin` in the `release` profile must be `>= 0.11.0`, never the
   skeleton/BEASTLabs default of `0.6.0` — see CompEvol/beast3#117 above.
+- Don't add a ZIP-root `fxtemplates/` `<fileSet>` — fxtemplates ship inside the module JAR;
+  a duplicate zip-root copy is redundant, not required.
+- Don't skip the `<resources>`/`<testResources>` excludes when `legacy/`/`reports/` exist
+  under `src/main/resources` or `src/test/resources` — without them, a leftover pre-migration
+  template with a duplicate `id` ends up in the JAR and breaks BEAUti startup.
 
 ## Log (controller Step 8 report)
 
 - `ci-publish.yml`: `copied verbatim (master)` or `copied and adapted (default branch: main)`
 - `beast-package.xml`: `copied` or `updated (excludes added: <list>)`
+- `pom.xml` `<resources>`/`<testResources>` excludes: `not needed (no legacy/reports found)` or
+  `added (<resources> and/or <testResources>, excluding <list>)`
 - `central-publishing-maven-plugin` version: `>= 0.11.0 (OK)` or `bumped from 0.6.0 (CompEvol/beast3#117)`
 - `mvn clean package -Dmaven.test.skip=true`: `PASS` or `FAIL — <reason>`
 - ZIP contents: confirmed clean, or list of unexpected entries removed
+- JAR `fxtemplates/` contents: confirmed no `legacy/`/`reports/` entries, or list removed
