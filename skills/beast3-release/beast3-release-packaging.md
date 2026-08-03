@@ -58,7 +58,7 @@ tag-triggered run needs the Central/GPG server credentials wired into `~/.m2/set
 ```yaml
 - name: Set up JDK 25 (Azul Zulu)
   if: "!startsWith(github.ref, 'refs/tags/v')"
-  uses: actions/setup-java@v4
+  uses: actions/setup-java@v5
   with:
     distribution: zulu
     java-version: '25'
@@ -66,7 +66,7 @@ tag-triggered run needs the Central/GPG server credentials wired into `~/.m2/set
 
 - name: Set up JDK 25 (Azul Zulu) for Maven Central
   if: startsWith(github.ref, 'refs/tags/v')
-  uses: actions/setup-java@v4
+  uses: actions/setup-java@v5
   with:
     distribution: zulu
     java-version: '25'
