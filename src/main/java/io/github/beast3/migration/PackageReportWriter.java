@@ -40,6 +40,7 @@ public final class PackageReportWriter {
         renderInputDeprecatedRefs(sb, r);
         renderXmlPunchList(sb, r);
         renderDeprecatedXmlRefs(sb, r);
+        renderAmbiguousXmlRefs(sb, r);
 
         if (sb.charAt(sb.length() - 1) != '\n') sb.append('\n');
         return sb.toString();
@@ -401,6 +402,40 @@ public final class PackageReportWriter {
                         .append(hitCell).append(" | ").append(repl).append(" |\n");
             }
             sb.append('\n');
+        }
+    }
+
+    private static void renderAmbiguousXmlRefs(StringBuilder sb, Report r) {
+        if (r.xmlAmbiguousRefs.isEmpty()) return;
+
+        sb.append("## Unqualified names that resolve by namespace order\n\n");
+        sb.append("> Each name below exists as BOTH a deprecated and a live class, so `XMLParserUtils.resolveClass` picks whichever the `namespace` attribute reaches first. Nothing in the file says which one is meant. That is not reported as an error: it surfaces later as a type mismatch against a neighbouring spec object, or it silently runs the legacy class. Qualify each one, or put the spec packages ahead of the legacy ones in `namespace`.\n\n");
+
+        java.util.Map<java.nio.file.Path, List<AmbiguousXmlRef>> byFile = new java.util.LinkedHashMap<>();
+        for (AmbiguousXmlRef ref : r.xmlAmbiguousRefs) {
+            byFile.computeIfAbsent(ref.file(), k -> new ArrayList<>()).add(ref);
+        }
+
+        for (var e : byFile.entrySet()) {
+            java.nio.file.Path pkgRoot = r.xmls.isEmpty() ? null : r.xmls.get(0).relativeTo();
+            String displayPath = (pkgRoot != null)
+                    ? pkgRoot.relativize(e.getKey()).toString()
+                    : e.getKey().toString();
+            java.util.Set<String> seen = new java.util.LinkedHashSet<>();
+            StringBuilder rows = new StringBuilder();
+            for (AmbiguousXmlRef ref : e.getValue()) {
+                if (!seen.add(ref.source() + "\t" + ref.hit())) continue;
+                String repl = ref.replacement().isBlank()
+                        ? "_(no spec equivalent found)_"
+                        : "`" + ref.replacement() + "`";
+                rows.append("| `").append(ref.source()).append("=` | `")
+                        .append(ref.hit()).append("` | `")
+                        .append(ref.deprecatedFqn()).append("` | ").append(repl).append(" |\n");
+            }
+            sb.append("**`").append(displayPath).append("`** (")
+                    .append(seen.size()).append("):\n\n");
+            sb.append("| Where | Name | Could resolve to | Spec class |\n");
+            sb.append("|---|---|---|---|\n").append(rows).append('\n');
         }
     }
 

@@ -814,6 +814,48 @@ public final class JavaScanner {
      * with that short name to confuse it with. Maps short name → one of the
      * deprecated FQNs (used as the canonical "hit" in reports).
      */
+    /**
+     * Simple names that resolve to <em>both</em> a deprecated and a live class,
+     * mapped to the deprecated FQN they could silently land on.
+     *
+     * <p>These are the names {@link #deriveUnambiguouslyDeprecatedShortNames}
+     * deliberately abstains on, to avoid false positives. But abstaining hides
+     * the one case that actually matters: {@code XMLParserUtils.resolveClass}
+     * returns the <em>first</em> namespace that resolves, so an unqualified
+     * {@code spec="TreeLikelihood"} silently binds to whichever of the legacy
+     * and spec classes the namespace list happens to reach first. That is not
+     * an error the parser reports — it surfaces later as a type mismatch
+     * against a neighbouring spec object, or not at all.</p>
+     *
+     * <p>Reported as a warning rather than a deprecated-reference hit: the name
+     * may well resolve correctly today. The point is that it resolves by
+     * namespace ordering rather than by anything written in the file.</p>
+     */
+    public static java.util.Map<String, String> deriveAmbiguousShortNames(
+            Set<String> deprecatedFqns, Set<String> allFqns) {
+        java.util.Map<String, java.util.List<String>> bySimpleName = new java.util.HashMap<>();
+        for (String fqn : allFqns) {
+            int dot = fqn.lastIndexOf('.');
+            String simple = dot < 0 ? fqn : fqn.substring(dot + 1);
+            bySimpleName.computeIfAbsent(simple, k -> new java.util.ArrayList<>()).add(fqn);
+        }
+        java.util.Map<String, String> out = new java.util.LinkedHashMap<>();
+        for (var e : bySimpleName.entrySet()) {
+            java.util.List<String> fqns = e.getValue();
+            if (fqns.size() < 2) continue;
+            java.util.List<String> deprecated = fqns.stream()
+                    .filter(deprecatedFqns::contains).toList();
+            // Ambiguous in the sense that matters: at least one deprecated
+            // candidate AND at least one live one, so the choice is made by
+            // namespace order. All-deprecated names are already reported by
+            // deriveUnambiguouslyDeprecatedShortNames.
+            if (deprecated.isEmpty() || deprecated.size() == fqns.size()) continue;
+            out.put(e.getKey(), deprecated.stream()
+                    .min(java.util.Comparator.comparingInt(String::length)).get());
+        }
+        return out;
+    }
+
     public static java.util.Map<String, String> deriveUnambiguouslyDeprecatedShortNames(
             Set<String> deprecatedFqns, Set<String> allFqns) {
         java.util.Map<String, java.util.List<String>> bySimpleName = new java.util.HashMap<>();
