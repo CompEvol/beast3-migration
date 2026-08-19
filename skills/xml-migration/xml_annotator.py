@@ -36,20 +36,48 @@ _PARAM_SPEC_MAP: dict[str, dict[str, str]] = {
 }
 
 
-def _infer_domain(elem: etree._Element) -> str:
-    """Map lower=/upper= attributes to a BEAST3 real domain class name."""
+# Parameter "roles" (the token before the first '.' or ':' in id=) that BEAST2
+# XML conventionally leaves with NO explicit lower=/upper= — old BEAST2 had no
+# domain system, so these were only ever implicitly positive by modelling
+# convention (a substitution-rate multiplier, a gamma shape parameter). With no
+# bound to read, bounds-only inference falls through to unrestricted 'Real',
+# which lets BEAST3 operators (e.g. DeltaExchangeOperator) push the value
+# negative — confirmed to silently corrupt TreeLikelihood into a bogus positive
+# log-density and eventually crash the chain with "positive infinite posterior"
+# (starbeast2 tutorial/CanisFBD/Canis-FBD.xml, mutationRate.s:FGFR3 going
+# negative around a DeltaExchangeOperator proposal). Keep this list narrow and
+# unambiguous: unlike e.g. "growthRate" (can be negative — shrinking
+# population), every role here is positive by definition in every BEAST2 model
+# that uses it.
+_KNOWN_POSITIVE_PARAM_ROLES = frozenset({'mutationRate', 'gammaShape'})
+
+
+def _infer_domain(elem: etree._Element) -> tuple[str, bool]:
+    """Map lower=/upper= attributes to a BEAST3 real domain class name.
+
+    Returns (domain, name_inferred) where name_inferred is True only when the
+    domain came from _KNOWN_POSITIVE_PARAM_ROLES rather than from an explicit
+    lower=/upper= bound — callers should flag that case for manual review.
+    """
     lower = elem.get('lower', '').strip()
     upper = elem.get('upper', '').strip()
     try:
         lo = float(lower) if lower else None
         hi = float(upper) if upper else None
     except ValueError:
-        return 'Real'
-    if lo == 0.0 and hi is None:
-        return 'PositiveReal'
+        return 'Real', False
     if lo == 0.0 and hi == 1.0:
-        return 'UnitInterval'
-    return 'Real'
+        return 'UnitInterval', False
+    if lo is not None and lo >= 0.0 and (hi is None or hi > 1.0):
+        # A finite but generous upper= (e.g. 10.0, 10000.0) is almost always an MCMC
+        # operator safety cap, not a genuine domain restriction. Preserve the lower-bound
+        # positivity constraint rather than silently widening to unrestricted Real, which
+        # would let e.g. population sizes or rates go negative.
+        return 'PositiveReal', False
+    role = elem.get('id', '').split('.')[0].split(':')[0]
+    if role in _KNOWN_POSITIVE_PARAM_ROLES:
+        return 'PositiveReal', True
+    return 'Real', False
 
 
 def _infer_int_domain(elem: etree._Element) -> str:
@@ -255,18 +283,28 @@ def prepass(tree: etree._ElementTree, dep_map: dict[str, str],
             else:
                 # RealParameter → PositiveReal/UnitInterval/Real domain.
                 # IntegerParameter (scalar/vector/simplex) → PositiveInt/NonNegativeInt domain.
+                name_inferred = False
                 if spec_simple == 'IntegerParameter':
                     domain = _infer_int_domain(elem)
                 else:
-                    domain = _infer_domain(elem)
+                    domain, name_inferred = _infer_domain(elem)
                 elem.set('_b3domain', domain)
                 dropped = [f'{a}="{elem.get(a)}"'
                            for a in ('lower', 'upper') if elem.get(a) is not None]
                 drop_note = f'  dropped: {", ".join(dropped)}' if dropped else ''
-                changes.append(Change(
-                    ChangeKind.RENAME,
-                    f'spec= "{spec_simple}"{qualifier} → "{b3spec}"  domain="{domain}"{drop_note}',
-                ))
+                if name_inferred:
+                    changes.append(Change(
+                        ChangeKind.WARNING,
+                        f'spec= "{spec_simple}"{qualifier} → "{b3spec}"  domain="{domain}"'
+                        f' — no lower=/upper= in source; inferred PositiveReal from'
+                        f' parameter role "{elem.get("id", "").split(".")[0].split(":")[0]}".'
+                        f' Verify this parameter is genuinely always positive.',
+                    ))
+                else:
+                    changes.append(Change(
+                        ChangeKind.RENAME,
+                        f'spec= "{spec_simple}"{qualifier} → "{b3spec}"  domain="{domain}"{drop_note}',
+                    ))
             continue
 
         # --- Prior classification ---

@@ -282,7 +282,14 @@ The skeleton `pom.xml` already includes this (verify it's present, don't duplica
 ```
 
 `${beast.pkg.name}` and `${beast.pkg.version}` are `pom.xml` properties matching the
-`name`/`version` attributes of `<package>` in `version.xml` — keep all three in sync.
+`name`/`version` attributes of `<package>` in `version.xml`. `beast.pkg.name` is a plain literal
+(sync it by hand with `version.xml`). `beast.pkg.version` is **not** — it's derived from
+`<version>` (stripping `-SNAPSHOT`) by a `build-helper-maven-plugin` `regex-property` execution
+bound to the `validate` phase; see `maven-setup.md` → **Deriving `beast.pkg.version`**. Verify
+that plugin execution is present (first entry under `<build><plugins>`, before the compiler
+plugin) rather than checking for a hardcoded `beast.pkg.version` value — a hardcoded value is the
+bug this replaced. `version.xml`'s `version` attribute still needs manual sync with `<version>`
+(the derivation only covers the `pom.xml` property, not `version.xml`).
 
 ### Verify
 
@@ -309,9 +316,16 @@ missing or misconfigured.
   justified).
 - Don't ship generated or untracked files (`git status` the `examples/` tree before
   finalising `<excludes>`).
-- Don't hand-edit the release version in `pom.xml` — the workflow sets it from the tag.
-- Keep `beast.pkg.name` / `beast.pkg.version` (`pom.xml`) and `name` / `version`
-  (`version.xml`) in sync; the ZIP filename and CBAN entry are both derived from the former.
+- Don't hand-edit the release version in `pom.xml` — the workflow sets it from the tag via
+  `versions:set`, which rewrites the literal `<version>` text; `beast.pkg.version` then
+  re-derives from it automatically on the next Maven invocation (see `maven-setup.md`), no
+  separate update needed.
+- Don't hardcode `beast.pkg.version` as its own literal — that reintroduces the duplicate-version
+  bug (`<version>` and `beast.pkg.version` drifting independently); it must stay derived via the
+  `build-helper-maven-plugin` execution.
+- Keep `beast.pkg.name` (`pom.xml`) and `name` / `version` (`version.xml`) in sync with
+  `<version>` (`pom.xml`) by hand; `beast.pkg.version` syncs itself. The ZIP filename and CBAN
+  entry are derived from `beast.pkg.name` / `beast.pkg.version`.
 - `central-publishing-maven-plugin` in the `release` profile must be `>= 0.11.0`, never the
   skeleton/BEASTLabs default of `0.6.0` — see CompEvol/beast3#117 above.
 - Don't add a ZIP-root `fxtemplates/` `<fileSet>` — fxtemplates ship inside the module JAR;

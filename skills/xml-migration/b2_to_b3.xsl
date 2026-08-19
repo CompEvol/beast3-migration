@@ -22,13 +22,15 @@
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-  <!-- cdata-section-elements: serialise <subtemplate> text content back into
-       <![CDATA[...]]> instead of entity-escaped text. FxTemplate <subtemplate>
-       elements hold an embedded runnable-analysis XML fragment as CDATA; without
+  <!-- cdata-section-elements: serialise <subtemplate>/<partitiontemplate> text
+       content back into <![CDATA[...]]> instead of entity-escaped text. Both
+       FxTemplate element types hold an embedded runnable-analysis XML fragment
+       as CDATA (<partitiontemplate> is the per-partition analogue of
+       <subtemplate>, used e.g. for the alignment-partition template); without
        this, the identity-copied text still round-trips to the same string once
        re-parsed (CDATA and escaped text are equivalent in the XML data model),
        but is unreadable and undiffable as one long escaped line. -->
-  <xsl:output method="xml" encoding="UTF-8" indent="yes" cdata-section-elements="subtemplate"/>
+  <xsl:output method="xml" encoding="UTF-8" indent="yes" cdata-section-elements="subtemplate partitiontemplate"/>
 
   <!-- ═══════════════════════════════════════════════════════════════════
        T1 — Root <beast> element

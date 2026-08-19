@@ -50,8 +50,57 @@ ls pom.xml build.xml *.xml 2>/dev/null
 1. Set `<maven.compiler.release>25</maven.compiler.release>` and compiler plugin `<release>25</release>`.
 2. Replace BEAST2 deps with BEAST3 deps (`<scope>provided</scope>`); see `../beast3/README.md` → **Add BEAST dependencies**.
 3. Copy surefire, resources, and assembly plugin configs from `../beast-package-skeleton/pom.xml`.
+4. If `<version>` is written as an expression (e.g. `<version>${beast.pkg.version}-SNAPSHOT</version>`) — Maven
+   rejects this: a project's own `version` must be a literal constant, not a property reference, since the
+   model isn't resolved yet when Maven reads its own coordinates (`mvn validate` warns "'version' contains an
+   expression but should be a constant"). Fix per **Deriving `beast.pkg.version`** below rather than hardcoding
+   both `<version>` and `beast.pkg.version` separately.
 
 Then skip to **Verify Maven dependency resolution**.
+
+### Deriving `beast.pkg.version`
+
+`beast.pkg.version` (used only for the assembly `finalName`, see `beast3-release-packaging.md`) must never be a
+second, independently hardcoded copy of `<version>` — that's a duplicate-declaration trap: the two drift the
+moment one is bumped and the other isn't, and the CI release step (`mvn versions:set -DnewVersion=$VERSION`,
+see `beast3-release-packaging.md` Part 1) only rewrites `<version>`, not this property.
+
+`../beast-package-skeleton/pom.xml` already wires this correctly — copy it rather than reinventing it. It
+derives `beast.pkg.version` from `${project.version}` with `-SNAPSHOT` stripped, via
+`build-helper-maven-plugin`'s `regex-property` goal bound to the `validate` phase (first plugin in `<build>
+<plugins>`, before the compiler plugin):
+
+```xml
+<plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>build-helper-maven-plugin</artifactId>
+    <version>3.6.0</version>
+    <executions>
+        <execution>
+            <id>set-beast-pkg-version</id>
+            <phase>validate</phase>
+            <goals><goal>regex-property</goal></goals>
+            <configuration>
+                <name>beast.pkg.version</name>
+                <value>${project.version}</value>
+                <regex>-SNAPSHOT$</regex>
+                <replacement></replacement>
+                <failIfNoMatch>false</failIfNoMatch>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+```
+
+`failIfNoMatch=false` matters: on a release build (`<version>` already has no `-SNAPSHOT` suffix, e.g. after
+CI's `versions:set`), the regex simply doesn't match and `beast.pkg.version` passes through unchanged — no
+special-casing needed for release vs. snapshot builds. Verify with
+`mvn validate help:evaluate -Dexpression=beast.pkg.version -q -DforceStdout` (plain `help:evaluate` alone won't
+work — it runs outside the lifecycle, before the `validate`-phase execution has fired).
+
+If a package's existing `pom.xml` instead hardcodes `beast.pkg.version` as its own literal (not derived), that's
+the same duplication in a different shape — replace it with this plugin execution rather than leaving two
+independently-maintained version strings.
 
 ---
 
@@ -89,7 +138,7 @@ If unsure, check which class loads the file: test-only → `src/test/resources/`
 
 | Source | Destination | Customise |
 |---|---|---|
-| `../beast-package-skeleton/pom.xml` | `pom.xml` | groupId, artifactId, version (see **Choosing the migrated version** above), pkg name, GitHub URLs — also bump `central-publishing-maven-plugin` to `>= 0.11.0` if the skeleton still has `0.6.0` (see `beast3-release-packaging.md` → CompEvol/beast3#117). Cross-check the customised result against a reference example's `pom.xml` (`../BEASTLabs`, `../model-selection`, `../morph-models`, `../sampled-ancestors`) rather than the skeleton alone — the skeleton is a minimal template, a real package shows what a finished one actually looks like. |
+| `../beast-package-skeleton/pom.xml` | `pom.xml` | groupId, artifactId, version (see **Choosing the migrated version** above), pkg name, GitHub URLs — also bump `central-publishing-maven-plugin` to `>= 0.11.0` if the skeleton still has `0.6.0` (see `beast3-release-packaging.md` → CompEvol/beast3#117). Leave the `build-helper-maven-plugin` `beast.pkg.version` derivation (see **Deriving `beast.pkg.version`** above) as-is — it needs no per-project customisation. Cross-check the customised result against a reference example's `pom.xml` (`../BEASTLabs`, `../model-selection`, `../morph-models`, `../sampled-ancestors`) rather than the skeleton alone — the skeleton is a minimal template, a real package shows what a finished one actually looks like. |
 | `../beast-package-skeleton/src/assembly/beast-package.xml` | `src/assembly/beast-package.xml` | none |
 | `../beast-package-skeleton/version.xml` | `version.xml` | version number (bumped, see **Choosing the migrated version** above) only; log other suggestions to `tmp/b3migration/TODO.md` |
 
