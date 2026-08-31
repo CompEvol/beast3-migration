@@ -3,15 +3,15 @@
 Auto-generated from CBAN's `packages2.7.xml`, `packages-extra-2.7.xml`,
 and `packages2.8.xml`. Regenerate with `python3 scripts/gen-backlog.py`.
 
-_Last regenerated: 2026-05-13T17:39:18+12:00_
+_Last regenerated: 2026-07-21T16:40:14+02:00_
 
 ## Summary
 
-- v2.7 packages (union of main + extra): **84**
-- Migrated to v2.8 (in `packages2.8.xml`): **10**
+- v2.7 packages (union of main + extra): **87**
+- Migrated to v2.8 (in `packages2.8.xml`): **14**
 - Built into beast3 core in v2.8: **2** (BEAST.app, BEAST.base)
 - Tracked in `packages.yaml` but not yet in `packages2.8.xml`: **3**
-- Untracked, unmigrated: **69**
+- Untracked, unmigrated: **68**
 
 ## Tracked in `packages.yaml` but not yet in CBAN packages2.8.xml
 
@@ -31,7 +31,7 @@ These v2.7 packages are not in `packages2.8.xml` and are not currently tracked i
 |---|---|---|---|---|
 | 5rf | extra | 0.0.2 | [link](https://github.com/rbouckaert/5rf/) | Rate Class Root Frequency Model |
 | AlmostDistributions | extra | 0.2.1 | [link](https://github.com/rbouckaert/AlmostDistributions) | Almost-distributions |
-| ASM | extra | 0.0.1 | [link](https://github.com/rbouckaert/asm) | Automatic stopping MCMC |
+| ASM | main | 0.0.1 | [link](https://github.com/rbouckaert/asm) | Automatic stopping MCMC |
 | Babel | main | 0.4.2 | [link](https://github.com/rbouckaert/Babel) | BABEL = BEAST analysis backing effective linguistics |
 | bacter | main | 3.0.1 | [link](https://tgvaughan.github.io/bacter) | Bacterial ARG inference. |
 | BADTRIP | main | 2.0.0 | [link](https://bitbucket.org/nicofmay/badtrip) | Infer transmission time for non-haplotype data and epi data |
@@ -40,17 +40,16 @@ These v2.7 packages are not in `packages2.8.xml` and are not currently tracked i
 | BDSKY | main | 1.5.1 | [link](https://github.com/BEAST2-Dev/bdsky/) | birth death skyline - handles serially sampled tips, piecewise constant rate changes through time and sampled ancestors |
 | bdtree | main | 0.0.2 | [link](https://github.com/fkmendes/bdtree) | Birth-death sequential sampling |
 | BEAST2Lang | extra | 0.0.1 | [link](https://github.com/CompEvol/beast2lang/) | Run a Beast2 model using the definition language |
+| BEASTBooster | extra | 0.0.2 | [link](https://github.com/rbouckaert/beastbooster) | BEAST Booster |
 | beastmap | extra | 0.0.3 | [link](https://github.com/jordandouglas/BeastMap/) | Stochastic mapping and ancestral sequence/state reconstruction |
 | BEASTvntr | main | 0.2.0 | [link](https://github.com/arjun-1/BEASTvntr) | Variable Number of Tandem Repeat data, such as microsattelites |
-| BICEPS | main | 1.1.2 | [link](https://github.com/rbouckaert/biceps/) | Bayesian Integrated Coalescent Epoch PlotS + Yule Skyline |
 | BREAK_AWAY | main | 1.2.0 | [link](https://github.com/rbouckaert/break-away) | break-away model of phylogegraphy |
-| BREATH | extra | 0.0.5 | [link](https://github.com/rbouckaert/transmission) | Bayesian Reconstruction and Evolutionary Analysis of Transmission Histories |
+| BREATH | extra | 0.0.6 | [link](https://github.com/rbouckaert/transmission) | Bayesian Reconstruction and Evolutionary Analysis of Transmission Histories |
 | CA | main | 2.1.0 | [link](https://github.com/BEAST2-Dev/cladeage) | Bayesian estimation of clade ages based on probabilities of fossil sampling |
 | CCD | main+extra | 1.0.3 | [link](https://github.com/CompEvol/CCD) | Better tree distribution and point estimates, computation of entropy, rogues and more. |
 | ClaDS | main | 2.3.0 | [link](https://bitbucket.org/bjoelle/clads/) | Implementation of the ClaDS birth-death tree prior with sampled ancestors |
 | CoalRe | main | 1.0.4 | [link](https://github.com/nicfel/CoalRe/) | Inference of Recombination networks |
 | CodonSubstModels | main | 2.0.1 | [link](https://github.com/BEAST2-Dev/codonsubstmodels) | Codon substitution models for DNA |
-| contacTrees | main | 1.2.0 | [link](https://github.com/NicoNeureiter/contacTrees) | Phylogenetic model with horizontal transfer for linguistics |
 | contraband | main | 1.0.2 | [link](https://github.com/fkmendes/contraband) | Scalable brownian models for continuous trait evolution |
 | CorrelatedTrait | extra | 0.0.5 | [link](https://github.com/rbouckaert/CorrelatedTrait) | Analysis for a fixed tree or fixed tree set |
 | CubeVB | main | 1.0.2 | [link](https://github.com/rbouckaert/cubevb) | Variational Bayes on a cube |
@@ -73,8 +72,9 @@ These v2.7 packages are not in `packages2.8.xml` and are not currently tracked i
 | MSBD | main | 2.0.6 | [link](https://bitbucket.org/bjoelle/msbd/) | MSBD multi-type birth-death tree prior with sampled ancestors |
 | MultiTypeTree | main | 8.3.0 | [link](https://tgvaughan.github.io/MultiTypeTree) | Structured coalescent inference. |
 | NS | main | 1.2.2 | [link](https://github.com/BEAST2-Dev/nested-sampling/wiki) | Nested sampling for model selection and posterior inference |
+| online | extra | 0.0.2 | [link](https://github.com/rbouckaert/online) | Online and faster parallel phylogenetics |
 | PhyDyn | main | 1.4.0 | [link](https://github.com/mrc-ide/PhyDyn) | PhyDyn: Epidemiological modelling with BEAST |
-| phylodynamics | main | 1.4.0 | [link](https://github.com/BEAST2-Dev/phylodynamics) | BDSIR and Stochastic Coalescent |
+| phylodynamics | main | 1.5.0 | [link](https://github.com/BEAST2-Dev/phylodynamics) | BDSIR and Stochastic Coalescent |
 | phylonco | main | 1.2.1 | [link](https://github.com/bioDS/beast-phylonco) | A package for single cell cancer evolution. |
 | phylonco.lphybeast | main | 1.2.1 | [link](https://github.com/bioDS/beast-phylonco) | A LPhyBEAST extension for phylonco (requires: LPhy and phylonco-lphy). |
 | PIQMEE | main | 1.0.0 | [link](https://github.com/boskovav/piqmee) | Birth-death skyline-based method efficiently dealing with duplicate sequences |
@@ -89,7 +89,6 @@ These v2.7 packages are not in `packages2.8.xml` and are not currently tracked i
 | snapper | main | 1.1.5 | [link](https://github.com/rbouckaert/snapper) | Diffusion based SNP and AFLP Phylogenies |
 | SpeciesNetwork | main | 1.0.0 | [link](https://github.com/zhangchicool/speciesnetwork) | Multispecies network coalescent (MSNC) inference of introgression and hybridization |
 | speedemon | main | 1.1.0 | [link](https://github.com/rbouckaert/speedemon) | Fast species delimitation under the multispecies coalescent |
-| SSM | main | 1.2.2 | [link](https://github.com/BEAST2-Dev/substmodels/) | Standard Nucleotide Substitution Models |
 | STACEY | main | 1.3.1 | [link](http://indriid.com/software.html) | Species delimitation and species tree estimation |
 | StarBEAST2 | main | 1.0.0 | [link](https://github.com/genomescale/starbeast2) | Multispecies coalescent inference using multi-locus and fossil data |
 | starbeast3 | main | 1.2.1 | [link](https://github.com/rbouckaert/starbeast3) | StarBeast3 multispecies coalescent using advanced MCMC operators |
@@ -103,13 +102,17 @@ These v2.7 packages are not in `packages2.8.xml` and are not currently tracked i
 
 | Package | Latest 2.7 | Latest 2.8 |
 |---|---|---|
+| BDMM-Prime | 2.7.2 | 3.0.0 |
 | BEAST_CLASSIC | 1.6.4 | 1.7.0 |
 | BEASTLabs | 2.0.3 | 2.1.0 |
+| BICEPS | 1.1.2 | 1.2.0 |
+| contacTrees | 1.2.0 | 2.0.0 |
 | CoupledMCMC | 1.2.2 | 1.3.0 |
-| feast | 10.6.1 | 11.0.0 |
+| feast | 10.6.1 | 11.0.1 |
 | gammaspike | 1.2.0 | 1.3.0 |
 | Mascot | 3.0.7 | 3.1.0 |
 | MM | 1.2.1 | 1.3.0 |
 | ORC | 1.2.1 | 1.3.1 |
-| ReMASTER | 2.7.4 | 3.0.0 |
+| ReMASTER | 2.7.4 | 3.0.1 |
 | SA | 2.1.1 | 2.3.0 |
+| SSM | 1.2.2 | 1.3.0 |

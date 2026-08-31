@@ -23,3 +23,4 @@ for the high-level cross-package status table.
 | [GammaSpikeModel](GammaSpikeModel.md) | compile-tested | ❌ | `13bd1b2` | `1.3.0-SNAPSHOT` |
 | [BDMM-Prime](BDMM-Prime.md) | compile-tested | ❌ | `ee37e1b` | `3.0.0` |
 | [remaster](remaster.md) | compile-tested | ❌ | `896c7b7` | `3.0.0` |
+| [contacTrees](contacTrees.md) | Maven Central | `2.0.0` | `efff8b7` | `2.0.0` |
