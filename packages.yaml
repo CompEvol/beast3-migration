@@ -123,3 +123,9 @@ packages:
     maven: io.github.tgvaughan:remaster
     stage: compile_tested
     notes: Migration WIP on `beast2.8-migration` branch (Maven, v3.0.0).
+  
+  - name: contacTrees
+    path: ../contacTrees
+    github: NicoNeureiter/contacTrees
+    maven: io.github.niconeureiter:contactrees
+    stage: maven_central
