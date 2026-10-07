@@ -7,9 +7,13 @@
 - **`_b3.xml` inputs are always rejected** — files whose stem ends in `_b3` are already
   converted BEAST3 outputs. Pass the original BEAST2 source instead. `--overwrite` does
   not bypass this guard (it only controls whether an existing `*_b3.xml` *output* may be replaced).
-- **FxTemplate `<subtemplate>` CDATA round-trips as CDATA**, not escaped text (see T1b in
-  `XML-MIGRATION-STRATEGY.md`) — but its content is never scanned or renamed. After converting a
-  FxTemplate, manually check the CDATA block for deprecated class references and fix by hand.
+- **FxTemplate `<subtemplate>`/`<partitiontemplate>` CDATA is converted** like the rest of the
+  document and written back as CDATA (see T1b in `XML-MIGRATION-STRATEGY.md`); its report lines are
+  prefixed `[CDATA <tag id=…>]`. Only a fragment that is not well-formed XML is skipped (`[todo]`).
+- **A class with several replacements in `deprecated_classes.md` is never resolved by taking the
+  first one.** `UniformOperator` (by target type), `Gamma` (by `mode=`), parameter shapes and the
+  `ScaleOperator` split have type-aware rules; any other multi-replacement class gets a `[warn]`.
+  Review every such `[warn]` against the actual parameter type.
 
 ## Post-conversion validation
 After converting a file, run `/test-b3-xml` (or follow `test-b3-xml.md`) to validate the

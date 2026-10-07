@@ -25,4 +25,4 @@
    17. [warn] ⚠  spec= "Uniform" [tree=] → full legacy path required  (short name resolves to distribution, not tree operator)
    18. [rename]  spec= "ESS" → "beast.base.spec.inference.util.ESS"
    19. [rename]  spec= "ESS" → "beast.base.spec.inference.util.ESS"
-   20. [warn] ⚠  spec= "Prior+OneOnX" (@hky.kappa) → "LogNormal"  M=1.0  S=0.5
+   20. [warn] ⚠  spec= "Prior+OneOnX" (@hky.kappa) → "LogUniform"  lower=1.0E-6  upper=1.0E6  — placeholder bounds; set lower/upper to the plausible range of this parameter

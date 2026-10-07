@@ -35,23 +35,12 @@ SCALE_OPERATOR_CLASSES: frozenset[str] = frozenset({
 })
 
 
-def parse_deprecated_md(md_path: Path) -> dict[str, str]:
+def _iter_deprecated_rows(md_path: Path):
     """
-    Parse deprecated_classes.md → rename map.
-
-    Keys are both simple class names AND full deprecated FQNs (reconstructed
-    from the ### package section headings).  Storing both allows resolve_spec()
-    to use exact-FQN lookup for full references, avoiding simple-name collisions
-    such as branchratemodel.Base vs substitutionmodel.Base.
-
-    Map entries:
-      SimpleName       → B3_FQN   (fallback for short-name references in XML)
-      DeprecatedFQN    → B3_FQN   (precise lookup for full-FQN references)
-
-    Only entries whose replacement column contains a backtick-quoted beast.* FQN
-    are included.  Classes with prose-only replacements are omitted.
+    Yield (simple_name, deprecated_package, [b3_fqn, ...]) for every table row of
+    deprecated_classes.md whose replacement column names at least one
+    backtick-quoted beast.* FQN.  FQNs are returned in the order written.
     """
-    mapping: dict[str, str] = {}
     fqn_re = re.compile(r'`(beast\.[^`]+)`')
     pkg_re = re.compile(r'(beast\.[^\s`]+)')
     current_package = ''
@@ -77,14 +66,55 @@ def parse_deprecated_md(md_path: Path) -> dict[str, str]:
             simple_name = name_match.group(1).strip()
             if simple_name in ('Deprecated Class', '---', ''):
                 continue
-            fqn_match = fqn_re.search(replacement_col)
-            if fqn_match:
-                b3_fqn = fqn_match.group(1)
-                mapping[simple_name] = b3_fqn
-                if current_package:
-                    mapping[f'{current_package}.{simple_name}'] = b3_fqn
+            fqns = list(dict.fromkeys(fqn_re.findall(replacement_col)))
+            if fqns:
+                yield simple_name, current_package, fqns
 
+
+def parse_deprecated_md(md_path: Path) -> dict[str, str]:
+    """
+    Parse deprecated_classes.md → rename map.
+
+    Keys are both simple class names AND full deprecated FQNs (reconstructed
+    from the ### package section headings).  Storing both allows resolve_spec()
+    to use exact-FQN lookup for full references, avoiding simple-name collisions
+    such as branchratemodel.Base vs substitutionmodel.Base.
+
+    Map entries:
+      SimpleName       → B3_FQN   (fallback for short-name references in XML)
+      DeprecatedFQN    → B3_FQN   (precise lookup for full-FQN references)
+
+    Only entries whose replacement column contains a backtick-quoted beast.* FQN
+    are included.  Classes with prose-only replacements are omitted.
+
+    When a row lists several replacements, only the FIRST is stored here.  That
+    is a default, not a decision — see parse_deprecated_alternatives() and the
+    type-aware resolvers in xml_annotator.py, which must override it.
+    """
+    mapping: dict[str, str] = {}
+    for simple_name, package, fqns in _iter_deprecated_rows(md_path):
+        mapping[simple_name] = fqns[0]
+        if package:
+            mapping[f'{package}.{simple_name}'] = fqns[0]
     return mapping
+
+
+def parse_deprecated_alternatives(md_path: Path) -> dict[str, list[str]]:
+    """
+    Return {simple_name: [b3_fqn, ...]} for every deprecated class whose row
+    lists MORE THAN ONE replacement (e.g. UniformOperator → IntUniformOperator
+    or IntervalOperator).  The rename map silently picks the first of these, so
+    the annotator uses this table to warn whenever no type-aware rule resolved
+    the choice.  Keyed by simple name and by full deprecated FQN.
+    """
+    alternatives: dict[str, list[str]] = {}
+    for simple_name, package, fqns in _iter_deprecated_rows(md_path):
+        if len(fqns) < 2:
+            continue
+        alternatives[simple_name] = fqns
+        if package:
+            alternatives[f'{package}.{simple_name}'] = fqns
+    return alternatives
 
 
 def resolve_spec(value: str, dep_map: dict[str, str]) -> Optional[str]:

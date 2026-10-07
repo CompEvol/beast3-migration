@@ -18,11 +18,17 @@ Output files (per input):
     <same-dir>/reports/<stem>.md      — Markdown migration report (always written)
 
 Pipeline:
-    1. deprecated_map.parse_deprecated_md()   → rename map
-    2. xml_annotator.prepass()                → stamp _b3* attrs on every element
-    3. xml_annotator.annotate_vector_priors() → upgrade flatten → iid where needed
-    4. lxml.etree.XSLT(b2_to_b3.xsl)         → structural XML transform
-    5. Write XML output and save report
+    1. deprecated_map.parse_deprecated_md()   → rename map (first FQN per row)
+       deprecated_map.parse_deprecated_alternatives() → rows with >1 replacement
+    2. Parse every FxTemplate CDATA fragment (<subtemplate>/<partitiontemplate>)
+       and build ONE id map over the document + all fragments, so cross-fragment
+       references (e.g. an operator's parameter=) resolve to a typed target
+    3. For each CDATA fragment: annotate → XSLT → write back as CDATA
+       (its changes are reported with a "[CDATA <tag id>]" prefix)
+    4. xml_annotator.prepass()                → stamp _b3* attrs on every element
+    5. xml_annotator.annotate_vector_priors() → upgrade flatten → iid where needed
+    6. lxml.etree.XSLT(b2_to_b3.xsl)         → structural XML transform
+    7. Write XML output and save report
 
 Requires: lxml  (pip install lxml)
 Python  : 3.9+
@@ -32,15 +38,23 @@ import re
 import sys
 import argparse
 from pathlib import Path
+from typing import Optional
 
 try:
     from lxml import etree
 except ImportError:
     sys.exit("ERROR: lxml is required.  Run: pip install lxml")
 
-from deprecated_map import parse_deprecated_md
+from deprecated_map import parse_deprecated_md, parse_deprecated_alternatives
 from reporter import Change, ChangeKind, save_report, print_report
-from xml_annotator import prepass, annotate_vector_priors, collect_prior_changes, annotate_int_simplex_params
+from xml_annotator import (
+    prepass, annotate_elements, annotate_vector_priors, collect_prior_changes,
+    annotate_int_simplex_params, annotate_simplex_refs,
+)
+
+# FxTemplate elements whose text is an embedded BEAST XML fragment held as CDATA.
+CDATA_FRAGMENT_TAGS = ('subtemplate', 'partitiontemplate')
+_FRAGMENT_ROOT = '_b3fragment'
 
 
 def convert(
@@ -49,6 +63,7 @@ def convert(
     xsl_path: Path,
     dep_map: dict[str, str],
     fxtemplate: bool,
+    alternatives: Optional[dict[str, list[str]]] = None,
 ) -> list[Change]:
     """
     Convert a single BEAST2 XML file to BEAST3 and write the result.
@@ -60,26 +75,49 @@ def convert(
     # to plain text nodes at parse time, before the XSLT ever runs — this is why
     # a FxTemplate's <subtemplate><![CDATA[...]]></subtemplate> (the embedded
     # runnable-analysis fragment) came out as escaped text (&lt;...&gt;) instead
-    # of round-tripping as CDATA. Preserving CDATA-ness here is the other half
-    # of the fix — see cdata-section-elements in b2_to_b3.xsl's <xsl:output>.
+    # of round-tripping as CDATA. The XSLT itself drops CDATA-ness, so it is
+    # restored on the fragment text after the transform (see below).
     parser = etree.XMLParser(remove_blank_text=False, remove_comments=False, strip_cdata=False)
     tree = etree.parse(str(input_path), parser)
     root = tree.getroot()
 
+    xslt = etree.XSLT(etree.parse(str(xsl_path)))
+    fragments, frag_changes = _parse_fragments(root, parser)
+
     # Build id_map before prepass so annotate_int_simplex_params can stamp
     # _b3int_simplex on IntegerParameter elements referenced by DeltaExchangeOperator.
-    id_map = {e.get('id'): e for e in root.iter() if e.get('id')}
-    annotate_int_simplex_params(root, id_map)
+    # It spans the CDATA fragments too: in an FxTemplate a parameter and the
+    # operator acting on it often live in different fragments.
+    trees = [root] + [frag for _, frag in fragments]
+    id_map = {e.get('id'): e for t in trees for e in t.iter() if e.get('id')}
+    for t in trees:
+        annotate_int_simplex_params(t, id_map)
+        annotate_simplex_refs(t, id_map)
 
-    changes = prepass(tree, dep_map, fxtemplate)
+    # Convert each CDATA fragment with the same annotate → XSLT steps as the
+    # document, then write it back as CDATA for the main pass to copy through.
+    for host, frag in fragments:
+        label = f'[CDATA <{host.tag}{" id=" + host.get("id") if host.get("id") else ""}>] '
+        changes_f = annotate_elements(frag, dep_map, id_map, alternatives)
+        annotate_vector_priors(frag, id_map)
+        changes_f.extend(collect_prior_changes(frag))
+        frag_changes.extend(Change(c.kind, label + c.description) for c in changes_f)
+        host.text = etree.CDATA(_serialize_fragment(xslt(etree.ElementTree(frag)).getroot()))
+
+    changes = prepass(tree, dep_map, fxtemplate, id_map, alternatives)
+    changes.extend(frag_changes)
 
     annotate_vector_priors(root, id_map)
     # Collect Prior changes after vector-prior upgrade so the report reflects
     # the final _b3prior_type (flatten may have been upgraded to iid).
     changes.extend(collect_prior_changes(root))
 
-    xslt_doc = etree.parse(str(xsl_path))
-    result = etree.XSLT(xslt_doc)(tree)
+    result = xslt(tree)
+    # XSLT drops CDATA-ness; restore it on each fragment's own text only (not
+    # on the whitespace tails between a template's <connect> children).
+    for host in result.getroot().iter(*CDATA_FRAGMENT_TAGS):
+        if host.text and '<' in host.text:
+            host.text = etree.CDATA(host.text)
 
     raw = etree.tostring(result, pretty_print=True,
                          xml_declaration=True, encoding='UTF-8')
@@ -87,6 +125,37 @@ def convert(
         f.write(_postprocess(raw))
 
     return changes
+
+
+def _parse_fragments(root: etree._Element, parser: etree.XMLParser):
+    """
+    Parse the CDATA text of every <subtemplate>/<partitiontemplate> into an
+    element tree wrapped in a synthetic <_b3fragment> root (fragments have many
+    top-level elements).  Returns ([(host_element, fragment_root)], changes);
+    an unparseable fragment is left untouched and reported as a TODO.
+    """
+    fragments, changes = [], []
+    for host in root.iter(*CDATA_FRAGMENT_TAGS):
+        text = host.text or ''
+        if '<' not in text:
+            continue
+        try:
+            frag = etree.fromstring(f'<{_FRAGMENT_ROOT}>{text}</{_FRAGMENT_ROOT}>', parser)
+        except etree.XMLSyntaxError as exc:
+            changes.append(Change(
+                ChangeKind.TODO,
+                f'[CDATA <{host.tag} id={host.get("id")}>] fragment is not well-formed XML '
+                f'({exc}) — NOT converted; migrate it by hand',
+            ))
+            continue
+        fragments.append((host, frag))
+    return fragments, changes
+
+
+def _serialize_fragment(frag_root: etree._Element) -> str:
+    """Inverse of _parse_fragments: the wrapper's content, whitespace preserved."""
+    return (frag_root.text or '') + ''.join(
+        etree.tostring(child, encoding='unicode', with_tail=True) for child in frag_root)
 
 
 def _postprocess(xml_bytes: bytes) -> bytes:
@@ -167,6 +236,7 @@ def main():
         sys.exit('ERROR: --out can only be used with a single input file.')
 
     dep_map = parse_deprecated_md(dep_path)
+    alternatives = parse_deprecated_alternatives(dep_path)
     all_changes: dict[str, list[Change]] = {}
 
     for inp in args.inputs:
@@ -197,7 +267,7 @@ def main():
 
         # --- Convert ---
         try:
-            changes = convert(inp, out, args.xsl, dep_map, args.fxtemplate)
+            changes = convert(inp, out, args.xsl, dep_map, args.fxtemplate, alternatives)
             print(f'OK:   {inp} → {out}', file=sys.stderr)
         except Exception as exc:
             print(f'ERROR: {inp}: {exc}', file=sys.stderr)

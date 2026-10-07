@@ -55,10 +55,12 @@ logNormal.initByName(
     "sigma", new RealScalarParam<>(0.5, PositiveReal.INSTANCE),
     "meanInRealSpace", true);
 
-// Gamma — alpha and beta are positive reals
+// Gamma — alpha plus EITHER theta (scale) OR lambda (rate); there is no "beta" input.
+// BEAST2's beta meant scale by default (mode=ShapeScale) → theta; mode=ShapeRate → lambda;
+// mode=ShapeMean → use GammaMean with "mean" instead.
 gamma.initByName(
     "alpha", new RealScalarParam<>(2.0, PositiveReal.INSTANCE),
-    "beta",  new RealScalarParam<>(1.0, PositiveReal.INSTANCE));
+    "theta", new RealScalarParam<>(1.0, PositiveReal.INSTANCE));
 
 // Dirichlet — alpha is a vector of positive reals
 dirichlet.initByName(
@@ -95,7 +97,8 @@ BEAST3 spec twin. If not, leave unchanged and flag with
 For `spec=` attribute changes in example XMLs and FxTemplates, see **`xml-migration/XML-MIGRATION-STRATEGY.md`** (T3 — Prior distribution variants). The converter (`convert_b2_to_b3.py`) applies these automatically; do not hand-edit XML. Key rules covered there:
 - `Prior` + inner distribution → direct spec distribution with `param=` (T3a)
 - Vector parameter with scalar distribution → `IID` wrapper (T3b)
-- `OneOnX` inner distribution has no spec twin → replaced with `LogNormal` (T3c–e), flagged `[warn]` in the per-file report
+- `OneOnX` inner distribution → `LogUniform` with placeholder `lower`/`upper` (T3c), flagged `[warn]` — set the bounds per parameter
+- `Gamma` → `Gamma` or `GammaMean` depending on BEAST2 `mode=`; `beta` renamed to `theta`/`lambda`/`mean` (see "Classes with several replacements")
 - Any other inner distribution with no spec twin → left unresolved, flagged `[todo]` in the per-file report only (no inline XML marker — see Limits)
 
 ---

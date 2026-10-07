@@ -13,10 +13,10 @@ Do not hand-edit XML files. Run the script; review its output.
 
 | File | Layer | Role |
 |---|---|---|
-| `deprecated_map.py` | Knowledge | Parses `deprecated_classes.md` → rename map; `resolve_spec()`; `DO_NOT_RENAME`; no lxml |
+| `deprecated_map.py` | Knowledge | Parses `deprecated_classes.md` → rename map (first FQN per row) and `parse_deprecated_alternatives()` (rows with >1 replacement); `resolve_spec()`; `DO_NOT_RENAME`; no lxml |
 | `xml_annotator.py` | Decision | lxml pre-pass: stamps `_b3*` attrs encoding all Python-side decisions |
 | `reporter.py` | Reporting | `ChangeKind`, `Change`; `render_report`, `save_report`, `print_report` |
-| `convert_b2_to_b3.py` | CLI | Orchestrates the modules, applies XSLT, saves report, prints to stdout |
+| `convert_b2_to_b3.py` | CLI | Orchestrates the modules, converts FxTemplate CDATA fragments, applies XSLT, saves report, prints to stdout |
 | `b2_to_b3.xsl` | Transform | XSLT 1.0: reads `_b3*` annotations, applies structural changes |
 | `../b2deprecated/deprecated_classes.md` | Data | Source for the rename map |
 
@@ -79,9 +79,12 @@ BEAST3 rejects unknown attributes.
 | `_b3version` | `prepass()` on `<beast>` root | T1 | Always present → rewrite `version="2.8"` |
 | `_b3fxtemplate` | `prepass()` on `<beast>` root, only when `--fxtemplate` | T1 | Present → skip the namespace rewrite (version is still bumped) |
 | `_b3spec` | `prepass()` on any element | T2, T5 | Full FQN to write into `spec=` |
-| `_b3domain` | `prepass()` on parameter elements | T2 | Domain class: `PositiveReal`, `UnitInterval`, or `Real` |
-| `_b3prior_type` | `prepass()` + `annotate_vector_priors()` | T3a–e | Prior variant: `flatten`, `iid`, `oneonx_pop`, `oneonx_kappa`, `oneonx_generic` |
-| `_b3vector_x` | `annotate_vector_priors()` | _(internal)_ | Triggers `flatten` → `iid` upgrade when `x=` param is vector-shaped |
+| `_b3domain` | `prepass()` on parameter elements | T2 | Domain class (`PositiveReal`, `UnitInterval`, `Real`, `PositiveInt`, `NonNegativeInt`, `Int`) or sentinel `simplex`/`boolean` |
+| `_b3prior_type` | `prepass()` + `annotate_vector_priors()` | T3a–c | Prior variant: `flatten`, `iid`, `oneonx` |
+| `_b3vector_x` | `annotate_vector_priors()` | T3c | `x=` param is vector-shaped: upgrades `flatten` → `iid`; makes T3c wrap LogUniform in `IID` |
+| `_b3lower` / `_b3upper` | `prepass()` on `oneonx` elements | T3c | Placeholder LogUniform bounds (`xml_annotator.ONEONX_LOGUNIFORM_BOUNDS`) |
+| `_b3simplex` | `annotate_simplex_refs()` | _(internal)_ | Parameter is referenced by `<frequencies frequencies="@…">` → simplex |
+| `_b3int_simplex` | `annotate_int_simplex_params()` | _(internal)_ | IntegerParameter supplied via `DeltaExchangeOperator intparameter=` → `IntSimplexParam` |
 | `_b3type` | `prepass()` | T5 | Replacement value for `type=` attribute |
 | `_b3class` | `prepass()` | T5 | Replacement value for `class=` attribute |
 
@@ -111,9 +114,9 @@ package list (no spec packages) for runnable example XMLs only; `--fxtemplate` m
 `namespace=` exactly as authored, since FxTemplates need their own broader package list (e.g.
 `beastfx.app.beauti`, `beastfx.app.inputeditor`).
 
-### T1b — `<subtemplate>` CDATA round-tripping (FxTemplate)
+### T1b — `<subtemplate>`/`<partitiontemplate>` CDATA fragments (FxTemplate)
 
-A BEAUti FxTemplate's `<subtemplate>` element holds the embedded runnable-analysis XML fragment
+A BEAUti FxTemplate's `<subtemplate>` (and per-partition `<partitiontemplate>`) element holds the embedded runnable-analysis XML fragment
 as `<![CDATA[...]]>` text, e.g.:
 
 ```xml
@@ -127,24 +130,22 @@ as `<![CDATA[...]]>` text, e.g.:
 </subtemplate>
 ```
 
-This must round-trip as CDATA, not as entity-escaped text (`&lt;run spec=...&gt;` etc.) — both
-forms parse to the identical text-node string once BEAUti re-parses the fragment, so it isn't a
-*correctness* bug, but escaped output is unreadable, undiffable, and wrong to write by any tool
-whose job is to produce editable BEAST XML. Two independent settings are required together, or the
-CDATA silently degrades to escaped text with no error:
+This must round-trip as CDATA, not as entity-escaped text (`&lt;run spec=...&gt;` etc.), and its
+**content must be converted like any other XML** — FxTemplates hold most of their model (parameters,
+priors, operators) inside these fragments. `convert_b2_to_b3.py` does both:
 
-1. **Parser**: `etree.XMLParser(..., strip_cdata=False)` in `convert()` (`convert_b2_to_b3.py`).
-   lxml's default is `strip_cdata=True`, which converts CDATA sections into ordinary text nodes
-   *at parse time* — before the XSLT ever runs — permanently discarding the CDATA distinction.
-2. **XSLT output**: `<xsl:output ... cdata-section-elements="subtemplate"/>` in `b2_to_b3.xsl`.
-   Without this, even a CDATA-preserved text node serialises as escaped text on output — the
-   serializer only wraps an element's text content in `<![CDATA[...]]>` when that element's name
-   is explicitly listed here.
-
-**Still a limit** (unrelated to the above — see Limits section): this only fixes *serialization*.
-The content *inside* the CDATA fragment is opaque text to `xml_annotator.py` — no class inside it
-gets renamed. A deprecated class referenced only inside `<subtemplate>` CDATA (e.g. `spec='ESS'`)
-still needs a manual, hand-applied rename after conversion; the per-file report will not flag it.
+1. **Parse**: `etree.XMLParser(..., strip_cdata=False)` keeps the CDATA text intact. Each
+   `<subtemplate>`/`<partitiontemplate>` text that contains markup is parsed as a fragment, wrapped in
+   a synthetic `<_b3fragment>` root (fragments have several top-level elements). A fragment that is not
+   well-formed is left untouched and reported as `[todo]`.
+2. **One id map** is built over the document **and all fragments**, so a reference from one fragment
+   resolves to a typed target in another (e.g. an operator's `parameter=` → its `RealParameter`).
+3. **Convert** each fragment with the same `annotate_elements()` → `annotate_vector_priors()` → XSLT
+   steps as the document. Its report lines carry a `[CDATA <tag id=…>]` prefix.
+4. **Write back as CDATA** — after the main XSLT, CDATA is restored on each fragment's own text only.
+   The stylesheet deliberately has **no** `cdata-section-elements`: that setting wraps *every* text
+   node of the element in CDATA, including the whitespace between trailing `<connect>` children,
+   producing stray `]]><connect …/><![CDATA[` runs.
 
 ### T2 — `<parameter>` scalar/vector (including bare tags with no `spec=`)
 `xml_annotator._infer_shape` / `_infer_domain` decide; XSLT applies. Output uses full FQN for spec=.
@@ -155,17 +156,26 @@ still needs a manual, hand-applied rename after conversion; the per-file report 
 
 | Condition | Shape | Output class |
 |---|---|---|
-| `id` contains `freq`, or parent is `frequencies` | simplex | `SimplexParam` — see T2s |
+| parent is `<frequencies>`, or referenced by `<frequencies frequencies="@id">` | simplex | `SimplexParam` — see T2s |
+| vector-shaped (below) **and** `id` contains `freq` (name fallback — a scalar is never a simplex) | simplex | `SimplexParam` |
 | `dimension > 1` **or** `value=` has >1 token | vector | `RealVectorParam` |
 | otherwise | scalar | `RealScalarParam` |
+
+Shape is still inferred from the `<parameter>` element alone, not from the consuming Java `Input`;
+a parameter with one value that feeds a vector input (e.g. `ConstantPopulations.populationSizes`)
+comes out as a scalar — `beast -validate` catches this.
 
 **Domain** from `lower=` / `upper=`:
 
 | `lower` / `upper` | Domain |
 |---|---|
-| `lower≥0`, no upper | `PositiveReal` |
-| `lower≥0`, `upper≤1` | `UnitInterval` |
-| anything else | `Real` |
+| `lower=0` **and** `upper=1` exactly | `UnitInterval` |
+| `lower≥0` and (no upper **or** `upper>1`) | `PositiveReal` — a finite large upper (e.g. `10000`) is an operator safety cap, not a domain |
+| no bounds, and `id` role is `mutationRate` or `gammaShape` (`_KNOWN_POSITIVE_PARAM_ROLES`) | `PositiveReal` + `[warn]` (inferred from the name) |
+| anything else (incl. `lower≥0` with `upper<1`, e.g. `[0, 0.5]`) | `Real` |
+
+Only `UnitInterval` has finite bounds — this matters for operators that need them (see
+`UniformOperator` under T4).
 
 **Attribute handling:**
 - `lower=` and `upper=` are **dropped** (absorbed into `domain=`).
@@ -194,8 +204,9 @@ not `intparameter`.
 | `lower` | Domain |
 |---|---|
 | `lower≥1` | `PositiveInt` |
-| `lower=0` | `NonNegativeInt` |
-| no bounds | `NonNegativeInt` (safest default for category indices) |
+| `0 ≤ lower < 1` | `NonNegativeInt` |
+| `lower<0` | `Int` (unrestricted — `NonNegativeInt` would reject the allowed negative values) |
+| no bounds | `NonNegativeInt` (default for category indices) |
 
 `dimension=` is **kept** when shape is vector or integer-simplex; `lower=` and `upper=` are **dropped**.
 
@@ -262,13 +273,17 @@ with T3c/d/e which already did this).
 |---|---|---|
 | `flatten` | scalar inner distr | inner distribution inlined; Prior wrapper dropped; `x=` → `param=` |
 | `iid` | vector `x=` param | `beast.base.spec.inference.distribution.IID`; `x=` → `param=` |
-| `oneonx_pop` | `OneOnX` inner + `x=` references `popSize` | `beast.base.spec.inference.distribution.LogNormal` M=3 S=2.5 |
-| `oneonx_kappa` | `OneOnX` inner + `x=` references `kappa` | `beast.base.spec.inference.distribution.LogNormal` M=1 S=0.5 |
-| `oneonx_generic` | `OneOnX` inner + unknown param, **or standalone `OneOnX` element** | `beast.base.spec.inference.distribution.LogNormal` M=1 S=1 + WARNING |
+| `oneonx` | `OneOnX` inner (`spec=` or tag-as-class `<OneOnX name="distr"/>`), **or standalone `OneOnX` element** | `beast.base.spec.inference.distribution.LogUniform` with `<lower>`/`<upper>` = `1.0E-6`/`1.0E6` + WARNING; wrapped in `IID` when `x=` is vector-shaped |
 
-**Standalone `OneOnX`** (not inside a Prior wrapper): stamped as `oneonx_generic` so XSLT T3e
-converts it to LogNormal(M=1, S=1). dep_map's `LogUniform` mapping is bypassed. A WARNING is
-emitted asking the user to verify M/S and set `param=`.
+**OneOnX → LogUniform** follows `deprecated_classes.md`: LogUniform has density ∝ 1/x on
+`[lower, upper]`, the proper version of the improper 1/x prior. The source has no bounds to carry
+over, so the converter writes wide placeholders and the WARNING asks the user to set the plausible
+range **per parameter** (e.g. StarBEAST2 `popMean`: `[1.0E-6, 0.5]`). No parameter-name heuristic
+is used — the earlier `popSize`/`kappa` → LogNormal(M, S) rules guessed M/S from the id, missed
+names like `popMean`, and emitted an empty `spec=""` for tag-as-class `<OneOnX name="distr"/>`.
+
+**Gamma inside a Prior** is converted by the `Gamma` rule under T4/T5 (mode → `Gamma`/`GammaMean`,
+`beta=` renamed) before being inlined.
 
 All T3 templates match `*[@_b3prior_type='...']` (any element tag, not just `distribution`) so
 they fire on both `<distribution>` and `<prior>` element styles.
@@ -277,6 +292,48 @@ they fire on both `<distribution>` and `<prior>` element styles.
 - `ScaleOperator`/`BactrianScaleOperator` + `parameter=` → `beast.base.spec.inference.operator.ScaleOperator`
 - `ScaleOperator`/`BactrianScaleOperator` + `tree=` → `beast.base.spec.evolution.operator.ScaleTreeOperator`
 - `Uniform` + `tree=` → `beast.base.evolution.operator.Uniform` (full legacy path; short `Uniform` resolves to the distribution)
+- `UniformOperator` → chosen from the **type of its `parameter`** (`parameter="@id"`, `<parameter idref=…>`
+  or inline), looked up across the document and all CDATA fragments (`_resolve_uniform_operator`):
+
+  | Target | Output |
+  |---|---|
+  | integer (`IntegerParameter`, `Int*Param`) | `…operator.uniform.IntUniformOperator` (keeps `howMany=`) |
+  | real (`RealParameter`, bare `<parameter>`, `Real*Param`) | `…operator.uniform.IntervalOperator`; `howMany=` dropped (`[warn]` if ≠ 1); `[warn]` if the domain is not `UnitInterval` — IntervalOperator needs finite bounds and BEAST3 rejects it otherwise |
+  | boolean | unchanged + `[todo]` (use `BitFlipOperator`) |
+  | not found | `IntervalOperator` + `[warn]` (real targets are the common case) |
+
+  Never take `deprecated_classes.md`'s first entry (`IntUniformOperator`) blindly: that default
+  turned every real-valued `ExtinctionFraction` operator in StarBEAST2 into `IntUniformOperator`.
+
+### Classes with several replacements
+
+`deprecated_classes.md` lists more than one replacement for some classes, and `parse_deprecated_md()`
+keeps only the **first**. Each such class must be resolved from the types actually involved:
+
+| Class | Replacements | Resolved by |
+|---|---|---|
+| `RealParameter` / `IntegerParameter` / `BooleanParameter` | Scalar · Vector (· Simplex) | shape (T2) |
+| `ScaleOperator` / `BactrianScaleOperator` | `ScaleOperator` · `ScaleTreeOperator` | `parameter=` vs `tree=` (T4) |
+| `UniformOperator` | `IntUniformOperator` · `IntervalOperator` | target parameter type (T4) |
+| `Gamma` | `Gamma` · `GammaMean` | `mode=` (below) |
+| `CompoundRealParameter` | `CompoundRealScalarParam` · `CompoundIntScalarParam` | BEAST2 only allowed `RealParameter` children → always `CompoundRealScalarParam`; `[warn]` for any child that is not a scalar real (the B3 class only accepts `RealScalarParam`) |
+| anything else (e.g. `Function`) | — | first FQN **plus a `[warn]`** listing the alternatives (`_unresolved_alternatives`) |
+
+A new multi-replacement row in `deprecated_classes.md` is therefore never applied silently; add a
+type-aware rule to `xml_annotator.py` (and to `_TYPE_RESOLVED`) when one is needed.
+
+**`Gamma`** (BEAST2 `alpha`, `beta`, `mode`; default `mode=ShapeScale`, defaults `alpha=2`, `beta=2`):
+
+| BEAST2 `mode` | BEAST3 class | `beta` becomes |
+|---|---|---|
+| `ShapeScale` (default) | `Gamma` | `theta` (scale) |
+| `ShapeRate` | `Gamma` | `lambda` (rate) |
+| `ShapeMean` | `GammaMean` | `mean` |
+| `OneParameter` | `Gamma` | dropped; `theta = 1/alpha` (`[todo]` if `alpha` is not a literal) |
+
+`beta` is renamed whether it is an attribute, a `name="beta"` child or a `<beta>` child; `mode=` is
+removed. Missing `alpha`/`beta` are written out as the BEAST2 defaults (`alpha="2.0"`, `theta="2.0"`)
+with a `[warn]`, because BEAST3's defaults differ and `Gamma` requires `theta` XOR `lambda`.
 
 ### T5 — Rename (`_b3spec` annotation)
 Any element with `_b3spec` stamped has its `spec=`/`type=`/`class=` replaced with the full FQN.
@@ -295,7 +352,7 @@ All `<map name="...">` elements are stripped. These are B2 short-name aliases; B
 | Already contains `.spec.` | No change |
 | Starts with `@` | No change |
 | In `DO_NOT_RENAME` | No change (see list below) |
-| Short name in `dep_map` | → full B3 FQN from `dep_map` (may or may not be a spec path) |
+| Short name in `dep_map` | → full B3 FQN from `dep_map` (may or may not be a spec path; the FIRST replacement of a multi-replacement row — see "Classes with several replacements") |
 | Short name not in `dep_map` | No change — resolves via namespace |
 | Full FQN with exact key in `dep_map` | → full B3 FQN from `dep_map` (precise — avoids simple-name collision) |
 | Full FQN without exact key, but simple name in `dep_map` | → full B3 FQN from `dep_map` (fallback) |
@@ -324,11 +381,15 @@ The converter always saves `<input-dir>/reports/<stem>.md`. Use `--report` to al
 | WARNING | `[warn] ⚠` | semantic replacement — review required |
 | TODO | `[todo] ✗` | no spec twin found — manual action required |
 
-Warnings are emitted for: Prior structural changes (`flatten`, `iid`, `oneonx_*`),
+Warnings are emitted for: Prior structural changes (`flatten`, `iid`, `oneonx`),
 ScaleOperator split, Uniform tree operator legacy path,
 TreeLikelihood (ThreadedTreeLikelihood suggestion),
-standalone OneOnX→LogNormal (review M/S and set `param=`),
-`UniformOperator` ambiguous split (IntUniformOperator assumed; may need IntervalOperator),
+OneOnX→LogUniform (placeholder bounds — set lower/upper; standalone: also set `param=`),
+`UniformOperator` whose target was not found (IntervalOperator assumed), `howMany` dropped, or
+IntervalOperator on a parameter without finite domain bounds,
+`Gamma` with missing `alpha`/`beta` or `mode="OneParameter"`,
+`CompoundRealParameter` with a non-scalar or non-real child,
+any multi-replacement class without a type-aware rule (first FQN taken — alternatives listed),
 `Parameter` abstract type mapped to Tensor (may need RealScalarParam/RealVectorParam),
 `Uniform` prior with `upper="Infinity"` or `lower="-Infinity"` replaced with `±1.0E6`
 (BEAST3's `Uniform` backed by Apache Commons Statistics requires finite bounds).
@@ -355,11 +416,8 @@ Leave `chainLength="N"` as a plain integer in all converted XMLs.
 ## Limits
 
 Not yet handled; requires manual fix or future XSLT extension:
-- `FxTemplate` `<subtemplate>` **CDATA content** — the embedded runnable-analysis fragment (see
-  T1b above) now round-trips correctly as CDATA, but its *content* is still opaque text to
-  `xml_annotator.py`: no `spec=`/tag-as-class rename, parameter typing, or Prior flattening is
-  applied inside it. Always manually diff the pre- and post-conversion CDATA block for deprecated
-  short names (e.g. `ESS`, `HKY`) and fix by hand; the per-file report has no visibility into it.
+- `FxTemplate` CDATA fragments that are **not well-formed XML** on their own — left unconverted
+  and reported as `[todo]`; migrate those by hand. Well-formed fragments are converted (T1b).
 - `FxTemplate` `fx:controller` attribute (GUI layer class moves) — not scanned or rewritten by
   `xml_annotator.py`. When reviewing a converted FxTemplate, manually check `fx:controller="..."`
   values and update only if the referenced controller class itself moved package.
