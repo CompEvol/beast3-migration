@@ -54,6 +54,8 @@ public final class Report {
     public final List<ClassRecord> classes = new ArrayList<>();
     public final List<XmlRecord> xmls = new ArrayList<>();
     public final List<DeprecatedXmlRef> xmlDeprecatedRefs = new ArrayList<>();
+    /** Unqualified names resolving to both a deprecated and a live class. */
+    public final List<AmbiguousXmlRef> xmlAmbiguousRefs = new ArrayList<>();
     public final List<InputDeprecatedRef> inputDeprecatedRefs = new ArrayList<>();
     public int xmlTotal;            // example XMLs only (excludes fxtemplates)
     public int xmlMigrated;         // version="2.8" AND beast.base.spec.* namespace
@@ -174,6 +176,22 @@ public final class Report {
         }
         dep.put("refs", refs);
         m.put("xmlDeprecated", dep);
+
+        Map<String, Object> amb = new LinkedHashMap<>();
+        amb.put("count", xmlAmbiguousRefs.size());
+        List<Map<String, Object>> ambRefs = new ArrayList<>();
+        for (AmbiguousXmlRef ref : xmlAmbiguousRefs) {
+            Map<String, Object> e = new LinkedHashMap<>();
+            e.put("file", ref.file().toString());
+            e.put("hit", ref.hit());
+            e.put("deprecatedFqn", ref.deprecatedFqn());
+            e.put("replacement", ref.replacement());
+            e.put("isFxTemplate", ref.isFxTemplate());
+            e.put("source", ref.source());
+            ambRefs.add(e);
+        }
+        amb.put("refs", ambRefs);
+        m.put("xmlAmbiguous", amb);
 
         Map<String, Object> build = new LinkedHashMap<>();
         build.put("hasPom", hasPom);

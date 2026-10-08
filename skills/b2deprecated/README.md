@@ -96,5 +96,11 @@ reported when the scan completes.
 
 `parse_deprecated_md()` in `xml-migration/deprecated_map.py` reads the table and
 extracts entries where the Replacement column contains a backtick-quoted `beast.*` FQN.
-Classes with prose-only replacements (e.g. `OneOnX`) are omitted — they are handled
-by dedicated XSLT templates (T3c–e) rather than a generic rename.
+Classes with prose-only replacements are omitted. Some classes are converted by dedicated
+rules instead of the generic rename (e.g. `OneOnX` → LogUniform via XSLT T3c).
+
+When a row lists **several** replacements (e.g. `UniformOperator` → `IntUniformOperator`,
+`IntervalOperator`), the rename map keeps only the first, which is a default — not a decision.
+`parse_deprecated_alternatives()` returns all of them; the converter then either applies a
+type-aware rule (see "Classes with several replacements" in `XML-MIGRATION-STRATEGY.md`) or
+emits a `[warn]`. Order the replacements in this file with that in mind, but never rely on it.

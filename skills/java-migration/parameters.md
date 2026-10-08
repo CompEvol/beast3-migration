@@ -193,6 +193,22 @@ parameters are typically `PositiveReal`.
 - **`Function` interface**: legacy `beast.base.evolution.tree.Tree` or
   `beast.base.inference.Function` passed as an input — replace with the appropriate interface type
   (`RealScalar`, `RealVector`, etc.) once the domain is clear.
+- **Do not coerce Int-typed inputs to Real just because a convenience getter is missing.**
+  BEAST3 has full `IntScalar`/`IntScalarParam` and `IntVector`/`IntVectorParam` types — an input
+  that is genuinely integer-valued (an indicator, an index, a count) must stay `Input<IntScalar<?
+  extends X>>` (or the concrete `IntScalarParam`/`IntVectorParam` in an Operator), exactly like the
+  Real case in R4/R5 above. This matters most when migrating an **LPhyBeast extension module**
+  (`lphybeast.*` converter classes, not the BEAST3 package itself): `lphybeast.BEASTContext` only
+  exposes `getAsRealScalar`/`getAsRealVector`/`getAsRealTensor` — there is no `getAsIntScalar`. That
+  asymmetry is not a hint to widen your Int field to Real; those three methods exist specifically to
+  *coerce* an Int-typed value up to Real for consumers that legitimately need Real (and they do so by
+  reading the already-registered `IntScalarParam`/`IntVectorParam` and wrapping it — see
+  `BEASTContext.getAsRealScalar`). For a consumer that wants to keep the value Int-typed, retrieve the
+  already-converted object directly instead: `(IntScalarParam<?>) context.getBEASTObject(value)` (the
+  default `IntegerValueToBEAST` will have already produced and registered it before your
+  `ValueToBEAST`/`GeneratorToBEAST` runs, the same way existing code already does for non-parameter
+  BEAST objects, e.g. `context.getBEASTObject((Value) node)` for population functions). Only use
+  `getAsRealScalar`/`getAsRealVector` on a value you deliberately want as Real.
 
 ---
 

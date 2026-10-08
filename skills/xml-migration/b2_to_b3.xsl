@@ -16,24 +16,33 @@
       T2  <parameter>         — RealParameter → typed param  (pre-annotated)
       T3  <distribution>      — Prior flatten / OneOnX / IID (pre-annotated)
       T4  <operator>          — ScaleOperator split, Uniform tree op
+                                (UniformOperator / Gamma splits are decided in
+                                 the pre-pass and applied through T5's _b3spec)
       T5  @spec / @type / @class  — simple .spec. rename  (pre-annotated _b3spec)
       T6  identity            — copy everything else unchanged
 -->
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
+  <!-- No cdata-section-elements: it would wrap EVERY text node of
+       <subtemplate>/<partitiontemplate> in CDATA — including the whitespace
+       between trailing <connect> children, producing stray
+       "]]><connect .../><![CDATA[" runs.  convert_b2_to_b3.py restores CDATA
+       on the fragment text only, after the transform. -->
   <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
 
   <!-- ═══════════════════════════════════════════════════════════════════
        T1 — Root <beast> element
-       Sets version="2.8" and replaces the namespace list with spec packages.
-       The fxtemplate flag in the Python script skips this template by
-       not setting the _b3version annotation on the root element.
+       Always sets version="2.8" (BEAST3 requires it, including FxTemplates).
+       Namespace is replaced with the legacy/core package list only for
+       runnable example XMLs; FxTemplates (_b3fxtemplate set) keep their
+       original, broader namespace (e.g. beastfx.app.beauti) unchanged.
        ═══════════════════════════════════════════════════════════════════ -->
   <!-- T7 — Strip <map name="..."> elements (B2 short-name aliases; replaced by FQNs) -->
   <xsl:template match="map"/>
 
-  <xsl:template match="/beast[@_b3version]">
+  <!-- Example XML: version="2.8" + namespace rewritten to the legacy/core list -->
+  <xsl:template match="/beast[@_b3version and not(@_b3fxtemplate)]">
     <beast version="2.8">
       <!--
         Namespace contains only legacy/core packages that resolve non-deprecated
@@ -41,12 +50,22 @@
         All deprecated/renamed classes use full spec FQNs — no spec packages needed.
       -->
       <xsl:attribute name="namespace">beast.core:beast.core.util:beast.evolution.alignment:beast.evolution.nuc:beast.evolution.operators:beast.evolution.sitemodel:beast.evolution.substitutionmodel:beast.evolution.tree.coalescent:beast.base.core:beast.base.evolution.alignment:beast.base.evolution.likelihood:beast.base.evolution.operator:beast.base.evolution.sitemodel:beast.base.evolution.substitutionmodel:beast.base.evolution.tree:beast.base.evolution.tree.coalescent:beast.base.inference:beast.base.inference.operator:beast.base.inference.util:beast.pkgmgmt</xsl:attribute>
-      <xsl:apply-templates select="@*[name()!='version' and name()!='namespace' and name()!='_b3version']"/>
+      <xsl:apply-templates select="@*[name()!='version' and name()!='namespace' and not(starts-with(name(),'_b3'))]"/>
       <xsl:apply-templates select="node()"/>
     </beast>
   </xsl:template>
 
-  <!-- Root element without _b3version (fxtemplate mode): copy attrs except internals -->
+  <!-- FxTemplate: version="2.8" only — namespace kept exactly as authored -->
+  <xsl:template match="/beast[@_b3version and @_b3fxtemplate]">
+    <beast version="2.8">
+      <xsl:apply-templates select="@*[name()!='version' and not(starts-with(name(),'_b3'))]"/>
+      <xsl:apply-templates select="node()"/>
+    </beast>
+  </xsl:template>
+
+  <!-- Defensive fallback: root element without _b3version (should not occur —
+       prepass() always stamps it — kept in case the XSLT is ever invoked
+       without the Python pre-pass). -->
   <xsl:template match="/beast[not(@_b3version)]">
     <beast>
       <xsl:apply-templates select="@*[not(starts-with(name(),'_b3'))]"/>
@@ -116,8 +135,7 @@
        Python pre-pass sets _b3prior_type on the element:
          flatten     → inline the inner distribution directly
          iid         → wrap with IID
-         oneonx_pop  → replace with LogNormal(M=3,S=2.5) for popSize
-         oneonx_kappa→ replace with LogNormal(M=1,S=0.5) for hky.kappa
+         oneonx      → replace with LogUniform(lower, upper) (IID-wrapped on a vector x=)
        ═══════════════════════════════════════════════════════════════════ -->
 
   <!-- T3a: flatten Prior → inline inner distribution.
@@ -176,36 +194,38 @@
     </distribution>
   </xsl:template>
 
-  <!-- T3c: OneOnX on popSize → LogNormal(M=3,S=2.5) -->
-  <xsl:template match="*[@_b3prior_type='oneonx_pop']">
+  <!-- T3c: OneOnX → LogUniform(lower, upper), the proper replacement named in
+       deprecated_classes.md (density ∝ 1/x on a bounded support).  The bounds
+       are placeholders stamped by the pre-pass (_b3lower/_b3upper, from
+       xml_annotator.ONEONX_LOGUNIFORM_BOUNDS); the report asks the user to
+       narrow them.  LogUniform is a scalar distribution, so a vector x=
+       (_b3vector_x) is wrapped in IID. -->
+  <xsl:template name="oneonx-bounds">
+    <lower spec="beast.base.spec.inference.parameter.RealScalarParam" domain="PositiveReal" estimate="false">
+      <xsl:attribute name="value"><xsl:value-of select="@_b3lower"/></xsl:attribute>
+    </lower>
+    <upper spec="beast.base.spec.inference.parameter.RealScalarParam" domain="PositiveReal" estimate="false">
+      <xsl:attribute name="value"><xsl:value-of select="@_b3upper"/></xsl:attribute>
+    </upper>
+  </xsl:template>
+
+  <xsl:template match="*[@_b3prior_type='oneonx' and not(@_b3vector_x)]">
     <distribution>
       <xsl:if test="@id"><xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute></xsl:if>
-      <xsl:attribute name="spec">beast.base.spec.inference.distribution.LogNormal</xsl:attribute>
-      <xsl:attribute name="param"><xsl:value-of select="@x"/></xsl:attribute>
-      <M spec="beast.base.spec.inference.parameter.RealScalarParam" domain="Real" value="3.0"/>
-      <S spec="beast.base.spec.inference.parameter.RealScalarParam" domain="PositiveReal" value="2.5"/>
+      <xsl:attribute name="spec">beast.base.spec.inference.distribution.LogUniform</xsl:attribute>
+      <xsl:if test="@x"><xsl:attribute name="param"><xsl:value-of select="@x"/></xsl:attribute></xsl:if>
+      <xsl:call-template name="oneonx-bounds"/>
     </distribution>
   </xsl:template>
 
-  <!-- T3d: OneOnX on hky.kappa → LogNormal(M=1,S=0.5) -->
-  <xsl:template match="*[@_b3prior_type='oneonx_kappa']">
+  <xsl:template match="*[@_b3prior_type='oneonx' and @_b3vector_x]">
     <distribution>
       <xsl:if test="@id"><xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute></xsl:if>
-      <xsl:attribute name="spec">beast.base.spec.inference.distribution.LogNormal</xsl:attribute>
+      <xsl:attribute name="spec">beast.base.spec.inference.distribution.IID</xsl:attribute>
       <xsl:attribute name="param"><xsl:value-of select="@x"/></xsl:attribute>
-      <M spec="beast.base.spec.inference.parameter.RealScalarParam" domain="Real" value="1.0"/>
-      <S spec="beast.base.spec.inference.parameter.RealScalarParam" domain="PositiveReal" value="0.5"/>
-    </distribution>
-  </xsl:template>
-
-  <!-- T3e: OneOnX with unknown parameter → LogNormal with conservative defaults -->
-  <xsl:template match="*[@_b3prior_type='oneonx_generic']">
-    <distribution>
-      <xsl:if test="@id"><xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute></xsl:if>
-      <xsl:attribute name="spec">beast.base.spec.inference.distribution.LogNormal</xsl:attribute>
-      <xsl:attribute name="param"><xsl:value-of select="@x"/></xsl:attribute>
-      <M spec="beast.base.spec.inference.parameter.RealScalarParam" domain="Real" value="1.0"/>
-      <S spec="beast.base.spec.inference.parameter.RealScalarParam" domain="PositiveReal" value="1.0"/>
+      <distr spec="beast.base.spec.inference.distribution.LogUniform">
+        <xsl:call-template name="oneonx-bounds"/>
+      </distr>
     </distribution>
   </xsl:template>
 

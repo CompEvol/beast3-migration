@@ -1,13 +1,13 @@
 # Deprecated Classes in Beast3
 
 Scanned from: `~/WorkSpace/beast3`  
-Total deprecated classes found: **100**
+Total deprecated classes found: **101**
 
 Entries are ordered by Maven module then Java package.
 The **Replacement** column is extracted from the `@deprecated` Javadoc tag;
 _no replacement specified_ means the tag was absent.
 
-## `beast-base` (99 classes)
+## `beast-base` (100 classes)
 
 ### `beast.base.core`
 
@@ -118,6 +118,7 @@ _no replacement specified_ means the tag was absent.
 |:---|:---|
 | `ClusterTree` | replaced by `beast.base.spec.evolution.tree.ClusterTree` |
 | `MRCAPrior` | replaced by `beast.base.spec.evolution.tree.MRCAPrior` |
+| `TreeHeightLogger` | removed in BEAST3 (commit `5ed52d0`, "remove deprecated classes"); its own Javadoc said "deprecated: use TreeStatLogger instead" — use `beast.base.evolution.tree.TreeStatLogger` instead (legacy path, no spec twin; `tree=` input is identical, default `logHeight=true`) |
 
 ### `beast.base.evolution.tree.coalescent`
 

@@ -7,6 +7,8 @@ metadata:
 
 Given a BEAST2 package project root, produce a working BEAST3 Maven build. Prerequisites: `../beast-package-skeleton` and `../beast3` must exist (controller Step 1).
 
+**Reference examples** — when a real-world model is needed (pom.xml shape, module-info.java, directory layout, versioning conventions), prefer an actual migrated downstream package over the skeleton or beast3 itself: `../BEASTLabs`, `../model-selection`, `../morph-models`, `../sampled-ancestors` are the recommended examples, in no particular order — pick whichever already has the file/pattern you need. `../beast3` (`beast-base`/`beast-fx`) can be consulted too, but it's the core framework, not a downstream package, so its own `pom.xml`/module setup carries extra concerns (multi-module reactor, publishing both core artifacts, JavaFX split) that don't generalise — treat it as a secondary source, not the template to copy first.
+
 ---
 
 ## Determine project identity
@@ -16,10 +18,16 @@ Infer from existing `pom.xml`, `version.xml`, or source files. Ask before writin
 | Field | Example |
 |---|---|
 | `groupId` | `io.github.compevol` |
-| `artifactId` | `beast-mypackage` |
-| `version` | `1.0.0-SNAPSHOT` |
+| `artifactId` | `mypackage` |
+| `version` | see **Choosing the migrated version** below |
 | `beast.pkg.name` | display name from `version.xml` |
 | GitHub org/repo | used in SCM and distribution URLs |
+
+`artifactId` should keep the project's existing/original name (from its current `pom.xml` or repo name) — do **not** add a `beast-` prefix by default. Most real BEAST3 packages have no such prefix (`codonsubstmodels`, `sampled-ancestors`, `mascot`, `morph-models`, ...); a few chose one themselves (`beast-labs`, `beast-classic`) but that's their own naming choice, not a convention to apply elsewhere. This also feeds the module name in `module-info.md` (artifactId, hyphens → dots), so an invented prefix here would leak into the JPMS module name too.
+
+### Choosing the migrated version
+
+For a package that already has a `version.xml` (i.e. this is a migration of an existing BEAST2 package, not a brand-new package), bump the **minor** version from the current `version.xml` value rather than keeping it unchanged or resetting to the skeleton's placeholder `1.0.0-SNAPSHOT` — the migration is a real change to the package (new build system, possibly new BEAST3 API surface) and deserves its own release number. E.g. current `1.0.2` → migrated `1.1.0`; current `2.3.1` → migrated `2.4.0`. Use this bumped value for both `pom.xml`'s `<version>` and `version.xml`'s `<package version>` (see **Update `version.xml`** below). Only fall back to the skeleton's `1.0.0-SNAPSHOT` when scaffolding a genuinely new package with no prior `version.xml`.
 
 ---
 
@@ -42,8 +50,57 @@ ls pom.xml build.xml *.xml 2>/dev/null
 1. Set `<maven.compiler.release>25</maven.compiler.release>` and compiler plugin `<release>25</release>`.
 2. Replace BEAST2 deps with BEAST3 deps (`<scope>provided</scope>`); see `../beast3/README.md` → **Add BEAST dependencies**.
 3. Copy surefire, resources, and assembly plugin configs from `../beast-package-skeleton/pom.xml`.
+4. If `<version>` is written as an expression (e.g. `<version>${beast.pkg.version}-SNAPSHOT</version>`) — Maven
+   rejects this: a project's own `version` must be a literal constant, not a property reference, since the
+   model isn't resolved yet when Maven reads its own coordinates (`mvn validate` warns "'version' contains an
+   expression but should be a constant"). Fix per **Deriving `beast.pkg.version`** below rather than hardcoding
+   both `<version>` and `beast.pkg.version` separately.
 
 Then skip to **Verify Maven dependency resolution**.
+
+### Deriving `beast.pkg.version`
+
+`beast.pkg.version` (used only for the assembly `finalName`, see `beast3-release-packaging.md`) must never be a
+second, independently hardcoded copy of `<version>` — that's a duplicate-declaration trap: the two drift the
+moment one is bumped and the other isn't, and the CI release step (`mvn versions:set -DnewVersion=$VERSION`,
+see `beast3-release-packaging.md` Part 1) only rewrites `<version>`, not this property.
+
+`../beast-package-skeleton/pom.xml` already wires this correctly — copy it rather than reinventing it. It
+derives `beast.pkg.version` from `${project.version}` with `-SNAPSHOT` stripped, via
+`build-helper-maven-plugin`'s `regex-property` goal bound to the `validate` phase (first plugin in `<build>
+<plugins>`, before the compiler plugin):
+
+```xml
+<plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>build-helper-maven-plugin</artifactId>
+    <version>3.6.0</version>
+    <executions>
+        <execution>
+            <id>set-beast-pkg-version</id>
+            <phase>validate</phase>
+            <goals><goal>regex-property</goal></goals>
+            <configuration>
+                <name>beast.pkg.version</name>
+                <value>${project.version}</value>
+                <regex>-SNAPSHOT$</regex>
+                <replacement></replacement>
+                <failIfNoMatch>false</failIfNoMatch>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+```
+
+`failIfNoMatch=false` matters: on a release build (`<version>` already has no `-SNAPSHOT` suffix, e.g. after
+CI's `versions:set`), the regex simply doesn't match and `beast.pkg.version` passes through unchanged — no
+special-casing needed for release vs. snapshot builds. Verify with
+`mvn validate help:evaluate -Dexpression=beast.pkg.version -q -DforceStdout` (plain `help:evaluate` alone won't
+work — it runs outside the lifecycle, before the `validate`-phase execution has fired).
+
+If a package's existing `pom.xml` instead hardcodes `beast.pkg.version` as its own literal (not derived), that's
+the same duplication in a different shape — replace it with this plugin execution rather than leaving two
+independently-maintained version strings.
 
 ---
 
@@ -63,13 +120,17 @@ mkdir -p src/test/resources/<groupId.with.dots>/examples
 
 | File type | Destination | Path |
 |---|---|---|
-| BEAUti FxTemplate XMLs | `src/main/resources/` | `<groupId.with.dots>/fxtemplates/` |
+| BEAUti FxTemplate XMLs | `src/main/resources/` | `<module-name-with-dots>/fxtemplates/` |
 | FXML, icons, CSS | `src/main/resources/` | mirrors calling class's package path |
 | Grammar files (ANTLR `.g4`) | `src/main/resources/` | mirrors generated parser's package |
 | Any `getClass().getResource(...)` file (main code) | `src/main/resources/` | mirrors calling class's package path |
-| Example BEAST XMLs | `src/test/resources/` | `<groupId.with.dots>/examples/` |
-| Data files (NEXUS, FASTA, JSON, trees, logs) | `src/test/resources/` | `<groupId.with.dots>/examples/<type>/` |
-| Test scripts (R, shell) | `src/test/resources/` | `<groupId.with.dots>/examples/` |
+| Example BEAST XMLs | `src/test/resources/` | `<top-level main package>/examples/` |
+| Data files (NEXUS, FASTA, JSON, trees, logs) | `src/test/resources/` | `<top-level main package>/examples/<type>/` |
+| Test scripts (R, shell) | `src/test/resources/` | `<top-level main package>/examples/` |
+
+`<module-name-with-dots>` is the JPMS module name (dotted `artifactId`, matching `module-info.md` — e.g. `model.selection`, `beast.labs`, `morph.models`, `sampled.ancestors`), **not** the groupId. Verified against all four reference examples' `src/main/resources/` — every one uses its dotted module name as the top-level folder for fxtemplates.
+
+`<top-level main package>` (for `src/test/resources/`) has no single fixed convention across real packages — `model-selection` uses the plain undotted package name (`modelselection`), `sampled-ancestors` uses a short code (`sa`), `morph-models` uses no prefix at all (`examples/` directly). Default to the plain package name (matches `src/main/java/<package>`) unless the project already has its own test-resources convention to preserve.
 
 If unsure, check which class loads the file: test-only → `src/test/resources/`; main code → `src/main/resources/`.
 
@@ -77,9 +138,9 @@ If unsure, check which class loads the file: test-only → `src/test/resources/`
 
 | Source | Destination | Customise |
 |---|---|---|
-| `../beast-package-skeleton/pom.xml` | `pom.xml` | groupId, artifactId, version, pkg name, GitHub URLs |
+| `../beast-package-skeleton/pom.xml` | `pom.xml` | groupId, artifactId, version (see **Choosing the migrated version** above), pkg name, GitHub URLs — also bump `central-publishing-maven-plugin` to `>= 0.11.0` if the skeleton still has `0.6.0` (see `beast3-release-packaging.md` → CompEvol/beast3#117). Leave the `build-helper-maven-plugin` `beast.pkg.version` derivation (see **Deriving `beast.pkg.version`** above) as-is — it needs no per-project customisation. Cross-check the customised result against a reference example's `pom.xml` (`../BEASTLabs`, `../model-selection`, `../morph-models`, `../sampled-ancestors`) rather than the skeleton alone — the skeleton is a minimal template, a real package shows what a finished one actually looks like. |
 | `../beast-package-skeleton/src/assembly/beast-package.xml` | `src/assembly/beast-package.xml` | none |
-| `../beast-package-skeleton/version.xml` | `version.xml` | version numbers only; log other suggestions to `tmp/b3migration/TODO.md` |
+| `../beast-package-skeleton/version.xml` | `version.xml` | version number (bumped, see **Choosing the migrated version** above) only; log other suggestions to `tmp/b3migration/TODO.md` |
 
 ---
 
@@ -96,7 +157,7 @@ If BEAST3 artifacts are unresolved, install them locally — see `../beast3/READ
 ## Update `version.xml`
 
 Only version numbers may change:
-1. `version` attribute on `<package>` — match `pom.xml` version.
+1. `version` attribute on `<package>` — match `pom.xml` version (the bumped minor version — see **Choosing the migrated version** above, not the pre-migration value).
 2. `atleast` attributes on `<depends>` — match BEAST3 dep versions in `pom.xml`.
 
 Do not restructure, reorder, add, or remove any elements. Log any structural suggestions to `tmp/b3migration/TODO.md`:

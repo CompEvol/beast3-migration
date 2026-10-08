@@ -32,8 +32,20 @@ public final class XmlScanner {
     private static final Pattern MERGEWITH = Pattern.compile("<mergewith\\b");
     private static final Pattern SPEC_REF = Pattern.compile("beast\\.base\\.spec\\.");
     /** Legacy parameter spec= attribute, e.g. {@code spec='parameter.RealParameter'}. */
-    private static final Pattern LEGACY_PARAM_REF = Pattern.compile(
+    private static final Pattern LEGACY_PARAM_ATTR = Pattern.compile(
             "spec\\s*=\\s*[\"']\\s*(?:beast\\.base\\.inference\\.)?parameter\\.(?:Real|Integer|Boolean)Parameter");
+    /**
+     * Legacy parameter <em>element</em>, e.g.
+     * {@code <parameter id="x" name="mutationRate">1.0</parameter>}.
+     *
+     * <p>This is the far more common legacy form and the attribute pattern
+     * above never saw it, so XMLs full of these counted as fully migrated.
+     * The {@code name=} attribute is what distinguishes a legacy declaration
+     * from {@code <parameter idref="x"/>}, which is a perfectly good reference
+     * into an input that happens to be called "parameter".</p>
+     */
+    private static final Pattern LEGACY_PARAM_ELEM = Pattern.compile(
+            "<parameter\\b[^>]*\\bname\\s*=");
 
     /** Any {@code spec="X"} or {@code spec='X'} attribute. Captures the value. */
     private static final Pattern SPEC_ATTR = Pattern.compile(
@@ -137,7 +149,8 @@ public final class XmlScanner {
         boolean v28 = VERSION_28.matcher(rootAttrs).find();
         boolean nsSpec = NAMESPACE_SPEC.matcher(rootAttrs).find();
         boolean bodyHasSpec = SPEC_REF.matcher(content).find();
-        boolean hasLegacyParam = LEGACY_PARAM_REF.matcher(content).find();
+        boolean hasLegacyParam = LEGACY_PARAM_ATTR.matcher(content).find()
+                || LEGACY_PARAM_ELEM.matcher(content).find();
 
         if (isFx) {
             report.fxTotal++;
@@ -183,6 +196,7 @@ public final class XmlScanner {
             Report report,
             java.util.Set<String> deprecatedFqns,
             java.util.Map<String, String> deprecatedShortNames,
+            java.util.Map<String, String> ambiguousShortNames,
             java.util.Map<String, String> specReplacements) {
         for (XmlRecord rec : report.xmls) {
             // Files under any `legacy*` / `beast2*` / `2.7` directory are
@@ -197,9 +211,11 @@ public final class XmlScanner {
                 continue;
             }
             collectFromAttribute(content, SPEC_ATTR, "spec", rec, report,
-                    deprecatedFqns, deprecatedShortNames, specReplacements);
+                    deprecatedFqns, deprecatedShortNames, ambiguousShortNames,
+                    specReplacements);
             collectFromAttribute(content, MAP_DECL, "map", rec, report,
-                    deprecatedFqns, deprecatedShortNames, specReplacements);
+                    deprecatedFqns, deprecatedShortNames, ambiguousShortNames,
+                    specReplacements);
         }
     }
 
@@ -208,6 +224,7 @@ public final class XmlScanner {
             XmlRecord rec, Report report,
             java.util.Set<String> deprecatedFqns,
             java.util.Map<String, String> deprecatedShortNames,
+            java.util.Map<String, String> ambiguousShortNames,
             java.util.Map<String, String> specReplacements) {
         Matcher m = pattern.matcher(content);
         while (m.find()) {
@@ -221,13 +238,24 @@ public final class XmlScanner {
                         rec.isFxTemplate(), true, source));
                 continue;
             }
+            if (value.contains(".")) continue;
             // Short-name hit: bare class name whose every FQN is deprecated.
-            if (!value.contains(".") && deprecatedShortNames.containsKey(value)) {
+            if (deprecatedShortNames.containsKey(value)) {
                 String canonical = deprecatedShortNames.get(value);
                 report.xmlDeprecatedRefs.add(new DeprecatedXmlRef(
                         rec.file(), value, canonical,
                         specReplacements.getOrDefault(canonical, ""),
                         rec.isFxTemplate(), false, source));
+                continue;
+            }
+            // Ambiguous short name: resolves to both a deprecated and a live
+            // class, so namespace ordering decides which one it binds to.
+            if (ambiguousShortNames.containsKey(value)) {
+                String deprecatedFqn = ambiguousShortNames.get(value);
+                report.xmlAmbiguousRefs.add(new AmbiguousXmlRef(
+                        rec.file(), value, deprecatedFqn,
+                        specReplacements.getOrDefault(deprecatedFqn, ""),
+                        rec.isFxTemplate(), source));
             }
         }
     }

@@ -158,10 +158,13 @@ public final class Main {
                 JavaScanner.deriveSpecReplacements(all, deprecatedFqns, allFqns);
         java.util.Map<String, String> deprecatedShortNames =
                 JavaScanner.deriveUnambiguouslyDeprecatedShortNames(deprecatedFqns, allFqns);
+        java.util.Map<String, String> ambiguousShortNames =
+                JavaScanner.deriveAmbiguousShortNames(deprecatedFqns, allFqns);
         if (target != null && target.pathExists) {
             JavaScanner.resolveAndTally(target, deprecatedFqns);
             XmlScanner.scanForDeprecatedReferences(
-                    target, deprecatedFqns, deprecatedShortNames, specReplacements);
+                    target, deprecatedFqns, deprecatedShortNames,
+                    ambiguousShortNames, specReplacements);
             for (ClassRecord c : target.classes) {
                 if (c.isDeprecated) continue;
                 target.inputDeprecatedRefs.addAll(c.inputsReferencingDeprecatedTypes(
@@ -199,6 +202,8 @@ public final class Main {
                 JavaScanner.deriveSpecReplacements(reports, deprecatedFqns, allFqns);
         java.util.Map<String, String> deprecatedShortNames =
                 JavaScanner.deriveUnambiguouslyDeprecatedShortNames(deprecatedFqns, allFqns);
+        java.util.Map<String, String> ambiguousShortNames =
+                JavaScanner.deriveAmbiguousShortNames(deprecatedFqns, allFqns);
         System.out.println("Collected " + deprecatedFqns.size()
                 + " @Deprecated class(es) across all packages ("
                 + specReplacements.size() + " with spec replacements, "
@@ -213,7 +218,8 @@ public final class Main {
         for (Report r : reports) {
             if (r.pathExists) {
                 XmlScanner.scanForDeprecatedReferences(
-                        r, deprecatedFqns, deprecatedShortNames, specReplacements);
+                        r, deprecatedFqns, deprecatedShortNames,
+                        ambiguousShortNames, specReplacements);
             }
         }
 

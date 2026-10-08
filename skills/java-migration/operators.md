@@ -39,6 +39,18 @@ split into two spec classes depending on what it operates on:
 
 Update the Java import to match the chosen replacement. For XML `spec=` attribute changes, see `xml-migration/XML-MIGRATION-STRATEGY.md` (T4a/T4b) — applied automatically by `convert_b2_to_b3.py`.
 
+**`beast.base.inference.operator.UniformOperator` split (special case):**
+
+BEAST2's `UniformOperator` accepted a real **or** integer parameter. BEAST3 splits it by the
+parameter's value type — `deprecated_classes.md` lists both, and its first entry is NOT a default:
+
+| Parameter operated on | BEAST3 replacement |
+|---|---|
+| integer (`IntScalarParam`/`IntVectorParam`) | `beast.base.spec.inference.operator.uniform.IntUniformOperator` (has `howMany`) |
+| real (`RealScalarParam`/`RealVectorParam`) | `beast.base.spec.inference.operator.uniform.IntervalOperator` — no `howMany`; requires a domain with finite bounds (`UnitInterval`) |
+
+Pick from the actual parameter type, never from the class-name list order.
+
 **`SubtreeSlide` — deprecated, non-spec replacement:**
 
 `beast.base.evolution.operator.SubtreeSlide` is `@Deprecated`. Its replacement is
@@ -107,6 +119,7 @@ no change needed unless a compilation error occurs.
 For `spec=` attribute changes in example XMLs and FxTemplates, see **`xml-migration/XML-MIGRATION-STRATEGY.md`** (T4 — operator transforms). The converter (`convert_b2_to_b3.py`) applies these automatically; do not hand-edit XML. Key rules covered there:
 - `ScaleOperator` split: `parameter=` → spec inference (T4a); `tree=` → `ScaleTreeOperator` (T4b)
 - `Uniform` tree operator: must use full path `beast.base.evolution.operator.Uniform` (T4c)
+- `UniformOperator`: `IntUniformOperator` or `IntervalOperator` chosen from the target parameter's type (T4)
 - `Exchange`, `WilsonBalding`: leave unchanged (no spec equivalent — in `DO_NOT_RENAME`)
 - `SubtreeSlide`: renamed to `beast.base.evolution.operator.kernel.BactrianSubtreeSlide` automatically (T4d), dropping the legacy `gaussian` attribute
 
