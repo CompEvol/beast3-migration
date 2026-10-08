@@ -3,9 +3,12 @@ package io.github.beast3.migration;
 /**
  * One {@code Input<X>} field declaration extracted from a Java source.
  * {@link #typeStr} is the raw text inside the {@code <...>}; {@link #carrier}
- * tells us which migration bucket it falls into.
+ * tells us which migration bucket it falls into. {@link #resolvedTypes} holds
+ * the FQN of every type named in {@link #typeStr}, resolved through the
+ * declaring file's imports (same package when not imported) — this is what
+ * tells a legacy {@code SiteModel} apart from its same-named spec twin.
  */
-public record InputDecl(String typeStr, Carrier carrier) {
+public record InputDecl(String typeStr, Carrier carrier, java.util.Set<String> resolvedTypes) {
 
     public enum Carrier {
         /** Spec interface — read-only, polymorphic. RealScalar, RealVector, IntScalar, … */

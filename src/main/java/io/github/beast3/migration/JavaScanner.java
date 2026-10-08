@@ -206,7 +206,8 @@ public final class JavaScanner {
         // Pre-extract all Input<...> declarations with their source positions
         // so we can attribute each to the innermost class scope containing it.
         java.util.List<int[]> inputPositions = new java.util.ArrayList<>();
-        java.util.List<InputDecl> inputDecls = extractInputsWithPositions(stripped, inputPositions);
+        java.util.List<InputDecl> inputDecls = extractInputsWithPositions(
+                stripped, inputPositions, simpleToFqn, pkgName);
 
         for (ClassScope s : scopes) {
             // Track only the primary class and its direct inner classes —
@@ -523,9 +524,13 @@ public final class JavaScanner {
      * position where each {@code Input<} starts are appended to it (so the
      * caller can attribute each input to its containing class scope).
      * Walks balanced angle brackets so nested generics like
-     * {@code Input<RealScalar<? extends PositiveReal>>} work.
+     * {@code Input<RealScalar<? extends PositiveReal>>} work. Type names are
+     * resolved to FQNs through {@code imports}, falling back to
+     * {@code currentPkg} for names that aren't imported.
      */
-    static java.util.List<InputDecl> extractInputsWithPositions(String src, java.util.List<int[]> positions) {
+    static java.util.List<InputDecl> extractInputsWithPositions(
+            String src, java.util.List<int[]> positions,
+            Map<String, String> imports, String currentPkg) {
         java.util.List<InputDecl> out = new java.util.ArrayList<>();
         int i = 0;
         while ((i = src.indexOf("Input<", i)) != -1) {
@@ -562,7 +567,8 @@ public final class JavaScanner {
                 continue;
             }
             if (nameEnd > nameStart) {
-                out.add(new InputDecl(inner, classifyInputCarrier(inner)));
+                out.add(new InputDecl(inner, classifyInputCarrier(inner),
+                        resolveTypeNames(inner, imports, currentPkg)));
                 if (positions != null) positions.add(new int[] { matchPos });
             }
             i = j;
@@ -572,7 +578,34 @@ public final class JavaScanner {
 
     /** Position-less convenience kept for tests / external callers. */
     static java.util.List<InputDecl> extractInputs(String src) {
-        return extractInputsWithPositions(src, null);
+        return extractInputsWithPositions(src, null, Map.of(), "");
+    }
+
+    private static final Pattern TYPE_NAME = Pattern.compile("[A-Za-z_]\\w*(?:\\.[A-Za-z_]\\w*)*");
+
+    /**
+     * FQNs of every type named in an {@code Input<...>} type argument, e.g.
+     * {@code List<SiteModel.Base>} → {@code java.util.List},
+     * {@code beast.base.evolution.sitemodel.SiteModel.Base}. Qualified names
+     * resolve their head segment through the imports (so inner classes work);
+     * names starting lowercase are taken as already fully qualified;
+     * un-imported simple names are assumed to live in {@code currentPkg}.
+     */
+    private static Set<String> resolveTypeNames(String typeStr, Map<String, String> imports, String currentPkg) {
+        Set<String> out = new java.util.LinkedHashSet<>();
+        Matcher m = TYPE_NAME.matcher(typeStr);
+        while (m.find()) {
+            String t = m.group();
+            if (t.equals("extends") || t.equals("super")) continue;
+            int dot = t.indexOf('.');
+            String head = dot < 0 ? t : t.substring(0, dot);
+            String tail = dot < 0 ? "" : t.substring(dot);
+            String headFqn = imports.get(head);
+            if (headFqn != null) out.add(headFqn + tail);
+            else if (Character.isLowerCase(head.charAt(0))) out.add(t);
+            else out.add(currentPkg.isBlank() ? t : currentPkg + "." + t);
+        }
+        return out;
     }
 
     private static InputDecl.Carrier classifyInputCarrier(String inner) {
@@ -749,7 +782,9 @@ public final class JavaScanner {
                 if (cand.equals(dep)) continue;
                 if (!cand.contains(".spec.")) continue;
                 if (deprecatedFqns.contains(cand)) continue;
-                if (pick == null || commonPrefixLen(cand, dep) > commonPrefixLen(pick, dep)) {
+                // Compare with ".spec" dropped: every candidate shares the
+                // "beast.base.spec." prefix, which would otherwise tie them all.
+                if (pick == null || commonPrefixLen(unspec(cand), dep) > commonPrefixLen(unspec(pick), dep)) {
                     pick = cand;
                 }
             }
@@ -833,6 +868,10 @@ public final class JavaScanner {
             out.put(e.getKey(), canonical);
         }
         return out;
+    }
+
+    private static String unspec(String fqn) {
+        return fqn.replace(".spec.", ".");
     }
 
     private static int commonPrefixLen(String a, String b) {

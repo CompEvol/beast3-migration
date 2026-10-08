@@ -180,7 +180,8 @@ public final class ClassRecord {
             java.util.Map<String, String> specReplacements) {
         java.util.List<InputDeprecatedRef> out = new java.util.ArrayList<>();
         for (InputDecl d : inputs) {
-            String hit = findDeprecatedReference(d.typeStr(), deprecatedFqns, deprecatedShortNames);
+            String hit = findDeprecatedResolvedType(d.resolvedTypes(), deprecatedFqns);
+            if (hit == null) hit = findDeprecatedReference(d.typeStr(), deprecatedFqns, deprecatedShortNames);
             if (hit == null) continue;
             String canonical = hit.contains(".") ? hit : deprecatedShortNames.get(hit);
             // Loggers legitimately accept `Function` as the "thing-that-
@@ -198,6 +199,22 @@ public final class ClassRecord {
             out.add(new InputDeprecatedRef(fqn(), d, hit, canonical, replacement));
         }
         return out;
+    }
+
+    /**
+     * First import-resolved type FQN that is, or is nested in, a deprecated
+     * class — {@code SiteModel.Base} reached through the legacy
+     * {@code SiteModel} counts. Returns the deprecated FQN or null.
+     */
+    private static String findDeprecatedResolvedType(
+            java.util.Set<String> resolvedTypes, java.util.Set<String> deprecatedFqns) {
+        if (resolvedTypes == null) return null;
+        for (String fqn : resolvedTypes) {
+            for (String s = fqn; s.contains("."); s = s.substring(0, s.lastIndexOf('.'))) {
+                if (deprecatedFqns.contains(s)) return s;
+            }
+        }
+        return null;
     }
 
     /**
